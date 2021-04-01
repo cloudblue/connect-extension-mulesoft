@@ -8,7 +8,7 @@
     <artifactId>connect-mulesoft</artifactId>
     <version>1.0.17</version>
     <packaging>mule-extension</packaging>
-    <name>CloudBlue Connect Extension</name>
+    <name>CloudBlue Connect Extension MuleSoft</name>
     <repositories>
         <repository>
             <id>mulesoft-releases</id>
