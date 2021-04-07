@@ -10,9 +10,11 @@ import org.mule.runtime.extension.api.annotation.param.Parameter;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CBCRequestItem {
     @Parameter
+    @JsonProperty
     private String id;
     
     @Parameter
+    @JsonProperty
     private Integer quantity;
 
     @JsonProperty("old_quantity")

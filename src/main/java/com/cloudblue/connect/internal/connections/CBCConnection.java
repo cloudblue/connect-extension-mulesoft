@@ -1,6 +1,6 @@
 package com.cloudblue.connect.internal.connections;
 
-import com.cloudblue.connect.api.models.CBCAccount;
+import com.cloudblue.connect.api.models.CBCTenant;
 import com.cloudblue.connect.internal.connections.clients.CBCClient;
 import com.cloudblue.connect.internal.connections.constants.HttpMethod;
 import com.cloudblue.connect.api.exceptions.CBCException;
@@ -24,7 +24,7 @@ public final class CBCConnection extends CBCClient {
 
     public boolean isConnected() throws Exception {
         
-        TypeReference<List<CBCAccount>> listAccountRefs =new TypeReference<List<CBCAccount>>() {};
+        TypeReference<List<CBCTenant>> listAccountRefs =new TypeReference<List<CBCTenant>>() {};
         
         try {
             exchange("accounts", null, HttpMethod.GET, null, listAccountRefs);

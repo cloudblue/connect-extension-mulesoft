@@ -1,4 +1,4 @@
-package com.cloudblue.connect.internal.operations.parameters.common;
+package com.cloudblue.connect.api.parameters.common;
 
 import org.mule.runtime.extension.api.annotation.Expression;
 import org.mule.runtime.extension.api.annotation.param.Parameter;

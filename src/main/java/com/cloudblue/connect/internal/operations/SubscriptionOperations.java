@@ -7,8 +7,8 @@ import com.cloudblue.connect.internal.connections.constants.HttpMethod;
 import com.cloudblue.connect.api.exceptions.CBCException;
 
 import com.cloudblue.connect.internal.connections.utils.URLBuilder;
-import com.cloudblue.connect.internal.operations.parameters.NewRequestParameter;
-import com.cloudblue.connect.internal.operations.parameters.common.ResourceActionParameter;
+import com.cloudblue.connect.api.parameters.NewPurchaseRequestParameter;
+import com.cloudblue.connect.api.parameters.common.ResourceActionParameter;
 import org.mule.runtime.extension.api.annotation.param.Connection;
 import org.mule.runtime.extension.api.annotation.param.MediaType;
 import org.mule.runtime.extension.api.annotation.param.ParameterGroup;
@@ -61,17 +61,17 @@ public class SubscriptionOperations {
     }
 
     @MediaType(value = ANY, strict = false)
-    @DisplayName("Create Request")
-    public CBCRequest createRequest(
+    @DisplayName("Create Purchase Request")
+    public CBCRequest createPurchaseRequest(
             @Connection CBCConnection connection,
-            @ParameterGroup(name="Create Request Details") NewRequestParameter newRequestParameter
+            @ParameterGroup(name="Create Purchase Request Details") NewPurchaseRequestParameter newRequestParameter
     ) throws CBCException {
         URLBuilder urlBuilder = new URLBuilder().addCollection("requests", null);
 
         return connection.exchange(
                 urlBuilder.build(),
                 newRequestParameter.buildEntity(),
-                HttpMethod.GET,
+                HttpMethod.POST,
                 null,
                 CBCRequest.class
         );

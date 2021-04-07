@@ -1,29 +1,38 @@
 package com.cloudblue.connect.api.models;
 
-import com.cloudblue.connect.api.models.enums.CBCAccountType;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.mule.runtime.extension.api.annotation.param.Optional;
+import org.mule.runtime.extension.api.annotation.param.Parameter;
 
-import java.util.List;
+import java.util.UUID;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CBCAccount {
-    
+    @Parameter
+    @Optional
+    @JsonProperty
     private String id;
-    private String name;
-    private String description;
     
+    @Parameter
+    @JsonProperty("name")
+    private String companyName;
+    
+    @Parameter
+    @Optional
     @JsonProperty("external_id")
-    private String externalUID;   
+    private String externalId;
     
-    private CBCAccountType type;
-    private String brand;
-    private String icon;
-    private String overview;
-    private String headquarters;
-    private List<String> websites;
+    @Parameter
+    @Optional
+    @JsonProperty("external_uid")
+    private String externalUid;
+    
+    @Parameter
+    @JsonProperty("contact_info")
+    private CBCContactInfo contactInfo;
 
     public String getId() {
         return id;
@@ -33,76 +42,38 @@ public class CBCAccount {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getCompanyName() {
+        return companyName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
-    public String getDescription() {
-        return description;
+    public String getExternalId() {
+        return externalId;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
     }
 
-    public String getExternalUID() {
-        return externalUID;
+    public String getExternalUid() {
+        if (externalUid == null || externalUid.isEmpty())
+            externalUid = UUID.randomUUID().toString();
+        return externalUid;
     }
 
-    public void setExternalUID(String externalUID) {
-        this.externalUID = externalUID;
+    public void setExternalUid(String externalUid) {
+        this.externalUid = externalUid;
     }
 
-    public CBCAccountType getType() {
-        return type;
+    public CBCContactInfo getContactInfo() {
+        return contactInfo;
     }
 
-    public void setType(CBCAccountType type) {
-        this.type = type;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
-
-    public String getOverview() {
-        return overview;
-    }
-
-    public void setOverview(String overview) {
-        this.overview = overview;
-    }
-
-    public String getHeadquarters() {
-        return headquarters;
-    }
-
-    public void setHeadquarters(String headquarters) {
-        this.headquarters = headquarters;
-    }
-
-    public List<String> getWebsites() {
-        return websites;
-    }
-
-    public void setWebsites(List<String> websites) {
-        this.websites = websites;
+    public void setContactInfo(CBCContactInfo contactInfo) {
+        this.contactInfo = contactInfo;
     }
     
     
