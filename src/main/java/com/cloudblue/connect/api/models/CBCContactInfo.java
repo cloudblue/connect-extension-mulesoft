@@ -2,30 +2,38 @@ package com.cloudblue.connect.api.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.mule.runtime.extension.api.annotation.param.Parameter;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CBCContactInfo {
     @Parameter
+    @JsonProperty("address_line1")
     private String addressLine1;
     
     @Parameter
+    @JsonProperty("address_line2")
     private String addressLine2;
     
     @Parameter
+    @JsonProperty
     private String city;
     
     @Parameter
+    @JsonProperty
     private String state;
     
     @Parameter
+    @JsonProperty("postal_code")
     private String postalCode;
     
     @Parameter
+    @JsonProperty
     private String country;
     
     @Parameter
+    @JsonProperty
     private CBCContact contact;
 
     public String getAddressLine1() {

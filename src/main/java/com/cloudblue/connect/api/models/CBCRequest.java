@@ -4,6 +4,7 @@ import com.cloudblue.connect.api.models.enums.CBCRequestStatus;
 import com.cloudblue.connect.api.models.enums.CBCRequestType;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
 import java.util.Map;
@@ -11,19 +12,46 @@ import java.util.Map;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CBCRequest {
+    @JsonProperty
     private String id;
+
+    @JsonProperty
     private CBCRequestType type;
+
+    @JsonProperty
     private String note;
+
+    @JsonProperty
     private String reason;
+
+    @JsonProperty
     private CBCRequestStatus status;
+
+    @JsonProperty
     private CBCAsset asset;
+
+    @JsonProperty
     private Date created;
+
+    @JsonProperty
     private Date updated;
+
+    @JsonProperty
     private String activationKey;
+
+    @JsonProperty
     private boolean answered;
+
+    @JsonProperty
     private Map<String, String> template;
+
+    @JsonProperty
     private Map<String, String> externalAttributes;
+
+    @JsonProperty
     private CBCContract contract;
+
+    @JsonProperty
     private CBCMarketplace marketplace;
 
     public String getId() {

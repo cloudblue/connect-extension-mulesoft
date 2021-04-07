@@ -1,4 +1,4 @@
-package com.cloudblue.connect.internal.operations.parameters;
+package com.cloudblue.connect.api.parameters;
 
 import com.cloudblue.connect.api.models.*;
 import com.cloudblue.connect.api.models.enums.CBCRequestType;
@@ -11,9 +11,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.mule.runtime.extension.api.annotation.param.Optional;
 import org.mule.runtime.extension.api.annotation.param.Parameter;
 
-public class NewRequestParameter implements Embeddable{
-    @Parameter
-    private CBCRequestType requestType;
+public class NewPurchaseRequestParameter implements Embeddable {
     
     @Parameter
     private String productId;
@@ -32,15 +30,15 @@ public class NewRequestParameter implements Embeddable{
     private String externalUid;
     
     @Parameter
-    private CBCOrganization customer;
+    private CBCAccount customer;
     
     @Parameter
     @Optional
-    private CBCOrganization tier1;
+    private CBCAccount tier1;
     
     @Parameter
     @Optional
-    private CBCOrganization tier2;
+    private CBCAccount tier2;
     
     @Parameter
     private List<CBCRequestItem> items;
@@ -73,14 +71,6 @@ public class NewRequestParameter implements Embeddable{
         this.marketplaceId = marketplaceId;
     }
 
-    public CBCRequestType getRequestType() {
-        return requestType;
-    }
-
-    public void setRequestType(CBCRequestType requestType) {
-        this.requestType = requestType;
-    }
-
     public String getExternalId() {
         return externalId;
     }
@@ -90,7 +80,7 @@ public class NewRequestParameter implements Embeddable{
     }
 
     public String getExternalUid() {
-        if (externalUid == null)
+        if (externalUid == null || externalUid.isEmpty())
             externalUid = UUID.randomUUID().toString();
         return externalUid;
     }
@@ -99,27 +89,27 @@ public class NewRequestParameter implements Embeddable{
         this.externalUid = externalUid;
     }
 
-    public CBCOrganization getCustomer() {
+    public CBCAccount getCustomer() {
         return customer;
     }
 
-    public void setCustomer(CBCOrganization customer) {
+    public void setCustomer(CBCAccount customer) {
         this.customer = customer;
     }
 
-    public CBCOrganization getTier1() {
+    public CBCAccount getTier1() {
         return tier1;
     }
 
-    public void setTier1(CBCOrganization tier1) {
+    public void setTier1(CBCAccount tier1) {
         this.tier1 = tier1;
     }
 
-    public CBCOrganization getTier2() {
+    public CBCAccount getTier2() {
         return tier2;
     }
 
-    public void setTier2(CBCOrganization tier2) {
+    public void setTier2(CBCAccount tier2) {
         this.tier2 = tier2;
     }
 
@@ -144,7 +134,7 @@ public class NewRequestParameter implements Embeddable{
     public Object buildEntity() {
 
         CBCRequest request = new CBCRequest();
-        request.setType(this.requestType);
+        request.setType(CBCRequestType.purchase);
 
         request.setAsset(new CBCAsset());
         request.getAsset().setParams(this.params);

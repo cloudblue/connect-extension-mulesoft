@@ -1,4 +1,4 @@
-package com.cloudblue.connect.test.operations;
+package com.cloudblue.connect.test.operations.subscription;
 
 import com.cloudblue.connect.api.models.CBCAsset;
 import com.cloudblue.connect.api.models.CBCRequest;
@@ -21,7 +21,7 @@ import org.mule.tck.junit4.rule.SystemProperty;
 import org.mule.test.runner.RunnerDelegateTo;
 
 @RunnerDelegateTo(Parameterized.class)
-public class SubscriptionGetOperationsTestCase extends BaseMuleFlowTestCase {
+public class GetOperationsTestCase extends BaseMuleFlowTestCase {
     
     private static final String REQUEST_ID = "PR-0000-0000-0000-001";
     private static final String ASSERT_ID = "AS-0000-0000-0000";
@@ -48,7 +48,7 @@ public class SubscriptionGetOperationsTestCase extends BaseMuleFlowTestCase {
         );
     }
 
-    public SubscriptionGetOperationsTestCase(String flow, Class clazz, String expectedIdValue) {
+    public GetOperationsTestCase(String flow, Class clazz, String expectedIdValue) {
         this.flow = flow;
         this.clazz = clazz;
         this.expectedIdValue = expectedIdValue;

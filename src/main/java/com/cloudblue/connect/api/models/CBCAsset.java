@@ -4,6 +4,7 @@ import com.cloudblue.connect.api.models.enums.CBCAssetStatus;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 import java.util.Map;
@@ -11,15 +12,32 @@ import java.util.Map;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CBCAsset {
+    @JsonProperty
     private String id;
+
+    @JsonProperty
     private CBCAssetStatus status;
+
+    @JsonProperty("external_id")
     private String externalId;
+
+    @JsonProperty("external_uid")
     private String externalUid;
+
+    @JsonProperty
     private CBCConnection connection;
+
+    @JsonProperty
     private CBCProduct product;
+
+    @JsonProperty
     private List<CBCRequestItem> items;
+
+    @JsonProperty
     private List<CBCRequestParam> params;
-    private Map<String, CBCOrganization> tiers;
+
+    @JsonProperty
+    private Map<String, CBCAccount> tiers;
 
     public String getId() {
         return id;
@@ -85,11 +103,11 @@ public class CBCAsset {
         this.params = params;
     }
 
-    public Map<String, CBCOrganization> getTiers() {
+    public Map<String, CBCAccount> getTiers() {
         return tiers;
     }
 
-    public void setTiers(Map<String, CBCOrganization> tiers) {
+    public void setTiers(Map<String, CBCAccount> tiers) {
         this.tiers = tiers;
     }
     
