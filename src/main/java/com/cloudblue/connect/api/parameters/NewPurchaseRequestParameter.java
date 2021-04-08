@@ -27,7 +27,7 @@ public class NewPurchaseRequestParameter implements Embeddable {
     
     @Parameter
     @Optional
-    private String externalUid;
+    private String externalUid = UUID.randomUUID().toString();
     
     @Parameter
     private CBCAccount customer;
@@ -143,6 +143,12 @@ public class NewPurchaseRequestParameter implements Embeddable {
         request.getAsset().getProduct().setId(this.productId);
         request.getAsset().setExternalId(this.getExternalId());
         request.getAsset().setExternalUid(this.getExternalUid());
+
+        if (
+                this.getCustomer().getExternalUid() == null
+                        || this.getCustomer().getExternalUid().isEmpty()
+        )
+            this.getCustomer().setExternalUid(UUID.randomUUID().toString());
 
         request.getAsset().setTiers(new HashMap<>());
         request.getAsset().getTiers().put("customer", this.getCustomer());
