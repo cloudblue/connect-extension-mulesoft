@@ -34,8 +34,11 @@ public class CreateRequestTestCase extends BaseMuleFlowTestCase {
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
-                        {"createPurchaseRequest"}
-                }
+                {"createPurchaseRequest"},
+                {"createSuspendRequest"},
+                {"createResumeRequest"},
+                {"createCancelRequest"}
+        }
         );
     }
 

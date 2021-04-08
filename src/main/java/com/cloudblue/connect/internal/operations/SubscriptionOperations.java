@@ -1,6 +1,8 @@
 package com.cloudblue.connect.internal.operations;
 
 import com.cloudblue.connect.api.models.CBCAsset;
+import com.cloudblue.connect.api.parameters.AdminHoldRequestParameter;
+import com.cloudblue.connect.api.parameters.Embeddable;
 import com.cloudblue.connect.internal.connections.CBCConnection;
 import com.cloudblue.connect.api.models.CBCRequest;
 import com.cloudblue.connect.internal.connections.constants.HttpMethod;
@@ -60,20 +62,37 @@ public class SubscriptionOperations {
         );
     }
 
-    @MediaType(value = ANY, strict = false)
-    @DisplayName("Create Purchase Request")
-    public CBCRequest createPurchaseRequest(
-            @Connection CBCConnection connection,
-            @ParameterGroup(name="Create Purchase Request Details") NewPurchaseRequestParameter newRequestParameter
+    private CBCRequest createRequest(
+            CBCConnection connection, Embeddable embeddable
     ) throws CBCException {
         URLBuilder urlBuilder = new URLBuilder().addCollection("requests", null);
 
         return connection.exchange(
                 urlBuilder.build(),
-                newRequestParameter.buildEntity(),
+                embeddable.buildEntity(),
                 HttpMethod.POST,
                 null,
                 CBCRequest.class
         );
+    }
+
+    @MediaType(value = ANY, strict = false)
+    @DisplayName("Create Purchase Request")
+    public CBCRequest createPurchaseRequest(
+            @Connection CBCConnection connection,
+            @ParameterGroup(name="Create Purchase Request Details")
+                    NewPurchaseRequestParameter newRequestParameter
+    ) throws CBCException {
+        return this.createRequest(connection, newRequestParameter);
+    }
+
+    @MediaType(value = ANY, strict = false)
+    @DisplayName("Create Suspend/Resume/Cancel Request")
+    public CBCRequest createAdminHoldRequest(
+            @Connection CBCConnection connection,
+            @ParameterGroup(name="Create Suspend/Resume/Cancel Request Details")
+                    AdminHoldRequestParameter newRequestParameter
+    ) throws CBCException {
+        return this.createRequest(connection, newRequestParameter);
     }
 }
