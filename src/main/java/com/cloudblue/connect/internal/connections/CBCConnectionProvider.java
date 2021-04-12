@@ -1,6 +1,7 @@
 package com.cloudblue.connect.internal.connections;
 
 
+import com.cloudblue.connect.api.clients.Config;
 import org.mule.runtime.api.connection.ConnectionException;
 import org.mule.runtime.api.connection.ConnectionValidationResult;
 import org.mule.runtime.api.connection.PoolingConnectionProvider;
@@ -29,7 +30,7 @@ public class CBCConnectionProvider implements PoolingConnectionProvider<CBCConne
         private String token;
 
         @Parameter
-        @Optional(defaultValue = "2000")
+        @Optional(defaultValue = "20000")
         private int connectionTimeout;
 
         public String getHost() {
@@ -55,6 +56,10 @@ public class CBCConnectionProvider implements PoolingConnectionProvider<CBCConne
         public void setConnectionTimeout(int connectionTimeout) {
             this.connectionTimeout = connectionTimeout;
         }
+
+        public Config getConfig() {
+            return new Config(host, token, connectionTimeout);
+        }
     }
 
     @RefName
@@ -71,7 +76,7 @@ public class CBCConnectionProvider implements PoolingConnectionProvider<CBCConne
     @Override
     public void disconnect(CBCConnection connection) {
         try {
-            connection.invalidate();
+            connection.close();
         } catch (Exception e) {
             LOGGER.error("Error while disconnecting Connect Connection: " + e.getMessage(), e);
         }

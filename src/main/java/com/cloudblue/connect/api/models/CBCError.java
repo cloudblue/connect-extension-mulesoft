@@ -1,6 +1,6 @@
 package com.cloudblue.connect.api.models;
 
-import com.cloudblue.connect.internal.connections.constants.HttpStatus;
+import com.cloudblue.connect.api.clients.constants.HttpStatus;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

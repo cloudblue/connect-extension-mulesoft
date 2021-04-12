@@ -1,4 +1,4 @@
-package com.cloudblue.connect.internal.connections.constants;
+package com.cloudblue.connect.api.clients.constants;
 
 /**
  * Created by Rahul on 7/14/2015.

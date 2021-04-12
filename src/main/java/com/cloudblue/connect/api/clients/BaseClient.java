@@ -1,18 +1,17 @@
-package com.cloudblue.connect.internal.connections.clients;
+package com.cloudblue.connect.api.clients;
 
 import com.cloudblue.connect.api.models.CBCError;
-import com.cloudblue.connect.internal.connections.CBCConnectionProvider;
-import com.cloudblue.connect.internal.connections.constants.HeaderParams;
-import com.cloudblue.connect.internal.connections.constants.HttpMethod;
-import com.cloudblue.connect.internal.connections.constants.HttpStatus;
-import com.cloudblue.connect.internal.connections.constants.RestConstants;
+import com.cloudblue.connect.api.clients.constants.HeaderParams;
+import com.cloudblue.connect.api.clients.constants.HttpMethod;
+import com.cloudblue.connect.api.clients.constants.HttpStatus;
+import com.cloudblue.connect.api.clients.constants.RestConstants;
 import com.cloudblue.connect.api.exceptions.CBCException;
-import com.cloudblue.connect.internal.connections.errors.ErrorCodes;
-import com.cloudblue.connect.internal.connections.parsers.RequestMarshaller;
-import com.cloudblue.connect.internal.connections.parsers.ResponseUnmarshaller;
-import com.cloudblue.connect.internal.connections.parsers.jackson.JacksonRequestMarshaller;
-import com.cloudblue.connect.internal.connections.parsers.jackson.JacksonResponseUnmarshaller;
-import com.cloudblue.connect.internal.connections.utils.RequestUtil;
+import com.cloudblue.connect.api.clients.errors.ErrorCodes;
+import com.cloudblue.connect.api.clients.parsers.RequestMarshaller;
+import com.cloudblue.connect.api.clients.parsers.ResponseUnmarshaller;
+import com.cloudblue.connect.api.clients.parsers.jackson.JacksonRequestMarshaller;
+import com.cloudblue.connect.api.clients.parsers.jackson.JacksonResponseUnmarshaller;
+import com.cloudblue.connect.api.clients.utils.RequestUtil;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 
@@ -41,24 +40,24 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class CBCClient {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CBCClient.class);
+public class BaseClient {
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaseClient.class);
     
-    private final CBCConnectionProvider.ConnectionParams config;
+    private final Config config;
     private final RequestMarshaller requestMarshaller;
     private final ResponseUnmarshaller responseUnmarshaller;
-    private final CloseableHttpClient client;
+    private final CloseableHttpClient httpClient;
     
-    public CBCClient(CBCConnectionProvider.ConnectionParams config) {
+    public BaseClient(Config config) {
         this.config = config;
         this.requestMarshaller = new JacksonRequestMarshaller();
         this.responseUnmarshaller = new JacksonResponseUnmarshaller();
-        this.client = HttpClients.createDefault();
+        this.httpClient = HttpClients.createDefault();
     }
 
-    public void invalidate(){
+    public void close(){
         try{
-           if (this.client!=null)this.client.close();
+           if (this.httpClient !=null)this.httpClient.close();
         }catch(IOException ex){
             LOGGER.error("Unable to close HTTP client due to error details.", ex);
         }
@@ -85,7 +84,7 @@ public class CBCClient {
 
     protected String getResponseBody(HttpResponse response) throws CBCException {
         HttpEntity responseEntity = response.getEntity();
-        String responseBody = null;
+        String responseBody;
 
         try {
             responseBody = EntityUtils.toString(responseEntity, "UTF-8");
@@ -147,7 +146,7 @@ public class CBCClient {
 
         CloseableHttpResponse response;
         try {
-            response = this.client.execute(request);
+            response = this.httpClient.execute(request);
             LOGGER.trace("HTTP Response: ");
             LOGGER.trace(response.toString());
         } catch (IOException ex) {
@@ -198,22 +197,6 @@ public class CBCClient {
         return response;
     }
 
-    public <T, S> Object exchange(
-            String url, T request,
-            HttpMethod method,
-            Map<String, String> headers,
-            Map<String, Object> queryParams,
-            TypeReference typeInfo
-    ) throws CBCException {
-        return exchange(
-                RequestUtil.addQueryParams(url, queryParams),
-                request,
-                method,
-                headers,
-                typeInfo
-        );
-    }
-    
     protected void setHeaders(HttpRequestBase httpRequest) {
         httpRequest.addHeader(HeaderParams.USER_AGENT, RestConstants.USER_AGENT);
         httpRequest.addHeader(HeaderParams.ACCEPT, "application/json, application/*+json");
@@ -240,7 +223,7 @@ public class CBCClient {
 
         if (httpRequest instanceof HttpEntityEnclosingRequestBase && request != null) {
             HttpEntityEnclosingRequestBase enclosingRequest = (HttpEntityEnclosingRequestBase) httpRequest;
-            String requestBody = null;
+            String requestBody;
             try {
                 if (request instanceof String) {
                     requestBody = (String) request;
@@ -261,9 +244,7 @@ public class CBCClient {
             }
         }
 
-        HttpResponse response = exchange(httpRequest);
-
-        return response;
+        return exchange(httpRequest);
     }
 
     public <T, S> S exchange(
@@ -305,7 +286,7 @@ public class CBCClient {
             String url, T request, 
             HttpMethod method, 
             Map<String, String> headers,
-            TypeReference typeInfo
+            TypeReference<S> typeInfo
     ) throws CBCException {
         Object result = null;
 
@@ -323,5 +304,21 @@ public class CBCClient {
             }
         }
         return result;
+    }
+
+    public <T, S> Object exchange(
+            String url, T request,
+            HttpMethod method,
+            Map<String, String> headers,
+            Map<String, Object> queryParams,
+            TypeReference<S> typeInfo
+    ) throws CBCException {
+        return exchange(
+                RequestUtil.addQueryParams(url, queryParams),
+                request,
+                method,
+                headers,
+                typeInfo
+        );
     }
 }

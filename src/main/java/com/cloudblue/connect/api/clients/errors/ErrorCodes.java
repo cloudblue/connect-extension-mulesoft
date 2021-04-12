@@ -1,4 +1,4 @@
-package com.cloudblue.connect.internal.connections.errors;
+package com.cloudblue.connect.api.clients.errors;
 
 public enum ErrorCodes {
     CONNECT_COMMUNICATION_ERROR("connect communication error"),

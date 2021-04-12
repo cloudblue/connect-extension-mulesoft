@@ -1,4 +1,4 @@
-package com.cloudblue.connect.internal.connections.utils;
+package com.cloudblue.connect.api.clients.utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;

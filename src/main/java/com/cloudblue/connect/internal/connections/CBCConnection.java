@@ -1,33 +1,31 @@
 package com.cloudblue.connect.internal.connections;
 
+import com.cloudblue.connect.api.clients.Client;
 import com.cloudblue.connect.api.models.CBCTenant;
-import com.cloudblue.connect.internal.connections.clients.CBCClient;
-import com.cloudblue.connect.internal.connections.constants.HttpMethod;
 import com.cloudblue.connect.api.exceptions.CBCException;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-
-import java.util.List;
+import java.util.ArrayList;
 
 import org.mule.runtime.api.connection.ConnectionException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public final class CBCConnection extends CBCClient {
+public final class CBCConnection extends Client {
         
     private final Logger LOGGER = LoggerFactory.getLogger(CBCConnection.class);
 
     public CBCConnection(CBCConnectionProvider.ConnectionParams config) {
-        super(config);
+        super(config.getConfig());
     }
 
     public boolean isConnected() throws Exception {
-        
-        TypeReference<List<CBCTenant>> listAccountRefs =new TypeReference<List<CBCTenant>>() {};
-        
+
         try {
-            exchange("accounts", null, HttpMethod.GET, null, listAccountRefs);
+            newQ(new ArrayList<CBCTenant>())
+                    .collection("accounts", null)
+                    .limit(1)
+                    .get();
         } catch(CBCException ex) {
             LOGGER.error("Error during testing connection", ex);
             throw new ConnectionException(

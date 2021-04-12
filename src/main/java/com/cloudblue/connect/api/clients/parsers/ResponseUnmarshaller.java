@@ -1,4 +1,4 @@
-package com.cloudblue.connect.internal.connections.parsers;
+package com.cloudblue.connect.api.clients.parsers;
 
 public interface ResponseUnmarshaller {
     <T> T unmarshal(String stringResponse, Class<T> responseType) throws Exception;

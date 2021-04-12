@@ -1,6 +1,6 @@
-package com.cloudblue.connect.internal.connections.parsers.jackson;
+package com.cloudblue.connect.api.clients.parsers.jackson;
 
-import com.cloudblue.connect.internal.connections.parsers.RequestMarshaller;
+import com.cloudblue.connect.api.clients.parsers.RequestMarshaller;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.MapperFeature;
