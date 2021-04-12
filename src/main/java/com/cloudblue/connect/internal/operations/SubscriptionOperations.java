@@ -5,12 +5,12 @@ import com.cloudblue.connect.api.parameters.AdminHoldRequestParameter;
 import com.cloudblue.connect.api.parameters.Embeddable;
 import com.cloudblue.connect.internal.connections.CBCConnection;
 import com.cloudblue.connect.api.models.CBCRequest;
-import com.cloudblue.connect.internal.connections.constants.HttpMethod;
+import com.cloudblue.connect.api.clients.constants.HttpMethod;
 import com.cloudblue.connect.api.exceptions.CBCException;
-
-import com.cloudblue.connect.internal.connections.utils.URLBuilder;
+import com.cloudblue.connect.api.clients.utils.URLBuilder;
 import com.cloudblue.connect.api.parameters.NewPurchaseRequestParameter;
 import com.cloudblue.connect.api.parameters.common.ResourceActionParameter;
+
 import org.mule.runtime.extension.api.annotation.param.Connection;
 import org.mule.runtime.extension.api.annotation.param.MediaType;
 import org.mule.runtime.extension.api.annotation.param.ParameterGroup;

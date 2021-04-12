@@ -1,6 +1,6 @@
-package com.cloudblue.connect.internal.connections.parsers.jackson;
+package com.cloudblue.connect.api.clients.parsers.jackson;
 
-import com.cloudblue.connect.internal.connections.parsers.ResponseUnmarshaller;
+import com.cloudblue.connect.api.clients.parsers.ResponseUnmarshaller;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.type.TypeReference;
