@@ -1,4 +1,4 @@
-package com.cloudblue.connect.test.common;
+package com.cloudblue.connect.test.internal.common;
 
 import org.mule.functional.junit4.MuleArtifactFunctionalTestCase;
 

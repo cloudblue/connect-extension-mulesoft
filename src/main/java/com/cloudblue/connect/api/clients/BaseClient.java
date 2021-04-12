@@ -295,8 +295,8 @@ public class BaseClient {
         if (typeInfo != null && response != null) {
             try {
                 String responseBody = getResponseBody(response);
-                responseBody = responseBody.replace("\n", "");
                 if (responseBody != null && !responseBody.isEmpty()) {
+                    responseBody = responseBody.replace("\n", "");
                     result = this.responseUnmarshaller.unmarshal(responseBody, typeInfo);
                 }
             } catch (Exception e) {

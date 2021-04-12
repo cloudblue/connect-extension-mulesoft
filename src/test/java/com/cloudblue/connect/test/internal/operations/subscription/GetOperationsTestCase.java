@@ -1,18 +1,20 @@
-package com.cloudblue.connect.test.operations.subscription;
+package com.cloudblue.connect.test.internal.operations.subscription;
 
 import com.cloudblue.connect.api.models.CBCAsset;
 import com.cloudblue.connect.api.models.CBCRequest;
-import com.cloudblue.connect.test.common.BaseMuleFlowTestCase;
-import java.lang.reflect.Field;
+import com.cloudblue.connect.test.internal.common.BaseMuleFlowTestCase;
+
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.*;
 
 import org.junit.Rule;
 import org.junit.Test;
-import static org.junit.Assert.assertThat;
+
 import org.junit.runners.Parameterized;
 
 import org.mule.runtime.api.event.Event;
@@ -43,7 +45,9 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
                     {"getRequest", CBCRequest.class, REQUEST_ID},
-                    {"getAsset", CBCAsset.class, ASSERT_ID}
+                    {"getAsset", CBCAsset.class, ASSERT_ID},
+                    {"listRequests", null, null},
+                    {"listAssets", null, null}
                 }
         );
     }
@@ -59,10 +63,16 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
     public void testGetRequest() throws Exception {
         Event getRequest = flowRunner(this.flow).run();
         Object object = getRequest.getMessage().getPayload().getValue();
-        
-        Method idMethod = this.clazz.getDeclaredMethod("getId");
-        String idValue = (String)idMethod.invoke(object);
-        
-        assertThat(idValue, is(this.expectedIdValue));
+
+        if (this.clazz != null) {
+            Method idMethod = this.clazz.getDeclaredMethod("getId");
+            String idValue = (String)idMethod.invoke(object);
+
+            assertThat(idValue, is(this.expectedIdValue));
+        } else {
+            assertTrue(object instanceof List);
+            assertEquals(((List)object).size(), 1);
+        }
+
     }
 }

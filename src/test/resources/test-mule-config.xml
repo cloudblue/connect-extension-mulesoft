@@ -17,10 +17,20 @@
         <http:listener path="/requests/${request_id}" config-ref="listenerConfig"/>
         <set-payload value="{'id':'${request_id}'}"/>
     </flow>
+
+    <flow name="listRequestsServer">
+        <http:listener path="/requests" config-ref="listenerConfig"/>
+        <set-payload value="[{'id':'${request_id}'}]"/>
+    </flow>
     
     <flow name="getAssetServer">
         <http:listener path="/assets/${asset_id}" config-ref="listenerConfig"/>
         <set-payload value="{'id':'${asset_id}'}"/>
+    </flow>
+
+    <flow name="listAssetsServer">
+        <http:listener path="/assets" config-ref="listenerConfig"/>
+        <set-payload value="[{'id':'${asset_id}'}]"/>
     </flow>
 
     <cloudblue-connect:config name="CloudBlue_Connect_Config_Test">
@@ -35,5 +45,31 @@
     
     <flow name="getAsset">
         <cloudblue-connect:get-asset config-ref="CloudBlue_Connect_Config_Test" id="${asset_id}"/>
+    </flow>
+
+    <flow name="listRequests">
+        <cloudblue-connect:list-requests config-ref="CloudBlue_Connect_Config_Test">
+            <cloudblue-connect:filter >
+                <cloudblue-connect:list-filter type="or" >
+                    <cloudblue-connect:filters >
+                        <cloudblue-connect:mono-filter type="eq" property="asset.id" value="AS-0000-0000-0000" />
+                        <cloudblue-connect:mono-filter type="eq" property="status" value="approved" />
+                    </cloudblue-connect:filters>
+                </cloudblue-connect:list-filter>
+            </cloudblue-connect:filter>
+        </cloudblue-connect:list-requests>
+    </flow>
+
+    <flow name="listAssets">
+        <cloudblue-connect:list-assets config-ref="CloudBlue_Connect_Config_Test">
+            <cloudblue-connect:filter >
+                <cloudblue-connect:list-filter type="and" >
+                    <cloudblue-connect:filters >
+                        <cloudblue-connect:mono-filter type="eq" property="id" value="AS-0000-0000-0000" />
+                        <cloudblue-connect:mono-filter type="ne" property="status" value="active" />
+                    </cloudblue-connect:filters>
+                </cloudblue-connect:list-filter>
+            </cloudblue-connect:filter>
+        </cloudblue-connect:list-assets>
     </flow>
 </mule>
