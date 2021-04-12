@@ -1,7 +1,7 @@
-package com.cloudblue.connect.test.operations.subscription;
+package com.cloudblue.connect.test.internal.operations.subscription;
 
 import com.cloudblue.connect.api.models.CBCRequest;
-import com.cloudblue.connect.test.common.BaseMuleFlowTestCase;
+import com.cloudblue.connect.test.internal.common.BaseMuleFlowTestCase;
 
 import org.junit.Rule;
 import org.junit.Test;

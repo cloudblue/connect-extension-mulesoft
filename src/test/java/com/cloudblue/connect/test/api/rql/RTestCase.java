@@ -1,4 +1,4 @@
-package com.cloudblue.connect.test.rql;
+package com.cloudblue.connect.test.api.rql;
 
 import com.cloudblue.connect.api.clients.rql.R;
 import static com.cloudblue.connect.api.clients.rql.R.*;

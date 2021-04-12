@@ -8,6 +8,7 @@ import com.cloudblue.connect.api.exceptions.CBCException;
 import com.fasterxml.jackson.core.type.TypeReference;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Client extends BaseClient {
 
@@ -48,17 +49,33 @@ public class Client extends BaseClient {
         }
 
         private String processFilters(String url) {
-            String filterStr = RequestUtil.buildQueryParameters(filters);
+            List<String> queryStrings = new ArrayList<>();
 
-            rqlFilters.add(R.orderBy(orderBys.toArray(new String[]{})));
-            String rqlStr = R.and(rqlFilters.toArray(new R[]{})).toString();
+            if (!url.contains("?")) url = url.concat("?");
+            else if (!url.endsWith("?")) url = url.concat("&");
 
-            String limitStr = "limit=" + limit;
+            if (!rqlFilters.isEmpty()) {
+                String rqlStr;
+                if (rqlFilters.size() == 1)
+                    rqlStr = rqlFilters.get(0).toString();
+                else
+                    rqlStr = R.and(rqlFilters.toArray(new R[]{})).toString();
 
-            if (url.contains("?")) url = url.concat("&");
-            else url = url.concat("?");
+                queryStrings.add(rqlStr);
+            }
 
-            return url.concat(rqlStr).concat("&").concat(filterStr).concat("&").concat(limitStr);
+            if (!filters.isEmpty()) {
+
+                queryStrings.add(RequestUtil.buildQueryParameters(filters));
+            }
+
+            if (!orderBys.isEmpty()) {
+                queryStrings.add(R.orderBy(orderBys.toArray(new String[]{})).toString());
+            }
+
+            queryStrings.add("limit=" + limit);
+
+            return url.concat(String.join("&", queryStrings));
         }
 
         private String getFinalUrl(String action) {
@@ -69,6 +86,10 @@ public class Client extends BaseClient {
         }
 
         public Q<T> ns(String ns) {
+            return collection(ns, null);
+        }
+
+        public Q<T> collection(String ns) {
             return collection(ns, null);
         }
 
