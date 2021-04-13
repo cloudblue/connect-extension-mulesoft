@@ -4,7 +4,7 @@ import com.cloudblue.connect.api.clients.Client;
 import com.cloudblue.connect.api.clients.Config;
 import com.cloudblue.connect.api.exceptions.CBCException;
 import com.cloudblue.connect.api.models.CBCRequest;
-import com.cloudblue.connect.api.parameters.common.MonoFilter;
+import com.cloudblue.connect.api.parameters.filters.MonoFilter;
 import org.junit.Before;
 import org.junit.Test;
 

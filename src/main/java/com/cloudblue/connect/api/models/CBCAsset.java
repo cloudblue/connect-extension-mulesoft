@@ -1,5 +1,6 @@
 package com.cloudblue.connect.api.models;
 
+import com.cloudblue.connect.api.models.common.CBCEntity;
 import com.cloudblue.connect.api.models.enums.CBCAssetStatus;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -11,7 +12,7 @@ import java.util.Map;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CBCAsset {
+public class CBCAsset extends CBCEntity {
     @JsonProperty
     private String id;
 

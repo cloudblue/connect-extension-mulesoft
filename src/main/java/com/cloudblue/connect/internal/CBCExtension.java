@@ -1,8 +1,6 @@
 package com.cloudblue.connect.internal;
 
-import com.cloudblue.connect.api.parameters.common.Filter;
-import com.cloudblue.connect.api.parameters.common.ListFilter;
-import com.cloudblue.connect.api.parameters.common.MonoFilter;
+import com.cloudblue.connect.api.parameters.filters.*;
 
 import org.mule.runtime.extension.api.annotation.Extension;
 import org.mule.runtime.extension.api.annotation.SubTypeMapping;
@@ -19,5 +17,12 @@ import org.mule.runtime.extension.api.annotation.Configurations;
 @Configurations(CBCConfiguration.class)
 @SubTypeMapping(
         baseType = Filter.class,
-        subTypes = {ListFilter.class, MonoFilter.class})
+        subTypes = {
+                ListFilter.class,
+                MonoFilter.class,
+                InFilter.class,
+                OutFilter.class,
+                NotFilter.class,
+                RawRQLFilter.class
+        })
 public class CBCExtension {}

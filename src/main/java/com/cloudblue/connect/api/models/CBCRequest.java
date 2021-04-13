@@ -1,5 +1,6 @@
 package com.cloudblue.connect.api.models;
 
+import com.cloudblue.connect.api.models.common.CBCEntity;
 import com.cloudblue.connect.api.models.enums.CBCRequestStatus;
 import com.cloudblue.connect.api.models.enums.CBCRequestType;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -11,7 +12,7 @@ import java.util.Map;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CBCRequest {
+public class CBCRequest extends CBCEntity {
     @JsonProperty
     private String id;
 
