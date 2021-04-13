@@ -3,13 +3,13 @@ package com.cloudblue.connect.internal.operations;
 import com.cloudblue.connect.api.models.CBCAsset;
 import com.cloudblue.connect.api.parameters.AdminHoldRequestParameter;
 import com.cloudblue.connect.api.parameters.Embeddable;
-import com.cloudblue.connect.internal.connections.CBCConnection;
 import com.cloudblue.connect.api.models.CBCRequest;
-import com.cloudblue.connect.api.clients.constants.HttpMethod;
 import com.cloudblue.connect.api.exceptions.CBCException;
-import com.cloudblue.connect.api.clients.utils.URLBuilder;
 import com.cloudblue.connect.api.parameters.NewPurchaseRequestParameter;
 import com.cloudblue.connect.api.parameters.common.ResourceActionParameter;
+import com.cloudblue.connect.internal.connections.CBCConnection;
+
+import com.fasterxml.jackson.core.type.TypeReference;
 
 import org.mule.runtime.extension.api.annotation.param.Connection;
 import org.mule.runtime.extension.api.annotation.param.MediaType;
@@ -32,16 +32,10 @@ public class SubscriptionOperations {
             @ParameterGroup(name="Request ID") ResourceActionParameter getRequestParameter
     ) throws CBCException {
 
-        URLBuilder urlBuilder = new URLBuilder()
-                .addCollection("requests", getRequestParameter.getId());
-
-        return connection.exchange(
-                urlBuilder.build(),
-                null,
-                HttpMethod.GET,
-                null,
-                CBCRequest.class
-        );
+        return (CBCRequest) connection
+                .newQ(new TypeReference<CBCRequest>() {})
+                .collection("requests", getRequestParameter.getId())
+                .get();
     }
     
     @MediaType(value = ANY, strict = false)
@@ -50,30 +44,20 @@ public class SubscriptionOperations {
             @Connection CBCConnection connection,
             @ParameterGroup(name="Asset ID")  ResourceActionParameter getAssetParameter
     ) throws CBCException {
-        URLBuilder urlBuilder = new URLBuilder()
-                .addCollection("assets", getAssetParameter.getId());
 
-        return connection.exchange(
-                urlBuilder.build(),
-                null,
-                HttpMethod.GET,
-                null,
-                CBCAsset.class
-        );
+        return (CBCAsset) connection
+                .newQ(new TypeReference<CBCAsset>() {})
+                .collection("assets", getAssetParameter.getId())
+                .get();
     }
 
     private CBCRequest createRequest(
             CBCConnection connection, Embeddable embeddable
     ) throws CBCException {
-        URLBuilder urlBuilder = new URLBuilder().addCollection("requests", null);
 
-        return connection.exchange(
-                urlBuilder.build(),
-                embeddable.buildEntity(),
-                HttpMethod.POST,
-                null,
-                CBCRequest.class
-        );
+        return (CBCRequest) connection.newQ(new TypeReference<CBCRequest>() {})
+                .collection("requests")
+                .create(embeddable.buildEntity());
     }
 
     @MediaType(value = ANY, strict = false)

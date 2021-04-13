@@ -282,7 +282,7 @@ public class BaseClient {
         return result;
     }
 
-    public <T, S> Object exchange(
+    public <T, S> S exchange(
             String url, T request, 
             HttpMethod method, 
             Map<String, String> headers,
@@ -303,10 +303,10 @@ public class BaseClient {
                 throw new CBCException(e.getMessage());
             }
         }
-        return result;
+        return (S) result;
     }
 
-    public <T, S> Object exchange(
+    public <T, S> S exchange(
             String url, T request,
             HttpMethod method,
             Map<String, String> headers,

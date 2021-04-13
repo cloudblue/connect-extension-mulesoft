@@ -6,6 +6,8 @@ import com.cloudblue.connect.api.exceptions.CBCException;
 
 import java.util.ArrayList;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+
 import org.mule.runtime.api.connection.ConnectionException;
 
 import org.slf4j.Logger;
@@ -22,8 +24,8 @@ public final class CBCConnection extends Client {
     public boolean isConnected() throws Exception {
 
         try {
-            newQ(new ArrayList<CBCTenant>())
-                    .collection("accounts", null)
+            newQ(new TypeReference<ArrayList<CBCTenant>>() {})
+                    .collection("accounts")
                     .limit(1)
                     .get();
         } catch(CBCException ex) {
