@@ -167,22 +167,19 @@ public class R {
                     rql.append(CLOSE_BRACES);
                 }
             }
-
-
-        }else if (this.type == Type.expr) {
-            rql.append(OPEN_BRACES);
-            rql.append(property);
             rql.append(CLOSE_BRACES);
-        }
-        else {
+
+        } else if (this.type == Type.expr) {
+            rql.append(property);
+        } else {
             rql.append(this.type.toString());
             rql.append(OPEN_BRACES);
             rql.append(
                     this.children.stream().map(R::toString)
                             .collect(Collectors.joining(COMA))
             );
+            rql.append(CLOSE_BRACES);
         }
-        rql.append(CLOSE_BRACES);
 
         return rql.toString();
     }

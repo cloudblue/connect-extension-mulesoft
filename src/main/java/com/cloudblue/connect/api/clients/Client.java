@@ -8,7 +8,6 @@ import com.cloudblue.connect.api.exceptions.CBCException;
 import com.fasterxml.jackson.core.type.TypeReference;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Client extends BaseClient {
 
@@ -65,7 +64,6 @@ public class Client extends BaseClient {
             }
 
             if (!filters.isEmpty()) {
-
                 queryStrings.add(RequestUtil.buildQueryParameters(filters));
             }
 

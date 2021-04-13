@@ -1,9 +1,9 @@
 package com.cloudblue.connect.api.parameters.utils;
 
 import com.cloudblue.connect.api.clients.rql.R;
-import com.cloudblue.connect.api.parameters.common.Filter;
-import com.cloudblue.connect.api.parameters.common.ListFilter;
-import com.cloudblue.connect.api.parameters.common.MonoFilter;
+import com.cloudblue.connect.api.parameters.filters.Filter;
+import com.cloudblue.connect.api.parameters.filters.ListFilter;
+import com.cloudblue.connect.api.parameters.filters.MonoFilter;
 
 public class Filters {
     public static R populateFilters(Filter filter) {
