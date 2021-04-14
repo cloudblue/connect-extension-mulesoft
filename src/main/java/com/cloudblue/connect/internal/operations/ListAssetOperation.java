@@ -6,6 +6,8 @@ import com.cloudblue.connect.api.parameters.filters.Filter;
 import com.cloudblue.connect.api.parameters.filters.OrderBy;
 import com.cloudblue.connect.internal.connections.CBCConnection;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+
 import org.mule.runtime.extension.api.annotation.param.Connection;
 import org.mule.runtime.extension.api.annotation.param.MediaType;
 import org.mule.runtime.extension.api.annotation.param.Optional;
@@ -32,11 +34,13 @@ public class ListAssetOperation {
     public List<CBCAsset> listAssets(
             @Connection CBCConnection connection
     ) throws CBCException {
+
         String[] orderByValues = new String[]{};
         if (orderBy != null)
             orderByValues = orderBy.getProperties().toArray(new String[]{});
 
-        return connection.newQ(new ArrayList<CBCAsset>())
+        return (List<CBCAsset>) connection
+                .newQ(new TypeReference<ArrayList<CBCAsset>>() {})
                 .collection("assets")
                 .filter(filter.toRQL())
                 .orderBy(orderByValues)

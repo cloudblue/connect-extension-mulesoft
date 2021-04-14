@@ -1,7 +1,7 @@
 package com.cloudblue.connect.api.clients;
 
-import com.cloudblue.connect.api.clients.rql.R;
 import com.cloudblue.connect.api.clients.constants.HttpMethod;
+import com.cloudblue.connect.api.clients.rql.R;
 import com.cloudblue.connect.api.clients.utils.RequestUtil;
 import com.cloudblue.connect.api.exceptions.CBCException;
 
@@ -11,7 +11,7 @@ import java.util.*;
 
 public class Client extends BaseClient {
 
-    public static final class Q <T> {
+    public final static class Q {
         private final List<String> ns = new ArrayList<>();
         private final Map<Integer, String> nsKeyMap = new HashMap<>();
         private final Map<String, String> filters = new HashMap<>();
@@ -19,12 +19,13 @@ public class Client extends BaseClient {
         private final List<String> orderBys = new ArrayList<>();
         private int limit = 100;
 
-        private final TypeReference<T> type =new TypeReference<T>() {};
+        private final TypeReference type;
 
         private final Client client;
 
-        public Q(Client client) {
+        public <S> Q(Client client, TypeReference<S> typeInfo) {
             this.client = client;
+            this.type = typeInfo;
         }
 
         private String getUrl() {
@@ -83,48 +84,48 @@ public class Client extends BaseClient {
                 return processFilters(getUrl());
         }
 
-        public Q<T> ns(String ns) {
+        public Q ns(String ns) {
             return collection(ns, null);
         }
 
-        public Q<T> collection(String ns) {
+        public Q collection(String ns) {
             return collection(ns, null);
         }
 
-        public Q<T> collection(String ns, String key) {
+        public Q collection(String ns, String key) {
             this.ns.add(ns);
             this.nsKeyMap.put(this.ns.size() - 1, key);
 
             return this;
         }
 
-        public Q<T> filter(String property, String value) {
+        public Q filter(String property, String value) {
             this.filters.put(property, value);
 
             return this;
         }
 
-        public Q<T> filter(R... r) {
+        public Q filter(R... r) {
             this.rqlFilters.addAll(Arrays.asList(r));
 
             return this;
         }
 
-        public Q<T> orderBy(String... orderBys) {
+        public Q orderBy(String... orderBys) {
             this.orderBys.addAll(Arrays.asList(orderBys));
 
             return this;
         }
 
-        public Q<T> limit(int limit) {
+        public Q limit(int limit) {
             this.limit = limit;
 
             return this;
         }
 
-        public T get() throws CBCException {
+        public Object get() throws CBCException {
 
-            return (T) client.exchange(
+            return client.exchange(
                     getFinalUrl(null),
                     null,
                     HttpMethod.GET,
@@ -133,8 +134,8 @@ public class Client extends BaseClient {
             );
         }
 
-        public <S> T create(S payload) throws CBCException {
-            return (T) client.exchange(
+        public <S> Object create(S payload) throws CBCException {
+            return client.exchange(
                     getFinalUrl(null),
                     payload,
                     HttpMethod.POST,
@@ -143,9 +144,9 @@ public class Client extends BaseClient {
             );
         }
 
-        public <S> T update(S payload) throws CBCException {
+        public <S> Object update(S payload) throws CBCException {
 
-            return (T) client.exchange(
+            return client.exchange(
                     getFinalUrl(null),
                     payload,
                     HttpMethod.PUT,
@@ -164,8 +165,8 @@ public class Client extends BaseClient {
             );
         }
 
-        public T action(String action, HttpMethod method) throws CBCException {
-            return (T) client.exchange(
+        public Object action(String action, HttpMethod method) throws CBCException {
+            return client.exchange(
                     getFinalUrl(action),
                     null,
                     method,
@@ -174,10 +175,10 @@ public class Client extends BaseClient {
             );
         }
 
-        public T first() throws CBCException {
+        public Object first() throws CBCException {
             limit = 1;
 
-            return (T) client.exchange(
+            return client.exchange(
                     getFinalUrl(null),
                     null,
                     HttpMethod.GET,
@@ -192,8 +193,8 @@ public class Client extends BaseClient {
         super(config);
     }
 
-    public <T> Q<T> newQ(T identifier) {
-        return new Q<T>(this);
+    public <T> Q newQ(TypeReference<T> identifier) {
+        return new Q(this, identifier);
     }
 
 }
