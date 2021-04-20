@@ -46,8 +46,10 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
         return Arrays.asList(new Object[][] {
                     {"getRequest", CBCRequest.class, REQUEST_ID},
                     {"getAsset", CBCAsset.class, ASSERT_ID},
-                    {"listRequests", null, null},
-                    {"listAssets", null, null}
+                    {"listRequestsWithFilter", null, null},
+                    {"listRequestsWithoutFilter", null, null},
+                    {"listAssetsWithFilter", null, null},
+                    {"listAssetsWithoutFilter", null, null}
                 }
         );
     }
@@ -60,7 +62,7 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
     
     
     @Test
-    public void testGetRequest() throws Exception {
+    public void testRetrieve() throws Exception {
         Event getRequest = flowRunner(this.flow).run();
         Object object = getRequest.getMessage().getPayload().getValue();
 

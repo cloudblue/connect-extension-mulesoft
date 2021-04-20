@@ -47,7 +47,7 @@
         <cloudblue-connect:get-asset config-ref="CloudBlue_Connect_Config_Test" id="${asset_id}"/>
     </flow>
 
-    <flow name="listRequests">
+    <flow name="listRequestsWithFilter">
         <cloudblue-connect:list-requests config-ref="CloudBlue_Connect_Config_Test">
             <cloudblue-connect:filter >
                 <cloudblue-connect:list-filter type="or" >
@@ -60,7 +60,11 @@
         </cloudblue-connect:list-requests>
     </flow>
 
-    <flow name="listAssets">
+    <flow name="listRequestsWithoutFilter">
+        <cloudblue-connect:list-requests config-ref="CloudBlue_Connect_Config_Test"/>
+    </flow>
+
+    <flow name="listAssetsWithFilter">
         <cloudblue-connect:list-assets config-ref="CloudBlue_Connect_Config_Test">
             <cloudblue-connect:filter >
                 <cloudblue-connect:list-filter type="and" >
@@ -71,5 +75,9 @@
                 </cloudblue-connect:list-filter>
             </cloudblue-connect:filter>
         </cloudblue-connect:list-assets>
+    </flow>
+
+    <flow name="listAssetsWithoutFilter">
+        <cloudblue-connect:list-assets config-ref="CloudBlue_Connect_Config_Test"/>
     </flow>
 </mule>
