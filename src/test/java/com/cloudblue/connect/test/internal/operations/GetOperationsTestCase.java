@@ -1,7 +1,8 @@
-package com.cloudblue.connect.test.internal.operations.subscription;
+package com.cloudblue.connect.test.internal.operations;
 
 import com.cloudblue.connect.api.models.CBCAsset;
 import com.cloudblue.connect.api.models.CBCRequest;
+import com.cloudblue.connect.api.models.CBCCase;
 import com.cloudblue.connect.test.internal.common.BaseMuleFlowTestCase;
 
 import java.lang.reflect.Method;
@@ -27,6 +28,9 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
     
     private static final String REQUEST_ID = "PR-0000-0000-0000-001";
     private static final String ASSERT_ID = "AS-0000-0000-0000";
+    private static final String CASE_ID = "CA-0000-0000";
+    private static final String CONVERSATION_ID = "CO-0000-0000";
+
     
     @Rule
     public DynamicPort listenPort = new DynamicPort("port");
@@ -37,6 +41,13 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
     @Rule
     public SystemProperty assetIdSystemProperty = new SystemProperty("asset_id", ASSERT_ID);
     
+    @Rule
+    public SystemProperty caseIdSystemProperty = new SystemProperty("case_id", CASE_ID);
+
+    @Rule
+    public SystemProperty conversationMessagesIdSystemProperty = new SystemProperty("conversation_id", CONVERSATION_ID);
+
+
     private final String flow;
     private final Class clazz;
     private final String expectedIdValue;
@@ -46,10 +57,15 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
         return Arrays.asList(new Object[][] {
                     {"getRequest", CBCRequest.class, REQUEST_ID},
                     {"getAsset", CBCAsset.class, ASSERT_ID},
+                    {"getCase", CBCCase.class, CASE_ID},
                     {"listRequestsWithFilter", null, null},
                     {"listRequestsWithoutFilter", null, null},
                     {"listAssetsWithFilter", null, null},
-                    {"listAssetsWithoutFilter", null, null}
+                    {"listAssetsWithoutFilter", null, null},
+                    {"listCasesWithFilter", null, null},
+                    {"listCasesWithoutFilter", null, null},
+                    {"listConversationMessagesWithFilter", null, null},
+                    {"listConversationMessagesWithoutFilter", null, null}
                 }
         );
     }

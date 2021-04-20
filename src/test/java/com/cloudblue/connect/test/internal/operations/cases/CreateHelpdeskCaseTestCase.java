@@ -1,6 +1,6 @@
-package com.cloudblue.connect.test.internal.operations.subscription;
+package com.cloudblue.connect.test.internal.operations.cases;
 
-import com.cloudblue.connect.api.models.CBCRequest;
+import com.cloudblue.connect.api.models.CBCCase;
 import com.cloudblue.connect.test.internal.common.BaseMuleFlowTestCase;
 
 import org.junit.Rule;
@@ -19,42 +19,43 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 @RunnerDelegateTo(Parameterized.class)
-public class CreateRequestTestCase extends BaseMuleFlowTestCase {
+public class CreateHelpdeskCaseTestCase extends BaseMuleFlowTestCase {
 
-    private static final String REQUEST_ID = "PR-0000-0000-0000-001";
+    private static final String CASE_ID = "CA-0000-0000";
 
     @Rule
     public DynamicPort listenPort = new DynamicPort("port");
 
     @Rule
-    public SystemProperty requestIdSystemProperty = new SystemProperty("request_id", REQUEST_ID);
+    public SystemProperty caseIdSystemProperty = new SystemProperty("case_id", CASE_ID);
 
     private final String flow;
 
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
-                {"createPurchaseRequest"},
-                {"createSuspendRequest"},
-                {"createResumeRequest"},
-                {"createCancelRequest"}
-        }
+                {"createHelpdeskCase"},
+                {"setInquiringHelpdeskCase"},
+                {"setPendingHelpdeskCase"},
+                {"setResolvedHelpdeskCase"},
+                {"setClosedHelpdeskCase"}
+            }
         );
     }
 
-    public CreateRequestTestCase(String flow) {
+    public CreateHelpdeskCaseTestCase(String flow) {
         this.flow = flow;
     }
 
     @Override
     protected String getConfigFile() {
-        return "test-mule-config-create-request.xml";
+        return "test-mule-config-create-case.xml";
     }
 
     @Test
-    public void testCreateRequest() throws Exception {
+    public void testCreateHelpdeskCase() throws Exception {
         Event getRequest = flowRunner(this.flow).run();
-        CBCRequest request = (CBCRequest)getRequest.getMessage().getPayload().getValue();
-        assertThat(request.getId(), is(REQUEST_ID));
+        CBCCase request = (CBCCase)getRequest.getMessage().getPayload().getValue();
+        assertThat(request.getId(), is(CASE_ID));
     }
 }
