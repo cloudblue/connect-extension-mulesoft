@@ -39,8 +39,8 @@ public class FilterTestCase {
         listFilter.getFilters().add(m2);
 
         Assert.assertEquals(
-                "or(" +
-                        "eq(asset.id,AS-0000-0000)," +
+                "(" +
+                        "eq(asset.id,AS-0000-0000)|" +
                         "ne(status,approved)" +
                         ")",
                 listFilter.toRQL().toString()
@@ -79,9 +79,9 @@ public class FilterTestCase {
         l3.getFilters().add(m1);
 
         Assert.assertEquals(
-                "and(" +
-                        "or(eq(asset.id,AS-0000-0000),ne(status,approved))," +
-                        "and(eq(asset.id,AS-0000-0000),ne(status,approved))," +
+                "(" +
+                        "(eq(asset.id,AS-0000-0000)|ne(status,approved))&" +
+                        "(eq(asset.id,AS-0000-0000)&ne(status,approved))&" +
                         "eq(asset.id,AS-0000-0000)" +
                         ")",
                 l3.toRQL().toString()
@@ -141,9 +141,9 @@ public class FilterTestCase {
 
         Assert.assertEquals(
                 "not(" +
-                        "and(" +
-                        "or(eq(asset.id,AS-0000-0000),ne(status,approved))," +
-                        "and(eq(asset.id,AS-0000-0000),ne(status,approved))," +
+                        "(" +
+                        "(eq(asset.id,AS-0000-0000)|ne(status,approved))&" +
+                        "(eq(asset.id,AS-0000-0000)&ne(status,approved))&" +
                         "eq(asset.id,AS-0000-0000)" +
                         ")" +
                         ")",
@@ -205,9 +205,9 @@ public class FilterTestCase {
         listFilter.getFilters().add(rqlFilter);
 
         Assert.assertEquals(
-                "or(" +
-                        "eq(asset.id,AS-0000-0000)," +
-                        "ne(status,approved)," +
+                "(" +
+                        "eq(asset.id,AS-0000-0000)|" +
+                        "ne(status,approved)|" +
                         "eq(property,value)" +
                         ")",
                 listFilter.toRQL().toString()

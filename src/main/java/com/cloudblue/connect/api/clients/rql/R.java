@@ -172,11 +172,25 @@ public class R {
         } else if (this.type == Type.expr) {
             rql.append(property);
         } else {
-            rql.append(this.type.toString());
+            String prefix = this.type.toString();
+            String separator = COMA;
+
+            if (type == Type.and || type == Type.or)
+                prefix = "";
+
+            if (type == Type.and) {
+                separator = "&";
+            }
+
+            if (type == Type.or) {
+                separator = "|";
+            }
+
+            rql.append(prefix);
             rql.append(OPEN_BRACES);
             rql.append(
                     this.children.stream().map(R::toString)
-                            .collect(Collectors.joining(COMA))
+                            .collect(Collectors.joining(separator))
             );
             rql.append(CLOSE_BRACES);
         }

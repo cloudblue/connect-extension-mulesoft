@@ -177,7 +177,7 @@ public class RTestCase {
         );
 
         Assert.assertEquals(
-                "and(eq(count,7),ne(asset.id,null()),le(price,7.45))",
+                "(eq(count,7)&ne(asset.id,null())&le(price,7.45))",
                 r.toString()
         );
     }
@@ -191,7 +191,7 @@ public class RTestCase {
         );
 
         Assert.assertEquals(
-                "or(eq(count,7),ne(asset.id,null()),le(price,7.45))",
+                "(eq(count,7)|ne(asset.id,null())|le(price,7.45))",
                 r.toString()
         );
     }
@@ -222,11 +222,11 @@ public class RTestCase {
         );
 
         Assert.assertEquals(
-                "and(" +
-                        "not(eq(count,7))," +
-                        "ne(asset.id,null())," +
-                        "and(le(price,7.45),ge(price,5.45))," +
-                        "or(eq(count,7),eq(count,11))" +
+                "(" +
+                        "not(eq(count,7))&" +
+                        "ne(asset.id,null())&" +
+                        "(le(price,7.45)&ge(price,5.45))&" +
+                        "(eq(count,7)|eq(count,11))" +
                         ")",
                 r.toString()
         );
