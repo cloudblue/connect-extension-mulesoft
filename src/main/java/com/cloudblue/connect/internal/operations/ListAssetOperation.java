@@ -1,5 +1,6 @@
 package com.cloudblue.connect.internal.operations;
 
+import com.cloudblue.connect.api.clients.Client;
 import com.cloudblue.connect.api.exceptions.CBCException;
 import com.cloudblue.connect.api.models.CBCAsset;
 import com.cloudblue.connect.api.parameters.filters.Filter;
@@ -20,14 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ListAssetOperation {
-    @Parameter
-    Filter filter;
-
-    @Parameter
-    @Optional
-    OrderBy orderBy;
-
+public class ListAssetOperation extends BaseListOperation {
 
     @MediaType(value = ANY, strict = false)
     @DisplayName("List Assets")
@@ -35,15 +29,12 @@ public class ListAssetOperation {
             @Connection CBCConnection connection
     ) throws CBCException {
 
-        String[] orderByValues = new String[]{};
-        if (orderBy != null)
-            orderByValues = orderBy.getProperties().toArray(new String[]{});
-
-        return (List<CBCAsset>) connection
+        Client.Q q = connection
                 .newQ(new TypeReference<ArrayList<CBCAsset>>() {})
-                .collection("assets")
-                .filter(filter.toRQL())
-                .orderBy(orderByValues)
-                .get();
+                .collection("assets");
+
+        resolve(q);
+
+        return (List<CBCAsset>) q.get();
     }
 }
