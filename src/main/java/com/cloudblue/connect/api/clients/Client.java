@@ -3,6 +3,7 @@ package com.cloudblue.connect.api.clients;
 import com.cloudblue.connect.api.clients.constants.HttpMethod;
 import com.cloudblue.connect.api.clients.rql.R;
 import com.cloudblue.connect.api.clients.utils.RequestUtil;
+import com.cloudblue.connect.api.clients.utils.Url;
 import com.cloudblue.connect.api.exceptions.CBCException;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -74,7 +75,8 @@ public class Client extends BaseClient {
 
             queryStrings.add("limit=" + limit);
 
-            return url.concat(String.join("&", queryStrings));
+
+            return url.concat(Url.encode(String.join("&", queryStrings)));
         }
 
         private String getFinalUrl(String action) {
