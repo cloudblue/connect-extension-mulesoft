@@ -1,6 +1,6 @@
-package com.cloudblue.connect.internal;
+package com.cloudblue.connect.internal.operations;
 
-import com.cloudblue.connect.internal.connections.CBCConnectionProvider;
+import com.cloudblue.connect.internal.operations.connections.CBCConnectionProvider;
 import com.cloudblue.connect.internal.operations.ListAssetOperation;
 import com.cloudblue.connect.internal.operations.ListRequestOperation;
 import com.cloudblue.connect.internal.operations.SubscriptionOperations;

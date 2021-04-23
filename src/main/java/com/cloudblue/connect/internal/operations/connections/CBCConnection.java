@@ -1,4 +1,4 @@
-package com.cloudblue.connect.internal.connections;
+package com.cloudblue.connect.internal.operations.connections;
 
 import com.cloudblue.connect.api.clients.Client;
 import com.cloudblue.connect.api.models.CBCTenant;

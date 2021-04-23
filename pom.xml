@@ -37,14 +37,14 @@
         </repository>
     </repositories>
     <dependencies>
-        
+
         <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>2.12.2</version>
         </dependency>
-        
+
         <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
@@ -52,27 +52,17 @@
             <version>4.5.13</version>
         </dependency>
 
-        <!-- Start of test dependencies-->
-        <dependency>
-            <groupId>org.mule.connectors</groupId>
-            <artifactId>mule-http-connector</artifactId>
-            <version>1.5.23</version>
-            <classifier>mule-plugin</classifier>
-            <scope>test</scope>
-        </dependency>
         <dependency>
             <groupId>org.mule.services</groupId>
             <artifactId>mule-service-http</artifactId>
             <version>1.1.0</version>
             <classifier>mule-service</classifier>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.mule.services</groupId>
             <artifactId>mule-service-scheduler</artifactId>
             <version>1.1.0</version>
             <classifier>mule-service</classifier>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>javax.activation</groupId>
@@ -88,6 +78,15 @@
             <groupId>com.sun.xml.bind</groupId>
             <artifactId>jaxb-impl</artifactId>
             <version>2.2.5</version>
+        </dependency>
+
+        <!-- Start of test dependencies-->
+        <dependency>
+            <groupId>org.mule.connectors</groupId>
+            <artifactId>mule-http-connector</artifactId>
+            <version>1.5.23</version>
+            <classifier>mule-plugin</classifier>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
