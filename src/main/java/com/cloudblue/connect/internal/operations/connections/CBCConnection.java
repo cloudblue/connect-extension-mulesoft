@@ -1,4 +1,4 @@
-package com.cloudblue.connect.internal.connections;
+package com.cloudblue.connect.internal.operations.connections;
 
 import com.cloudblue.connect.api.clients.Client;
 import com.cloudblue.connect.api.models.CBCTenant;
@@ -21,7 +21,7 @@ public final class CBCConnection extends Client {
         super(config.getConfig());
     }
 
-    public boolean isConnected() throws Exception {
+    public boolean isConnected() throws ConnectionException {
 
         try {
             newQ(new TypeReference<ArrayList<CBCTenant>>() {})

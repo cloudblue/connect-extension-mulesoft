@@ -1,10 +1,11 @@
 package com.cloudblue.connect.internal.operations;
 
+import com.cloudblue.connect.api.clients.Client;
 import com.cloudblue.connect.api.exceptions.CBCException;
 import com.cloudblue.connect.api.models.CBCAsset;
 import com.cloudblue.connect.api.parameters.filters.Filter;
 import com.cloudblue.connect.api.parameters.filters.OrderBy;
-import com.cloudblue.connect.internal.connections.CBCConnection;
+import com.cloudblue.connect.internal.operations.connections.CBCConnection;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 
@@ -22,6 +23,7 @@ import java.util.List;
 
 public class ListAssetOperation {
     @Parameter
+    @Optional
     Filter filter;
 
     @Parameter
@@ -39,11 +41,15 @@ public class ListAssetOperation {
         if (orderBy != null)
             orderByValues = orderBy.getProperties().toArray(new String[]{});
 
-        return (List<CBCAsset>) connection
+        Client.Q q = connection
                 .newQ(new TypeReference<ArrayList<CBCAsset>>() {})
                 .collection("assets")
-                .filter(filter.toRQL())
-                .orderBy(orderByValues)
-                .get();
+                .orderBy(orderByValues);
+
+        if (filter != null) {
+            q.filter(filter.toRQL());
+        }
+
+        return (List<CBCAsset>) q.get();
     }
 }

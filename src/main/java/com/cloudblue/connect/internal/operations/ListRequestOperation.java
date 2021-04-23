@@ -1,10 +1,11 @@
 package com.cloudblue.connect.internal.operations;
 
+import com.cloudblue.connect.api.clients.Client;
 import com.cloudblue.connect.api.exceptions.CBCException;
 import com.cloudblue.connect.api.models.CBCRequest;
 import com.cloudblue.connect.api.parameters.filters.Filter;
 import com.cloudblue.connect.api.parameters.filters.OrderBy;
-import com.cloudblue.connect.internal.connections.CBCConnection;
+import com.cloudblue.connect.internal.operations.connections.CBCConnection;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 
@@ -21,6 +22,7 @@ import java.util.List;
 
 public class ListRequestOperation {
     @Parameter
+    @Optional
     Filter filter;
 
     @Parameter
@@ -38,11 +40,15 @@ public class ListRequestOperation {
         if (orderBy != null)
             orderByValues = orderBy.getProperties().toArray(new String[]{});
 
-        return (List<CBCRequest>) connection
+        Client.Q q = connection
                 .newQ(new TypeReference<ArrayList<CBCRequest>>() {})
                 .collection("requests")
-                .filter(filter.toRQL())
-                .orderBy(orderByValues)
-                .get();
+                .orderBy(orderByValues);
+
+        if (filter != null) {
+            q.filter(filter.toRQL());
+        }
+
+        return (List<CBCRequest>) q.get();
     }
 }
