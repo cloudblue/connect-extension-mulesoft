@@ -1,0 +1,64 @@
+<mule xmlns="http://www.mulesoft.org/schema/mule/core"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:http="http://www.mulesoft.org/schema/mule/http"
+      xmlns:cloudblue-connect="http://www.mulesoft.org/schema/mule/cloudblue-connect"
+      xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core
+            http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+            http://www.mulesoft.org/schema/mule/http 
+            http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+            http://www.mulesoft.org/schema/mule/cloudblue-connect 
+            http://www.mulesoft.org/schema/mule/cloudblue-connect/current/mule-cloudblue-connect.xsd">
+
+    <cloudblue-connect:webhook-config name="CloudBlue_Connect_Webhook_config" basePath="/webhook" >
+        <cloudblue-connect:listener-connection host="localhost" port="${webhook_port}"
+                                               token="ApiKey SU-000-000-000:fake-token-001" />
+    </cloudblue-connect:webhook-config>
+
+    <http:listener-config name="listenerConfig">
+        <http:listener-connection host="localhost" port="${port}"/>
+    </http:listener-config>
+
+    <flow name="getRequestServer">
+        <http:listener path="/requests" config-ref="listenerConfig"/>
+        <set-payload value="[{'id':'PR-000-000-000'}]"/>
+    </flow>
+
+    <cloudblue-connect:config name="CloudBlue_Connect_Config_Test">
+        <cloudblue-connect:connection token="ApiKey SU-000-000-000:fake-token-001"
+                                      connectionTimeout="20000"
+                                      endpoint="http://localhost:${port}"/>
+    </cloudblue-connect:config>
+
+    <flow name="webhookFlow">
+        <cloudblue-connect:webhook-source config-ref="CloudBlue_Connect_Webhook_config" path="/fulfilment"
+                                          webhookEventType="fulfillment_request" productId="PRD-000-000-000"/>
+        <cloudblue-connect:list-requests config-ref="CloudBlue_Connect_Config_Test">
+            <cloudblue-connect:filter >
+                <cloudblue-connect:list-filter type="and" >
+                    <cloudblue-connect:filters >
+                        <cloudblue-connect:mono-filter type="eq" property="product.id" value="#[payload.productId]"/>
+                        <cloudblue-connect:mono-filter type="eq" property="status" value="pending" />
+                    </cloudblue-connect:filters>
+                </cloudblue-connect:list-filter>
+            </cloudblue-connect:filter>
+        </cloudblue-connect:list-requests>
+        <logger level="INFO" message="#[payload.id]"/>
+    </flow>
+
+    <http:request-config name="HTTP_Request_configuration">
+        <http:request-connection host="localhost" port="${webhook_port}" usePersistentConnections="false" />
+    </http:request-config>
+
+    <flow name="testWebhook">
+        <http:request method="POST"
+                      config-ref="HTTP_Request_configuration" path="webhook/fulfillment_request">
+            <http:body >
+                <![CDATA[{
+                    product_id: 'PRD-000-000-000'
+                }]]>
+            </http:body>
+
+        </http:request>
+    </flow>
+
+</mule>

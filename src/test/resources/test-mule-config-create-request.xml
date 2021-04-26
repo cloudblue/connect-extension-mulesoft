@@ -21,7 +21,7 @@
     <cloudblue-connect:config name="CloudBlue_Connect_Config_Test">
         <cloudblue-connect:connection token="ApiKey SU-000-000-000:fake-token-001"
                                       connectionTimeout="20000"
-                                      host="http://localhost:${port}"/>
+                                      endpoint="http://localhost:${port}"/>
     </cloudblue-connect:config>
 
     <flow name="createSuspendRequest">

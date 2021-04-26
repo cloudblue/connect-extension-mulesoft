@@ -1,4 +1,4 @@
-package com.cloudblue.connect.internal.connections;
+package com.cloudblue.connect.internal.operations.connections;
 
 
 import com.cloudblue.connect.api.clients.Config;
@@ -23,7 +23,7 @@ public class CBCConnectionProvider implements PoolingConnectionProvider<CBCConne
         @Parameter
         @Expression
         @Optional(defaultValue = "https://api.connect.cloud.im/public/v1")
-        private String host;
+        private String endpoint;
 
         @Parameter
         @Expression
@@ -33,12 +33,12 @@ public class CBCConnectionProvider implements PoolingConnectionProvider<CBCConne
         @Optional(defaultValue = "20000")
         private int connectionTimeout;
 
-        public String getHost() {
-            return host;
+        public String getEndpoint() {
+            return endpoint;
         }
 
-        public void setHost(String host) {
-            this.host = host;
+        public void setEndpoint(String endpoint) {
+            this.endpoint = endpoint;
         }
 
         public String getToken() {
@@ -58,7 +58,7 @@ public class CBCConnectionProvider implements PoolingConnectionProvider<CBCConne
         }
 
         public Config getConfig() {
-            return new Config(host, token, connectionTimeout);
+            return new Config(endpoint, token, connectionTimeout);
         }
     }
 

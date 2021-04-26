@@ -7,7 +7,7 @@ import com.cloudblue.connect.api.models.CBCRequest;
 import com.cloudblue.connect.api.exceptions.CBCException;
 import com.cloudblue.connect.api.parameters.NewPurchaseRequestParameter;
 import com.cloudblue.connect.api.parameters.common.ResourceActionParameter;
-import com.cloudblue.connect.internal.connections.CBCConnection;
+import com.cloudblue.connect.internal.operations.connections.CBCConnection;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 
