@@ -4,7 +4,7 @@ import org.mule.runtime.extension.api.annotation.param.Parameter;
 
 import java.util.List;
 
-public abstract class MultiValueFilter extends Filter {
+public abstract class MultiValueFilter implements Filter {
     @Parameter
     private String property;
 

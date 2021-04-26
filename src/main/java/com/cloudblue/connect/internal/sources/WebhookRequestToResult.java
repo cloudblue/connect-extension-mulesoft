@@ -17,6 +17,8 @@ import java.nio.charset.StandardCharsets;
 
 
 public class WebhookRequestToResult {
+    private WebhookRequestToResult() {}
+
     public static Result<CBCWebhookEvent, WebhookRequestAttributes> transform(final HttpRequestContext requestContext)
             throws Exception {
         final HttpRequest request = requestContext.getRequest();

@@ -40,20 +40,22 @@
     </cloudblue-connect:config>
     
     <flow name="getRequest">
-        <cloudblue-connect:get-request config-ref="CloudBlue_Connect_Config_Test" id="${request_id}"/>
+        <cloudblue-connect:get-request config-ref="CloudBlue_Connect_Config_Test"
+                                       id="${request_id}"/>
     </flow>
     
     <flow name="getAsset">
-        <cloudblue-connect:get-asset config-ref="CloudBlue_Connect_Config_Test" id="${asset_id}"/>
+        <cloudblue-connect:get-asset config-ref="CloudBlue_Connect_Config_Test"
+                                     id="${asset_id}"/>
     </flow>
 
     <flow name="listRequestsWithFilter">
         <cloudblue-connect:list-requests config-ref="CloudBlue_Connect_Config_Test">
             <cloudblue-connect:filter >
-                <cloudblue-connect:list-filter type="or" >
+                <cloudblue-connect:list-filter type="OR" >
                     <cloudblue-connect:filters >
-                        <cloudblue-connect:mono-filter type="eq" property="asset.id" value="AS-0000-0000-0000" />
-                        <cloudblue-connect:mono-filter type="eq" property="status" value="approved" />
+                        <cloudblue-connect:mono-filter type="EQ" property="asset.id" value="AS-0000-0000-0000" />
+                        <cloudblue-connect:mono-filter type="EQ" property="status" value="approved" />
                     </cloudblue-connect:filters>
                 </cloudblue-connect:list-filter>
             </cloudblue-connect:filter>
@@ -67,10 +69,10 @@
     <flow name="listAssetsWithFilter">
         <cloudblue-connect:list-assets config-ref="CloudBlue_Connect_Config_Test">
             <cloudblue-connect:filter >
-                <cloudblue-connect:list-filter type="and" >
+                <cloudblue-connect:list-filter type="AND" >
                     <cloudblue-connect:filters >
-                        <cloudblue-connect:mono-filter type="eq" property="id" value="AS-0000-0000-0000" />
-                        <cloudblue-connect:mono-filter type="ne" property="status" value="active" />
+                        <cloudblue-connect:mono-filter type="EQ" property="id" value="AS-0000-0000-0000" />
+                        <cloudblue-connect:mono-filter type="NE" property="status" value="active" />
                     </cloudblue-connect:filters>
                 </cloudblue-connect:list-filter>
             </cloudblue-connect:filter>

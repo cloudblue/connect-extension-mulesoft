@@ -10,18 +10,14 @@ import com.fasterxml.jackson.core.type.TypeReference;
 
 import org.mule.runtime.api.connection.ConnectionException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public final class CBCConnection extends Client {
-        
-    private final Logger LOGGER = LoggerFactory.getLogger(CBCConnection.class);
 
     public CBCConnection(CBCConnectionProvider.ConnectionParams config) {
         super(config.getConfig());
     }
 
-    public boolean isConnected() throws Exception {
+    public boolean isConnected() throws ConnectionException {
 
         try {
             newQ(new TypeReference<ArrayList<CBCTenant>>() {})
@@ -29,7 +25,6 @@ public final class CBCConnection extends Client {
                     .limit(1)
                     .get();
         } catch(CBCException ex) {
-            LOGGER.error("Error during testing connection", ex);
             throw new ConnectionException(
                     "Error connecting to the server: Error Code "
                     + ex.getErrorCode()

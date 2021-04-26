@@ -6,9 +6,9 @@ import org.mule.runtime.extension.api.annotation.param.Parameter;
 
 import java.util.List;
 
-public class ListFilter extends Filter {
+public class ListFilter implements Filter {
     public enum Type {
-        and, or
+        AND, OR
     }
 
     @Parameter
@@ -16,8 +16,6 @@ public class ListFilter extends Filter {
 
     @Parameter
     private List<Filter> filters;
-
-    public ListFilter() {}
 
     public Type getType() {
         return type;
@@ -39,9 +37,9 @@ public class ListFilter extends Filter {
     public R toRQL() {
         R[] rs = getFilters().stream().map(Filter::toRQL).toArray(R[]::new);
 
-        if (getType() == ListFilter.Type.and) {
+        if (getType() == ListFilter.Type.AND) {
             return R.and(rs);
-        } else if (getType() == ListFilter.Type.or) {
+        } else if (getType() == ListFilter.Type.OR) {
             return R.or(rs);
         }
 

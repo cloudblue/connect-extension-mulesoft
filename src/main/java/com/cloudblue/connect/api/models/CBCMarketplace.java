@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CBCMarketplace extends CBCEntity {
+public class CBCMarketplace implements CBCEntity {
     @JsonProperty
     private String id;
 

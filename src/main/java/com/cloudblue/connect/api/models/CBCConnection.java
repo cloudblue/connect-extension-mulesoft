@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CBCConnection extends CBCEntity {
+public class CBCConnection implements CBCEntity {
     @JsonProperty
     private String id;
 

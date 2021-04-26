@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +21,7 @@ public class CBCError {
     private List<String> errors;
 
     @JsonProperty("params")
-    private HashMap<String, Object> params;
+    private Map<String, Object> params;
 
     @JsonIgnore
     private HttpStatus status;
@@ -43,11 +42,11 @@ public class CBCError {
         this.errorCode = errorCode;
     }
 
-    public HashMap<String, Object> getParams() {
+    public Map<String, Object> getParams() {
         return params;
     }
 
-    public void setParams(HashMap<String, Object> params) {
+    public void setParams(Map<String, Object> params) {
         this.params = params;
     }
 

@@ -19,9 +19,7 @@ public class BaseListOperation {
     protected void resolve(Client.Q q) {
 
         if (orderBy != null){
-            String[] orderByValues = new String[]{};
-            orderByValues = orderBy.getProperties().toArray(new String[]{});
-            q.orderBy(orderByValues);
+            q.orderBy(orderBy.getProperties().toArray(new String[]{}));
         }
 
         if (filter != null) {

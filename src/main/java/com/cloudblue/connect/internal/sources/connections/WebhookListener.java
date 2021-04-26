@@ -1,4 +1,4 @@
-package com.cloudblue.connect.internal.sources;
+package com.cloudblue.connect.internal.sources.connections;
 
 import com.cloudblue.connect.internal.operations.connections.CBCConnection;
 import org.mule.runtime.api.connection.ConnectionException;
@@ -21,12 +21,6 @@ public class WebhookListener {
                     )
             );
         }
-
-//        if (!cbcConnection.isConnected()) {
-//            throw new ConnectionException(
-//                    "Webhook Listener is not able to access Cloudblue Connect APIs with specified configuration."
-//            );
-//        }
 
         return true;
     }

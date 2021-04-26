@@ -4,7 +4,7 @@ import com.cloudblue.connect.api.clients.rql.R;
 
 import org.mule.runtime.extension.api.annotation.param.Parameter;
 
-public class RawRQLFilter extends Filter {
+public class RawRQLFilter implements Filter {
     @Parameter
     private String rawRql;
 

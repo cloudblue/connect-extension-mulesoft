@@ -116,7 +116,7 @@ public enum HttpStatus {
     }
 
 
-    public static enum Series {
+    public enum Series {
 
         INFORMATIONAL(1),
         SUCCESSFUL(2),

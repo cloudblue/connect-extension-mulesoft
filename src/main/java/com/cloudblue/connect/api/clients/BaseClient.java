@@ -147,10 +147,8 @@ public class BaseClient {
         CloseableHttpResponse response;
         try {
             response = this.httpClient.execute(request);
-            LOGGER.trace("HTTP Response: ");
-            LOGGER.trace(response.toString());
+            LOGGER.trace("HTTP Response: {}", response);
         } catch (IOException ex) {
-            LOGGER.error("Failed to execute API call: ",ex);
             throw new CBCException(
                     ErrorCodes.CONNECTAPI_ERROR.getValue(),
                     ex.getMessage(),
@@ -178,15 +176,11 @@ public class BaseClient {
                     );
                 }
                 else{
-                    throw new Exception("No error details found in HTTP response");
+                    throw new CBCException("No error details found in HTTP response");
                 }
-            }
-            catch(CBCException ex){
-                LOGGER.error("Error during calling Connect API:", ex);
+            } catch(CBCException ex){
                 throw ex;
-            }
-            catch (Exception ex) {
-                LOGGER.error("Failed to generate error details from API error response", ex);
+            } catch (Exception ex) {
                 throw new CBCException(
                         ErrorCodes.CONNECTAPI_ERROR.getValue(),
                         ex.getMessage(),
@@ -235,11 +229,8 @@ public class BaseClient {
                             new StringEntity(requestBody, ContentType.APPLICATION_JSON)
                     );
                 }
-                LOGGER.trace("HTTP Request: " + requestBody);
-                LOGGER.trace(httpRequest.toString());
 
             } catch (Exception e) {
-                LOGGER.error("Failed during Connect API call", e);
                 throw new CBCException(e.getMessage());
             }
         }
@@ -262,7 +253,7 @@ public class BaseClient {
             try {
                 if (responseType != HttpResponse.class) {
                     String responseBody = getResponseBody(response);
-                    LOGGER.trace("HTTP Response: " + responseBody);
+                    LOGGER.trace("HTTP Response: {}", responseBody);
                     if (responseBody != null && !responseBody.isEmpty()) {
                         result = this.responseUnmarshaller.unmarshal(responseBody, responseType);
                     }
@@ -270,7 +261,6 @@ public class BaseClient {
                     result = (S) response;
                 }
             } catch (Exception ex) {
-                LOGGER.error("Unable to parse API response due to error details: ", ex);
                 throw new CBCException(
                         ErrorCodes.EXTENSION_ERROR.getValue(),
                         "API response parsing error",

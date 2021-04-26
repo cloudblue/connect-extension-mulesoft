@@ -1,5 +1,11 @@
 package com.cloudblue.connect.api.models.enums;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public enum CBCAccountType {
-    vendor, provider
+    @JsonProperty("vendor")
+    VENDOR,
+
+    @JsonProperty("provider")
+    PROVIDER
 }

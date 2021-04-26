@@ -17,14 +17,9 @@ import org.mule.runtime.extension.api.annotation.param.ParameterGroup;
 import org.mule.runtime.extension.api.annotation.param.display.DisplayName;
 import static org.mule.runtime.extension.api.annotation.param.MediaType.ANY;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 
 public class SubscriptionOperations {
-    
-    private final Logger LOGGER = LoggerFactory.getLogger(SubscriptionOperations.class);
-    
+
     @MediaType(value = ANY, strict = false)
     @DisplayName("Get Request")
     public CBCRequest getRequest(

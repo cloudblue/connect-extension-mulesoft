@@ -10,7 +10,7 @@ import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CBCTenant extends CBCEntity {
+public class CBCTenant implements CBCEntity {
     @JsonProperty
     private String id;
 

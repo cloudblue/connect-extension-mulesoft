@@ -3,16 +3,25 @@ package com.cloudblue.connect.api.exceptions;
 import com.cloudblue.connect.api.models.CBCError;
 
 public class CBCException extends Exception {
-    private String errorCode;
-    private String errorTitle;
-    private String detailedErrormessage;
+    private final String errorCode;
+    private final String errorTitle;
+    private final String detailedErrormessage;
 
-    private CBCError connectAPiError;
+    private final transient CBCError connectAPiError;
 
-    public CBCException() {}
+    public CBCException() {
+        errorCode = null;
+        errorTitle = null;
+        detailedErrormessage = null;
+        connectAPiError = null;
+    }
 
     public CBCException(String message) {
         super(message);
+        errorCode = null;
+        errorTitle = null;
+        detailedErrormessage = null;
+        connectAPiError = null;
     }
 
     public CBCException(String errorCode, String errorTitle, String detailedErrormessage) {
@@ -20,6 +29,7 @@ public class CBCException extends Exception {
         this.errorCode = errorCode;
         this.errorTitle = errorTitle;
         this.detailedErrormessage = detailedErrormessage;
+        this.connectAPiError = null;
     }
     public CBCException(String errorCode, String errorTitle, CBCError error) {
         super(error.errorDetail());

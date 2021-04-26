@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CBCAccount extends CBCEntity {
+public class CBCAccount implements CBCEntity {
     @Parameter
     @Optional
     @JsonProperty

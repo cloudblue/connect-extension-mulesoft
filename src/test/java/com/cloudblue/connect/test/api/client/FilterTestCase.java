@@ -10,7 +10,7 @@ public class FilterTestCase {
     @Test
     public void test_mono_filter() {
         MonoFilter filter = new MonoFilter();
-        filter.setType(MonoFilter.Type.eq);
+        filter.setType(MonoFilter.Type.EQ);
         filter.setProperty("asset.id");
         filter.setValue("AS-0000-0000");
 
@@ -23,17 +23,17 @@ public class FilterTestCase {
     @Test
     public void test_list_filter_simple() {
         MonoFilter m1 = new MonoFilter();
-        m1.setType(MonoFilter.Type.eq);
+        m1.setType(MonoFilter.Type.EQ);
         m1.setProperty("asset.id");
         m1.setValue("AS-0000-0000");
 
         MonoFilter m2 = new MonoFilter();
-        m2.setType(MonoFilter.Type.ne);
+        m2.setType(MonoFilter.Type.NE);
         m2.setProperty("status");
         m2.setValue("approved");
 
         ListFilter listFilter = new ListFilter();
-        listFilter.setType(ListFilter.Type.or);
+        listFilter.setType(ListFilter.Type.OR);
         listFilter.setFilters(new ArrayList<>());
         listFilter.getFilters().add(m1);
         listFilter.getFilters().add(m2);
@@ -50,29 +50,29 @@ public class FilterTestCase {
     @Test
     public void test_list_filter_complex() {
         MonoFilter m1 = new MonoFilter();
-        m1.setType(MonoFilter.Type.eq);
+        m1.setType(MonoFilter.Type.EQ);
         m1.setProperty("asset.id");
         m1.setValue("AS-0000-0000");
 
         MonoFilter m2 = new MonoFilter();
-        m2.setType(MonoFilter.Type.ne);
+        m2.setType(MonoFilter.Type.NE);
         m2.setProperty("status");
         m2.setValue("approved");
 
         ListFilter l1 = new ListFilter();
-        l1.setType(ListFilter.Type.or);
+        l1.setType(ListFilter.Type.OR);
         l1.setFilters(new ArrayList<>());
         l1.getFilters().add(m1);
         l1.getFilters().add(m2);
 
         ListFilter l2 = new ListFilter();
-        l2.setType(ListFilter.Type.and);
+        l2.setType(ListFilter.Type.AND);
         l2.setFilters(new ArrayList<>());
         l2.getFilters().add(m1);
         l2.getFilters().add(m2);
 
         ListFilter l3 = new ListFilter();
-        l3.setType(ListFilter.Type.and);
+        l3.setType(ListFilter.Type.AND);
         l3.setFilters(new ArrayList<>());
         l3.getFilters().add(l1);
         l3.getFilters().add(l2);
@@ -91,7 +91,7 @@ public class FilterTestCase {
     @Test
     public void test_not_filter_simple() {
         MonoFilter m1 = new MonoFilter();
-        m1.setType(MonoFilter.Type.eq);
+        m1.setType(MonoFilter.Type.EQ);
         m1.setProperty("asset.id");
         m1.setValue("AS-0000-0000");
 
@@ -108,29 +108,29 @@ public class FilterTestCase {
     @Test
     public void test_not_filter_complex() {
         MonoFilter m1 = new MonoFilter();
-        m1.setType(MonoFilter.Type.eq);
+        m1.setType(MonoFilter.Type.EQ);
         m1.setProperty("asset.id");
         m1.setValue("AS-0000-0000");
 
         MonoFilter m2 = new MonoFilter();
-        m2.setType(MonoFilter.Type.ne);
+        m2.setType(MonoFilter.Type.NE);
         m2.setProperty("status");
         m2.setValue("approved");
 
         ListFilter l1 = new ListFilter();
-        l1.setType(ListFilter.Type.or);
+        l1.setType(ListFilter.Type.OR);
         l1.setFilters(new ArrayList<>());
         l1.getFilters().add(m1);
         l1.getFilters().add(m2);
 
         ListFilter l2 = new ListFilter();
-        l2.setType(ListFilter.Type.and);
+        l2.setType(ListFilter.Type.AND);
         l2.setFilters(new ArrayList<>());
         l2.getFilters().add(m1);
         l2.getFilters().add(m2);
 
         ListFilter l3 = new ListFilter();
-        l3.setType(ListFilter.Type.and);
+        l3.setType(ListFilter.Type.AND);
         l3.setFilters(new ArrayList<>());
         l3.getFilters().add(l1);
         l3.getFilters().add(l2);
@@ -185,12 +185,12 @@ public class FilterTestCase {
     @Test
     public void test_raw_Rql_filter() {
         MonoFilter m1 = new MonoFilter();
-        m1.setType(MonoFilter.Type.eq);
+        m1.setType(MonoFilter.Type.EQ);
         m1.setProperty("asset.id");
         m1.setValue("AS-0000-0000");
 
         MonoFilter m2 = new MonoFilter();
-        m2.setType(MonoFilter.Type.ne);
+        m2.setType(MonoFilter.Type.NE);
         m2.setProperty("status");
         m2.setValue("approved");
 
@@ -198,7 +198,7 @@ public class FilterTestCase {
         rqlFilter.setRawRql("eq(property,value)");
 
         ListFilter listFilter = new ListFilter();
-        listFilter.setType(ListFilter.Type.or);
+        listFilter.setType(ListFilter.Type.OR);
         listFilter.setFilters(new ArrayList<>());
         listFilter.getFilters().add(m1);
         listFilter.getFilters().add(m2);
