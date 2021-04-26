@@ -10,8 +10,9 @@ public class JacksonRequestMarshaller implements RequestMarshaller {
 
     public ObjectMapper getObjectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
-        objectMapper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
+        objectMapper.enable(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES);
+        objectMapper.enable(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES);
+        objectMapper.enable(MapperFeature.ACCEPT_CASE_INSENSITIVE_ENUMS);
         objectMapper.disable(
                 MapperFeature.AUTO_DETECT_CREATORS,
                 MapperFeature.AUTO_DETECT_FIELDS,

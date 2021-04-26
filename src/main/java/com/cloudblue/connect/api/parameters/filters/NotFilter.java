@@ -3,7 +3,7 @@ package com.cloudblue.connect.api.parameters.filters;
 import com.cloudblue.connect.api.clients.rql.R;
 import org.mule.runtime.extension.api.annotation.param.Parameter;
 
-public class NotFilter extends Filter {
+public class NotFilter implements Filter {
 
     @Parameter
     private Filter filter;

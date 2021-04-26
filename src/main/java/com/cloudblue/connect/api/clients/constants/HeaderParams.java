@@ -1,15 +1,17 @@
 package com.cloudblue.connect.api.clients.constants;
 
-public interface HeaderParams {
+public class HeaderParams {
 
-    String CONTENT_TYPE = "Content-Type";
+    private HeaderParams() {}
 
-    String RETRY_AFTER = "Retry-After";
+    public static final String CONTENT_TYPE = "Content-Type";
 
-    String ACCEPT = "Accept";
+    public static final String RETRY_AFTER = "Retry-After";
 
-    String USER_AGENT = "User-Agent";
+    public static final String ACCEPT = "Accept";
 
-    String AUTHORIZATION = "Authorization";
+    public static final String USER_AGENT = "User-Agent";
+
+    public static final String AUTHORIZATION = "Authorization";
 
 }

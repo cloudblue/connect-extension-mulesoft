@@ -4,10 +4,10 @@ import com.cloudblue.connect.api.clients.rql.R;
 
 import org.mule.runtime.extension.api.annotation.param.Parameter;
 
-public class MonoFilter extends Filter {
+public class MonoFilter implements Filter {
     
     public enum Type {
-        eq, ne, lt, le, gt, ge, like, ilike
+        EQ, NE, LT, LE, GT, GE, LIKE, ILIKE
     }
 
     @Parameter
@@ -18,8 +18,6 @@ public class MonoFilter extends Filter {
 
     @Parameter
     private String value;
-
-    public MonoFilter() {}
 
     public Type getType() {
         return type;
@@ -47,19 +45,19 @@ public class MonoFilter extends Filter {
 
     @Override
     public R toRQL() {
-        if (this.getType() == Type.eq)
+        if (this.getType() == Type.EQ)
             return R.eq(this.getProperty(), this.getValue());
-        else if (this.getType() == Type.ne)
+        else if (this.getType() == Type.NE)
             return R.ne(this.getProperty(), this.getValue());
-        else if (this.getType() == Type.ge)
+        else if (this.getType() == Type.GE)
             return R.ge(this.getProperty(), this.getValue());
-        else if (this.getType() == Type.gt)
+        else if (this.getType() == Type.GT)
             return R.gt(this.getProperty(), this.getValue());
-        else if (this.getType() == Type.le)
+        else if (this.getType() == Type.LE)
             return R.le(this.getProperty(), this.getValue());
-        else if (this.getType() == Type.lt)
+        else if (this.getType() == Type.LT)
             return R.lt(this.getProperty(), this.getValue());
-        else if (this.getType() == Type.like)
+        else if (this.getType() == Type.LIKE)
             return R.like(this.getProperty(), this.getValue());
         else return R.ilike(this.getProperty(), this.getValue());
     }

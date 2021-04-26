@@ -27,19 +27,19 @@
     <flow name="createSuspendRequest">
         <cloudblue-connect:create-admin-hold-request
                 config-ref="CloudBlue_Connect_Config_Test"
-                requestType="suspend" assetId="AS-0000-0000-0000"/>
+                requestType="SUSPEND" assetId="AS-0000-0000-0000"/>
     </flow>
 
     <flow name="createResumeRequest">
         <cloudblue-connect:create-admin-hold-request
                 config-ref="CloudBlue_Connect_Config_Test"
-                requestType="resume" assetId="AS-0000-0000-0000"/>
+                requestType="RESUME" assetId="AS-0000-0000-0000"/>
     </flow>
 
     <flow name="createCancelRequest">
         <cloudblue-connect:create-admin-hold-request
                 config-ref="CloudBlue_Connect_Config_Test"
-                requestType="cancel" assetId="AS-0000-0000-0000"/>
+                requestType="CANCEL" assetId="AS-0000-0000-0000"/>
     </flow>
 
     <flow name="createPurchaseRequest">

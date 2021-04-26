@@ -1,9 +1,9 @@
 package com.cloudblue.connect.internal;
 
 import com.cloudblue.connect.api.parameters.filters.*;
-
 import com.cloudblue.connect.internal.operations.CBCConfiguration;
 import com.cloudblue.connect.internal.sources.CBCWebhookConfig;
+
 import org.mule.runtime.extension.api.annotation.Extension;
 import org.mule.runtime.extension.api.annotation.SubTypeMapping;
 import org.mule.runtime.extension.api.annotation.dsl.xml.Xml;

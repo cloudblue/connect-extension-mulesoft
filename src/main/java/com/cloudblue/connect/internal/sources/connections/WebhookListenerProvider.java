@@ -1,4 +1,4 @@
-package com.cloudblue.connect.internal.sources;
+package com.cloudblue.connect.internal.sources.connections;
 
 import com.cloudblue.connect.internal.listeners.MuleContextStopListener;
 import com.cloudblue.connect.internal.operations.connections.CBCConnection;

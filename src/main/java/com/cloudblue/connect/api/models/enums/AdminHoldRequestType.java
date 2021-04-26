@@ -1,5 +1,14 @@
 package com.cloudblue.connect.api.models.enums;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public enum AdminHoldRequestType {
-    suspend, resume, cancel
+    @JsonProperty("suspend")
+    SUSPEND,
+
+    @JsonProperty("resume")
+    RESUME,
+
+    @JsonProperty("cancel")
+    CANCEL
 }

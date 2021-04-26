@@ -134,7 +134,7 @@ public class NewPurchaseRequestParameter implements Embeddable {
     public Object buildEntity() {
 
         CBCRequest request = new CBCRequest();
-        request.setType(CBCRequestType.purchase);
+        request.setType(CBCRequestType.PURCHASE);
 
         request.setAsset(new CBCAsset());
         request.getAsset().setParams(this.params);

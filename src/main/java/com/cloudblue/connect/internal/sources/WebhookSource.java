@@ -3,13 +3,13 @@ package com.cloudblue.connect.internal.sources;
 import com.cloudblue.connect.api.models.CBCWebhookEvent;
 import com.cloudblue.connect.api.models.enums.CBCWebhookEventType;
 import com.cloudblue.connect.api.webhook.WebhookRequestAttributes;
-import com.cloudblue.connect.internal.listeners.MuleContextStopListener;
+import com.cloudblue.connect.internal.sources.connections.WebhookListener;
 
 import org.mule.runtime.api.connection.ConnectionProvider;
 import org.mule.runtime.api.exception.MuleException;
 import org.mule.runtime.api.exception.MuleRuntimeException;
-import org.mule.runtime.api.notification.NotificationListenerRegistry;
-import org.mule.runtime.core.api.MuleContext;
+import org.mule.runtime.api.message.Error;
+import org.mule.runtime.extension.api.annotation.execution.OnError;
 import org.mule.runtime.extension.api.annotation.execution.OnSuccess;
 import org.mule.runtime.extension.api.annotation.execution.OnTerminate;
 import org.mule.runtime.extension.api.annotation.param.*;
@@ -18,18 +18,21 @@ import org.mule.runtime.extension.api.annotation.param.display.Placement;
 import org.mule.runtime.extension.api.annotation.param.display.Summary;
 import org.mule.runtime.extension.api.annotation.source.EmitsResponse;
 import org.mule.runtime.extension.api.runtime.operation.Result;
-import org.mule.runtime.extension.api.runtime.source.Source;
-import org.mule.runtime.extension.api.runtime.source.SourceCallback;
-import org.mule.runtime.extension.api.runtime.source.SourceCallbackContext;
-import org.mule.runtime.extension.api.runtime.source.SourceResult;
+import org.mule.runtime.extension.api.runtime.source.*;
+import org.mule.runtime.http.api.domain.entity.HttpEntity;
+import org.mule.runtime.http.api.domain.entity.multipart.HttpPart;
 import org.mule.runtime.http.api.domain.message.response.HttpResponse;
-import org.mule.runtime.http.api.domain.request.HttpRequestContext;
+import org.mule.runtime.http.api.domain.message.response.HttpResponseBuilder;
 import org.mule.runtime.http.api.server.HttpServer;
-import org.mule.runtime.http.api.server.RequestHandler;
 import org.mule.runtime.http.api.server.async.HttpResponseReadyCallback;
 import org.mule.runtime.http.api.server.async.ResponseStatusCallback;
 
-import javax.inject.Inject;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import static org.mule.runtime.api.i18n.I18nMessageFactory.createStaticMessage;
 import static org.mule.runtime.extension.api.annotation.param.MediaType.ANY;
@@ -63,43 +66,34 @@ public class WebhookSource extends Source<CBCWebhookEvent, WebhookRequestAttribu
     @Config
     private CBCWebhookConfig webhookConfig;
 
-    @Inject
-    private MuleContext muleContext;
-
-    @Inject
-    private NotificationListenerRegistry notificationListenerRegistry;
-
-    private MuleContextStopListener muleContextStopListener;
     private HttpServer server;
 
 
     @Override
     public void onStart(SourceCallback<CBCWebhookEvent, WebhookRequestAttributes> sourceCallback)
             throws MuleException {
-        String listenerPath = webhookConfig.getFullListenerPath(webhookEventType.toString());
+
+        String listenerPath = webhookConfig.getFullListenerPath(
+                path, webhookEventType.toString().toLowerCase()
+        );
 
         server = listenerProvider.connect().getHttpServer();
-        server.addRequestHandler(listenerPath, new RequestHandler() {
-            @Override
-            public void handleRequest(HttpRequestContext requestContext, HttpResponseReadyCallback responseCallback) {
-                SourceCallbackContext ctx = sourceCallback.createContext();
+        server.addRequestHandler(listenerPath, (requestContext, responseCallback) -> {
+            try {
 
-                try {
+                Result<CBCWebhookEvent, WebhookRequestAttributes> result = WebhookRequestToResult
+                        .transform(requestContext);
 
-                    Result<CBCWebhookEvent, WebhookRequestAttributes> result = WebhookRequestToResult
-                            .transform(requestContext);
+                WebhookResponseContext responseContext = new WebhookResponseContext();
+                responseContext.setResponseCallback(responseCallback);
 
-                    WebhookResponseContext responseContext = new WebhookResponseContext();
-                    responseContext.setResponseCallback(responseCallback);
-
-                    SourceCallbackContext context = sourceCallback.createContext();
-                    context.addVariable("RESPONSE_CONTEXT", responseContext);
-                    sourceCallback.handle(result, context);
+                SourceCallbackContext context = sourceCallback.createContext();
+                context.addVariable("RESPONSE_CONTEXT", responseContext);
+                sourceCallback.handle(result, context);
 
 
-                } catch (Exception e) {
-                    throw new MuleRuntimeException(e);
-                }
+            } catch (Exception e) {
+                throw new MuleRuntimeException(e);
             }
         });
     }
@@ -108,7 +102,25 @@ public class WebhookSource extends Source<CBCWebhookEvent, WebhookRequestAttribu
     public void onSuccess(
             @Optional(defaultValue = "200") @Placement(tab = "Responses") Integer responseStatusCode,
             SourceCallbackContext callbackContext
-    ) throws Exception {
+    ) {
+        sendResponse(responseStatusCode, null, callbackContext);
+    }
+
+    @OnError
+    public void onError(
+            @Optional(defaultValue = "500") @Placement(tab = "Error Responses") Integer errorResponseStatusCode,
+            SourceCallbackContext callbackContext,
+            Error error,
+            SourceCompletionCallback completionCallback
+    ) {
+        try {
+            sendResponse(errorResponseStatusCode, error.getDescription(), callbackContext);
+        } catch (Exception t) {
+            completionCallback.error(t);
+        }
+    }
+
+    private void sendResponse(Integer responseCode, String responseBody, SourceCallbackContext callbackContext) {
 
         WebhookResponseContext responseContext = callbackContext.<WebhookResponseContext>getVariable("RESPONSE_CONTEXT")
                 .orElseThrow(() -> new MuleRuntimeException(
@@ -116,21 +128,67 @@ public class WebhookSource extends Source<CBCWebhookEvent, WebhookRequestAttribu
                 ));
 
         final HttpResponseReadyCallback responseCallback = responseContext.getResponseCallback();
-        HttpResponse response = HttpResponse.builder().statusCode(responseStatusCode).build();
+
+        HttpResponseBuilder responseBuilder = HttpResponse.builder().statusCode(responseCode);
+
+        if (responseBody != null && !responseBody.isEmpty()) {
+            HttpEntity entity = buildEntity(responseBody);
+            responseBuilder = responseBuilder.entity(entity);
+        }
+
         responseCallback.responseReady(
-                response,
+                responseBuilder.build(),
                 new ResponseStatusCallback() {
                     @Override
-                    public void responseSendFailure(Throwable exception) {}
+                    public void responseSendFailure(Throwable exception) {
+                        // Do nothing on response send failure.
+                    }
 
                     @Override
-                    public void responseSendSuccessfully() {}
+                    public void responseSendSuccessfully() {
+                        // Do nothing on response send success.
+                    }
                 });
     }
 
-    @OnTerminate
-    public void onTerminate(SourceResult sourceResult) {}
+    private HttpEntity buildEntity(String body) {
+        return new HttpEntity() {
+            @Override
+            public boolean isStreaming() {
+                return false;
+            }
 
+            @Override
+            public boolean isComposed() {
+                return false;
+            }
+
+            @Override
+            public InputStream getContent() {
+                return new ByteArrayInputStream(body.getBytes(StandardCharsets.UTF_8));
+            }
+
+            @Override
+            public byte[] getBytes() throws IOException {
+                return body.getBytes(StandardCharsets.UTF_8);
+            }
+
+            @Override
+            public Collection<HttpPart> getParts() throws IOException {
+                return new ArrayList<>();
+            }
+
+            @Override
+            public java.util.Optional<Long> getLength() {
+                return java.util.Optional.of((long) body.length());
+            }
+        };
+    }
+
+    @OnTerminate
+    public void onTerminate(SourceResult sourceResult) {
+        // Do nothing on termination.
+    }
 
     @Override
     public void onStop() {

@@ -1,5 +1,6 @@
 package com.cloudblue.connect.internal.sources;
 
+import com.cloudblue.connect.internal.sources.connections.WebhookListenerProvider;
 import org.mule.runtime.extension.api.annotation.Configuration;
 import org.mule.runtime.extension.api.annotation.Sources;
 import org.mule.runtime.extension.api.annotation.connectivity.ConnectionProviders;
@@ -22,14 +23,25 @@ public class CBCWebhookConfig {
         return basePath;
     }
 
-    public String getFullListenerPath(String listenerPath) {
-        if (basePath.endsWith("/")) {
-            basePath = basePath.substring(0, basePath.lastIndexOf("/"));
-        }
+    private void append(StringBuilder pathSuffix, String sniffed) {
 
-        if (!listenerPath.startsWith("/")) {
-            listenerPath = "/" + listenerPath;
+        if (sniffed!= null && !sniffed.isEmpty()) {
+            if (!sniffed.startsWith("/"))
+                sniffed = "/" + sniffed;
+            if (sniffed.endsWith("/"))
+                sniffed = sniffed.substring(0, sniffed.lastIndexOf("/"));
+
+            pathSuffix.append(sniffed);
         }
-        return basePath + listenerPath;
+    }
+
+    public String getFullListenerPath(String path, String webhookType) {
+        StringBuilder pathSuffix = new StringBuilder();
+
+        append(pathSuffix, basePath);
+        append(pathSuffix, path);
+        append(pathSuffix, webhookType);
+
+        return pathSuffix.toString();
     }
 }

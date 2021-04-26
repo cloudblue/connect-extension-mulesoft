@@ -8,7 +8,7 @@ import org.mule.runtime.extension.api.annotation.param.Parameter;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CBCContactInfo extends CBCEntity {
+public class CBCContactInfo implements CBCEntity {
     @Parameter
     @JsonProperty("address_line1")
     private String addressLine1;

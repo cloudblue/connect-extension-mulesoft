@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class CBCConnectionProvider implements PoolingConnectionProvider<CBCConnection> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(CBCConnectionProvider.class);
+    private final Logger logger = LoggerFactory.getLogger(CBCConnectionProvider.class);
 
     public static final class ConnectionParams {
 
@@ -78,7 +78,7 @@ public class CBCConnectionProvider implements PoolingConnectionProvider<CBCConne
         try {
             connection.close();
         } catch (Exception e) {
-            LOGGER.error("Error while disconnecting Connect Connection: " + e.getMessage(), e);
+            logger.error("Error while disconnecting Connect Connection: " + e.getMessage(), e);
         }
     }
 

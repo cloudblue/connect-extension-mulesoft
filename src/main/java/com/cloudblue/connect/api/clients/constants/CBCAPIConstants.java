@@ -1,9 +1,12 @@
 package com.cloudblue.connect.api.clients.constants;
 
-public interface CBCAPIConstants {
-    
-    interface GenericFilterKeys{
+public class CBCAPIConstants {
 
-        String ORDERING_KEY = "ordering";
+    private CBCAPIConstants() {}
+
+    public static class GenericFilterKeys {
+        private GenericFilterKeys() {}
+
+        public static final String ORDERING_KEY = "ordering";
     }
 }

@@ -12,7 +12,7 @@ import java.util.Map;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CBCRequest extends CBCEntity {
+public class CBCRequest implements CBCEntity {
     @JsonProperty
     private String id;
 
