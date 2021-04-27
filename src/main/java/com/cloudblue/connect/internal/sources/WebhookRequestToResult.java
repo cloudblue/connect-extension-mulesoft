@@ -33,8 +33,8 @@ public class WebhookRequestToResult {
         MultiMap<String, String> headers = request.getHeaders();
 
         WebhookRequestAttributes attributes = new WebhookRequestAttributes();
-        if (headers.containsKey(HeaderParams.AUTHORIZATION))
-            attributes.setToken(headers.get(HeaderParams.AUTHORIZATION));
+        if (headers.containsKey(HeaderParams.AUTHORIZATION.toLowerCase()))
+            attributes.setToken(headers.get(HeaderParams.AUTHORIZATION.toLowerCase()));
 
         Result.Builder<CBCWebhookEvent, WebhookRequestAttributes> resultBuilder = Result.builder();
 

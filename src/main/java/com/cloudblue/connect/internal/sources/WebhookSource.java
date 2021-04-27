@@ -54,6 +54,10 @@ public class WebhookSource extends Source<CBCWebhookEvent, WebhookRequestAttribu
     private String productId;
 
     @Parameter
+    @Placement(order = 4)
+    private String authenticationToken;
+
+    @Parameter
     @Optional
     @Placement(tab = Placement.ADVANCED_TAB)
     @Summary("Comma separated list of methods. Leave empty to allow all.")
@@ -77,6 +81,8 @@ public class WebhookSource extends Source<CBCWebhookEvent, WebhookRequestAttribu
                 path, webhookEventType.toString().toLowerCase()
         );
 
+        WebhookAuthProvider authProvider = WebhookAuthProvider.builder().token(authenticationToken).build();
+
         server = listenerProvider.connect().getHttpServer();
         server.addRequestHandler(listenerPath, (requestContext, responseCallback) -> {
             try {
@@ -87,10 +93,17 @@ public class WebhookSource extends Source<CBCWebhookEvent, WebhookRequestAttribu
                 WebhookResponseContext responseContext = new WebhookResponseContext();
                 responseContext.setResponseCallback(responseCallback);
 
-                SourceCallbackContext context = sourceCallback.createContext();
-                context.addVariable("RESPONSE_CONTEXT", responseContext);
-                sourceCallback.handle(result, context);
+                String token = result.getAttributes().orElseThrow(() -> new MuleRuntimeException(
+                        createStaticMessage("Webhook Request Attributes are not found.")
+                )).getToken();
 
+                if (!authProvider.authenticate(token))
+                    sendResponse(401, "Authentication failed.", responseCallback);
+                else {
+                    SourceCallbackContext context = sourceCallback.createContext();
+                    context.addVariable("RESPONSE_CONTEXT", responseContext);
+                    sourceCallback.handle(result, context);
+                }
 
             } catch (Exception e) {
                 throw new MuleRuntimeException(e);
@@ -120,14 +133,12 @@ public class WebhookSource extends Source<CBCWebhookEvent, WebhookRequestAttribu
         }
     }
 
-    private void sendResponse(Integer responseCode, String responseBody, SourceCallbackContext callbackContext) {
 
-        WebhookResponseContext responseContext = callbackContext.<WebhookResponseContext>getVariable("RESPONSE_CONTEXT")
-                .orElseThrow(() -> new MuleRuntimeException(
-                        createStaticMessage("Response Context is not present. Could not send response.")
-                ));
-
-        final HttpResponseReadyCallback responseCallback = responseContext.getResponseCallback();
+    private void sendResponse(
+            Integer responseCode,
+            String responseBody,
+            HttpResponseReadyCallback responseCallback
+    ) {
 
         HttpResponseBuilder responseBuilder = HttpResponse.builder().statusCode(responseCode);
 
@@ -149,6 +160,18 @@ public class WebhookSource extends Source<CBCWebhookEvent, WebhookRequestAttribu
                         // Do nothing on response send success.
                     }
                 });
+    }
+
+    private void sendResponse(Integer responseCode, String responseBody, SourceCallbackContext callbackContext) {
+
+        WebhookResponseContext responseContext = callbackContext.<WebhookResponseContext>getVariable("RESPONSE_CONTEXT")
+                .orElseThrow(() -> new MuleRuntimeException(
+                        createStaticMessage("Response Context is not present. Could not send response.")
+                ));
+
+        final HttpResponseReadyCallback responseCallback = responseContext.getResponseCallback();
+
+        sendResponse(responseCode, responseBody, responseCallback);
     }
 
     private HttpEntity buildEntity(String body) {

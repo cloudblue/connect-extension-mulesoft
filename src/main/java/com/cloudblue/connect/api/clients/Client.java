@@ -12,7 +12,7 @@ import java.util.*;
 
 public class Client extends BaseClient {
 
-    public final static class Q {
+    public static final class Q {
         private final List<String> ns = new ArrayList<>();
         private final Map<Integer, String> nsKeyMap = new HashMap<>();
         private final Map<String, String> filters = new HashMap<>();
