@@ -73,7 +73,7 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
             assertThat(idValue, is(this.expectedIdValue));
         } else {
             assertTrue(object instanceof List);
-            assertEquals(((List)object).size(), 1);
+            assertEquals(1, ((List)object).size());
         }
 
     }

@@ -8,7 +8,6 @@ import org.junit.Test;
 
 import org.mule.extension.http.api.HttpResponseAttributes;
 import org.mule.runtime.api.event.Event;
-import org.mule.runtime.api.exception.MuleRuntimeException;
 import org.mule.tck.junit4.rule.DynamicPort;
 
 public class WebhookTestCase extends BaseMuleFlowTestCase {
@@ -31,8 +30,13 @@ public class WebhookTestCase extends BaseMuleFlowTestCase {
         Assert.assertEquals(200, attributes.getStatusCode());
     }
 
-    @Test(expected = Exception.class)
+    @Test
     public void testWebhookSourceNegative() throws Exception {
         flowRunner("testWebhookError").run();
+    }
+
+    @Test
+    public void testWebhookSourceUnauthorized() throws Exception {
+        flowRunner("testWebhookUnauthorized").run();
     }
 }
