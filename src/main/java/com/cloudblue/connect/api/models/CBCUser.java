@@ -5,29 +5,32 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import org.mule.runtime.extension.api.annotation.param.Optional;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CBCDetail implements CBCEntity {
+public class CBCUser implements CBCEntity {
 
     @JsonProperty
-    private String at;
+    private String id;
 
     @JsonProperty
-    private CBCBy by;   
+    private String name;
 
-    public String getAt() {
-        return at;
+    public String getId() {
+        return id;
     }
 
-    public void setAt(String at) {
-        this.at = at;
+    public void setId(String id) {
+        this.id = id;
     }    
 
-    public CBCBy getBy() {
-        return by;
+    public String getName() {
+        return name;
     }
 
-    public void setBy(CBCBy by) {
-        this.by = by;
-    }  
+    public void setName(String name) {
+        this.name = name;
+    }    
+ 
 }

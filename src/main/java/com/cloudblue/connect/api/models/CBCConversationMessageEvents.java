@@ -11,24 +11,24 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class CBCConversationMessageEvents implements CBCEntity {
 
     @JsonProperty
-    private CBCDetail created;   
+    private CBCEvent created;   
 
     @JsonProperty
-    private CBCDetail updated;   
+    private CBCEvent updated;   
 
-    public CBCDetail getCreated() {
+    public CBCEvent getCreated() {
         return created;
     }
 
-    public void setCreated(CBCDetail created) {
+    public void setCreated(CBCEvent created) {
         this.created = created;
     }  
 
-    public CBCDetail getUpdated() {
+    public CBCEvent getUpdated() {
         return updated;
     }
 
-    public void setUpdated(CBCDetail updated) {
+    public void setUpdated(CBCEvent updated) {
         this.updated = updated;
     }  
 }

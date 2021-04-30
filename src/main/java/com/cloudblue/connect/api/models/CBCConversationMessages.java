@@ -13,13 +13,13 @@ public class CBCConversationMessages {
     private String conversation;
 
     @JsonProperty
-    private CBCBy account;
+    private CBCUser account;
 
     @JsonProperty
     private String created;
 
     @JsonProperty
-    private CBCBy creator;
+    private CBCUser creator;
 
     @JsonProperty
     private String text;
@@ -46,11 +46,11 @@ public class CBCConversationMessages {
         this.conversation = conversation;
     }    
 
-    public CBCBy getAccount() {
+    public CBCUser getAccount() {
         return account;
     }
 
-    public void setAccount(CBCBy account) {
+    public void setAccount(CBCUser account) {
         this.account = account;
     }    
 
@@ -62,11 +62,11 @@ public class CBCConversationMessages {
         this.created = created;
     } 
 
-    public CBCBy getCreator() {
+    public CBCUser getCreator() {
         return creator;
     }
 
-    public void setCreator(CBCBy creator) {
+    public void setCreator(CBCUser creator) {
         this.creator = creator;
     }     
 

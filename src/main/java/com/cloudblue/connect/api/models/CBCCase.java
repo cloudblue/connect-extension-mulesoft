@@ -30,7 +30,7 @@ public class CBCCase {
     private CBCCaseType type;
 
     @JsonProperty
-    private CBCCaseEvents events;  
+    private CBCEvents events;  
 
     @JsonProperty
     private CBCCaseIssuer issuer;  
@@ -94,11 +94,11 @@ public class CBCCase {
         this.type = type;
     }    
 
-    public CBCCaseEvents getEvents() {
+    public CBCEvents getEvents() {
         return events;
     }
 
-    public void setEvents(CBCCaseEvents events) {
+    public void setEvents(CBCEvents events) {
         this.events = events;
     }
     

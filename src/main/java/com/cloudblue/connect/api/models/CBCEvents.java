@@ -8,63 +8,63 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 
-public class CBCCaseEvents implements CBCEntity {
+public class CBCEvents implements CBCEntity {
 
     @JsonProperty
-    private CBCDetail closed;   
+    private CBCEvent closed;   
 
     @JsonProperty
-    private CBCDetail created;   
+    private CBCEvent created;   
 
     @JsonProperty
-    private CBCDetail inquiring;   
+    private CBCEvent inquiring;   
 
     @JsonProperty
-    private CBCDetail pending;   
+    private CBCEvent pending;   
 
     @JsonProperty
-    private CBCDetail resolved;   
+    private CBCEvent resolved;   
 
     @JsonProperty
-    private CBCDetail updated;   
+    private CBCEvent updated;   
 
-    public CBCDetail getClosed() {
+    public CBCEvent getClosed() {
         return closed;
     }
 
-    public void setClosed(CBCDetail closed) {
+    public void setClosed(CBCEvent closed) {
         this.closed = closed;
     }  
 
-    public CBCDetail getCreated() {
+    public CBCEvent getCreated() {
         return created;
     }
 
-    public void setCreated(CBCDetail created) {
+    public void setCreated(CBCEvent created) {
         this.created = created;
     }  
 
-    public CBCDetail getInquiring() {
+    public CBCEvent getInquiring() {
         return inquiring;
     }
 
-    public void setInquiring(CBCDetail inquiring) {
+    public void setInquiring(CBCEvent inquiring) {
         this.inquiring = inquiring;
     }  
 
-    public CBCDetail getPending() {
+    public CBCEvent getPending() {
         return pending;
     }
 
-    public void setPending(CBCDetail pending) {
+    public void setPending(CBCEvent pending) {
         this.pending = pending;
     }  
 
-    public CBCDetail getResolved() {
+    public CBCEvent getResolved() {
         return resolved;
     }
 
-    public void setResolved(CBCDetail resolved) {
+    public void setResolved(CBCEvent resolved) {
         this.resolved = resolved;
     }  
 }

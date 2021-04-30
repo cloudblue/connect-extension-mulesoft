@@ -83,7 +83,7 @@
     <flow name="createHelpdeskCase">
 		<cloudblue-connect:create-helpdesk-case 
             config-ref="CloudBlue_Connect_Config_Test" 
-            type="technical" 
+            type="TECHNICAL" 
             productId="PRD-325-557-281" 
             subject="hey you"
             description="will work" 

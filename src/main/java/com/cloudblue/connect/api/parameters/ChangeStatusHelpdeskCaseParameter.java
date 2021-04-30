@@ -48,16 +48,10 @@ public class ChangeStatusHelpdeskCaseParameter implements Embeddable {
         CBCCase helpdeskCase = new CBCCase();
         helpdeskCase.setId(this.caseId);
         helpdeskCase.setState(this.operation);
-/*
+
         CBCConversationMessages message = new CBCConversationMessages();
         message.setConversation(this.caseId);
         message.setText(this.comment);
-
-        request.setType(CBCRequestType.valueOf(this.requestType.toString()));
-
-        request.setAsset(new CBCAsset());
-        request.getAsset().setId(this.assetId);
-*/
         return (helpdeskCase);
     }
 

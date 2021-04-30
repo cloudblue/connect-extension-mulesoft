@@ -12,35 +12,35 @@ import java.util.List;
 public class CBCCaseIssuer implements CBCEntity {
 
     @JsonProperty
-    private CBCBy account;    
+    private CBCUser account;    
 
     @JsonProperty
-    private CBCBy agent;    
+    private CBCUser agent;    
 
     @JsonProperty
-    private List<CBCBy> recipients;    
+    private List<CBCUser> recipients;    
 
     
-    public CBCBy getAccount() {
+    public CBCUser getAccount() {
         return account;
     }
 
-    public void setAccount(CBCBy account) {
+    public void setAccount(CBCUser account) {
         this.account = account;
     }
 
-    public CBCBy getAgent() {
+    public CBCUser getAgent() {
         return agent;
     }
 
-    public void setAgent(CBCBy agent) {
+    public void setAgent(CBCUser agent) {
         this.agent = agent;
     }    
-    public List<CBCBy> getRecipients() {
+    public List<CBCUser> getRecipients() {
         return recipients;
     }
 
-    public void setRecipients(List<CBCBy> recipients) {
+    public void setRecipients(List<CBCUser> recipients) {
         this.recipients = recipients;
     }    
 }

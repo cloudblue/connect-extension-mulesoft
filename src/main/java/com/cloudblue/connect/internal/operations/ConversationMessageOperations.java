@@ -18,22 +18,16 @@ import org.slf4j.LoggerFactory;
 public class ConversationMessageOperations {
     
     private final Logger LOGGER = LoggerFactory.getLogger(ConversationMessageOperations.class);
-    
-    private CBCConversationMessages createConversationMessageOperation(
-            CBCConnection connection, NewConversationMessage params
-    ) throws CBCException {
-        return (CBCConversationMessages) connection.newQ(new TypeReference<CBCConversationMessages>() {})
-                .collection("conversations/"+params.getConversationId()+"/messages")
-                .create(params.buildEntity());
-    }
 
     @MediaType(value = ANY, strict = false)
     @DisplayName("Create Message Conversation")
     public CBCConversationMessages createConversationMessage(
-            @Connection CBCConnection connection,
-            @ParameterGroup(name="Create Message Conversation Details")
-                    NewConversationMessage newRequestParameter
+        @Connection CBCConnection connection,
+        @ParameterGroup(name="Create Message Conversation Details")
+            NewConversationMessage newRequestParameter
     ) throws CBCException {
-        return this.createConversationMessageOperation(connection, newRequestParameter);
+        return (CBCConversationMessages) connection.newQ(new TypeReference<CBCConversationMessages>() {})
+        .collection("conversations/"+newRequestParameter.getConversationId()+"/messages")
+        .create(newRequestParameter.buildEntity());
     }
 }

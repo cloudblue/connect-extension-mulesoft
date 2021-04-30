@@ -1,5 +1,12 @@
 package com.cloudblue.connect.api.models.enums;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public enum CBCCaseType {
-    technical, business
+    @JsonProperty("technical")
+    TECHNICAL,
+
+    @JsonProperty("business")
+    BUSINESS
+
 }

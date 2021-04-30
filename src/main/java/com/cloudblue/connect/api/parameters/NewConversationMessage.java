@@ -1,17 +1,8 @@
 package com.cloudblue.connect.api.parameters;
 
 import com.cloudblue.connect.api.models.*;
-
-import java.util.List;
-import java.util.ArrayList;
-
-import java.util.UUID;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import org.mule.runtime.extension.api.annotation.param.Optional;
 import org.mule.runtime.extension.api.annotation.param.Parameter;
-import org.mule.runtime.extension.internal.MuleDsqlParser.identifier_return;
 
 public class NewConversationMessage implements Embeddable {
 
@@ -19,10 +10,10 @@ public class NewConversationMessage implements Embeddable {
     private String conversationId;
     
     @Parameter
-    private CBCBy account;
+    private CBCUser account;
     
     @Parameter
-    private CBCBy creator;
+    private CBCUser creator;
     
     @Parameter
     private String text;
@@ -38,19 +29,19 @@ public class NewConversationMessage implements Embeddable {
         this.conversationId = conversationId;
     }
 
-    public CBCBy getAccount() {
+    public CBCUser getAccount() {
         return account;
     }
 
-    public void setAccount(CBCBy account) {
+    public void setAccount(CBCUser account) {
         this.account = account;
     }
 
-    public CBCBy getCreator() {
+    public CBCUser getCreator() {
         return creator;
     }
 
-    public void setCreator(CBCBy creator) {
+    public void setCreator(CBCUser creator) {
         this.creator = creator;
     }
 
@@ -75,12 +66,12 @@ public class NewConversationMessage implements Embeddable {
     public Object buildEntity() {
         
         CBCConversationMessages request = new CBCConversationMessages();
-        request.setAccount(new CBCBy());
         if (this.account != null){
+            request.setAccount(new CBCUser());
             request.getAccount().setId(this.account.getId());
         }
-        request.setCreator(new CBCBy());
         if (this.creator != null){
+            request.setCreator(new CBCUser());
             request.getCreator().setId(this.creator.getId());
         }    
         request.setText(this.text);

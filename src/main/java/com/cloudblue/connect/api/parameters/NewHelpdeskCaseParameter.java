@@ -104,12 +104,12 @@ public class NewHelpdeskCaseParameter implements Embeddable {
         request.setPriority(this.priority);
         request.setType(this.type);
         request.setReceiver(new CBCCaseIssuer());
-        request.getReceiver().setAccount(new CBCBy());
+        request.getReceiver().setAccount(new CBCUser());
         request.getReceiver().getAccount().setId(this.receiverAccount);
 
         request.setIssuer(new CBCCaseIssuer());
-        List<CBCBy> recipients = new ArrayList<CBCBy>();
-        CBCBy element = new CBCBy();
+        List<CBCUser> recipients = new ArrayList<CBCUser>();
+        CBCUser element = new CBCUser();
         recipients.add(element);
         element.setId(this.issuerRecipient);
         request.getIssuer().setRecipients(recipients);
