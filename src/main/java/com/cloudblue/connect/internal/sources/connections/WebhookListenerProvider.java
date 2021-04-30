@@ -1,6 +1,5 @@
 package com.cloudblue.connect.internal.sources.connections;
 
-import com.cloudblue.connect.internal.listeners.MuleContextStopListener;
 import com.cloudblue.connect.internal.operations.connections.CBCConnection;
 import com.cloudblue.connect.internal.operations.connections.CBCConnectionProvider;
 
@@ -101,7 +100,6 @@ public class WebhookListenerProvider implements CachedConnectionProvider<Webhook
     @Inject
     private NotificationListenerRegistry notificationListenerRegistry;
 
-    private MuleContextStopListener muleContextStopListener;
     private WebhookListener webhookListener;
 
 
@@ -176,10 +174,6 @@ public class WebhookListenerProvider implements CachedConnectionProvider<Webhook
 
         webhookListener.setCbcConnection(new CBCConnection(this.connectionParams));
 
-        if (muleContextStopListener == null) {
-            muleContextStopListener = new MuleContextStopListener();
-            notificationListenerRegistry.registerListener(muleContextStopListener);
-        }
     }
 
     @Override

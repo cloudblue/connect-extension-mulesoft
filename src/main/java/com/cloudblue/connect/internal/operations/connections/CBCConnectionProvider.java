@@ -33,30 +33,6 @@ public class CBCConnectionProvider implements PoolingConnectionProvider<CBCConne
         @Optional(defaultValue = "20000")
         private int connectionTimeout;
 
-        public String getEndpoint() {
-            return endpoint;
-        }
-
-        public void setEndpoint(String endpoint) {
-            this.endpoint = endpoint;
-        }
-
-        public String getToken() {
-            return token;
-        }
-
-        public void setToken(String token) {
-            this.token = token;
-        }
-
-        public int getConnectionTimeout() {
-            return connectionTimeout;
-        }
-
-        public void setConnectionTimeout(int connectionTimeout) {
-            this.connectionTimeout = connectionTimeout;
-        }
-
         public Config getConfig() {
             return new Config(endpoint, token, connectionTimeout);
         }
