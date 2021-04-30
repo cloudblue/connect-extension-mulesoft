@@ -5,16 +5,12 @@ import com.cloudblue.connect.api.exceptions.CBCException;
 import com.cloudblue.connect.api.models.CBCConversationMessages;
 import com.cloudblue.connect.api.parameters.common.ResourceActionParameter;
 import org.mule.runtime.extension.api.annotation.param.ParameterGroup;
-import com.cloudblue.connect.api.parameters.filters.Filter;
-import com.cloudblue.connect.api.parameters.filters.OrderBy;
 import com.cloudblue.connect.internal.operations.connections.CBCConnection;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 
 import org.mule.runtime.extension.api.annotation.param.Connection;
 import org.mule.runtime.extension.api.annotation.param.MediaType;
-import org.mule.runtime.extension.api.annotation.param.Optional;
-import org.mule.runtime.extension.api.annotation.param.Parameter;
 import org.mule.runtime.extension.api.annotation.param.display.DisplayName;
 
 import static org.mule.runtime.extension.api.annotation.param.MediaType.ANY;
@@ -34,7 +30,8 @@ public class ListConversationMessages extends BaseListOperation {
 
         Client.Q q = connection
                 .newQ(new TypeReference<ArrayList<CBCConversationMessages>>() {})
-                .collection("conversations/"+getCaseParameter.getId()+"/messages");
+                .collection("conversations", getCaseParameter.getId())
+                .collection("messages");
         resolve(q);
 
         return (List<CBCConversationMessages>) q.get();

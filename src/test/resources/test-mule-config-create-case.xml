@@ -47,7 +47,7 @@
     <flow name="setInquiringHelpdeskCase">
         <cloudblue-connect:change-status-helpdesk-case 
             config-ref="CloudBlue_Connect_Config_Test" 
-            operation="inquiring" 
+            operation="INQUIRING" 
             caseId="CA-0000-0000" 
             comment="inquiring">
         </cloudblue-connect:change-status-helpdesk-case>
@@ -56,7 +56,7 @@
     <flow name="setPendingHelpdeskCase">
         <cloudblue-connect:change-status-helpdesk-case 
             config-ref="CloudBlue_Connect_Config_Test" 
-            operation="pending" 
+            operation="PENDING" 
             caseId="CA-0000-0000" 
             comment="pending">
         </cloudblue-connect:change-status-helpdesk-case>
@@ -65,7 +65,7 @@
     <flow name="setResolvedHelpdeskCase">
         <cloudblue-connect:change-status-helpdesk-case 
             config-ref="CloudBlue_Connect_Config_Test" 
-            operation="resolved" 
+            operation="RESOLVED" 
             caseId="CA-0000-0000" 
             comment="resolved">
         </cloudblue-connect:change-status-helpdesk-case>
@@ -74,7 +74,7 @@
     <flow name="setClosedHelpdeskCase">
         <cloudblue-connect:change-status-helpdesk-case 
             config-ref="CloudBlue_Connect_Config_Test" 
-            operation="closed" 
+            operation="CLOSED" 
             caseId="CA-0000-0000" 
             comment="closed">
         </cloudblue-connect:change-status-helpdesk-case>

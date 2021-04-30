@@ -33,7 +33,7 @@ public class CaseOperations {
     ) throws CBCException {
         return (CBCCase) connection
                 .newQ(new TypeReference<CBCCase>() {})
-                .collection("helpdesk/cases", getCaseParameter.getId())
+                .collection("helpdesk").collection("cases", getCaseParameter.getId())
                 .get();
     }
 
@@ -59,9 +59,11 @@ public class CaseOperations {
         String operation =  newRequestParameter.getOperation().getOperation();
         
         CBCCase result = (CBCCase)connection.newQ(new TypeReference<CBCCase>() {})
-            .collection("helpdesk/cases", newRequestParameter.getCaseId())
-            .action(operation, HttpMethod.POST);
-        
+            .collection("helpdesk").collection("cases", newRequestParameter.getCaseId())
+            .collection(operation)
+            .create(newRequestParameter.buildEntity());
+
+
         NewConversationMessage message = new NewConversationMessage();
         message.setText(newRequestParameter.getComment());
         message.setConversationId(newRequestParameter.getCaseId());

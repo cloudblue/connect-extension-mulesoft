@@ -1,10 +1,15 @@
 package com.cloudblue.connect.api.models.enums;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 public enum CBCCaseState {
-    pending("pend"), 
-    inquiring("inquire"), 
-    resolved("resolve"), 
-    closed("close");
+    @JsonProperty("pending")
+    PENDING("pend"), 
+    @JsonProperty("inquiring")
+    INQUIRING("inquire"), 
+    @JsonProperty("resolved")
+    RESOLVED("resolve"),
+    @JsonProperty("closed")
+    CLOSED("close");
 
     private String operation;
  

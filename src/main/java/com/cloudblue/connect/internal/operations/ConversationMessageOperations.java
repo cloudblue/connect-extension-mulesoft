@@ -27,7 +27,8 @@ public class ConversationMessageOperations {
             NewConversationMessage newRequestParameter
     ) throws CBCException {
         return (CBCConversationMessages) connection.newQ(new TypeReference<CBCConversationMessages>() {})
-        .collection("conversations/"+newRequestParameter.getConversationId()+"/messages")
+        .collection("conversations", newRequestParameter.getConversationId())
+        .collection("messages")
         .create(newRequestParameter.buildEntity());
     }
 }
