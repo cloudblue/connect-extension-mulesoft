@@ -11,7 +11,6 @@ import com.cloudblue.connect.api.clients.parsers.RequestMarshaller;
 import com.cloudblue.connect.api.clients.parsers.ResponseUnmarshaller;
 import com.cloudblue.connect.api.clients.parsers.jackson.JacksonRequestMarshaller;
 import com.cloudblue.connect.api.clients.parsers.jackson.JacksonResponseUnmarshaller;
-import com.cloudblue.connect.api.clients.utils.RequestUtil;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 
@@ -238,39 +237,6 @@ public class BaseClient {
         return exchange(httpRequest);
     }
 
-    public <T, S> S exchange(
-            String url,
-            T request,
-            HttpMethod method, 
-            Map<String, String> headers,
-            Class<S> responseType
-    ) throws CBCException {
-        S result = null;
-
-        HttpResponse response = exchange(url, request, method, headers);
-
-        if (responseType != null && response != null) {
-            try {
-                if (responseType != HttpResponse.class) {
-                    String responseBody = getResponseBody(response);
-                    LOGGER.trace("HTTP Response: {}", responseBody);
-                    if (responseBody != null && !responseBody.isEmpty()) {
-                        result = this.responseUnmarshaller.unmarshal(responseBody, responseType);
-                    }
-                } else {
-                    result = (S) response;
-                }
-            } catch (Exception ex) {
-                throw new CBCException(
-                        ErrorCodes.EXTENSION_ERROR.getValue(),
-                        "API response parsing error",
-                        ex.getMessage()
-                );
-            }
-        }
-        
-        return result;
-    }
 
     public <T, S> S exchange(
             String url, T request, 
@@ -296,19 +262,4 @@ public class BaseClient {
         return (S) result;
     }
 
-    public <T, S> S exchange(
-            String url, T request,
-            HttpMethod method,
-            Map<String, String> headers,
-            Map<String, Object> queryParams,
-            TypeReference<S> typeInfo
-    ) throws CBCException {
-        return exchange(
-                RequestUtil.addQueryParams(url, queryParams),
-                request,
-                method,
-                headers,
-                typeInfo
-        );
-    }
 }

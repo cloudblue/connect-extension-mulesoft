@@ -19,10 +19,6 @@ public class CBCWebhookConfig {
     @Optional
     private String basePath;
 
-    public String getBasePath() {
-        return basePath;
-    }
-
     private void append(StringBuilder pathSuffix, String sniffed) {
 
         if (sniffed!= null && !sniffed.isEmpty()) {
