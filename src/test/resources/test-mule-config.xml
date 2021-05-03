@@ -33,6 +33,22 @@
         <set-payload value="[{'id':'${asset_id}'}]"/>
     </flow>
 
+    <flow name="getCaseServer">
+        <http:listener path="/helpdesk/cases/${case_id}" config-ref="listenerConfig"/>
+        <set-payload value="{'id':'${case_id}'}"/>
+    </flow>
+
+    <flow name="listCasesServer">
+        <http:listener path="/helpdesk/cases" config-ref="listenerConfig"/>
+        <set-payload value="[{'id':'${case_id}'}]"/>
+    </flow>
+
+    <flow name="listConversationMessagesServer">
+        <http:listener path="/conversations/${conversation_id}/conversations" config-ref="listenerConfig"/>
+        <set-payload value="[{'id':'${conversation_id}'}]"/>
+    </flow>
+
+
     <cloudblue-connect:config name="CloudBlue_Connect_Config_Test">
         <cloudblue-connect:connection token="ApiKey SU-000-000-000:fake-token-001"
                                       connectionTimeout="20000"
@@ -47,6 +63,10 @@
     <flow name="getAsset">
         <cloudblue-connect:get-asset config-ref="CloudBlue_Connect_Config_Test"
                                      id="${asset_id}"/>
+    </flow>
+
+    <flow name="getCase">
+        <cloudblue-connect:get-case config-ref="CloudBlue_Connect_Config_Test" id="${case_id}"/>
     </flow>
 
     <flow name="listRequestsWithFilter">
@@ -82,4 +102,42 @@
     <flow name="listAssetsWithoutFilter">
         <cloudblue-connect:list-assets config-ref="CloudBlue_Connect_Config_Test"/>
     </flow>
+
+    <flow name="listCasesWithFilter">
+        <cloudblue-connect:list-cases config-ref="CloudBlue_Connect_Config_Test">
+            <cloudblue-connect:filter >
+                <cloudblue-connect:list-filter type="AND" >
+                    <cloudblue-connect:filters >
+                        <cloudblue-connect:mono-filter type="EQ" property="id" value="CA-0000-0000" />
+                        <cloudblue-connect:mono-filter type="NE" property="state" value="pending" />
+                    </cloudblue-connect:filters>
+                </cloudblue-connect:list-filter>
+            </cloudblue-connect:filter>
+        </cloudblue-connect:list-cases>
+    </flow>
+
+    <flow name="listCasesWithoutFilter">
+        <cloudblue-connect:list-cases config-ref="CloudBlue_Connect_Config_Test"/>
+    </flow>
+
+    <flow name="listConversationMessagesWithoutFilter">
+        <cloudblue-connect:list-assets config-ref="CloudBlue_Connect_Config_Test"/>
+    </flow>
+
+    <flow name="listConversationMessagesWithFilter">
+        <cloudblue-connect:list-assets config-ref="CloudBlue_Connect_Config_Test">
+            <cloudblue-connect:filter >
+                <cloudblue-connect:list-filter type="AND" >
+                    <cloudblue-connect:filters >
+                        <cloudblue-connect:mono-filter type="EQ" property="conversation_id" value="CO-0000-0000" />
+                        <cloudblue-connect:mono-filter type="NE" property="text" value="pending" />
+                    </cloudblue-connect:filters>
+                </cloudblue-connect:list-filter>
+            </cloudblue-connect:filter>
+        </cloudblue-connect:list-assets>
+    </flow>
+
+
+
+
 </mule>

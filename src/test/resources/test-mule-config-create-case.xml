@@ -1,0 +1,95 @@
+<mule xmlns="http://www.mulesoft.org/schema/mule/core"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:http="http://www.mulesoft.org/schema/mule/http"
+      xmlns:cloudblue-connect="http://www.mulesoft.org/schema/mule/cloudblue-connect"
+      xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core
+            http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+            http://www.mulesoft.org/schema/mule/http 
+            http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+            http://www.mulesoft.org/schema/mule/cloudblue-connect 
+            http://www.mulesoft.org/schema/mule/cloudblue-connect/current/mule-cloudblue-connect.xsd">
+    
+    <http:listener-config name="listenerConfig">
+        <http:listener-connection host="localhost" port="${port}"/>
+    </http:listener-config>
+    
+    <flow name="createHelpdeskCaseServer">
+        <http:listener path="/helpdesk/cases" config-ref="listenerConfig"/>
+        <set-payload value="{'id':'${case_id}'}"/>
+    </flow>
+
+    <flow name="setInquiringHelpdeskCaseServer">
+        <http:listener path="/helpdesk/cases/${case_id}/inquire" config-ref="listenerConfig"/>
+        <set-payload value="{'id':'${case_id}'}"/>
+    </flow>
+
+    <flow name="setPendingHelpdeskCaseServer">
+        <http:listener path="/helpdesk/cases/${case_id}/pend" config-ref="listenerConfig"/>
+        <set-payload value="{'id':'${case_id}'}"/>
+    </flow>
+
+    <flow name="setResolvedHelpdeskCaseServer">
+        <http:listener path="/helpdesk/cases/${case_id}/resolve" config-ref="listenerConfig"/>
+        <set-payload value="{'id':'${case_id}'}"/>
+    </flow>
+
+    <flow name="setClosedHelpdeskCaseServer">
+        <http:listener path="/helpdesk/cases/${case_id}/close" config-ref="listenerConfig"/>
+        <set-payload value="{'id':'${case_id}'}"/>
+    </flow>
+
+    <cloudblue-connect:config name="CloudBlue_Connect_Config_Test">
+        <cloudblue-connect:connection token="ApiKey SU-000-000-000:fake-token-001"
+                                      connectionTimeout="20000"
+                                      endpoint="http://localhost:${port}"/>
+    </cloudblue-connect:config>
+
+    <flow name="setInquiringHelpdeskCase">
+        <cloudblue-connect:change-status-helpdesk-case 
+            config-ref="CloudBlue_Connect_Config_Test" 
+            operation="INQUIRING" 
+            caseId="CA-0000-0000" 
+            comment="inquiring">
+        </cloudblue-connect:change-status-helpdesk-case>
+    </flow>
+
+    <flow name="setPendingHelpdeskCase">
+        <cloudblue-connect:change-status-helpdesk-case 
+            config-ref="CloudBlue_Connect_Config_Test" 
+            operation="PENDING" 
+            caseId="CA-0000-0000" 
+            comment="pending">
+        </cloudblue-connect:change-status-helpdesk-case>
+    </flow>
+
+    <flow name="setResolvedHelpdeskCase">
+        <cloudblue-connect:change-status-helpdesk-case 
+            config-ref="CloudBlue_Connect_Config_Test" 
+            operation="RESOLVED" 
+            caseId="CA-0000-0000" 
+            comment="resolved">
+        </cloudblue-connect:change-status-helpdesk-case>
+    </flow>
+
+    <flow name="setClosedHelpdeskCase">
+        <cloudblue-connect:change-status-helpdesk-case 
+            config-ref="CloudBlue_Connect_Config_Test" 
+            operation="CLOSED" 
+            caseId="CA-0000-0000" 
+            comment="closed">
+        </cloudblue-connect:change-status-helpdesk-case>
+    </flow>
+
+    <flow name="createHelpdeskCase">
+		<cloudblue-connect:create-helpdesk-case 
+            config-ref="CloudBlue_Connect_Config_Test" 
+            type="TECHNICAL" 
+            productId="PRD-325-557-281" 
+            subject="hey you"
+            description="will work" 
+            priority="0" 
+            receiverAccount="VA-334-169"
+            issuerRecipient="UR-988-291-489">
+		</cloudblue-connect:create-helpdesk-case>
+    </flow>
+</mule>
