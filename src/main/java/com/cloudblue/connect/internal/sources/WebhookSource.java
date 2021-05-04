@@ -43,6 +43,7 @@ import java.util.List;
 
 import static org.mule.runtime.api.i18n.I18nMessageFactory.createStaticMessage;
 import static org.mule.runtime.extension.api.annotation.param.MediaType.ANY;
+import static com.cloudblue.connect.api.clients.constants.CBCAPIConstants.CollectionKeys.*;
 
 @EmitsResponse
 @MediaType(value = ANY, strict = false)
@@ -92,8 +93,8 @@ public class WebhookSource extends Source<CBCWebhookEvent, WebhookRequestAttribu
 
         List<CBCWebhook> webhooks = (List<CBCWebhook>) cbcConnection
                 .newQ(new TypeReference<List<CBCWebhook>>() {})
-                .collection("notifications")
-                .collection("webhooks")
+                .collection(NOTIFICATIONS)
+                .collection(WEBHOOKS)
                 .get();
 
         CBCWebhook webhook = null;
@@ -122,8 +123,8 @@ public class WebhookSource extends Source<CBCWebhookEvent, WebhookRequestAttribu
             webhook.setObjectClass(webhookEventType);
 
             webhook = (CBCWebhook) cbcConnection.newQ(new TypeReference<CBCWebhook>() {})
-                    .collection("notifications")
-                    .collection("webhooks")
+                    .collection(NOTIFICATIONS)
+                    .collection(WEBHOOKS)
                     .create(webhook);
 
         } else if (Boolean.FALSE.equals(webhook.getActive())) {
@@ -131,8 +132,8 @@ public class WebhookSource extends Source<CBCWebhookEvent, WebhookRequestAttribu
             updateWebhook.setActive(Boolean.TRUE);
 
             cbcConnection.newQ(new TypeReference<CBCWebhook>() {})
-                    .collection("notifications")
-                    .collection("webhooks", webhook.getId())
+                    .collection(NOTIFICATIONS)
+                    .collection(WEBHOOKS, webhook.getId())
                     .update(updateWebhook);
 
         }
@@ -146,8 +147,8 @@ public class WebhookSource extends Source<CBCWebhookEvent, WebhookRequestAttribu
             updateWebhook.setActive(Boolean.FALSE);
 
             cbcConnection.newQ(new TypeReference<CBCWebhook>() {})
-                    .collection("notifications")
-                    .collection("webhooks", webhookId)
+                    .collection(NOTIFICATIONS)
+                    .collection(WEBHOOKS, webhookId)
                     .update(updateWebhook);
         }
     }

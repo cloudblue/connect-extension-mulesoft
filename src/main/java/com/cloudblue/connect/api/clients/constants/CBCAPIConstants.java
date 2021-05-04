@@ -9,4 +9,11 @@ public class CBCAPIConstants {
 
         public static final String ORDERING_KEY = "ordering";
     }
+
+    public static class CollectionKeys {
+        private CollectionKeys() {}
+
+        public static final String NOTIFICATIONS = "notifications";
+        public static final String WEBHOOKS = "webhooks";
+    }
 }
