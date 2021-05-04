@@ -9,17 +9,23 @@ import org.junit.Test;
 import org.mule.extension.http.api.HttpResponseAttributes;
 import org.mule.runtime.api.event.Event;
 import org.mule.tck.junit4.rule.DynamicPort;
+import org.mule.tck.junit4.rule.SystemProperty;
 
 public class WebhookTestCase extends BaseMuleFlowTestCase {
+    private static final String WEBHOOK_ID = "WB-0000-0000-0000";
+
     @Rule
     public DynamicPort listenPort = new DynamicPort("port");
 
     @Rule
     public DynamicPort webhookPort = new DynamicPort("webhook_port");
 
+    @Rule
+    public SystemProperty webhookIdSystemProperty = new SystemProperty("webhook_id", WEBHOOK_ID);
+
     @Override
     protected String getConfigFile() {
-        return "test-mule-config-webhook.xml";
+        return "test-mule-config-webhook-positive.xml";
     }
 
     @Test
@@ -30,12 +36,7 @@ public class WebhookTestCase extends BaseMuleFlowTestCase {
         Assert.assertEquals(200, attributes.getStatusCode());
     }
 
-    @Test
-    public void testWebhookSourceNegative() throws Exception {
-        flowRunner("testWebhookError").run();
-    }
-
-    @Test
+    @Test(expected = Test.None.class)
     public void testWebhookSourceUnauthorized() throws Exception {
         flowRunner("testWebhookUnauthorized").run();
     }

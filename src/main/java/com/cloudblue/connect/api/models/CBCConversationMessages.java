@@ -28,7 +28,7 @@ public class CBCConversationMessages {
     private String type;
 
     @JsonProperty
-    private CBCConversationMessageEvents events;
+    private CBCEvents events;
 
     public String getId() {
         return id;
@@ -86,11 +86,11 @@ public class CBCConversationMessages {
         this.type = type;
     } 
 
-    public CBCConversationMessageEvents getEvents() {
+    public CBCEvents getEvents() {
         return events;
     }
 
-    public void setEvents(CBCConversationMessageEvents events) {
+    public void setEvents(CBCEvents events) {
         this.events = events;
     } 
 }

@@ -10,6 +10,8 @@ public class WebhookListener {
     private HttpServer httpServer;
     private CBCConnection cbcConnection;
 
+    private String serverEndpoint;
+
     public boolean isConnected() throws ConnectionException {
         if (httpServer.isStopped() || httpServer.isStopping()) {
             ServerAddress serverAddress = httpServer.getServerAddress();
@@ -39,5 +41,13 @@ public class WebhookListener {
 
     public void setCbcConnection(CBCConnection cbcConnection) {
         this.cbcConnection = cbcConnection;
+    }
+
+    public String getServerEndpoint() {
+        return serverEndpoint;
+    }
+
+    public void setServerEndpoint(String serverEndpoint) {
+        this.serverEndpoint = serverEndpoint;
     }
 }

@@ -66,5 +66,13 @@ public class CBCEvents implements CBCEntity {
 
     public void setResolved(CBCEvent resolved) {
         this.resolved = resolved;
-    }  
+    }
+
+    public CBCEvent getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(CBCEvent updated) {
+        this.updated = updated;
+    }
 }
