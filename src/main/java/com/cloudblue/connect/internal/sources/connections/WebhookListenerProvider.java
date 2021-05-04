@@ -60,6 +60,13 @@ public class WebhookListenerProvider implements CachedConnectionProvider<Webhook
         @Placement(order = 3)
         private Integer port;
 
+
+        @Parameter
+        @Example("https://myintegration.com")
+        @Expression(NOT_SUPPORTED)
+        @Placement(order = 4)
+        private String webhookBindingUrl;
+
         public HttpConstants.Protocol getProtocol() {
             return protocol;
         }
@@ -70,6 +77,10 @@ public class WebhookListenerProvider implements CachedConnectionProvider<Webhook
 
         public Integer getPort() {
             return port;
+        }
+
+        public String getWebhookBindingUrl() {
+            return webhookBindingUrl;
         }
     }
 
@@ -102,6 +113,9 @@ public class WebhookListenerProvider implements CachedConnectionProvider<Webhook
 
     private WebhookListener webhookListener;
 
+    public ListenerParams getListenerParams() {
+        return listenerParams;
+    }
 
     @Override
     public WebhookListener connect() throws ConnectionException {
@@ -164,6 +178,7 @@ public class WebhookListenerProvider implements CachedConnectionProvider<Webhook
 
         try {
             webhookListener.setHttpServer(httpService.getServerFactory().create(serverConfiguration));
+            webhookListener.setServerEndpoint(listenerParams.getWebhookBindingUrl());
         } catch (ServerCreationException e) {
             throw new InitialisationException(
                     createStaticMessage("Not able to create Webhook Listener with configuration %s", configName),
