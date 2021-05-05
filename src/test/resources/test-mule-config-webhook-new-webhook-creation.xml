@@ -27,7 +27,12 @@
 
     <flow name="getWebhooksServer">
         <http:listener path="/notifications/webhooks" config-ref="listenerConfig" allowedMethods="GET"/>
-        <set-payload value="[{'id':'${webhook_id}', 'object_class': 'fulfillment_request', 'external_url': 'https://localhost/webhook/fulfilment/fulfillment_request', 'jwt_secret': 'ABCD-EFGH-XYZ1', 'active': false, 'product': {'id':'PRD-000-000-000'}}]"/>
+        <set-payload value="[]"/>
+    </flow>
+
+    <flow name="postWebhooksServer">
+        <http:listener path="/notifications/webhooks" config-ref="listenerConfig" allowedMethods="POST"/>
+        <set-payload value="{'id':'${webhook_id}', 'object_class': 'fulfillment_request', 'external_url': 'https://localhost/webhook/fulfilment/fulfillment_request', 'jwt_secret': 'ABCD-EFGH-XYZ1', 'active': true, 'product': {'id':'PRD-000-000-000'}}"/>
     </flow>
 
     <flow name="getWebhookServer">
@@ -62,7 +67,7 @@
         <http:request-connection host="localhost" port="${webhook_port}" usePersistentConnections="false" />
     </http:request-config>
 
-    <flow name="testWebhook">
+    <flow name="testWebhookNew">
         <http:request method="POST"
                       config-ref="HTTP_Request_configuration" path="webhook/fulfilment/fulfillment_request">
             <http:body >
@@ -79,23 +84,6 @@
                 ]]]>
             </http:headers>
         </http:request>
-    </flow>
-
-    <flow name="testWebhookUnauthorized">
-        <try>
-            <http:request method="POST"
-                          config-ref="HTTP_Request_configuration"
-                          path="webhook/fulfilment/fulfillment_request">
-                <http:body >
-                    <![CDATA[{
-                    product_id: 'PRD-000-000-000'
-                }]]>
-                </http:body>
-            </http:request>
-        </try>
-        <error-handler>
-            <on-error-continue type="HTTP:UNAUTHORIZED" enableNotifications="false" logException="false"/>
-        </error-handler>
     </flow>
 
 </mule>
