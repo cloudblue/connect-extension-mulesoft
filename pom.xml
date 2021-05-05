@@ -116,7 +116,42 @@
                             <goal>report</goal>
                         </goals>
                     </execution>
-
+                    <execution>
+                        <id>jacoco-check</id>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <rule>
+                                    <element>PACKAGE</element>
+                                    <excludes>
+                                        <exclude>com.cloudblue.connect.api.models</exclude>
+                                        <exclude>com.cloudblue.connect.api.models.enums</exclude>
+                                        <exclude>com.cloudblue.connect.api.parameters</exclude>
+                                        <exclude>com.cloudblue.connect.api.parameters.filters</exclude>
+                                        <exclude>com.cloudblue.connect.api.parameters.filters.common</exclude>
+                                        <exclude>com.cloudblue.connect.api.exceptions</exclude>
+                                        <exclude>com.cloudblue.connect.api.clients.errors</exclude>
+                                        <exclude>com.cloudblue.connect.api.clients.constants</exclude>
+                                        <exclude>com.cloudblue.connect.api.parameters.common</exclude>
+                                        <exclude>com.cloudblue.connect.internal</exclude>
+                                        <exclude>com.cloudblue.connect.api.clients.utils</exclude>
+                                        <exclude>com.cloudblue.connect.api.clients</exclude>
+                                        <exclude>com.cloudblue.connect.api.clients.parsers.jackson</exclude>
+                                        <exclude>com.cloudblue.connect.internal.sources.connections</exclude>
+                                    </excludes>
+                                    <limits>
+                                        <limit>
+                                            <counter>LINE</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.9</minimum>
+                                        </limit>
+                                    </limits>
+                                </rule>
+                            </rules>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
         </plugins>

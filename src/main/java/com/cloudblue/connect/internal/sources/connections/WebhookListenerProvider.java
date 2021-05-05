@@ -113,10 +113,6 @@ public class WebhookListenerProvider implements CachedConnectionProvider<Webhook
 
     private WebhookListener webhookListener;
 
-    public ListenerParams getListenerParams() {
-        return listenerParams;
-    }
-
     @Override
     public WebhookListener connect() throws ConnectionException {
         return webhookListener;
@@ -219,7 +215,7 @@ public class WebhookListenerProvider implements CachedConnectionProvider<Webhook
                 .setPort(listenerParams.getPort())
                 .setName(configName);
 
-        if (listenerParams.protocol == HttpConstants.Protocol.HTTPS)
+        if (listenerParams.getProtocol() == HttpConstants.Protocol.HTTPS)
             builder = builder.setTlsContextFactory(tlsContext);
 
         if (useIOScheduler()) {

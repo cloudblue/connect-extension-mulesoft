@@ -79,6 +79,11 @@
                     </cloudblue-connect:filters>
                 </cloudblue-connect:list-filter>
             </cloudblue-connect:filter>
+            <cloudblue-connect:order-by >
+                <cloudblue-connect:properties >
+                    <cloudblue-connect:property value="-created" />
+                </cloudblue-connect:properties>
+            </cloudblue-connect:order-by>
         </cloudblue-connect:list-requests>
     </flow>
 
