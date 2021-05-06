@@ -53,8 +53,10 @@ public class Client extends BaseClient {
         private String processFilters(String url) {
             List<String> queryStrings = new ArrayList<>();
 
-            if (!url.contains("?")) url = url.concat("?");
-            else if (!url.endsWith("?")) url = url.concat("&");
+            if (!url.contains("?"))
+                url = url.concat("?");
+            else if (!url.endsWith("?"))
+                url = url.concat("&");
 
             if (!rqlFilters.isEmpty()) {
                 String rqlStr;
@@ -80,15 +82,11 @@ public class Client extends BaseClient {
             return url.concat(Url.encode(String.join("&", queryStrings)));
         }
 
-        private String getFinalUrl(String action) {
+        public String getFinalUrl(String action) {
             if (action != null && !action.isEmpty())
                 return processFilters(getUrl() + "/" + action);
             else
                 return processFilters(getUrl());
-        }
-
-        public Q ns(String ns) {
-            return collection(ns, null);
         }
 
         public Q collection(String ns) {

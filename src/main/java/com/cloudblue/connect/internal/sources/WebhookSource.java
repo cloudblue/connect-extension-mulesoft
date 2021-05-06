@@ -85,71 +85,78 @@ public class WebhookSource extends Source<CBCWebhookEvent, WebhookRequestAttribu
     private CBCConnection cbcConnection;
     private String webhookId;
 
-    private void updateWebhookObject() throws CBCException {
+    public void updateWebhookObject() throws MuleRuntimeException {
+        try {
+            String listenerPath = webhookListener.getServerEndpoint() + webhookConfig.getFullListenerPath(
+                    path, webhookEventType.toString().toLowerCase()
+            );
 
-        String listenerPath = webhookListener.getServerEndpoint() + webhookConfig.getFullListenerPath(
-                path, webhookEventType.toString().toLowerCase()
-        );
-
-        List<CBCWebhook> webhooks = (List<CBCWebhook>) cbcConnection
-                .newQ(new TypeReference<List<CBCWebhook>>() {})
-                .collection(NOTIFICATIONS)
-                .collection(WEBHOOKS)
-                .get();
-
-        CBCWebhook webhook = null;
-        if (webhooks != null && !webhooks.isEmpty()) {
-
-            for (CBCWebhook w : webhooks) {
-                if (w.getProduct().getId().equals(productId) &&
-                        w.getExternalUrl().equals(listenerPath) &&
-                        w.getJwtToken().equals(authenticationToken) &&
-                        w.getObjectClass() == webhookEventType) {
-                    webhook = w;
-                    break;
-                }
-            }
-        }
-
-        if (webhook == null) {
-
-            webhook = new CBCWebhook();
-            webhook.setDescription("Webhook for Mule Extension Source " + listenerPath);
-            webhook.setLabel("Webhook for Mule Extension Source");
-            webhook.setProductId(productId);
-            webhook.setActive(Boolean.TRUE);
-            webhook.setExternalUrl(listenerPath);
-            webhook.setJwtToken(authenticationToken);
-            webhook.setObjectClass(webhookEventType);
-
-            webhook = (CBCWebhook) cbcConnection.newQ(new TypeReference<CBCWebhook>() {})
+            List<CBCWebhook> webhooks = (List<CBCWebhook>) cbcConnection
+                    .newQ(new TypeReference<List<CBCWebhook>>() {})
                     .collection(NOTIFICATIONS)
                     .collection(WEBHOOKS)
-                    .create(webhook);
+                    .get();
 
-        } else if (Boolean.FALSE.equals(webhook.getActive())) {
-            CBCWebhook updateWebhook = new CBCWebhook();
-            updateWebhook.setActive(Boolean.TRUE);
+            CBCWebhook webhook = null;
+            if (webhooks != null && !webhooks.isEmpty()) {
 
-            cbcConnection.newQ(new TypeReference<CBCWebhook>() {})
-                    .collection(NOTIFICATIONS)
-                    .collection(WEBHOOKS, webhook.getId())
-                    .update(updateWebhook);
+                for (CBCWebhook w : webhooks) {
+                    if (w.getProduct().getId().equals(productId) &&
+                            w.getExternalUrl().equals(listenerPath) &&
+                            w.getJwtToken().equals(authenticationToken) &&
+                            w.getObjectClass() == webhookEventType) {
+                        webhook = w;
+                        break;
+                    }
+                }
+            }
 
+            if (webhook == null) {
+
+                webhook = new CBCWebhook();
+                webhook.setDescription("Webhook for Mule Extension Source " + listenerPath);
+                webhook.setLabel("Webhook for Mule Extension Source");
+                webhook.setProductId(productId);
+                webhook.setActive(Boolean.TRUE);
+                webhook.setExternalUrl(listenerPath);
+                webhook.setJwtToken(authenticationToken);
+                webhook.setObjectClass(webhookEventType);
+
+                webhook = (CBCWebhook) cbcConnection.newQ(new TypeReference<CBCWebhook>() {})
+                        .collection(NOTIFICATIONS)
+                        .collection(WEBHOOKS)
+                        .create(webhook);
+
+            } else if (Boolean.FALSE.equals(webhook.getActive())) {
+                CBCWebhook updateWebhook = new CBCWebhook();
+                updateWebhook.setActive(Boolean.TRUE);
+
+                cbcConnection.newQ(new TypeReference<CBCWebhook>() {})
+                        .collection(NOTIFICATIONS)
+                        .collection(WEBHOOKS, webhook.getId())
+                        .update(updateWebhook);
+
+            }
+
+            webhookId = webhook.getId();
+        } catch (CBCException e) {
+            throw new MuleRuntimeException(e);
         }
-
-        webhookId = webhook.getId();
     }
 
-    private void disableWebhook() throws CBCException {
-        if (webhookId != null) {
-            CBCWebhook updateWebhook = new CBCWebhook();
-            updateWebhook.setActive(Boolean.FALSE);
+    public void disableWebhook() throws MuleRuntimeException {
+        try {
+            if (webhookId != null) {
+                CBCWebhook updateWebhook = new CBCWebhook();
+                updateWebhook.setActive(Boolean.FALSE);
 
-            cbcConnection.newQ(new TypeReference<CBCWebhook>() {})
-                    .collection(NOTIFICATIONS)
-                    .collection(WEBHOOKS, webhookId)
-                    .update(updateWebhook);
+                cbcConnection.newQ(new TypeReference<CBCWebhook>() {})
+                        .collection(NOTIFICATIONS)
+                        .collection(WEBHOOKS, webhookId)
+                        .update(updateWebhook);
+            }
+        } catch (CBCException e) {
+            throw new MuleRuntimeException(e);
         }
     }
 
@@ -167,11 +174,7 @@ public class WebhookSource extends Source<CBCWebhookEvent, WebhookRequestAttribu
         server = webhookListener.getHttpServer();
         cbcConnection = webhookListener.getCbcConnection();
 
-        try {
-            updateWebhookObject();
-        } catch (CBCException e) {
-            throw new MuleRuntimeException(e);
-        }
+        updateWebhookObject();
 
         server.addRequestHandler(listenerPath, (requestContext, responseCallback) -> {
             try {
@@ -305,10 +308,6 @@ public class WebhookSource extends Source<CBCWebhookEvent, WebhookRequestAttribu
     @Override
     public void onStop() {
         server.stop();
-        try {
-            disableWebhook();
-        } catch (CBCException e) {
-            LOGGER.error("Error during disabling webhook", e);
-        }
+        disableWebhook();
     }
 }
