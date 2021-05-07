@@ -1,9 +1,9 @@
 package com.cloudblue.connect.internal.operations;
 
+import com.cloudblue.connect.api.clients.constants.HttpMethod;
 import com.cloudblue.connect.internal.operations.connections.CBCConnection;
 import com.cloudblue.connect.api.models.CBCCase;
 import com.cloudblue.connect.api.parameters.NewConversationMessage;
-import com.cloudblue.connect.api.clients.constants.HttpMethod;
 import com.cloudblue.connect.api.exceptions.CBCException;
 import com.cloudblue.connect.api.parameters.NewHelpdeskCaseParameter;
 import com.cloudblue.connect.api.parameters.ChangeStatusHelpdeskCaseParameter;
@@ -15,16 +15,12 @@ import org.mule.runtime.extension.api.annotation.param.ParameterGroup;
 import org.mule.runtime.extension.api.annotation.param.display.DisplayName;
 
 
+import static com.cloudblue.connect.api.clients.constants.CBCAPIConstants.CollectionKeys.*;
 import static org.mule.runtime.extension.api.annotation.param.MediaType.ANY;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 public class CaseOperations {
-    
-    private final Logger LOGGER = LoggerFactory.getLogger(CaseOperations.class);
-    
+
     @MediaType(value = ANY, strict = false)
     @DisplayName("Get Helpdesk Case")
     public CBCCase getCase(
@@ -33,7 +29,8 @@ public class CaseOperations {
     ) throws CBCException {
         return (CBCCase) connection
                 .newQ(new TypeReference<CBCCase>() {})
-                .collection("helpdesk").collection("cases", getCaseParameter.getId())
+                .collection(HELPDESK)
+                .collection(CASES, getCaseParameter.getId())
                 .get();
     }
 
@@ -45,8 +42,9 @@ public class CaseOperations {
                     NewHelpdeskCaseParameter newRequestParameter
     ) throws CBCException {
         return (CBCCase) connection.newQ(new TypeReference<CBCCase>() {})
-        .collection("helpdesk").collection("cases")
-        .create(newRequestParameter.buildEntity());
+                .collection(HELPDESK)
+                .collection(CASES)
+                .create(newRequestParameter.buildEntity());
     }    
 
     @MediaType(value = ANY, strict = false)
@@ -59,17 +57,19 @@ public class CaseOperations {
         String operation =  newRequestParameter.getOperation().getOperation();
         
         CBCCase result = (CBCCase)connection.newQ(new TypeReference<CBCCase>() {})
-            .collection("helpdesk").collection("cases", newRequestParameter.getCaseId())
-            .collection(operation)
-            .create(newRequestParameter.buildEntity());
+                .collection(HELPDESK)
+                .collection(CASES, newRequestParameter.getCaseId())
+                .action(operation, HttpMethod.POST, newRequestParameter.buildEntity());
 
 
         NewConversationMessage message = new NewConversationMessage();
         message.setText(newRequestParameter.getComment());
         message.setConversationId(newRequestParameter.getCaseId());
         message.setType("message");
-        ConversationMessageOperations messageOperation  = new ConversationMessageOperations();
-        messageOperation.createConversationMessage(connection, message);
+
+        new ConversationMessageOperations()
+                .createConversationMessage(connection, message);
+
         return result;
     }    
 }

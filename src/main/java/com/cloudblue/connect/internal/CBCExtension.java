@@ -1,6 +1,7 @@
 package com.cloudblue.connect.internal;
 
 import com.cloudblue.connect.api.parameters.filters.*;
+import com.cloudblue.connect.api.parameters.requests.*;
 import com.cloudblue.connect.internal.operations.CBCConfiguration;
 import com.cloudblue.connect.internal.sources.CBCWebhookConfig;
 
@@ -27,5 +28,16 @@ import org.mule.runtime.extension.api.annotation.Configurations;
                 OutFilter.class,
                 NotFilter.class,
                 RawRQLFilter.class
+        })
+@SubTypeMapping(
+        baseType = RequestAction.class,
+        subTypes = {
+                ApproveRequest.class,
+                AssignRequest.class,
+                InquireRequest.class,
+                PendRequest.class,
+                PurchaseRequest.class,
+                RejectRequest.class,
+                UnassignRequest.class
         })
 public class CBCExtension {}

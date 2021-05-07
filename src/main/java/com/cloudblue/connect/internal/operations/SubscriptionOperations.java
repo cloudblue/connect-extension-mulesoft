@@ -1,5 +1,6 @@
 package com.cloudblue.connect.internal.operations;
 
+import com.cloudblue.connect.api.clients.constants.HttpMethod;
 import com.cloudblue.connect.api.models.CBCAsset;
 import com.cloudblue.connect.api.parameters.AdminHoldRequestParameter;
 import com.cloudblue.connect.api.parameters.Embeddable;
@@ -7,6 +8,7 @@ import com.cloudblue.connect.api.models.CBCRequest;
 import com.cloudblue.connect.api.exceptions.CBCException;
 import com.cloudblue.connect.api.parameters.NewPurchaseRequestParameter;
 import com.cloudblue.connect.api.parameters.common.ResourceActionParameter;
+import com.cloudblue.connect.api.parameters.requests.RequestAction;
 import com.cloudblue.connect.internal.operations.connections.CBCConnection;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -15,6 +17,8 @@ import org.mule.runtime.extension.api.annotation.param.Connection;
 import org.mule.runtime.extension.api.annotation.param.MediaType;
 import org.mule.runtime.extension.api.annotation.param.ParameterGroup;
 import org.mule.runtime.extension.api.annotation.param.display.DisplayName;
+
+import static com.cloudblue.connect.api.clients.constants.CBCAPIConstants.CollectionKeys.*;
 import static org.mule.runtime.extension.api.annotation.param.MediaType.ANY;
 
 
@@ -29,7 +33,7 @@ public class SubscriptionOperations {
 
         return (CBCRequest) connection
                 .newQ(new TypeReference<CBCRequest>() {})
-                .collection("requests", getRequestParameter.getId())
+                .collection(REQUESTS, getRequestParameter.getId())
                 .get();
     }
     
@@ -42,7 +46,7 @@ public class SubscriptionOperations {
 
         return (CBCAsset) connection
                 .newQ(new TypeReference<CBCAsset>() {})
-                .collection("assets", getAssetParameter.getId())
+                .collection(ASSETS, getAssetParameter.getId())
                 .get();
     }
 
@@ -51,7 +55,7 @@ public class SubscriptionOperations {
     ) throws CBCException {
 
         return (CBCRequest) connection.newQ(new TypeReference<CBCRequest>() {})
-                .collection("requests")
+                .collection(REQUESTS)
                 .create(embeddable.buildEntity());
     }
 
@@ -73,5 +77,16 @@ public class SubscriptionOperations {
                     AdminHoldRequestParameter newRequestParameter
     ) throws CBCException {
         return this.createRequest(connection, newRequestParameter);
+    }
+
+    @MediaType(value = ANY, strict = false)
+    @DisplayName("Request Action")
+    public CBCRequest performRequestAction(
+            @Connection CBCConnection connection,
+            RequestAction requestAction
+    ) throws CBCException {
+        return (CBCRequest) connection.newQ(new TypeReference<CBCRequest>() {})
+                .collection(REQUESTS, requestAction.getId())
+                .action(requestAction.action(), HttpMethod.POST, requestAction.buildEntity());
     }
 }

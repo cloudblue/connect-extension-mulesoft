@@ -15,5 +15,9 @@ public class CBCAPIConstants {
 
         public static final String NOTIFICATIONS = "notifications";
         public static final String WEBHOOKS = "webhooks";
+        public static final String REQUESTS = "requests";
+        public static final String ASSETS = "assets";
+        public static final String HELPDESK = "helpdesk";
+        public static final String CASES = "cases";
     }
 }
