@@ -166,10 +166,10 @@ public class Client extends BaseClient {
             );
         }
 
-        public Object action(String action, HttpMethod method) throws CBCException {
+        public <S> Object action(String action, HttpMethod method, S payload) throws CBCException {
             return client.exchange(
                     getFinalUrl(action),
-                    null,
+                    payload,
                     method,
                     null,
                     type
