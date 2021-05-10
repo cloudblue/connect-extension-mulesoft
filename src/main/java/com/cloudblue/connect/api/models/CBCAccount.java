@@ -16,11 +16,21 @@ public class CBCAccount implements CBCEntity {
     @Optional
     @JsonProperty
     private String id;
+
+    @Parameter
+    @Optional
+    @JsonProperty
+    private String version;
     
     @Parameter
     @JsonProperty("name")
     private String companyName;
-    
+
+    @Parameter
+    @Optional    
+    @JsonProperty("type")
+    private String type;
+   
     @Parameter
     @Optional
     @JsonProperty("external_id")
@@ -30,7 +40,32 @@ public class CBCAccount implements CBCEntity {
     @Optional
     @JsonProperty("external_uid")
     private String externalUid;
+
+    @Parameter
+    @Optional
+    @JsonProperty("parent")
+    private CBCUser parent;
     
+    @Parameter
+    @Optional
+    @JsonProperty("owner")
+    private CBCUser owner;
+
+    @Parameter
+    @Optional    
+    @JsonProperty("hub")
+    private CBCUser hub;
+
+    @Parameter
+    @Optional    
+    @JsonProperty("tax_id")
+    private String taxId;
+
+    @Parameter
+    @Optional
+    @JsonProperty("events")
+    private CBCEvents events;
+
     @Parameter
     @JsonProperty("contact_info")
     private CBCContactInfo contactInfo;
@@ -43,12 +78,28 @@ public class CBCAccount implements CBCEntity {
         this.id = id;
     }
 
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
     public String getCompanyName() {
         return companyName;
     }
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getExternalId() {
@@ -69,6 +120,46 @@ public class CBCAccount implements CBCEntity {
         this.externalUid = externalUid;
     }
 
+    public CBCUser getParent() {
+        return parent;
+    }
+
+    public void setParent(CBCUser parent) {
+        this.parent = parent;
+    }
+
+    public CBCUser getOwner() {
+        return owner;
+    }
+
+    public void setOwner(CBCUser owner) {
+        this.owner = owner;
+    }
+
+    public CBCUser getHub() {
+        return hub;
+    }
+
+    public void setHub(CBCUser hub) {
+        this.hub = hub;
+    }
+
+    public String getTaxId() {
+        return taxId;
+    }
+
+    public void setTaxId(String taxId) {
+        this.taxId = taxId;
+    }
+
+    public CBCEvents getEvents() {
+        return events;
+    }
+
+    public void setEvents(CBCEvents events) {
+        this.events = events;
+    }
+
     public CBCContactInfo getContactInfo() {
         return contactInfo;
     }
@@ -76,6 +167,4 @@ public class CBCAccount implements CBCEntity {
     public void setContactInfo(CBCContactInfo contactInfo) {
         this.contactInfo = contactInfo;
     }
-    
-    
 }

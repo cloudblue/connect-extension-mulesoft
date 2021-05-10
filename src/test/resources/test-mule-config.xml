@@ -49,6 +49,16 @@
     </flow>
 
 
+    <flow name="getTierAccountServer">
+        <http:listener path="/tier/accounts/${tierAccount_id}" config-ref="listenerConfig"/>
+        <set-payload value="{'id':'${tierAccount_id}'}"/>
+    </flow>
+
+    <flow name="listTierAccountsServer">
+        <http:listener path="/tier/accounts/" config-ref="listenerConfig"/>
+        <set-payload value="[{'id':'${tierAccount_id}'}]"/>
+    </flow>
+
     <cloudblue-connect:config name="CloudBlue_Connect_Config_Test">
         <cloudblue-connect:connection token="ApiKey SU-000-000-000:fake-token-001"
                                       connectionTimeout="20000"
@@ -67,6 +77,11 @@
 
     <flow name="getCase">
         <cloudblue-connect:get-case config-ref="CloudBlue_Connect_Config_Test" id="${case_id}"/>
+    </flow>
+
+    <flow name="getTierAccount">
+        <cloudblue-connect:get-tier-account config-ref="CloudBlue_Connect_Config_Test" 
+                                        id="${tierAccount_id}"/>
     </flow>
 
     <flow name="listRequestsWithFilter">
@@ -142,6 +157,22 @@
         </cloudblue-connect:list-assets>
     </flow>
 
+    <flow name="listTierAccountsWithoutFilter">
+        <cloudblue-connect:list-tier-accounts config-ref="CloudBlue_Connect_Config_Test"/>
+    </flow>
+
+    <flow name="listTierAccountsWithFilter">
+        <cloudblue-connect:list-tier-accounts config-ref="CloudBlue_Connect_Config_Test">
+            <cloudblue-connect:filter >
+                <cloudblue-connect:list-filter type="AND" >
+                    <cloudblue-connect:filters >
+                        <cloudblue-connect:mono-filter type="EQ" property="external_id" value="ABCD-0000-0000" />
+                        <cloudblue-connect:mono-filter type="NE" property="name" value="pepe" />
+                    </cloudblue-connect:filters>
+                </cloudblue-connect:list-filter>
+            </cloudblue-connect:filter>
+        </cloudblue-connect:list-tier-accounts>
+    </flow>
 
 
 

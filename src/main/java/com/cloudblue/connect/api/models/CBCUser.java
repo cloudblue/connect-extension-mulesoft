@@ -17,6 +17,9 @@ public class CBCUser implements CBCEntity {
     @JsonProperty
     private String name;
 
+    @JsonProperty
+    private String externalId;
+    
     public String getId() {
         return id;
     }
@@ -33,4 +36,13 @@ public class CBCUser implements CBCEntity {
         this.name = name;
     }    
  
+    public String getExternalId() {
+        return externalId;
+    }
+
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
+    }    
+
+
 }
