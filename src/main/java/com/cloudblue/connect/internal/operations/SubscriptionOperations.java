@@ -9,6 +9,7 @@ import com.cloudblue.connect.api.exceptions.CBCException;
 import com.cloudblue.connect.api.parameters.NewPurchaseRequestParameter;
 import com.cloudblue.connect.api.parameters.common.ResourceActionParameter;
 import com.cloudblue.connect.api.parameters.requests.RequestAction;
+import com.cloudblue.connect.api.parameters.requests.UpdateRequestParameter;
 import com.cloudblue.connect.internal.operations.connections.CBCConnection;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -88,5 +89,16 @@ public class SubscriptionOperations {
         return (CBCRequest) connection.newQ(new TypeReference<CBCRequest>() {})
                 .collection(REQUESTS, requestAction.getId())
                 .action(requestAction.action(), HttpMethod.POST, requestAction.buildEntity());
+    }
+
+    @MediaType(value = ANY, strict = false)
+    @DisplayName("Update Request")
+    public CBCRequest updateRequest(
+            @Connection CBCConnection connection,
+            UpdateRequestParameter requestParameter
+    ) throws CBCException {
+        return (CBCRequest) connection.newQ(new TypeReference<CBCRequest>() {})
+                .collection(REQUESTS, requestParameter.getId())
+                .update(requestParameter.buildEntity());
     }
 }
