@@ -1,5 +1,6 @@
 package com.cloudblue.connect.test.internal.operations;
 
+import com.cloudblue.connect.api.models.CBCAccount;
 import com.cloudblue.connect.api.models.CBCAsset;
 import com.cloudblue.connect.api.models.CBCRequest;
 import com.cloudblue.connect.api.models.CBCCase;
@@ -30,6 +31,8 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
     private static final String ASSERT_ID = "AS-0000-0000-0000";
     private static final String CASE_ID = "CA-0000-0000";
     private static final String CONVERSATION_ID = "CO-0000-0000";
+    private static final String TIERACCOUNT_ID = "TA-0000-0000";
+
 
     
     @Rule
@@ -47,6 +50,9 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
     @Rule
     public SystemProperty conversationMessagesIdSystemProperty = new SystemProperty("conversation_id", CONVERSATION_ID);
 
+    @Rule
+    public SystemProperty tierAccountIdSystemProperty = new SystemProperty("tierAccount_id", TIERACCOUNT_ID);
+
 
     private final String flow;
     private final Class clazz;
@@ -58,6 +64,7 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
                     {"getRequest", CBCRequest.class, REQUEST_ID},
                     {"getAsset", CBCAsset.class, ASSERT_ID},
                     {"getCase", CBCCase.class, CASE_ID},
+                    {"getTierAccount", CBCAccount.class, TIERACCOUNT_ID},
                     {"listRequestsWithFilter", null, null},
                     {"listRequestsWithoutFilter", null, null},
                     {"listAssetsWithFilter", null, null},
@@ -65,7 +72,9 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
                     {"listCasesWithFilter", null, null},
                     {"listCasesWithoutFilter", null, null},
                     {"listConversationMessagesWithFilter", null, null},
-                    {"listConversationMessagesWithoutFilter", null, null}
+                    {"listConversationMessagesWithoutFilter", null, null},
+                    {"listTierAccountsWithFilter", null, null},
+                    {"listTierAccountsWithoutFilter", null, null}
                 }
         );
     }

@@ -2,7 +2,7 @@ package com.cloudblue.connect.internal.operations;
 
 import com.cloudblue.connect.internal.operations.connections.CBCConnection;
 import com.cloudblue.connect.api.models.CBCConversationMessages;
-import com.cloudblue.connect.api.parameters.NewConversationMessage;
+import com.cloudblue.connect.api.parameters.NewConversationMessageParameter;
 import com.cloudblue.connect.api.exceptions.CBCException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.mule.runtime.extension.api.annotation.param.Connection;
@@ -20,7 +20,7 @@ public class ConversationMessageOperations {
     public CBCConversationMessages createConversationMessage(
         @Connection CBCConnection connection,
         @ParameterGroup(name="Create Message Conversation Details")
-            NewConversationMessage newRequestParameter
+            NewConversationMessageParameter newRequestParameter
     ) throws CBCException {
         return (CBCConversationMessages) connection.newQ(new TypeReference<CBCConversationMessages>() {})
         .collection("conversations", newRequestParameter.getConversationId())

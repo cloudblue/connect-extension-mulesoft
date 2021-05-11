@@ -4,7 +4,7 @@ import com.cloudblue.connect.api.models.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.mule.runtime.extension.api.annotation.param.Parameter;
 
-public class NewConversationMessage implements Embeddable {
+public class NewConversationMessageParameter implements Embeddable {
 
     @Parameter
     private String conversationId;

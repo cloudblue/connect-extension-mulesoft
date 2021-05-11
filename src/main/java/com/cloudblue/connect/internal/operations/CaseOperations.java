@@ -3,7 +3,7 @@ package com.cloudblue.connect.internal.operations;
 import com.cloudblue.connect.api.clients.constants.HttpMethod;
 import com.cloudblue.connect.internal.operations.connections.CBCConnection;
 import com.cloudblue.connect.api.models.CBCCase;
-import com.cloudblue.connect.api.parameters.NewConversationMessage;
+import com.cloudblue.connect.api.parameters.NewConversationMessageParameter;
 import com.cloudblue.connect.api.exceptions.CBCException;
 import com.cloudblue.connect.api.parameters.NewHelpdeskCaseParameter;
 import com.cloudblue.connect.api.parameters.ChangeStatusHelpdeskCaseParameter;
@@ -62,7 +62,7 @@ public class CaseOperations {
                 .action(operation, HttpMethod.POST, newRequestParameter.buildEntity());
 
 
-        NewConversationMessage message = new NewConversationMessage();
+        NewConversationMessageParameter message = new NewConversationMessageParameter();
         message.setText(newRequestParameter.getComment());
         message.setConversationId(newRequestParameter.getCaseId());
         message.setType("message");
