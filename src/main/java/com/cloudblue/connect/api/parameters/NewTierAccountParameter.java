@@ -110,23 +110,7 @@ public class NewTierAccountParameter implements Embeddable {
             tierAccount.getParent().setId(this.parentId);
         }    
         tierAccount.setCompanyName(this.name);
-        tierAccount.setContactInfo(new CBCContactInfo());
-        tierAccount.getContactInfo().setAddressLine1(this.contactInfo.getAddressLine1());
-        tierAccount.getContactInfo().setAddressLine2(this.contactInfo.getAddressLine2());
-        tierAccount.getContactInfo().setCity(this.contactInfo.getCity());
-        tierAccount.getContactInfo().setState(this.contactInfo.getState());
-        tierAccount.getContactInfo().setPostalCode(this.contactInfo.getPostalCode());
-        tierAccount.getContactInfo().setCountry(this.contactInfo.getCountry());
-        tierAccount.getContactInfo().setContact(new CBCContact()); 
-        tierAccount.getContactInfo().getContact().setFirstName(this.getContactInfo().getContact().getFirstName());  
-        tierAccount.getContactInfo().getContact().setLastName(this.getContactInfo().getContact().getLastName());  
-        tierAccount.getContactInfo().getContact().setEmail(this.getContactInfo().getContact().getEmail());  
-        tierAccount.getContactInfo().getContact().setPhoneNumber(new CBCPhoneNumber());
-        tierAccount.getContactInfo().getContact().getPhoneNumber().setAreaCode(this.getContactInfo().getContact().getPhoneNumber().getAreaCode());     
-        tierAccount.getContactInfo().getContact().getPhoneNumber().setCountryCode(this.getContactInfo().getContact().getPhoneNumber().getCountryCode());
-        tierAccount.getContactInfo().getContact().getPhoneNumber().setExtension(this.getContactInfo().getContact().getPhoneNumber().getExtension());
-        tierAccount.getContactInfo().getContact().getPhoneNumber().setPhoneNumber(this.getContactInfo().getContact().getPhoneNumber().getPhoneNumber());
-
+        tierAccount.setContactInfo(this.contactInfo);
         return tierAccount;    
     }
 }

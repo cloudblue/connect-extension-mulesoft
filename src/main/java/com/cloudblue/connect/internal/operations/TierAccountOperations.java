@@ -2,7 +2,6 @@ package com.cloudblue.connect.internal.operations;
 
 import com.cloudblue.connect.internal.operations.connections.CBCConnection;
 import com.cloudblue.connect.api.models.CBCAccount;
-import com.cloudblue.connect.api.models.common.CBCEntity;
 import com.cloudblue.connect.api.parameters.NewTierAccountParameter;
 import com.cloudblue.connect.api.exceptions.CBCException;
 import com.cloudblue.connect.api.parameters.common.ResourceActionParameter;
@@ -15,13 +14,7 @@ import org.mule.runtime.extension.api.annotation.param.display.DisplayName;
 
 import static org.mule.runtime.extension.api.annotation.param.MediaType.ANY;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-
 public class TierAccountOperations {
-    
-    private final Logger LOGGER = LoggerFactory.getLogger(CaseOperations.class);
     
     @MediaType(value = ANY, strict = false)
     @DisplayName("Get Tier Account")
@@ -34,7 +27,7 @@ public class TierAccountOperations {
             .collection("tier").collection("accounts", getTierAccountParameter.getId())
             .get();
     }
-
+   
     @MediaType(value = ANY, strict = false)
     @DisplayName("Create/Update Tier Account")
     public CBCAccount createTierAccount(

@@ -44,17 +44,17 @@ public class CBCAccount implements CBCEntity {
     @Parameter
     @Optional
     @JsonProperty("parent")
-    private CBCUser parent;
+    private CBCAccount parent;
     
     @Parameter
     @Optional
     @JsonProperty("owner")
-    private CBCUser owner;
+    private CBCAccount owner;
 
     @Parameter
     @Optional    
     @JsonProperty("hub")
-    private CBCUser hub;
+    private CBCHub hub;
 
     @Parameter
     @Optional    
@@ -120,27 +120,27 @@ public class CBCAccount implements CBCEntity {
         this.externalUid = externalUid;
     }
 
-    public CBCUser getParent() {
+    public CBCAccount getParent() {
         return parent;
     }
 
-    public void setParent(CBCUser parent) {
+    public void setParent(CBCAccount parent) {
         this.parent = parent;
     }
 
-    public CBCUser getOwner() {
+    public CBCAccount getOwner() {
         return owner;
     }
 
-    public void setOwner(CBCUser owner) {
+    public void setOwner(CBCAccount owner) {
         this.owner = owner;
     }
 
-    public CBCUser getHub() {
+    public CBCHub getHub() {
         return hub;
     }
 
-    public void setHub(CBCUser hub) {
+    public void setHub(CBCHub hub) {
         this.hub = hub;
     }
 
