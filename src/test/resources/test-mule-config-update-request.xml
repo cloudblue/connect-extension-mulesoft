@@ -1,0 +1,36 @@
+<mule xmlns="http://www.mulesoft.org/schema/mule/core"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:http="http://www.mulesoft.org/schema/mule/http"
+      xmlns:cloudblue-connect="http://www.mulesoft.org/schema/mule/cloudblue-connect"
+      xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core
+            http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+            http://www.mulesoft.org/schema/mule/http 
+            http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+            http://www.mulesoft.org/schema/mule/cloudblue-connect 
+            http://www.mulesoft.org/schema/mule/cloudblue-connect/current/mule-cloudblue-connect.xsd">
+    
+    <http:listener-config name="listenerConfig">
+        <http:listener-connection host="localhost" port="${port}"/>
+    </http:listener-config>
+    
+    <flow name="updateRequestServer">
+        <http:listener path="/requests/${request_id}" config-ref="listenerConfig"/>
+        <set-payload value="{'id':'${request_id}'}"/>
+    </flow>
+
+    <cloudblue-connect:config name="CloudBlue_Connect_Config_Test">
+        <cloudblue-connect:connection token="ApiKey SU-000-000-000:fake-token-001"
+                                      connectionTimeout="20000"
+                                      endpoint="http://localhost:${port}"/>
+    </cloudblue-connect:config>
+
+    <flow name="updateRequest">
+        <cloudblue-connect:update-request config-ref="CloudBlue_Connect_Config_Test">
+            <cloudblue-connect:request-parameter id="${request_id}" >
+                <cloudblue-connect:params >
+                    <cloudblue-connect:cbc-request-param id="param1" value="value1" />
+                </cloudblue-connect:params>
+            </cloudblue-connect:request-parameter>
+        </cloudblue-connect:update-request>
+    </flow>
+</mule>
