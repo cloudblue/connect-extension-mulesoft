@@ -7,28 +7,28 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CBCUser implements CBCEntity {
+
+public class CBCTiers implements CBCEntity {
 
     @JsonProperty
-    private String id;
+    private CBCAccount tier1;   
 
     @JsonProperty
-    private String name;
-    
-    public String getId() {
-        return id;
+    private CBCAccount tier2;   
+
+    public CBCAccount getTier1() {
+        return tier1;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }    
+    public void setTier1(CBCAccount tier1) {
+        this.tier1 = tier1;
+    }  
 
-    public String getName() {
-        return name;
+    public CBCAccount getTier2() {
+        return tier2;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }    
-
+    public void setTier2(CBCAccount tier2) {
+        this.tier2 = tier2;
+    }  
 }

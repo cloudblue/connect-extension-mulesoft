@@ -1,6 +1,9 @@
 package com.cloudblue.connect.test.internal.operations;
 
 import com.cloudblue.connect.api.models.CBCAccount;
+import com.cloudblue.connect.api.models.CBCAccountRequest;
+import com.cloudblue.connect.api.models.CBCTierConfig;
+import com.cloudblue.connect.api.models.CBCTierConfigRequest;
 import com.cloudblue.connect.api.models.CBCAsset;
 import com.cloudblue.connect.api.models.CBCRequest;
 import com.cloudblue.connect.api.models.CBCCase;
@@ -32,6 +35,10 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
     private static final String CASE_ID = "CA-0000-0000";
     private static final String CONVERSATION_ID = "CO-0000-0000";
     private static final String TIERACCOUNT_ID = "TA-0000-0000";
+    private static final String TIERACCOUNTREQUEST_ID = "TAR-0000-0000";
+    private static final String TIERCONFIG_ID = "TC-0000-0000";
+    private static final String TIERCONFIGREQUEST_ID = "TCR-0000-0000";
+
 
 
     
@@ -53,6 +60,14 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
     @Rule
     public SystemProperty tierAccountIdSystemProperty = new SystemProperty("tierAccount_id", TIERACCOUNT_ID);
 
+    @Rule
+    public SystemProperty tierAccountRequestIdSystemProperty = new SystemProperty("tierAccountRequest_id", TIERACCOUNTREQUEST_ID);
+
+    @Rule
+    public SystemProperty tierConfigIdSystemProperty = new SystemProperty("tierConfig_id", TIERCONFIG_ID);
+
+    @Rule
+    public SystemProperty tierConfigRequestIdSystemProperty = new SystemProperty("tierConfigRequest_id", TIERCONFIGREQUEST_ID);
 
     private final String flow;
     private final Class clazz;
@@ -61,21 +76,30 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
-                    {"getRequest", CBCRequest.class, REQUEST_ID},
-                    {"getAsset", CBCAsset.class, ASSERT_ID},
-                    {"getCase", CBCCase.class, CASE_ID},
-                    {"getTierAccount", CBCAccount.class, TIERACCOUNT_ID},
-                    {"listRequestsWithFilter", null, null},
-                    {"listRequestsWithoutFilter", null, null},
-                    {"listAssetsWithFilter", null, null},
-                    {"listAssetsWithoutFilter", null, null},
-                    {"listCasesWithFilter", null, null},
-                    {"listCasesWithoutFilter", null, null},
-                    {"listConversationMessagesWithFilter", null, null},
-                    {"listConversationMessagesWithoutFilter", null, null},
-                    {"listTierAccountsWithFilter", null, null},
-                    {"listTierAccountsWithoutFilter", null, null}
-                }
+                {"getRequest", CBCRequest.class, REQUEST_ID},
+                {"getAsset", CBCAsset.class, ASSERT_ID},
+                {"getCase", CBCCase.class, CASE_ID},
+                {"getTierAccount", CBCAccount.class, TIERACCOUNT_ID},
+                {"getTierAccountRequest", CBCAccountRequest.class, TIERACCOUNTREQUEST_ID},
+                {"getTierConfig", CBCTierConfig.class, TIERCONFIG_ID},
+                {"getTierConfigRequest", CBCTierConfigRequest.class, TIERCONFIGREQUEST_ID},                
+                {"listRequestsWithFilter", null, null},
+                {"listRequestsWithoutFilter", null, null},
+                {"listAssetsWithFilter", null, null},
+                {"listAssetsWithoutFilter", null, null},
+                {"listCasesWithFilter", null, null},
+                {"listCasesWithoutFilter", null, null},
+                {"listConversationMessagesWithFilter", null, null},
+                {"listConversationMessagesWithoutFilter", null, null},
+                {"listTierAccountsWithFilter", null, null},
+                {"listTierAccountsWithoutFilter", null, null},
+                {"listTierAccountRequestsWithFilter", null, null},
+                {"listTierAccountRequestsWithoutFilter", null, null},
+                {"listTierConfigsWithFilter", null, null},
+                {"listTierConfigsWithoutFilter", null, null},
+                {"listTierConfigRequestsWithFilter", null, null},
+                {"listTierConfigRequestsWithoutFilter", null, null}
+            }
         );
     }
 

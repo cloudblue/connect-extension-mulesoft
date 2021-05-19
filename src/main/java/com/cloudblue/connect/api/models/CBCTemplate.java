@@ -7,13 +7,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CBCUser implements CBCEntity {
+public class CBCTemplate implements CBCEntity {
 
     @JsonProperty
     private String id;
 
     @JsonProperty
     private String name;
+
+    @JsonProperty
+    private String representation;
     
     public String getId() {
         return id;
@@ -29,6 +32,14 @@ public class CBCUser implements CBCEntity {
 
     public void setName(String name) {
         this.name = name;
+    }    
+ 
+    public String getRepresentation() {
+        return representation;
+    }
+
+    public void setRepresentation(String representation) {
+        this.representation = representation;
     }    
 
 }

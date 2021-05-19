@@ -155,6 +155,7 @@
                                         <exclude>com.cloudblue.connect.api.clients</exclude>
                                         <exclude>com.cloudblue.connect.api.clients.parsers.jackson</exclude>
                                         <exclude>com.cloudblue.connect.internal.sources.connections</exclude>
+                                        <exclude>com.cloudblue.connect.api.parameters.accounts</exclude>
                                     </excludes>
                                     <limits>
                                         <limit>

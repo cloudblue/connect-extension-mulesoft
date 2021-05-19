@@ -13,9 +13,9 @@
         <http:listener-connection host="localhost" port="${port}"/>
     </http:listener-config>
     
-    <flow name="createTierAccountCaseServer">
-        <http:listener path="/tier/accounts" config-ref="listenerConfig"/>
-        <set-payload value="{'id':'${tierAccount_id}'}"/>
+    <flow name="pendingTierAccountRequestServer">
+        <http:listener path="/tier/config-requests/${tierConfigRequest_id}/pending" config-ref="listenerConfig"/>
+        <set-payload value="{'id':'${tierConfigRequest_id}'}"/>
     </flow>
 
     <cloudblue-connect:config name="CloudBlue_Connect_Config_Test">
@@ -24,27 +24,10 @@
                                       endpoint="http://localhost:${port}"/>
     </cloudblue-connect:config>
 
-    <flow name="createTierAccount">
-		<cloudblue-connect:create-tier-account 
-            config-ref="CloudBlue_Connect_Config_Test" 
-            type="reseller"
-            name="toto" 
-            externalId="ABCD-325-557-281" 
-            externalUid="dsfdsfdsfsd2">
-            <cloudblue-connect:contact-info addressLine1="H-23"
-                addressLine2="Lone Street"
-                city="MSW" state="CI"
-                postalCode="762635" country="US">
-                <cloudblue-connect:contact firstName="First"
-                    lastName="Last"
-                    email="first.last@example.com">
-                    <cloudblue-connect:phone-number areaCode="00"
-                        countryCode="+34"
-                        extension="0"
-                        phoneNumber="555555555"/>
-                    </cloudblue-connect:contact>                               
-                </cloudblue-connect:contact-info>
-		</cloudblue-connect:create-tier-account>
+    <flow name="pendingTierConfigRequest">
+        <cloudblue-connect:pending-tier-config-request 
+            config-ref="CloudBlue_Connect_Config_Test"
+            tierConfigRequestId="TCR-0000-0000">
+        </cloudblue-connect:pending-tier-config-request>
     </flow>
-
 </mule>
