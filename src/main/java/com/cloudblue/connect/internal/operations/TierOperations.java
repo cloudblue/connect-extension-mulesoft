@@ -84,7 +84,7 @@ public class TierOperations {
         return (CBCAccountRequest) connection.newQ(new TypeReference<CBCAccountRequest>() {})
             .collection("tier")
             .collection("account-requests",newRequestParameter.getTierAccountRequestId())
-            .action("accept", HttpMethod.POST,"");
+            .action("accept", HttpMethod.POST,null);
         }    
 
     @MediaType(value = ANY, strict = false)
@@ -160,7 +160,7 @@ public class TierOperations {
         return (CBCTierConfigRequest) connection.newQ(new TypeReference<CBCTierConfigRequest>() {})
             .collection("tier")
             .collection("config-requests",newRequestParameter.getTierConfigRequestId())
-            .action("inquire", HttpMethod.POST,"");
+            .action("inquire", HttpMethod.POST,null);
         }  
 
     @MediaType(value = ANY, strict = false)
@@ -199,7 +199,7 @@ public class TierOperations {
         return (CBCTierConfigRequest) connection.newQ(new TypeReference<CBCTierConfigRequest>() {})
             .collection("tier")
             .collection("config-requests",newRequestParameter.getTierConfigRequestId())
-            .action("", HttpMethod.PUT, newRequestParameter.getParams());
+            .update(newRequestParameter.getParams());
         }  
     
     

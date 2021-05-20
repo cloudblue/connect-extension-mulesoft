@@ -16,11 +16,9 @@ public class CBCConfiguration implements CBCEntity {
     @JsonProperty
     private String id;
 
-    @Parameter
     @JsonProperty
     private String name;
 
-    @Parameter
     @JsonProperty
     private CBCAccount account;
 
@@ -36,7 +34,6 @@ public class CBCConfiguration implements CBCEntity {
     @JsonProperty
     private CBCConnection connection;
 
-    @Parameter
     @JsonProperty
     private CBCEvent events;
 
