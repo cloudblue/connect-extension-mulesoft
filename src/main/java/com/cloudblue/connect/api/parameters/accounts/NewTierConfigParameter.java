@@ -4,7 +4,6 @@ import com.cloudblue.connect.api.models.*;
 import com.cloudblue.connect.api.parameters.Embeddable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.mule.runtime.extension.api.annotation.param.Optional;
 import org.mule.runtime.extension.api.annotation.param.Parameter;
 import java.util.List;
 import java.util.ArrayList;

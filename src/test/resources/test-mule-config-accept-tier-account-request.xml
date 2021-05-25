@@ -27,7 +27,7 @@
     <flow name="acceptTierAccountRequest">
         <cloudblue-connect:accept-tier-account-request 
             config-ref="CloudBlue_Connect_Config_Test"
-            tierAccountRequestId="TAR-0000-0000">
+            id="TAR-0000-0000">
         </cloudblue-connect:accept-tier-account-request>
     </flow>
 </mule>

@@ -27,7 +27,7 @@
     <flow name="pendingTierConfigRequest">
         <cloudblue-connect:pending-tier-config-request 
             config-ref="CloudBlue_Connect_Config_Test"
-            tierConfigRequestId="TCR-0000-0000">
+            id="TCR-0000-0000">
         </cloudblue-connect:pending-tier-config-request>
     </flow>
 </mule>

@@ -6,12 +6,10 @@ import com.cloudblue.connect.api.models.CBCAccount;
 import com.cloudblue.connect.api.models.CBCAccountRequest;
 import com.cloudblue.connect.api.models.CBCTierConfig;
 import com.cloudblue.connect.api.models.CBCTierConfigRequest;
-import com.cloudblue.connect.api.parameters.accounts.AcceptTierAccountRequestParameter;
 import com.cloudblue.connect.api.parameters.accounts.IgnoreTierAccountRequestParameter;
 import com.cloudblue.connect.api.parameters.accounts.NewTierAccountParameter;
 import com.cloudblue.connect.api.parameters.accounts.NewTierConfigParameter;
 import com.cloudblue.connect.api.parameters.accounts.ApproveTierConfigRequestParameter;
-import com.cloudblue.connect.api.parameters.accounts.ActionTierConfigRequestParameter;
 import com.cloudblue.connect.api.parameters.accounts.UpdateTierConfigRequestParameter;
 import com.cloudblue.connect.api.exceptions.CBCException;
 import com.cloudblue.connect.api.parameters.common.ResourceActionParameter;
@@ -79,11 +77,11 @@ public class TierOperations {
     public CBCAccountRequest acceptTierAccountRequest(
             @Connection CBCConnection connection,
             @ParameterGroup(name="Accept Tier Account Request")
-                    AcceptTierAccountRequestParameter newRequestParameter
+                    ResourceActionParameter newRequestParameter
     ) throws CBCException {
         return (CBCAccountRequest) connection.newQ(new TypeReference<CBCAccountRequest>() {})
             .collection("tier")
-            .collection("account-requests",newRequestParameter.getTierAccountRequestId())
+            .collection("account-requests",newRequestParameter.getId())
             .action("accept", HttpMethod.POST,null);
         }    
 
@@ -155,11 +153,11 @@ public class TierOperations {
     public CBCTierConfigRequest inquireTierConfigRequest(
         @Connection CBCConnection connection,
         @ParameterGroup(name="Inquire Tier Account Request")
-        ActionTierConfigRequestParameter newRequestParameter
+        ResourceActionParameter newRequestParameter
     ) throws CBCException {
         return (CBCTierConfigRequest) connection.newQ(new TypeReference<CBCTierConfigRequest>() {})
             .collection("tier")
-            .collection("config-requests",newRequestParameter.getTierConfigRequestId())
+            .collection("config-requests",newRequestParameter.getId())
             .action("inquire", HttpMethod.POST,null);
         }  
 
@@ -168,11 +166,11 @@ public class TierOperations {
     public CBCTierConfigRequest pendingTierConfigRequest(
         @Connection CBCConnection connection,
         @ParameterGroup(name="Set Pending Tier Account Request")
-        ActionTierConfigRequestParameter newRequestParameter
+        ResourceActionParameter newRequestParameter
     ) throws CBCException {
         return (CBCTierConfigRequest) connection.newQ(new TypeReference<CBCTierConfigRequest>() {})
             .collection("tier")
-            .collection("config-requests",newRequestParameter.getTierConfigRequestId())
+            .collection("config-requests",newRequestParameter.getId())
             .action("pending", HttpMethod.POST,"");
         }  
 
@@ -181,11 +179,11 @@ public class TierOperations {
     public CBCTierConfigRequest failTierConfigRequest(
         @Connection CBCConnection connection,
         @ParameterGroup(name="Set Fail Tier Account Request")
-        ActionTierConfigRequestParameter newRequestParameter
+        ResourceActionParameter newRequestParameter
     ) throws CBCException {
         return (CBCTierConfigRequest) connection.newQ(new TypeReference<CBCTierConfigRequest>() {})
             .collection("tier")
-            .collection("config-requests",newRequestParameter.getTierConfigRequestId())
+            .collection("config-requests",newRequestParameter.getId())
             .action("fail", HttpMethod.POST,"");
         }  
 
