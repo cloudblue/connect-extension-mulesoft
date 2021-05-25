@@ -199,10 +199,8 @@ public class TierOperations {
         return (CBCTierConfigRequest) connection.newQ(new TypeReference<CBCTierConfigRequest>() {})
             .collection("tier")
             .collection("config-requests",newRequestParameter.getTierConfigRequestId())
-            .update(newRequestParameter.getParams());
+            .update(newRequestParameter.buildEntity());
         }  
-    
-    
 }
 
 
