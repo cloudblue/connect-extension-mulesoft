@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CBCHub implements CBCEntity {
+public class CBCTemplate implements CBCEntity {
 
     @JsonProperty
     private String id;
@@ -16,14 +16,8 @@ public class CBCHub implements CBCEntity {
     private String name;
 
     @JsonProperty
-    private CBCUser company;
-
-    @JsonProperty
-    private String description;
+    private String representation;
     
-    @JsonProperty
-    private CBCEvents events;
-
     public String getId() {
         return id;
     }
@@ -40,28 +34,12 @@ public class CBCHub implements CBCEntity {
         this.name = name;
     }    
  
-    public CBCUser getCompany() {
-        return company;
+    public String getRepresentation() {
+        return representation;
     }
 
-    public void setCompany(CBCUser company) {
-        this.company = company;
-    }    
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }    
-
-    public CBCEvents getEvents() {
-        return events;
-    }
-
-    public void setEvents(CBCEvents events) {
-        this.events = events;
+    public void setRepresentation(String representation) {
+        this.representation = representation;
     }    
 
 }

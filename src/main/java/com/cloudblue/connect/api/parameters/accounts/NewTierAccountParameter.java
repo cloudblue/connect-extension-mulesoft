@@ -1,6 +1,8 @@
-package com.cloudblue.connect.api.parameters;
+package com.cloudblue.connect.api.parameters.accounts;
 
 import com.cloudblue.connect.api.models.*;
+import com.cloudblue.connect.api.parameters.Embeddable;
+
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;

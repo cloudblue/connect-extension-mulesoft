@@ -48,7 +48,6 @@
         <set-payload value="[{'id':'${conversation_id}'}]"/>
     </flow>
 
-
     <flow name="getTierAccountServer">
         <http:listener path="/tier/accounts/${tierAccount_id}" config-ref="listenerConfig"/>
         <set-payload value="{'id':'${tierAccount_id}'}"/>
@@ -57,6 +56,36 @@
     <flow name="listTierAccountsServer">
         <http:listener path="/tier/accounts/" config-ref="listenerConfig"/>
         <set-payload value="[{'id':'${tierAccount_id}'}]"/>
+    </flow>
+
+    <flow name="getTierAccountRequestServer">
+        <http:listener path="/tier/account-requests/${tierAccountRequest_id}" config-ref="listenerConfig"/>
+        <set-payload value="{'id':'${tierAccountRequest_id}'}"/>
+    </flow>
+
+    <flow name="listTierAccountRequestsServer">
+        <http:listener path="/tier/account-requests/" config-ref="listenerConfig"/>
+        <set-payload value="[{'id':'${tierAccountRequest_id}'}]"/>
+    </flow>
+
+    <flow name="getTierConfigServer">
+        <http:listener path="/tier/configs/${tierConfig_id}" config-ref="listenerConfig"/>
+        <set-payload value="{'id':'${tierConfig_id}'}"/>
+    </flow>
+
+    <flow name="listTierConfigsServer">
+        <http:listener path="/tier/configs/" config-ref="listenerConfig"/>
+        <set-payload value="[{'id':'${tierConfig_id}'}]"/>
+    </flow>
+
+    <flow name="getTierConfigRequestServer">
+        <http:listener path="/tier/config-requests/${tierConfigRequest_id}" config-ref="listenerConfig"/>
+        <set-payload value="{'id':'${tierConfigRequest_id}'}"/>
+    </flow>
+
+    <flow name="listTierConfigRequestsServer">
+        <http:listener path="/tier/config-requests/" config-ref="listenerConfig"/>
+        <set-payload value="[{'id':'${tierConfigRequest_id}'}]"/>
     </flow>
 
     <cloudblue-connect:config name="CloudBlue_Connect_Config_Test">
@@ -82,6 +111,21 @@
     <flow name="getTierAccount">
         <cloudblue-connect:get-tier-account config-ref="CloudBlue_Connect_Config_Test" 
                                         id="${tierAccount_id}"/>
+    </flow>
+
+    <flow name="getTierAccountRequest">
+        <cloudblue-connect:get-tier-account-request config-ref="CloudBlue_Connect_Config_Test" 
+                                        id="${tierAccountRequest_id}"/>
+    </flow>
+
+    <flow name="getTierConfig">
+        <cloudblue-connect:get-tier-config config-ref="CloudBlue_Connect_Config_Test" 
+                                        id="${tierConfig_id}"/>
+    </flow>
+
+    <flow name="getTierConfigRequest">
+        <cloudblue-connect:get-tier-config-request config-ref="CloudBlue_Connect_Config_Test" 
+                                        id="${tierConfigRequest_id}"/>
     </flow>
 
     <flow name="listRequestsWithFilter">
@@ -174,6 +218,56 @@
         </cloudblue-connect:list-tier-accounts>
     </flow>
 
+    <flow name="listTierAccountRequestsWithoutFilter">
+        <cloudblue-connect:list-tier-account-requests config-ref="CloudBlue_Connect_Config_Test"/>
+    </flow>
+
+    <flow name="listTierAccountRequestsWithFilter">
+        <cloudblue-connect:list-tier-account-requests config-ref="CloudBlue_Connect_Config_Test">
+            <cloudblue-connect:filter >
+                <cloudblue-connect:list-filter type="AND" >
+                    <cloudblue-connect:filters >
+                        <cloudblue-connect:mono-filter type="EQ" property="external_id" value="ABCD-0000-0000" />
+                        <cloudblue-connect:mono-filter type="NE" property="name" value="pepe" />
+                    </cloudblue-connect:filters>
+                </cloudblue-connect:list-filter>
+            </cloudblue-connect:filter>
+        </cloudblue-connect:list-tier-account-requests>
+    </flow>
+
+    <flow name="listTierConfigsWithoutFilter">
+        <cloudblue-connect:list-tier-configs config-ref="CloudBlue_Connect_Config_Test"/>
+    </flow>
+
+    <flow name="listTierConfigsWithFilter">
+        <cloudblue-connect:list-tier-configs config-ref="CloudBlue_Connect_Config_Test">
+            <cloudblue-connect:filter >
+                <cloudblue-connect:list-filter type="AND" >
+                    <cloudblue-connect:filters >
+                        <cloudblue-connect:mono-filter type="EQ" property="status" value="active" />
+                        <cloudblue-connect:mono-filter type="NE" property="name" value="pepe" />
+                    </cloudblue-connect:filters>
+                </cloudblue-connect:list-filter>
+            </cloudblue-connect:filter>
+        </cloudblue-connect:list-tier-configs>
+    </flow>
+
+    <flow name="listTierConfigRequestsWithoutFilter">
+        <cloudblue-connect:list-tier-config-requests config-ref="CloudBlue_Connect_Config_Test"/>
+    </flow>
+
+    <flow name="listTierConfigRequestsWithFilter">
+        <cloudblue-connect:list-tier-config-requests config-ref="CloudBlue_Connect_Config_Test">
+            <cloudblue-connect:filter >
+                <cloudblue-connect:list-filter type="AND" >
+                    <cloudblue-connect:filters >
+                        <cloudblue-connect:mono-filter type="EQ" property="type" value="setup" />
+                        <cloudblue-connect:mono-filter type="NE" property="status" value="approved" />
+                    </cloudblue-connect:filters>
+                </cloudblue-connect:list-filter>
+            </cloudblue-connect:filter>
+        </cloudblue-connect:list-tier-config-requests>
+    </flow>
 
 
 </mule>

@@ -7,29 +7,28 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CBCConnection implements CBCEntity {
-    
-    @JsonProperty
-    private String id;
+
+public class CBCTiers implements CBCEntity {
 
     @JsonProperty
-    private String type;
+    private CBCAccount tier1;   
 
-    public String getId() {
-        return id;
+    @JsonProperty
+    private CBCAccount tier2;   
+
+    public CBCAccount getTier1() {
+        return tier1;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setTier1(CBCAccount tier1) {
+        this.tier1 = tier1;
+    }  
+
+    public CBCAccount getTier2() {
+        return tier2;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-    
-    
+    public void setTier2(CBCAccount tier2) {
+        this.tier2 = tier2;
+    }  
 }
