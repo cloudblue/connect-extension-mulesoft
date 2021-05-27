@@ -5,6 +5,7 @@ import com.cloudblue.connect.api.clients.Client;
 import com.cloudblue.connect.api.parameters.filters.Filter;
 import com.cloudblue.connect.api.parameters.filters.OrderBy;
 
+import org.mule.runtime.extension.api.annotation.Ignore;
 import org.mule.runtime.extension.api.annotation.param.Optional;
 import org.mule.runtime.extension.api.annotation.param.Parameter;
 
@@ -17,14 +18,35 @@ public class BaseListOperation {
     @Optional
     OrderBy orderBy;
 
+    @Ignore
+    public Filter getFilter() {
+        return filter;
+    }
+
+    @Ignore
+    public void setFilter(Filter filter) {
+        this.filter = filter;
+    }
+
+    @Ignore
+    public OrderBy getOrderBy() {
+        return orderBy;
+    }
+
+    @Ignore
+    public void setOrderBy(OrderBy orderBy) {
+        this.orderBy = orderBy;
+    }
+
+    @Ignore
     protected void resolve(Client.Q q) {
 
-        if (orderBy != null){
-            q.orderBy(orderBy.getProperties().toArray(new String[]{}));
+        if (getOrderBy() != null){
+            q.orderBy(getOrderBy().getProperties().toArray(new String[]{}));
         }
 
-        if (filter != null) {
-            q.filter(filter.toRQL());
+        if (getFilter() != null) {
+            q.filter(getFilter().toRQL());
         }
     }
 }
