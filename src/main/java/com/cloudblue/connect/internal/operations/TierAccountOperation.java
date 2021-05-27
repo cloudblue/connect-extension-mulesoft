@@ -22,7 +22,7 @@ import org.mule.runtime.extension.api.annotation.param.display.DisplayName;
 
 import static org.mule.runtime.extension.api.annotation.param.MediaType.ANY;
 
-public class TierOperations {
+public class TierAccountOperation {
     
     @MediaType(value = ANY, strict = false)
     @DisplayName("Get Tier Account")

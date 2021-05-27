@@ -20,7 +20,7 @@ import static org.mule.runtime.extension.api.annotation.param.MediaType.ANY;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListTierOperations extends BaseListOperation {
+public class ListTierAccountOperation extends BaseListOperation {
 
     @MediaType(value = ANY, strict = false)
     @DisplayName("List Tier Accounts")
