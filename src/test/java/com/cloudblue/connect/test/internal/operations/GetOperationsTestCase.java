@@ -1,12 +1,6 @@
 package com.cloudblue.connect.test.internal.operations;
 
-import com.cloudblue.connect.api.models.CBCAccount;
-import com.cloudblue.connect.api.models.CBCAccountRequest;
-import com.cloudblue.connect.api.models.CBCTierConfig;
-import com.cloudblue.connect.api.models.CBCTierConfigRequest;
-import com.cloudblue.connect.api.models.CBCAsset;
-import com.cloudblue.connect.api.models.CBCRequest;
-import com.cloudblue.connect.api.models.CBCCase;
+import com.cloudblue.connect.api.models.*;
 import com.cloudblue.connect.test.internal.common.BaseMuleFlowTestCase;
 
 import java.lang.reflect.Method;
@@ -38,9 +32,7 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
     private static final String TIERACCOUNTREQUEST_ID = "TAR-0000-0000";
     private static final String TIERCONFIG_ID = "TC-0000-0000";
     private static final String TIERCONFIGREQUEST_ID = "TCR-0000-0000";
-
-
-
+    private static final String USAGE_REPORT_ID = "UF-0000-00-0000-0000";
     
     @Rule
     public DynamicPort listenPort = new DynamicPort("port");
@@ -69,6 +61,9 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
     @Rule
     public SystemProperty tierConfigRequestIdSystemProperty = new SystemProperty("tierConfigRequest_id", TIERCONFIGREQUEST_ID);
 
+    @Rule
+    public SystemProperty usageReportIdSystemProperty = new SystemProperty("usage_report_id", USAGE_REPORT_ID);
+
     private final String flow;
     private final Class clazz;
     private final String expectedIdValue;
@@ -82,7 +77,8 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
                 {"getTierAccount", CBCAccount.class, TIERACCOUNT_ID},
                 {"getTierAccountRequest", CBCAccountRequest.class, TIERACCOUNTREQUEST_ID},
                 {"getTierConfig", CBCTierConfig.class, TIERCONFIG_ID},
-                {"getTierConfigRequest", CBCTierConfigRequest.class, TIERCONFIGREQUEST_ID},                
+                {"getTierConfigRequest", CBCTierConfigRequest.class, TIERCONFIGREQUEST_ID},
+                {"getUsageFile", CBCUsageReport.class, USAGE_REPORT_ID},
                 {"listRequestsWithFilter", null, null},
                 {"listRequestsWithoutFilter", null, null},
                 {"listAssetsWithFilter", null, null},
@@ -98,7 +94,8 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
                 {"listTierConfigsWithFilter", null, null},
                 {"listTierConfigsWithoutFilter", null, null},
                 {"listTierConfigRequestsWithFilter", null, null},
-                {"listTierConfigRequestsWithoutFilter", null, null}
+                {"listTierConfigRequestsWithoutFilter", null, null},
+                {"listUsageFiles", null, null}
             }
         );
     }

@@ -13,7 +13,9 @@ import org.mule.runtime.extension.api.annotation.connectivity.ConnectionProvider
     ListConversationMessages.class,
     ConversationMessageOperations.class,
     TierOperations.class,
-    ListTierOperations.class
+    ListTierOperations.class,
+    ListUsageReportOperations.class,
+    UsageReportOperations.class
 })
 @ConnectionProviders(CBCConnectionProvider.class)
 public class CBCConfiguration {}

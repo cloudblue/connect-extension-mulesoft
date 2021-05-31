@@ -19,5 +19,7 @@ public class CBCAPIConstants {
         public static final String ASSETS = "assets";
         public static final String HELPDESK = "helpdesk";
         public static final String CASES = "cases";
+        public static final String USAGE = "usage";
+        public static final String FILES = "files";
     }
 }

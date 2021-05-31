@@ -26,7 +26,19 @@ public class CBCEvents implements CBCEntity {
     private CBCEvent resolved;   
 
     @JsonProperty
-    private CBCEvent updated;   
+    private CBCEvent updated;
+
+    @JsonProperty
+    private CBCEvent uploaded;
+
+    @JsonProperty
+    private CBCEvent submitted;
+
+    @JsonProperty
+    private CBCEvent accepted;
+
+    @JsonProperty
+    private CBCEvent rejected;
 
     public CBCEvent getClosed() {
         return closed;
@@ -74,5 +86,37 @@ public class CBCEvents implements CBCEntity {
 
     public void setUpdated(CBCEvent updated) {
         this.updated = updated;
+    }
+
+    public CBCEvent getUploaded() {
+        return uploaded;
+    }
+
+    public void setUploaded(CBCEvent uploaded) {
+        this.uploaded = uploaded;
+    }
+
+    public CBCEvent getSubmitted() {
+        return submitted;
+    }
+
+    public void setSubmitted(CBCEvent submitted) {
+        this.submitted = submitted;
+    }
+
+    public CBCEvent getAccepted() {
+        return accepted;
+    }
+
+    public void setAccepted(CBCEvent accepted) {
+        this.accepted = accepted;
+    }
+
+    public CBCEvent getRejected() {
+        return rejected;
+    }
+
+    public void setRejected(CBCEvent rejected) {
+        this.rejected = rejected;
     }
 }
