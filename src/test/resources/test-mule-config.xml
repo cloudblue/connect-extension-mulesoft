@@ -88,6 +88,16 @@
         <set-payload value="[{'id':'${tierConfigRequest_id}'}]"/>
     </flow>
 
+    <flow name="listUsageReportsServer">
+        <http:listener path="/usage/files/" config-ref="listenerConfig"/>
+        <set-payload value="[{'id':'${usage_report_id}'}]"/>
+    </flow>
+
+    <flow name="getUsageReportServer">
+        <http:listener path="/usage/files/${usage_report_id}" config-ref="listenerConfig"/>
+        <set-payload value="{'id':'${usage_report_id}'}"/>
+    </flow>
+
     <cloudblue-connect:config name="CloudBlue_Connect_Config_Test">
         <cloudblue-connect:connection token="ApiKey SU-000-000-000:fake-token-001"
                                       connectionTimeout="20000"
@@ -269,5 +279,24 @@
         </cloudblue-connect:list-tier-config-requests>
     </flow>
 
+    <flow name="listUsageFiles">
+        <cloudblue-connect:list-usage-reports
+                config-ref="CloudBlue_Connect_Config_Test">
+            <cloudblue-connect:filter >
+                <cloudblue-connect:in-filter property="status" >
+                    <cloudblue-connect:values >
+                        <cloudblue-connect:value value="accepted" />
+                        <cloudblue-connect:value value="pending" />
+                    </cloudblue-connect:values>
+                </cloudblue-connect:in-filter>
+            </cloudblue-connect:filter>
+        </cloudblue-connect:list-usage-reports>
+    </flow>
+
+    <flow name="getUsageFile">
+        <cloudblue-connect:get-usage-report
+                config-ref="CloudBlue_Connect_Config_Test"
+                id="${usage_report_id}"/>
+    </flow>
 
 </mule>
