@@ -47,8 +47,10 @@ import org.mule.runtime.extension.api.annotation.Configurations;
                 AcceptUsageReport.class,
                 CloseUsageReport.class,
                 DeleteUsageReport.class,
+                ReconcileUsageReport.class,
                 RejectUsageReport.class,
                 ReprocessUsageFile.class,
-                SubmitUsageReport.class
+                SubmitUsageReport.class,
+                UploadUsageReport.class
         })
 public class CBCExtension {}

@@ -2,9 +2,11 @@ package com.cloudblue.connect.test.internal.operations.usage.report;
 
 import com.cloudblue.connect.api.models.CBCUsageReport;
 import com.cloudblue.connect.test.internal.common.BaseMuleFlowTestCase;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runners.Parameterized;
+
 import org.mule.runtime.api.event.Event;
 import org.mule.tck.junit4.rule.DynamicPort;
 import org.mule.tck.junit4.rule.SystemProperty;
@@ -27,6 +29,13 @@ public class UsageReportTestCase extends BaseMuleFlowTestCase {
     @Rule
     public SystemProperty usageReportIdSystemProperty = new SystemProperty("usage_report_id", USAGE_REPORT_ID);
 
+    @Rule
+    public SystemProperty filePath = new SystemProperty(
+            "filePath",
+            this.getClass().getClassLoader()
+                    .getResource("Usage_File.xlsx").getPath()
+    );
+
     private final String flow;
 
     @Parameterized.Parameters
@@ -35,7 +44,8 @@ public class UsageReportTestCase extends BaseMuleFlowTestCase {
                 {"createUsageReport"},
                 {"updateUsageReport"},
                 {"submitUsageReport"},
-                {"acceptUsageReport"}
+                {"acceptUsageReport"},
+                {"uploadUsageReport"}
         });
     }
 
