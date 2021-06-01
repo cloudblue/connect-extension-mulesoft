@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.cloudblue</groupId>
     <artifactId>connect-mulesoft-extension</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.211</version>
     <packaging>mule-extension</packaging>
     <name>CloudBlue Connect Extension MuleSoft</name>
 
@@ -162,7 +162,9 @@
                                         <exclude>com.cloudblue.connect.api.clients.parsers.jackson</exclude>
                                         <exclude>com.cloudblue.connect.internal.sources.connections</exclude>
                                         <exclude>com.cloudblue.connect.api.parameters.accounts</exclude>
-                                        <exclude>com.cloudblue.connect.api.parameters.usage</exclude>
+                                        <exclude>com.cloudblue.connect.api.parameters.usage.report</exclude>
+                                        <exclude>com.cloudblue.connect.api.models.usage</exclude>
+                                        <exclude>com.cloudblue.connect.api.parameters.usage.record</exclude>
                                     </excludes>
                                     <limits>
                                         <limit>

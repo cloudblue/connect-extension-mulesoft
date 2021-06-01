@@ -1,4 +1,4 @@
-package com.cloudblue.connect.api.models;
+package com.cloudblue.connect.api.models.usage;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;

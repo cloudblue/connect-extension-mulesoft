@@ -1,6 +1,8 @@
 package com.cloudblue.connect.test.internal.operations;
 
 import com.cloudblue.connect.api.models.*;
+import com.cloudblue.connect.api.models.usage.CBCUsageRecord;
+import com.cloudblue.connect.api.models.usage.CBCUsageReport;
 import com.cloudblue.connect.test.internal.common.BaseMuleFlowTestCase;
 
 import java.lang.reflect.Method;
@@ -33,6 +35,7 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
     private static final String TIERCONFIG_ID = "TC-0000-0000";
     private static final String TIERCONFIGREQUEST_ID = "TCR-0000-0000";
     private static final String USAGE_REPORT_ID = "UF-0000-00-0000-0000";
+    private static final String USAGE_RECORD_ID = "UR-0000-00-0000-0000-0000-0000";
     
     @Rule
     public DynamicPort listenPort = new DynamicPort("port");
@@ -64,6 +67,9 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
     @Rule
     public SystemProperty usageReportIdSystemProperty = new SystemProperty("usage_report_id", USAGE_REPORT_ID);
 
+    @Rule
+    public SystemProperty usageRecordIdSystemProperty = new SystemProperty("usage_record_id", USAGE_RECORD_ID);
+
     private final String flow;
     private final Class clazz;
     private final String expectedIdValue;
@@ -79,6 +85,7 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
                 {"getTierConfig", CBCTierConfig.class, TIERCONFIG_ID},
                 {"getTierConfigRequest", CBCTierConfigRequest.class, TIERCONFIGREQUEST_ID},
                 {"getUsageFile", CBCUsageReport.class, USAGE_REPORT_ID},
+                {"getUsageRecords", CBCUsageRecord.class, USAGE_RECORD_ID},
                 {"listRequestsWithFilter", null, null},
                 {"listRequestsWithoutFilter", null, null},
                 {"listAssetsWithFilter", null, null},
@@ -95,7 +102,8 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
                 {"listTierConfigsWithoutFilter", null, null},
                 {"listTierConfigRequestsWithFilter", null, null},
                 {"listTierConfigRequestsWithoutFilter", null, null},
-                {"listUsageFiles", null, null}
+                {"listUsageFiles", null, null},
+                {"listUsageRecords", null, null}
             }
         );
     }

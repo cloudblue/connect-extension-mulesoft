@@ -1,27 +1,27 @@
-package com.cloudblue.connect.api.parameters.usage;
+package com.cloudblue.connect.api.parameters.usage.report;
 
 import org.mule.runtime.extension.api.annotation.Expression;
 import org.mule.runtime.extension.api.annotation.param.Parameter;
 import org.mule.runtime.extension.api.annotation.param.display.Placement;
 
-public class AcceptUsageReport extends UsageReportAction {
+public class RejectUsageReport extends UsageReportAction {
 
     @Parameter
     @Expression
     @Placement(order = 2)
-    private String acceptanceNote;
+    private String rejectionNote;
 
-    public String getAcceptanceNote() {
-        return acceptanceNote;
+    public String getRejectionNote() {
+        return rejectionNote;
     }
 
-    public void setAcceptanceNote(String acceptanceNote) {
-        this.acceptanceNote = acceptanceNote;
+    public void setRejectionNote(String rejectionNote) {
+        this.rejectionNote = rejectionNote;
     }
 
     @Override
     public Object buildEntity() {
-        addValue("acceptance_note", acceptanceNote);
+        addValue("rejection_note", rejectionNote);
 
         return payload;
     }

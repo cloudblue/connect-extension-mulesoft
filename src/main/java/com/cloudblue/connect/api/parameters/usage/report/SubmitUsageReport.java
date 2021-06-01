@@ -1,4 +1,4 @@
-package com.cloudblue.connect.api.parameters.usage;
+package com.cloudblue.connect.api.parameters.usage.report;
 
 public class SubmitUsageReport extends UsageReportAction {
     @Override

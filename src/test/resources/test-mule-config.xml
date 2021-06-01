@@ -98,6 +98,18 @@
         <set-payload value="{'id':'${usage_report_id}'}"/>
     </flow>
 
+    <flow name="listUsageRecordServer">
+        <http:listener path="/usage/records/"
+                       config-ref="listenerConfig"/>
+        <set-payload value="[{'id':'${usage_record_id}'}]"/>
+    </flow>
+
+    <flow name="getUsageRecordServer">
+        <http:listener path="/usage/records/${usage_record_id}"
+                       config-ref="listenerConfig"/>
+        <set-payload value="{'id':'${usage_record_id}'}"/>
+    </flow>
+
     <cloudblue-connect:config name="CloudBlue_Connect_Config_Test">
         <cloudblue-connect:connection token="ApiKey SU-000-000-000:fake-token-001"
                                       connectionTimeout="20000"
@@ -297,6 +309,17 @@
         <cloudblue-connect:get-usage-report
                 config-ref="CloudBlue_Connect_Config_Test"
                 id="${usage_report_id}"/>
+    </flow>
+
+    <flow name="listUsageRecords">
+        <cloudblue-connect:list-usage-records
+                config-ref="CloudBlue_Connect_Config_Test"/>
+    </flow>
+
+    <flow name="getUsageRecords">
+        <cloudblue-connect:get-usage-record
+                config-ref="CloudBlue_Connect_Config_Test"
+                id="${usage_record_id}"/>
     </flow>
 
 </mule>

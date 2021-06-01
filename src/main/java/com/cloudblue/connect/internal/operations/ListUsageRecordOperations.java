@@ -2,9 +2,11 @@ package com.cloudblue.connect.internal.operations;
 
 import com.cloudblue.connect.api.clients.Client;
 import com.cloudblue.connect.api.exceptions.CBCException;
-import com.cloudblue.connect.api.models.usage.CBCUsageReport;
+import com.cloudblue.connect.api.models.usage.CBCUsageRecord;
 import com.cloudblue.connect.internal.operations.connections.CBCConnection;
+
 import com.fasterxml.jackson.core.type.TypeReference;
+
 import org.mule.runtime.extension.api.annotation.param.Connection;
 import org.mule.runtime.extension.api.annotation.param.MediaType;
 import org.mule.runtime.extension.api.annotation.param.display.DisplayName;
@@ -12,19 +14,20 @@ import org.mule.runtime.extension.api.annotation.param.display.DisplayName;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.cloudblue.connect.api.clients.constants.CBCAPIConstants.CollectionKeys.RECORDS;
+import static com.cloudblue.connect.api.clients.constants.CBCAPIConstants.CollectionKeys.USAGE;
 import static org.mule.runtime.extension.api.annotation.param.MediaType.ANY;
-import static com.cloudblue.connect.api.clients.constants.CBCAPIConstants.CollectionKeys.*;
 
-public class ListUsageReportOperations extends BaseListOperation {
+public class ListUsageRecordOperations extends BaseListOperation {
     @MediaType(value = ANY, strict = false)
-    @DisplayName("List Usage Reports")
-    public List<CBCUsageReport> listUsageReports(
+    @DisplayName("List Usage Records")
+    public List<CBCUsageRecord> listUsageRecords(
             @Connection CBCConnection connection
     ) throws CBCException {
         Client.Q q = connection
-                .newQ(new TypeReference<ArrayList<CBCUsageReport>>() {})
-                .collection(USAGE).collection(FILES);
+                .newQ(new TypeReference<ArrayList<CBCUsageRecord>>() {})
+                .collection(USAGE).collection(RECORDS);
         resolve(q);
-        return (List<CBCUsageReport>) q.get();
+        return (List<CBCUsageRecord>) q.get();
     }
 }
