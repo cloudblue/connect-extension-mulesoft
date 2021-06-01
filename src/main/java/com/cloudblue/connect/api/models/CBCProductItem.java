@@ -1,7 +1,7 @@
 package com.cloudblue.connect.api.models;
 
 import com.cloudblue.connect.api.models.common.CBCEntity;
-
+import com.cloudblue.connect.api.models.enums.CBCProductItemPrecision;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -40,13 +40,13 @@ public class CBCProductItem implements CBCEntity {
     private String period;
 
     @JsonProperty
-    private String precision;
+    private CBCProductItemPrecision precision;
 
     @JsonProperty
     private CBCCommitment commitment;
 
     @JsonProperty
-    private String dynamic;
+    private Boolean dynamic;
 
     @JsonProperty
     private CBCExtensions replacement;
@@ -152,11 +152,11 @@ public class CBCProductItem implements CBCEntity {
     public void setPeriod(String period) {
         this.period = period;
     }    
-    public String getPrecision() {
+    public CBCProductItemPrecision getPrecision() {
         return precision;
     }
 
-    public void setPrecision(String precision) {
+    public void setPrecision(CBCProductItemPrecision precision) {
         this.precision = precision;
     }    
 
@@ -169,11 +169,11 @@ public class CBCProductItem implements CBCEntity {
         this.commitment = commitment;
     }
 
-    public String getDynamic() {
+    public Boolean getDynamic() {
         return dynamic;
     }
 
-    public void setDynamic(String dynamic) {
+    public void setDynamic(Boolean dynamic) {
         this.dynamic = dynamic;
     }
 

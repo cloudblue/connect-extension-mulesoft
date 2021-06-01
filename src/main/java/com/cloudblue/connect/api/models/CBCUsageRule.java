@@ -12,16 +12,16 @@ import java.util.List;
 public class CBCUsageRule implements CBCEntity {
 
     @JsonProperty
-    private String enabled;
+    private Boolean enabled;
 
     @JsonProperty
     private List<CBCCommonEntity> providers;
     
-    public String getEnabled() {
+    public Boolean getEnabled() {
         return enabled;
     }
 
-    public void setEnabled(String enabled) {
+    public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
     }    
 

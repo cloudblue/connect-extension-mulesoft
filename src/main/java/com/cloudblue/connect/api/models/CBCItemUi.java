@@ -10,13 +10,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class CBCItemUi implements CBCEntity {
 
     @JsonProperty
-    private String visibility;
+    private Boolean visibility;
     
-    public String getVisibility() {
+    public Boolean getVisibility() {
         return visibility;
     }
 
-    public void setVisibility(String visibility) {
+    public void setVisibility(Boolean visibility) {
         this.visibility = visibility;
     }    
 

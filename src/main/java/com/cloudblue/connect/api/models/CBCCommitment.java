@@ -10,24 +10,24 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class CBCCommitment implements CBCEntity {
 
     @JsonProperty
-    private String multiplier;
+    private Integer multiplier;
 
     @JsonProperty
-    private String count;
+    private Integer count;
     
-    public String getMultiplier() {
+    public Integer getMultiplier() {
         return multiplier;
     }
 
-    public void setMultiplier(String multiplier) {
+    public void setMultiplier(Integer multiplier) {
         this.multiplier = multiplier;
     }    
 
-    public String getCount() {
+    public Integer getCount() {
         return count;
     }
 
-    public void setCount(String count) {
+    public void setCount(Integer count) {
         this.count = count;
     }    
 

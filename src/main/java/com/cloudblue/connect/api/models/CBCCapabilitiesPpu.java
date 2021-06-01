@@ -13,13 +13,13 @@ public class CBCCapabilitiesPpu implements CBCEntity {
     private String schema;
 
     @JsonProperty
-    private String dynamic;
+    private Boolean dynamic;
 
     @JsonProperty
-    private String predictive;
+    private Boolean predictive;
     
     @JsonProperty
-    private String future;
+    private Boolean future;
     
     public String getSchena() {
         return schema;
@@ -29,27 +29,27 @@ public class CBCCapabilitiesPpu implements CBCEntity {
         this.schema = schema;
     }    
 
-    public String getDynamic() {
+    public Boolean getDynamic() {
         return dynamic;
     }
 
-    public void setDynamic(String dynamic) {
+    public void setDynamic(Boolean dynamic) {
         this.dynamic = dynamic;
     }    
 
-    public String getPredictive() {
+    public Boolean getPredictive() {
         return predictive;
     }
 
-    public void setPredictive(String predictive) {
+    public void setPredictive(Boolean predictive) {
         this.predictive = predictive;
     }    
 
-    public String getFuture() {
+    public Boolean getFuture() {
         return future;
     }
 
-    public void setFuture(String future) {
+    public void setFuture(Boolean future) {
         this.future = future;
     }    
 }

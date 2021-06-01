@@ -9,24 +9,24 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CBCConfigurations implements CBCEntity {
     @JsonProperty
-    private String suspendResumeSupported;
+    private Boolean suspendResumeSupported;
     
     @JsonProperty
-    private String requiresResellerInformation;
+    private Boolean requiresResellerInformation;
 
-    public String getSuspendResumeSupported() {
+    public Boolean getSuspendResumeSupported() {
         return suspendResumeSupported;
     }
 
-    public void setSuspendResumeSupported(String suspendResumeSupported) {
+    public void setSuspendResumeSupported(Boolean suspendResumeSupported) {
         this.suspendResumeSupported = suspendResumeSupported;
     }
 
-    public String getRequiresResellerInformation() {
+    public Boolean getRequiresResellerInformation() {
         return requiresResellerInformation;
     }
 
-    public void setRequiresResellerInformation(String requiresResellerInformation) {
+    public void setRequiresResellerInformation(Boolean requiresResellerInformation) {
         this.requiresResellerInformation = requiresResellerInformation;
     }
 }

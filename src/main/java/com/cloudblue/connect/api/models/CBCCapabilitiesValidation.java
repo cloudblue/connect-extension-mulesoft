@@ -10,13 +10,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class CBCCapabilitiesValidation implements CBCEntity {
 
     @JsonProperty
-    private String validation;
+    private Boolean validation;
 
-    public String getValidation() {
+    public Boolean getValidation() {
         return validation;
     }
 
-    public void setValidation(String validation) {
+    public void setValidation(Boolean validation) {
         this.validation = validation;
     }    
 }

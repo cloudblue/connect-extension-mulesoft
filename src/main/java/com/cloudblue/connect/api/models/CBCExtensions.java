@@ -4,6 +4,7 @@ import com.cloudblue.connect.api.models.common.CBCEntity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.cloudblue.connect.api.models.enums.CBCExtensionStatus;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -18,7 +19,7 @@ public class CBCExtensions implements CBCEntity {
     private String name;
 
     @JsonProperty
-    private String status;
+    private CBCExtensionStatus status;
 
 
     public String getId() {
@@ -45,11 +46,11 @@ public class CBCExtensions implements CBCEntity {
         this.icon = icon;
     }
     
-    public String getStatus() {
+    public CBCExtensionStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(CBCExtensionStatus status) {
         this.status = status;
     }
     

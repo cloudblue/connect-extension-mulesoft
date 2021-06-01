@@ -37,7 +37,7 @@
             period="monthly"
             commitmentCount="1"
             unitId="gb"
-            precision="integer"
+            precision="INTEGER"
             uiVisibility="true">
 		</cloudblue-connect:create-product-item>
     </flow>

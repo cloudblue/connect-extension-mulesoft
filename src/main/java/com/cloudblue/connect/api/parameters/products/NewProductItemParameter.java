@@ -2,9 +2,9 @@ package com.cloudblue.connect.api.parameters.products;
 
 import com.cloudblue.connect.api.models.CBCProductItem;
 import com.cloudblue.connect.api.models.CBCCommitment;
-import com.cloudblue.connect.api.models.CBCEvents;
 import com.cloudblue.connect.api.models.CBCUnit;
 import com.cloudblue.connect.api.models.CBCItemUi;
+import com.cloudblue.connect.api.models.enums.CBCProductItemPrecision;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.mule.runtime.extension.api.annotation.Expression;
@@ -33,7 +33,7 @@ public class NewProductItemParameter {
 
     @Parameter
     @Expression
-    private String dynamic;
+    private boolean dynamic;
 
     @Parameter
     @Expression
@@ -41,7 +41,7 @@ public class NewProductItemParameter {
 
     @Parameter
     @Expression
-    private String commitmentCount;
+    private Integer commitmentCount;
 
     @Parameter
     @Expression
@@ -49,11 +49,11 @@ public class NewProductItemParameter {
 
     @Parameter
     @Expression
-    private String precision;
+    private CBCProductItemPrecision precision;
 
     @Parameter
     @Expression
-    private String uiVisibility;
+    private boolean uiVisibility;
 
     public String getProductId() {
         return productId;
@@ -95,11 +95,11 @@ public class NewProductItemParameter {
         this.type = type;
     }  
 
-    public String getDynamic() {
+    public Boolean getDynamic() {
         return dynamic;
     }
 
-    public void setDynamic(String dynamic) {
+    public void setDynamic(Boolean dynamic) {
         this.dynamic = dynamic;
     }    
 
@@ -111,11 +111,11 @@ public class NewProductItemParameter {
         this.period = period;
     }    
 
-    public String getCommitmentCount() {
+    public Integer getCommitmentCount() {
         return commitmentCount;
     }
 
-    public void setCommitmentCount(String commitmentCount) {
+    public void setCommitmentCount(Integer commitmentCount) {
         this.commitmentCount = commitmentCount;
     }    
 
@@ -127,19 +127,19 @@ public class NewProductItemParameter {
         this.unitId = unitId;
     }    
 
-    public String getPrecision() {
+    public CBCProductItemPrecision getPrecision() {
         return precision;
     }
 
-    public void setPrecision(String precision) {
+    public void setPrecision(CBCProductItemPrecision precision) {
         this.precision = precision;
     }    
 
-    public String getUiVisibility() {
+    public Boolean getUiVisibility() {
         return uiVisibility;
     }
 
-    public void setUiVisibility(String uiVisibility) {
+    public void setUiVisibility(Boolean uiVisibility) {
         this.uiVisibility = uiVisibility;
     }    
 

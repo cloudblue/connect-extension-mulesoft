@@ -10,13 +10,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class CBCCapabilitiesReservation implements CBCEntity {
 
     @JsonProperty
-    private String consumption;
+    private Boolean consumption;
 
-    public String getConsumption() {
+    public Boolean getConsumption() {
         return consumption;
     }
 
-    public void setConsumption(String consumption) {
+    public void setConsumption(Boolean consumption) {
         this.consumption = consumption;
     }    
 }
