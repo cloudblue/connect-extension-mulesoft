@@ -1,5 +1,6 @@
 package com.cloudblue.connect.api.clients;
 
+import com.cloudblue.connect.api.clients.entity.FileEntity;
 import com.cloudblue.connect.api.models.CBCError;
 import com.cloudblue.connect.api.clients.constants.HeaderParams;
 import com.cloudblue.connect.api.clients.constants.HttpMethod;
@@ -14,6 +15,7 @@ import com.cloudblue.connect.api.clients.parsers.jackson.JacksonResponseUnmarsha
 
 import com.fasterxml.jackson.core.type.TypeReference;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
@@ -32,6 +34,8 @@ import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.methods.HttpTrace;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
@@ -193,7 +197,6 @@ public class BaseClient {
     protected void setHeaders(HttpRequestBase httpRequest) {
         httpRequest.addHeader(HeaderParams.USER_AGENT, RestConstants.USER_AGENT);
         httpRequest.addHeader(HeaderParams.ACCEPT, "application/json, application/*+json");
-        httpRequest.addHeader(HeaderParams.CONTENT_TYPE, "application/json");
         httpRequest.addHeader(HeaderParams.AUTHORIZATION, this.config.getToken());
     }
 
@@ -222,8 +225,17 @@ public class BaseClient {
                     requestBody = (String) request;
                     StringEntity params = new StringEntity(requestBody);
                     enclosingRequest.setEntity(params);
+                } else if (request instanceof FileEntity) {
+                    MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+                    builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+
+                    for (Map.Entry<String, File> entry : ((FileEntity)request).getFiles().entrySet())
+                        builder.addBinaryBody(entry.getKey(), entry.getValue());
+
+                    enclosingRequest.setEntity(builder.build());
                 } else {
                     requestBody = this.requestMarshaller.marshal(request);
+                    httpRequest.addHeader(HeaderParams.CONTENT_TYPE, "application/json");
                     enclosingRequest.setEntity(
                             new StringEntity(requestBody, ContentType.APPLICATION_JSON)
                     );

@@ -33,6 +33,11 @@
         <set-payload value="{'id':'${usage_report_id}'}'}"/>
     </flow>
 
+    <flow name="uploadUsageReportServer">
+        <http:listener path="/usage/files/${usage_report_id}/upload" config-ref="listenerConfig"/>
+        <set-payload value="{'id':'${usage_report_id}'}'}"/>
+    </flow>
+
     <cloudblue-connect:config name="CloudBlue_Connect_Config_Test">
         <cloudblue-connect:connection token="ApiKey SU-000-000-000:fake-token-001"
                                       connectionTimeout="20000"
@@ -72,6 +77,17 @@
                 <cloudblue-connect:accept-usage-report
                         acceptanceNote="Accepted as records are correct."
                         id="${usage_report_id}" />
+            </cloudblue-connect:usage-report-action-details>
+        </cloudblue-connect:usage-report-action>
+    </flow>
+
+    <flow name="uploadUsageReport">
+        <cloudblue-connect:usage-report-action
+                config-ref="CloudBlue_Connect_Config_Test">
+            <cloudblue-connect:usage-report-action-details >
+                <cloudblue-connect:upload-usage-report
+                        usageFile="${filePath}"
+                        id="${usage_report_id}"/>
             </cloudblue-connect:usage-report-action-details>
         </cloudblue-connect:usage-report-action>
     </flow>
