@@ -5,6 +5,7 @@ import com.cloudblue.connect.api.models.CBCCommitment;
 import com.cloudblue.connect.api.models.CBCUnit;
 import com.cloudblue.connect.api.models.CBCItemUi;
 import com.cloudblue.connect.api.models.enums.CBCProductItemPrecision;
+import com.cloudblue.connect.api.models.enums.CBCProductItemType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.mule.runtime.extension.api.annotation.Expression;
@@ -29,7 +30,7 @@ public class NewProductItemParameter {
 
     @Parameter
     @Expression
-    private String type;
+    private CBCProductItemType type;
 
     @Parameter
     @Expression
@@ -87,11 +88,11 @@ public class NewProductItemParameter {
         this.description = description;
     }    
 
-    public String getType() {
+    public CBCProductItemType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(CBCProductItemType type) {
         this.type = type;
     }  
 

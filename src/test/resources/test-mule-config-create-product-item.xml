@@ -32,7 +32,7 @@
             name="Cool Item"
             mpn="1234"
             description="Cool Item"
-            type="reservation"
+            type="RESERVATION"
             dynamic="false"
             period="monthly"
             commitmentCount="1"
