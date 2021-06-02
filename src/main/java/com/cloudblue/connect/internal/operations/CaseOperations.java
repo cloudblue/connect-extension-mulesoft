@@ -2,7 +2,7 @@ package com.cloudblue.connect.internal.operations;
 
 import com.cloudblue.connect.api.clients.constants.HttpMethod;
 import com.cloudblue.connect.internal.operations.connections.CBCConnection;
-import com.cloudblue.connect.api.models.CBCCase;
+import com.cloudblue.connect.api.models.ticketing.CBCCase;
 import com.cloudblue.connect.api.parameters.NewConversationMessageParameter;
 import com.cloudblue.connect.api.exceptions.CBCException;
 import com.cloudblue.connect.api.parameters.NewHelpdeskCaseParameter;

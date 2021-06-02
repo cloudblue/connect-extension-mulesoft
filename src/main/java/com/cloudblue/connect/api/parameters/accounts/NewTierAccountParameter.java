@@ -1,6 +1,7 @@
 package com.cloudblue.connect.api.parameters.accounts;
 
-import com.cloudblue.connect.api.models.*;
+import com.cloudblue.connect.api.models.tier.CBCAccount;
+import com.cloudblue.connect.api.models.tier.CBCContactInfo;
 import com.cloudblue.connect.api.parameters.Embeddable;
 
 import java.util.UUID;

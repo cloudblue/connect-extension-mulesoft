@@ -1,7 +1,7 @@
 package com.cloudblue.connect.api.parameters;
 
-import com.cloudblue.connect.api.models.CBCAsset;
-import com.cloudblue.connect.api.models.CBCRequest;
+import com.cloudblue.connect.api.models.subscription.CBCAsset;
+import com.cloudblue.connect.api.models.subscription.CBCRequest;
 import com.cloudblue.connect.api.models.enums.AdminHoldRequestType;
 import com.cloudblue.connect.api.models.enums.CBCRequestType;
 import org.mule.runtime.extension.api.annotation.param.Parameter;

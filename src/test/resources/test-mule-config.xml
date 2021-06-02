@@ -98,6 +98,16 @@
         <set-payload value="{'id':'${usage_report_id}'}"/>
     </flow>
 
+    <flow name="listChunkFilesServer">
+        <http:listener path="/usage/chunks/" config-ref="listenerConfig"/>
+        <set-payload value="[{'id':'${chunk_file_id}'}]"/>
+    </flow>
+
+    <flow name="getChunkFilesServer">
+        <http:listener path="/usage/chunks/${chunk_file_id}" config-ref="listenerConfig"/>
+        <set-payload value="{'id':'${chunk_file_id}'}"/>
+    </flow>
+
     <flow name="getProductServer">
         <http:listener path="/products/${product_id}" config-ref="listenerConfig"/>
         <set-payload value="{'id':'${product_id}'}"/>
@@ -383,5 +393,20 @@
                 </cloudblue-connect:list-filter>
             </cloudblue-connect:filter>
         </cloudblue-connect:list-product-items>
+    </flow>
+
+    <flow name="listUsageChunkFiles">
+        <cloudblue-connect:list-usage-chunk-files
+                config-ref="CloudBlue_Connect_Config_Test">
+            <cloudblue-connect:filter >
+                <cloudblue-connect:mono-filter type="EQ" property="usagefile.id" value="${usage_report_id}" />
+            </cloudblue-connect:filter>
+        </cloudblue-connect:list-usage-chunk-files>
+    </flow>
+
+    <flow name="getUsageChunkFiles">
+        <cloudblue-connect:get-chunk-files
+                config-ref="CloudBlue_Connect_Config_Test"
+                id="${chunk_file_id}"/>
     </flow>
 </mule>

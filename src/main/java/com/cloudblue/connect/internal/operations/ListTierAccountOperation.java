@@ -2,10 +2,10 @@ package com.cloudblue.connect.internal.operations;
 
 import com.cloudblue.connect.api.clients.Client;
 import com.cloudblue.connect.api.exceptions.CBCException;
-import com.cloudblue.connect.api.models.CBCAccount;
-import com.cloudblue.connect.api.models.CBCAccountRequest;
-import com.cloudblue.connect.api.models.CBCTierConfig;
-import com.cloudblue.connect.api.models.CBCTierConfigRequest;
+import com.cloudblue.connect.api.models.tier.CBCAccount;
+import com.cloudblue.connect.api.models.tier.CBCAccountRequest;
+import com.cloudblue.connect.api.models.tier.CBCTierConfig;
+import com.cloudblue.connect.api.models.tier.CBCTierConfigRequest;
 
 
 import com.cloudblue.connect.internal.operations.connections.CBCConnection;

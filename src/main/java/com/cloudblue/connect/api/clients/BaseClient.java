@@ -1,7 +1,7 @@
 package com.cloudblue.connect.api.clients;
 
 import com.cloudblue.connect.api.clients.entity.FileEntity;
-import com.cloudblue.connect.api.models.CBCError;
+import com.cloudblue.connect.api.models.common.CBCError;
 import com.cloudblue.connect.api.clients.constants.HeaderParams;
 import com.cloudblue.connect.api.clients.constants.HttpMethod;
 import com.cloudblue.connect.api.clients.constants.HttpStatus;
@@ -16,6 +16,7 @@ import com.cloudblue.connect.api.clients.parsers.jackson.JacksonResponseUnmarsha
 import com.fasterxml.jackson.core.type.TypeReference;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Map;
 
@@ -269,6 +270,38 @@ public class BaseClient {
             }
         }
         return (S) result;
+    }
+
+    public void download(
+            String url,
+            HttpMethod method,
+            Map<String, String> headers,
+            String location,
+            String fileName
+    ) throws CBCException {
+        HttpResponse response = exchange(url, null, method, headers);
+
+
+        HttpEntity entity = response.getEntity();
+        try {
+            String fullFileLocation = location + File.separator + fileName;
+            File myFile = new File(fullFileLocation);
+            if (myFile.createNewFile()) {
+                if (entity != null) {
+                    try (FileOutputStream outStream = new FileOutputStream(myFile)) {
+                        entity.writeTo(outStream);
+                    }
+                }
+            } else {
+                LOGGER.error("Error during creation of file " + fullFileLocation);
+                throw new CBCException("Not able to create file " + fullFileLocation);
+            }
+
+        } catch (IOException e) {
+            LOGGER.error("Error during download of file.", e);
+            throw new CBCException("Not able to download file.");
+        }
+
     }
 
 }

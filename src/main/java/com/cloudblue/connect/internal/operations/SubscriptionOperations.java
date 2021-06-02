@@ -1,10 +1,10 @@
 package com.cloudblue.connect.internal.operations;
 
 import com.cloudblue.connect.api.clients.constants.HttpMethod;
-import com.cloudblue.connect.api.models.CBCAsset;
+import com.cloudblue.connect.api.models.subscription.CBCAsset;
 import com.cloudblue.connect.api.parameters.AdminHoldRequestParameter;
 import com.cloudblue.connect.api.parameters.Embeddable;
-import com.cloudblue.connect.api.models.CBCRequest;
+import com.cloudblue.connect.api.models.subscription.CBCRequest;
 import com.cloudblue.connect.api.exceptions.CBCException;
 import com.cloudblue.connect.api.parameters.NewPurchaseRequestParameter;
 import com.cloudblue.connect.api.parameters.common.ResourceActionParameter;

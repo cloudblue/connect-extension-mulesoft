@@ -1,6 +1,6 @@
 package com.cloudblue.connect.api.models.usage;
 
-import com.cloudblue.connect.api.models.CBCAsset;
+import com.cloudblue.connect.api.models.subscription.CBCAsset;
 import com.cloudblue.connect.api.models.common.CBCEntity;
 import com.cloudblue.connect.api.models.enums.CBCUsageRecordStatus;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

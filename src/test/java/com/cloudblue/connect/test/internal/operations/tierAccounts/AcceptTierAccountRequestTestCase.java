@@ -1,6 +1,6 @@
 package com.cloudblue.connect.test.internal.operations.tierAccounts;
 
-import com.cloudblue.connect.api.models.CBCAccountRequest;
+import com.cloudblue.connect.api.models.tier.CBCAccountRequest;
 import com.cloudblue.connect.test.internal.common.BaseMuleFlowTestCase;
 
 import org.junit.Rule;

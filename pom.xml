@@ -147,25 +147,17 @@
                                     <element>PACKAGE</element>
                                     <excludes>
                                         <exclude>com.cloudblue.connect.api.models</exclude>
-                                        <exclude>com.cloudblue.connect.api.models.enums</exclude>
+                                        <exclude>com.cloudblue.connect.api.models.*</exclude>
                                         <exclude>com.cloudblue.connect.api.parameters</exclude>
-                                        <exclude>com.cloudblue.connect.api.parameters.requests</exclude>
-                                        <exclude>com.cloudblue.connect.api.parameters.products</exclude>
-                                        <exclude>com.cloudblue.connect.api.parameters.filters</exclude>
-                                        <exclude>com.cloudblue.connect.api.parameters.filters.common</exclude>
+                                        <exclude>com.cloudblue.connect.api.parameters.*</exclude>
                                         <exclude>com.cloudblue.connect.api.exceptions</exclude>
+                                        <exclude>com.cloudblue.connect.api.clients</exclude>
                                         <exclude>com.cloudblue.connect.api.clients.errors</exclude>
                                         <exclude>com.cloudblue.connect.api.clients.constants</exclude>
-                                        <exclude>com.cloudblue.connect.api.parameters.common</exclude>
-                                        <exclude>com.cloudblue.connect.internal</exclude>
                                         <exclude>com.cloudblue.connect.api.clients.utils</exclude>
-                                        <exclude>com.cloudblue.connect.api.clients</exclude>
                                         <exclude>com.cloudblue.connect.api.clients.parsers.jackson</exclude>
+                                        <exclude>com.cloudblue.connect.internal</exclude>
                                         <exclude>com.cloudblue.connect.internal.sources.connections</exclude>
-                                        <exclude>com.cloudblue.connect.api.parameters.accounts</exclude>
-                                        <exclude>com.cloudblue.connect.api.parameters.usage.report</exclude>
-                                        <exclude>com.cloudblue.connect.api.models.usage</exclude>
-                                        <exclude>com.cloudblue.connect.api.parameters.usage.record</exclude>
                                     </excludes>
                                     <limits>
                                         <limit>

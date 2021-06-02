@@ -1,6 +1,7 @@
 package com.cloudblue.connect.api.parameters.usage.report;
 
 import com.cloudblue.connect.api.models.*;
+import com.cloudblue.connect.api.models.contract.CBCContract;
 import com.cloudblue.connect.api.models.usage.CBCUsagePeriod;
 import com.cloudblue.connect.api.models.usage.CBCUsageReport;
 import com.cloudblue.connect.api.parameters.Embeddable;

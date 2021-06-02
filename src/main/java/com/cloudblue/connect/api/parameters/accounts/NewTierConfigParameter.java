@@ -1,6 +1,10 @@
 package com.cloudblue.connect.api.parameters.accounts;
 
 import com.cloudblue.connect.api.models.*;
+import com.cloudblue.connect.api.models.marketplace.CBCConnection;
+import com.cloudblue.connect.api.models.marketplace.CBCMarketplace;
+import com.cloudblue.connect.api.models.subscription.CBCRequestParam;
+import com.cloudblue.connect.api.models.tier.CBCTierConfig;
 import com.cloudblue.connect.api.parameters.Embeddable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -72,14 +76,14 @@ public class NewTierConfigParameter implements Embeddable {
         return paramValue;
     }
 
-    public void setPaaramValue(String paramValue) {
+    public void setParamValue(String paramValue) {
         this.paramValue = paramValue;
     }
 
     @Override
     @JsonIgnore
     public Object buildEntity() {
-        CBCConfiguration configuration = new CBCConfiguration();
+        CBCTierConfig configuration = new CBCTierConfig();
         configuration.setProduct(new CBCProduct());
         configuration.getProduct().setId(this.productId);
         configuration.setTierLevel(this.tierLevel);
@@ -88,12 +92,16 @@ public class NewTierConfigParameter implements Embeddable {
         configuration.setMarketplace(new CBCMarketplace());
         configuration.getMarketplace().setId(this.marketplaceId);
 
-        List<CBCParams> recipients = new ArrayList<CBCParams>();
-        CBCParams element = new CBCParams();
-        recipients.add(element);
-        element.setId(this.paramId);
-        element.setValue(this.paramValue);
-        configuration.setParams(recipients);
+
+        CBCRequestParam param = new CBCRequestParam();
+        param.setId(this.paramId);
+        param.setValue(this.paramValue);
+
+        List<CBCRequestParam> params = new ArrayList<>();
+        params.add(param);
+
+        configuration.setParams(params);
+
         return configuration;    
     }
 }

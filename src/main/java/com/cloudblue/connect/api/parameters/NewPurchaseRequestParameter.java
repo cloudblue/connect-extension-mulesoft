@@ -7,6 +7,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import com.cloudblue.connect.api.models.marketplace.CBCConnection;
+import com.cloudblue.connect.api.models.marketplace.CBCMarketplace;
+import com.cloudblue.connect.api.models.subscription.CBCAsset;
+import com.cloudblue.connect.api.models.subscription.CBCRequest;
+import com.cloudblue.connect.api.models.subscription.CBCRequestItem;
+import com.cloudblue.connect.api.models.subscription.CBCRequestParam;
+import com.cloudblue.connect.api.models.tier.CBCAccount;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.mule.runtime.extension.api.annotation.param.Optional;
 import org.mule.runtime.extension.api.annotation.param.Parameter;

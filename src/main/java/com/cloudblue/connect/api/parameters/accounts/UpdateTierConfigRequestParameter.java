@@ -1,8 +1,9 @@
 package com.cloudblue.connect.api.parameters.accounts;
 
-import com.cloudblue.connect.api.models.CBCParams;
 import java.util.List;
 import java.util.ArrayList;
+
+import com.cloudblue.connect.api.models.subscription.CBCRequestParam;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -52,11 +53,14 @@ public class UpdateTierConfigRequestParameter {
 
     @JsonIgnore
     public Object buildEntity() {
-        List<CBCParams> recipients = new ArrayList<CBCParams>();
-        CBCParams element = new CBCParams();
-        recipients.add(element);
-        element.setId(this.parameterId);
-        element.setValue(this.parameterValue);       
-        return recipients;
+
+        CBCRequestParam param = new CBCRequestParam();
+        param.setId(this.parameterId);
+        param.setValue(this.parameterValue);
+
+        List<CBCRequestParam> params = new ArrayList<>();
+        params.add(param);
+
+        return params;
     }
 }

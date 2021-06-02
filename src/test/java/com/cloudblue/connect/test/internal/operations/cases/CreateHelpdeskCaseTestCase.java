@@ -1,6 +1,6 @@
 package com.cloudblue.connect.test.internal.operations.cases;
 
-import com.cloudblue.connect.api.models.CBCCase;
+import com.cloudblue.connect.api.models.ticketing.CBCCase;
 import com.cloudblue.connect.test.internal.common.BaseMuleFlowTestCase;
 
 import org.junit.Rule;

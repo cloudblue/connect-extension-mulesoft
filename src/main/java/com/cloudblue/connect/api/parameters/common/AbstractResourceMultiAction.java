@@ -1,5 +1,6 @@
 package com.cloudblue.connect.api.parameters.common;
 
+import com.cloudblue.connect.api.clients.constants.HttpMethod;
 import com.cloudblue.connect.api.parameters.Embeddable;
 
 import java.util.HashMap;
@@ -12,5 +13,9 @@ public abstract class AbstractResourceMultiAction extends ResourceActionParamete
 
     public void addValue(String key, String value) {
         payload.put(key, value);
+    }
+
+    public HttpMethod getMethod() {
+        return HttpMethod.POST;
     }
 }
