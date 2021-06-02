@@ -1,0 +1,67 @@
+<mule xmlns="http://www.mulesoft.org/schema/mule/core"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:http="http://www.mulesoft.org/schema/mule/http"
+      xmlns:cloudblue-connect="http://www.mulesoft.org/schema/mule/cloudblue-connect"
+      xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core
+            http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+            http://www.mulesoft.org/schema/mule/http 
+            http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+            http://www.mulesoft.org/schema/mule/cloudblue-connect 
+            http://www.mulesoft.org/schema/mule/cloudblue-connect/current/mule-cloudblue-connect.xsd">
+    
+    <http:listener-config name="listenerConfig">
+        <http:listener-connection host="localhost" port="${port}"/>
+    </http:listener-config>
+
+    <flow name="updateUsageChunkFileServer">
+        <http:listener path="/usage/chunks/${chunk_file_id}"
+                       config-ref="listenerConfig"/>
+        <set-payload value="{'id':'${chunk_file_id}'}"/>
+    </flow>
+
+    <flow name="closeUsageChunkFileServer">
+        <http:listener path="/usage/chunks/${chunk_file_id}/close"
+                       config-ref="listenerConfig"/>
+        <set-payload value="{'id':'${chunk_file_id}'}"/>
+    </flow>
+
+    <flow name="downloadUsageChunkFileServer">
+        <http:listener path="/usage/chunks/${chunk_file_id}/download"
+                       config-ref="listenerConfig"/>
+        <set-payload value="Sample Data!"/>
+    </flow>
+
+    <cloudblue-connect:config name="CloudBlue_Connect_Config_Test">
+        <cloudblue-connect:connection token="ApiKey SU-000-000-000:fake-token-001"
+                                      connectionTimeout="20000"
+                                      endpoint="http://localhost:${port}"/>
+    </cloudblue-connect:config>
+
+    <flow name="updateChunkFileFlow">
+        <cloudblue-connect:update-chunk-file
+                config-ref="CloudBlue_Connect_Config_Test"
+                id="${chunk_file_id}"
+                externalId="EXT-0001"/>
+    </flow>
+
+    <flow name="closeChunkFileFlow">
+        <cloudblue-connect:chunk-file-action
+                config-ref="CloudBlue_Connect_Config_Test">
+            <cloudblue-connect:chunk-file-action-details >
+                <cloudblue-connect:close-chunk-file
+                        externalBillingId="EXT-BILL-0001"
+                        externalBillingNote="All good!"
+                        id="${chunk_file_id}"/>
+            </cloudblue-connect:chunk-file-action-details>
+        </cloudblue-connect:chunk-file-action>
+    </flow>
+
+    <flow name="downloadChunkFileFlow">
+        <cloudblue-connect:download-chunk-files
+                config-ref="CloudBlue_Connect_Config_Test"
+                id="${chunk_file_id}"
+                location="${filePath}"
+                fileName="${chunk_file_id}.txt"/>
+    </flow>
+
+</mule>

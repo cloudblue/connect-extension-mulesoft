@@ -1,8 +1,8 @@
 package com.cloudblue.connect.api.parameters.requests;
 
-import com.cloudblue.connect.api.models.CBCAsset;
-import com.cloudblue.connect.api.models.CBCRequest;
-import com.cloudblue.connect.api.models.CBCRequestParam;
+import com.cloudblue.connect.api.models.subscription.CBCAsset;
+import com.cloudblue.connect.api.models.subscription.CBCRequest;
+import com.cloudblue.connect.api.models.subscription.CBCRequestParam;
 import com.cloudblue.connect.api.parameters.Embeddable;
 import com.cloudblue.connect.api.parameters.common.ResourceActionParameter;
 

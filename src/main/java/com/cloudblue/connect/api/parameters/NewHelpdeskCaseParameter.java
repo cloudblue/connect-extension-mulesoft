@@ -1,12 +1,15 @@
 package com.cloudblue.connect.api.parameters;
 
 import com.cloudblue.connect.api.models.*;
+import com.cloudblue.connect.api.models.common.CBCUser;
 import com.cloudblue.connect.api.models.enums.CBCCaseType;
 
 import java.util.List;
 import java.util.ArrayList;
 
 
+import com.cloudblue.connect.api.models.ticketing.CBCCase;
+import com.cloudblue.connect.api.models.ticketing.CBCCaseIssuer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.mule.runtime.extension.api.annotation.param.Optional;
 import org.mule.runtime.extension.api.annotation.param.Parameter;

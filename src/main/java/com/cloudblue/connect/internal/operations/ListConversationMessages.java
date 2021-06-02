@@ -2,7 +2,7 @@ package com.cloudblue.connect.internal.operations;
 
 import com.cloudblue.connect.api.clients.Client;
 import com.cloudblue.connect.api.exceptions.CBCException;
-import com.cloudblue.connect.api.models.CBCConversationMessages;
+import com.cloudblue.connect.api.models.ticketing.CBCConversationMessages;
 import com.cloudblue.connect.api.parameters.common.ResourceActionParameter;
 import org.mule.runtime.extension.api.annotation.param.ParameterGroup;
 import com.cloudblue.connect.internal.operations.connections.CBCConnection;

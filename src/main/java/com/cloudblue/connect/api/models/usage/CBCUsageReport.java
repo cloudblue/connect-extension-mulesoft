@@ -2,9 +2,13 @@ package com.cloudblue.connect.api.models.usage;
 
 import com.cloudblue.connect.api.models.*;
 import com.cloudblue.connect.api.models.common.CBCEntity;
+import com.cloudblue.connect.api.models.common.CBCEvents;
+import com.cloudblue.connect.api.models.common.CBCTenant;
+import com.cloudblue.connect.api.models.contract.CBCContract;
 import com.cloudblue.connect.api.models.enums.CBCUsageReportSchema;
 import com.cloudblue.connect.api.models.enums.CBCUsageReportStatus;
 
+import com.cloudblue.connect.api.models.marketplace.CBCMarketplace;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -71,7 +75,7 @@ public class CBCUsageReport implements CBCEntity {
     private String externalId;
 
     @JsonProperty
-    private CBCUsageReportStats stats;
+    private CBCUsageStats stats;
 
     @JsonProperty
     private CBCEvents events;
@@ -228,11 +232,11 @@ public class CBCUsageReport implements CBCEntity {
         this.externalId = externalId;
     }
 
-    public CBCUsageReportStats getStats() {
+    public CBCUsageStats getStats() {
         return stats;
     }
 
-    public void setStats(CBCUsageReportStats stats) {
+    public void setStats(CBCUsageStats stats) {
         this.stats = stats;
     }
 

@@ -1,6 +1,7 @@
 package com.cloudblue.connect.api.parameters;
 
-import com.cloudblue.connect.api.models.*;
+import com.cloudblue.connect.api.models.common.CBCUser;
+import com.cloudblue.connect.api.models.ticketing.CBCConversationMessages;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.mule.runtime.extension.api.annotation.param.Parameter;
 

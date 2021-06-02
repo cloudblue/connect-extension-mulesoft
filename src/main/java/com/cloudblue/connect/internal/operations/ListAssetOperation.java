@@ -2,7 +2,7 @@ package com.cloudblue.connect.internal.operations;
 
 import com.cloudblue.connect.api.clients.Client;
 import com.cloudblue.connect.api.exceptions.CBCException;
-import com.cloudblue.connect.api.models.CBCAsset;
+import com.cloudblue.connect.api.models.subscription.CBCAsset;
 import com.cloudblue.connect.internal.operations.connections.CBCConnection;
 
 import com.fasterxml.jackson.core.type.TypeReference;

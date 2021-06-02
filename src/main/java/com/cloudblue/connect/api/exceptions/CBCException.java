@@ -1,6 +1,6 @@
 package com.cloudblue.connect.api.exceptions;
 
-import com.cloudblue.connect.api.models.CBCError;
+import com.cloudblue.connect.api.models.common.CBCError;
 
 public class CBCException extends Exception {
     private final String errorCode;

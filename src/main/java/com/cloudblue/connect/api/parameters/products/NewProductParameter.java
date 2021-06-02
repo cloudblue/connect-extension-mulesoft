@@ -1,7 +1,7 @@
 package com.cloudblue.connect.api.parameters.products;
 
 import com.cloudblue.connect.api.models.CBCProduct;
-import com.cloudblue.connect.api.models.CBCCommonEntity;
+import com.cloudblue.connect.api.models.common.CBCCommonEntity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.mule.runtime.extension.api.annotation.Expression;

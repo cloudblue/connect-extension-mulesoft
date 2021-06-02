@@ -1,7 +1,10 @@
 package com.cloudblue.connect.api.models;
 
+import com.cloudblue.connect.api.models.common.CBCCommonEntity;
 import com.cloudblue.connect.api.models.common.CBCEntity;
 
+import com.cloudblue.connect.api.models.common.CBCEvents;
+import com.cloudblue.connect.api.models.contract.CBCAgreement;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;

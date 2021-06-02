@@ -1,12 +1,15 @@
 package com.cloudblue.connect.test.internal.operations;
 
-import com.cloudblue.connect.api.models.*;
-import com.cloudblue.connect.api.models.CBCAccount;
-import com.cloudblue.connect.api.models.CBCAsset;
-import com.cloudblue.connect.api.models.CBCRequest;
-import com.cloudblue.connect.api.models.CBCCase;
+import com.cloudblue.connect.api.models.tier.CBCAccount;
+import com.cloudblue.connect.api.models.subscription.CBCAsset;
+import com.cloudblue.connect.api.models.subscription.CBCRequest;
+import com.cloudblue.connect.api.models.ticketing.CBCCase;
 import com.cloudblue.connect.api.models.CBCProduct;
 import com.cloudblue.connect.api.models.CBCProductItem;
+import com.cloudblue.connect.api.models.tier.CBCAccountRequest;
+import com.cloudblue.connect.api.models.tier.CBCTierConfig;
+import com.cloudblue.connect.api.models.tier.CBCTierConfigRequest;
+import com.cloudblue.connect.api.models.usage.CBCUsageChunkFile;
 import com.cloudblue.connect.api.models.usage.CBCUsageRecord;
 import com.cloudblue.connect.api.models.usage.CBCUsageReport;
 import com.cloudblue.connect.test.internal.common.BaseMuleFlowTestCase;
@@ -43,8 +46,8 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
     private static final String USAGE_REPORT_ID = "UF-0000-00-0000-0000";
     private static final String PRODUCT_ID = "PRD-0000-0000";
     private static final String PRODUCTITEM_ID = "PRD-0000-0000-001";
-
     private static final String USAGE_RECORD_ID = "UR-0000-00-0000-0000-0000-0000";
+    private static final String USAGE_CHUNK_FILE_ID = "UFC-0000-00-0000-0000-001";
 
     @Rule
     public DynamicPort listenPort = new DynamicPort("port");
@@ -82,9 +85,11 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
     @Rule
     public SystemProperty productItemIdSystemProperty = new SystemProperty("productItem_id", PRODUCTITEM_ID);
 
-
     @Rule
     public SystemProperty usageRecordIdSystemProperty = new SystemProperty("usage_record_id", USAGE_RECORD_ID);
+
+    @Rule
+    public SystemProperty usageChunkFileIdSystemProperty = new SystemProperty("chunk_file_id", USAGE_CHUNK_FILE_ID);
 
     private final String flow;
     private final Class clazz;
@@ -104,6 +109,7 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
                 {"getProductItem", CBCProductItem.class, PRODUCTITEM_ID},
                 {"getUsageFile", CBCUsageReport.class, USAGE_REPORT_ID},
                 {"getUsageRecords", CBCUsageRecord.class, USAGE_RECORD_ID},
+                {"getUsageChunkFiles", CBCUsageChunkFile.class, USAGE_CHUNK_FILE_ID},
                 {"listRequestsWithFilter", null, null},
                 {"listRequestsWithoutFilter", null, null},
                 {"listAssetsWithFilter", null, null},
@@ -125,7 +131,8 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
                 {"listProductItemsWithFilter", null, null},
                 {"listProductItemsWithoutFilter", null, null},
                 {"listUsageFiles", null, null},
-                {"listUsageRecords", null, null}
+                {"listUsageRecords", null, null},
+                {"listUsageChunkFiles", null, null}
             }
         );
     }

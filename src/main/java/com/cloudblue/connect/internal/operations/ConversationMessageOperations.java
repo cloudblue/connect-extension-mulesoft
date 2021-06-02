@@ -1,7 +1,7 @@
 package com.cloudblue.connect.internal.operations;
 
 import com.cloudblue.connect.internal.operations.connections.CBCConnection;
-import com.cloudblue.connect.api.models.CBCConversationMessages;
+import com.cloudblue.connect.api.models.ticketing.CBCConversationMessages;
 import com.cloudblue.connect.api.parameters.NewConversationMessageParameter;
 import com.cloudblue.connect.api.exceptions.CBCException;
 import com.fasterxml.jackson.core.type.TypeReference;

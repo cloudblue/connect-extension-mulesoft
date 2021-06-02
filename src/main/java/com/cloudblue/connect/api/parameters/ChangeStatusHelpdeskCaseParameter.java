@@ -1,8 +1,8 @@
 package com.cloudblue.connect.api.parameters;
 
-import com.cloudblue.connect.api.models.CBCCase;
+import com.cloudblue.connect.api.models.ticketing.CBCCase;
 import com.cloudblue.connect.api.models.enums.CBCCaseState;
-import com.cloudblue.connect.api.models.CBCConversationMessages;
+import com.cloudblue.connect.api.models.ticketing.CBCConversationMessages;
 
 import org.mule.runtime.extension.api.annotation.param.Parameter;
 

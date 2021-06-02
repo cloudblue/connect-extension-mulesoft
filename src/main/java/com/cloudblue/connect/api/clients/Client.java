@@ -133,6 +133,16 @@ public class Client extends BaseClient {
             );
         }
 
+        public void download(String location, String fileName) throws CBCException {
+            client.download(
+                    getFinalUrl(null),
+                    HttpMethod.GET,
+                    null,
+                    location,
+                    fileName
+            );
+        }
+
         public <S> Object create(S payload) throws CBCException {
             return client.exchange(
                     getFinalUrl(null),

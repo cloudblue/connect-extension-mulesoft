@@ -1,6 +1,7 @@
 package com.cloudblue.connect.api.models;
 
 import com.cloudblue.connect.api.models.common.CBCEntity;
+import com.cloudblue.connect.api.models.common.CBCEvents;
 import com.cloudblue.connect.api.models.enums.CBCProductItemPrecision;
 import com.cloudblue.connect.api.models.enums.CBCProductItemType;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

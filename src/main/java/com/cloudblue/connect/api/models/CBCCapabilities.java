@@ -10,49 +10,49 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class CBCCapabilities implements CBCEntity {
 
     @JsonProperty
-    private CBCCapabilitiesPpu ppu;
+    private CBCPpuCapabilities ppu;
 
     @JsonProperty
-    private CBCCapabilitiesReservation resevation;
+    private CBCReservationCapabilities resevation;
     
     @JsonProperty
-    private CBCCapabilitiesValidation cart;
+    private CBCValidationCapabilities cart;
     
     @JsonProperty
-    private CBCCapabilitiesValidation inquiring;
+    private CBCValidationCapabilities inquiring;
     
 
-    public CBCCapabilitiesPpu getPpu() {
+    public CBCPpuCapabilities getPpu() {
         return ppu;
     }
 
-    public void setPpu(CBCCapabilitiesPpu ppu) {
+    public void setPpu(CBCPpuCapabilities ppu) {
         this.ppu = ppu;
     }    
 
-    public CBCCapabilitiesReservation getResevation() {
+    public CBCReservationCapabilities getResevation() {
         return resevation;
     }
 
-    public void setResevation(CBCCapabilitiesReservation resevation) {
+    public void setResevation(CBCReservationCapabilities resevation) {
         this.resevation = resevation;
     }    
 
 
-    public CBCCapabilitiesValidation getCart() {
+    public CBCValidationCapabilities getCart() {
         return cart;
     }
 
-    public void setCart(CBCCapabilitiesValidation cart) {
+    public void setCart(CBCValidationCapabilities cart) {
         this.cart = cart;
     }    
 
 
-    public CBCCapabilitiesValidation getInquiring() {
+    public CBCValidationCapabilities getInquiring() {
         return inquiring;
     }
 
-    public void setInquiring(CBCCapabilitiesValidation inquiring) {
+    public void setInquiring(CBCValidationCapabilities inquiring) {
         this.inquiring = inquiring;
     }     
 }
