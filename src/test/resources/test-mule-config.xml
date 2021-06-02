@@ -98,6 +98,26 @@
         <set-payload value="{'id':'${usage_report_id}'}"/>
     </flow>
 
+    <flow name="getProductServer">
+        <http:listener path="/products/${product_id}" config-ref="listenerConfig"/>
+        <set-payload value="{'id':'${product_id}'}"/>
+    </flow>
+
+    <flow name="listProductsServer">
+        <http:listener path="/products/" config-ref="listenerConfig"/>
+        <set-payload value="[{'id':'${product_id}'}]"/>
+    </flow>
+
+    <flow name="getProductItemServer">
+        <http:listener path="/products/${product_id}/items/${productItem_id}" config-ref="listenerConfig"/>
+        <set-payload value="{'id':'${productItem_id}'}"/>
+    </flow>
+
+    <flow name="listProductItemsServer">
+        <http:listener path="/products/${product_id}/items" config-ref="listenerConfig"/>
+        <set-payload value="[{'id':'${productItem_id}'}]"/>
+    </flow>
+
     <cloudblue-connect:config name="CloudBlue_Connect_Config_Test">
         <cloudblue-connect:connection token="ApiKey SU-000-000-000:fake-token-001"
                                       connectionTimeout="20000"
@@ -137,6 +157,10 @@
         <cloudblue-connect:get-tier-config-request config-ref="CloudBlue_Connect_Config_Test" 
                                         id="${tierConfigRequest_id}"/>
     </flow>
+    <flow name="getProduct">
+        <cloudblue-connect:get-product config-ref="CloudBlue_Connect_Config_Test" 
+                                        id="${product_id}"/>
+    </flow>    
 
     <flow name="listRequestsWithFilter">
         <cloudblue-connect:list-requests config-ref="CloudBlue_Connect_Config_Test">
@@ -155,6 +179,11 @@
             </cloudblue-connect:order-by>
         </cloudblue-connect:list-requests>
     </flow>
+
+    <flow name="getProductItem">
+        <cloudblue-connect:get-product-item config-ref="CloudBlue_Connect_Config_Test" 
+                                        productId="${product_id}" productItemId="${productItem_id}"/>
+    </flow>    
 
     <flow name="listRequestsWithoutFilter">
         <cloudblue-connect:list-requests config-ref="CloudBlue_Connect_Config_Test"/>
@@ -299,4 +328,37 @@
                 id="${usage_report_id}"/>
     </flow>
 
+    <flow name="listProductsWithoutFilter">
+        <cloudblue-connect:list-products config-ref="CloudBlue_Connect_Config_Test"/>
+    </flow>
+
+    <flow name="listProductsWithFilter">
+        <cloudblue-connect:list-products config-ref="CloudBlue_Connect_Config_Test">
+            <cloudblue-connect:filter >
+                <cloudblue-connect:list-filter type="AND" >
+                    <cloudblue-connect:filters >
+                        <cloudblue-connect:mono-filter type="EQ" property="status" value="published" />
+                        <cloudblue-connect:mono-filter type="NE" property="name" value="pepe" />
+                    </cloudblue-connect:filters>
+                </cloudblue-connect:list-filter>
+            </cloudblue-connect:filter>
+        </cloudblue-connect:list-products>
+    </flow>
+
+    <flow name="listProductItemsWithoutFilter">
+        <cloudblue-connect:list-product-items config-ref="CloudBlue_Connect_Config_Test" id="${product_id}"/>
+    </flow>
+
+    <flow name="listProductItemsWithFilter">
+        <cloudblue-connect:list-product-items config-ref="CloudBlue_Connect_Config_Test" id="${product_id}">
+            <cloudblue-connect:filter >
+                <cloudblue-connect:list-filter type="AND" >
+                    <cloudblue-connect:filters >
+                        <cloudblue-connect:mono-filter type="EQ" property="id" value="PRD-0000-0000-001" />
+                        <cloudblue-connect:mono-filter type="NE" property="name" value="pepe" />
+                    </cloudblue-connect:filters>
+                </cloudblue-connect:list-filter>
+            </cloudblue-connect:filter>
+        </cloudblue-connect:list-product-items>
+    </flow>
 </mule>

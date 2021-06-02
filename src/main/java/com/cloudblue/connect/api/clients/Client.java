@@ -7,9 +7,7 @@ import com.cloudblue.connect.api.clients.utils.Url;
 import com.cloudblue.connect.api.exceptions.CBCException;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-
 import java.util.*;
-
 
 public class Client extends BaseClient {
 
