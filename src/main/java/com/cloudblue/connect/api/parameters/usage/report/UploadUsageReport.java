@@ -1,4 +1,4 @@
-package com.cloudblue.connect.api.parameters.usage;
+package com.cloudblue.connect.api.parameters.usage.report;
 
 import com.cloudblue.connect.api.clients.entity.FileEntity;
 

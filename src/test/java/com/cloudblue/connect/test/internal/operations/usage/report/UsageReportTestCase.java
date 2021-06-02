@@ -1,6 +1,6 @@
 package com.cloudblue.connect.test.internal.operations.usage.report;
 
-import com.cloudblue.connect.api.models.CBCUsageReport;
+import com.cloudblue.connect.api.models.usage.CBCUsageReport;
 import com.cloudblue.connect.test.internal.common.BaseMuleFlowTestCase;
 
 import org.junit.Rule;
@@ -59,7 +59,7 @@ public class UsageReportTestCase extends BaseMuleFlowTestCase {
     }
 
     @Test
-    public void testCreateRequest() throws Exception {
+    public void testUsageReport() throws Exception {
         Event event = flowRunner(this.flow).run();
         CBCUsageReport usageReport = (CBCUsageReport)event.getMessage().getPayload().getValue();
         assertThat(usageReport.getId(), is(USAGE_REPORT_ID));

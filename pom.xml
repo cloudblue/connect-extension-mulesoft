@@ -163,7 +163,9 @@
                                         <exclude>com.cloudblue.connect.api.clients.parsers.jackson</exclude>
                                         <exclude>com.cloudblue.connect.internal.sources.connections</exclude>
                                         <exclude>com.cloudblue.connect.api.parameters.accounts</exclude>
-                                        <exclude>com.cloudblue.connect.api.parameters.usage</exclude>
+                                        <exclude>com.cloudblue.connect.api.parameters.usage.report</exclude>
+                                        <exclude>com.cloudblue.connect.api.models.usage</exclude>
+                                        <exclude>com.cloudblue.connect.api.parameters.usage.record</exclude>
                                     </excludes>
                                     <limits>
                                         <limit>

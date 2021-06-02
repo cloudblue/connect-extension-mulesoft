@@ -1,6 +1,8 @@
-package com.cloudblue.connect.api.parameters.usage;
+package com.cloudblue.connect.api.parameters.usage.report;
 
 import com.cloudblue.connect.api.models.*;
+import com.cloudblue.connect.api.models.usage.CBCUsagePeriod;
+import com.cloudblue.connect.api.models.usage.CBCUsageReport;
 import com.cloudblue.connect.api.parameters.Embeddable;
 import org.mule.runtime.extension.api.annotation.param.Optional;
 import org.mule.runtime.extension.api.annotation.param.Parameter;

@@ -1,0 +1,48 @@
+<mule xmlns="http://www.mulesoft.org/schema/mule/core"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:http="http://www.mulesoft.org/schema/mule/http"
+      xmlns:cloudblue-connect="http://www.mulesoft.org/schema/mule/cloudblue-connect"
+      xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core
+            http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+            http://www.mulesoft.org/schema/mule/http 
+            http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+            http://www.mulesoft.org/schema/mule/cloudblue-connect 
+            http://www.mulesoft.org/schema/mule/cloudblue-connect/current/mule-cloudblue-connect.xsd">
+    
+    <http:listener-config name="listenerConfig">
+        <http:listener-connection host="localhost" port="${port}"/>
+    </http:listener-config>
+
+    <flow name="updateUsageRecordServer">
+        <http:listener path="/usage/records/${usage_record_id}"
+                       config-ref="listenerConfig"/>
+        <set-payload value="{'id':'${usage_record_id}'}"/>
+    </flow>
+
+    <flow name="closeUsageRecordServer">
+        <http:listener path="/usage/records/${usage_record_id}/close"
+                       config-ref="listenerConfig"/>
+        <set-payload value="{'id':'${usage_record_id}'}"/>
+    </flow>
+
+    <cloudblue-connect:config name="CloudBlue_Connect_Config_Test">
+        <cloudblue-connect:connection token="ApiKey SU-000-000-000:fake-token-001"
+                                      connectionTimeout="20000"
+                                      endpoint="http://localhost:${port}"/>
+    </cloudblue-connect:config>
+
+
+    <flow name="closeUsageRecords">
+        <cloudblue-connect:close-usage-record
+                config-ref="CloudBlue_Connect_Config_Test"
+                id="${usage_record_id}"
+                externalBillingId="EXT-0001"
+                externalBillingNote="Closed on friday"/>
+    </flow>
+
+    <flow name="updateUsageRecords">
+        <cloudblue-connect:update-usage-record
+                config-ref="CloudBlue_Connect_Config_Test"
+                id="${usage_record_id}"/>
+    </flow>
+</mule>

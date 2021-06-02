@@ -2,7 +2,7 @@ package com.cloudblue.connect.internal;
 
 import com.cloudblue.connect.api.parameters.filters.*;
 import com.cloudblue.connect.api.parameters.requests.*;
-import com.cloudblue.connect.api.parameters.usage.*;
+import com.cloudblue.connect.api.parameters.usage.report.*;
 import com.cloudblue.connect.internal.operations.CBCConfiguration;
 import com.cloudblue.connect.internal.sources.CBCWebhookConfig;
 

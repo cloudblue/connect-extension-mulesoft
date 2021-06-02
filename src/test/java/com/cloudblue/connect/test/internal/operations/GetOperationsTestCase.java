@@ -7,6 +7,8 @@ import com.cloudblue.connect.api.models.CBCRequest;
 import com.cloudblue.connect.api.models.CBCCase;
 import com.cloudblue.connect.api.models.CBCProduct;
 import com.cloudblue.connect.api.models.CBCProductItem;
+import com.cloudblue.connect.api.models.usage.CBCUsageRecord;
+import com.cloudblue.connect.api.models.usage.CBCUsageReport;
 import com.cloudblue.connect.test.internal.common.BaseMuleFlowTestCase;
 
 import java.lang.reflect.Method;
@@ -42,7 +44,8 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
     private static final String PRODUCT_ID = "PRD-0000-0000";
     private static final String PRODUCTITEM_ID = "PRD-0000-0000-001";
 
-    
+    private static final String USAGE_RECORD_ID = "UR-0000-00-0000-0000-0000-0000";
+
     @Rule
     public DynamicPort listenPort = new DynamicPort("port");
     
@@ -80,6 +83,9 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
     public SystemProperty productItemIdSystemProperty = new SystemProperty("productItem_id", PRODUCTITEM_ID);
 
 
+    @Rule
+    public SystemProperty usageRecordIdSystemProperty = new SystemProperty("usage_record_id", USAGE_RECORD_ID);
+
     private final String flow;
     private final Class clazz;
     private final String expectedIdValue;
@@ -97,6 +103,7 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
                 {"getProduct", CBCProduct.class, PRODUCT_ID},
                 {"getProductItem", CBCProductItem.class, PRODUCTITEM_ID},
                 {"getUsageFile", CBCUsageReport.class, USAGE_REPORT_ID},
+                {"getUsageRecords", CBCUsageRecord.class, USAGE_RECORD_ID},
                 {"listRequestsWithFilter", null, null},
                 {"listRequestsWithoutFilter", null, null},
                 {"listAssetsWithFilter", null, null},
@@ -117,7 +124,8 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
                 {"listProductsWithoutFilter", null, null},
                 {"listProductItemsWithFilter", null, null},
                 {"listProductItemsWithoutFilter", null, null},
-                {"listUsageFiles", null, null}
+                {"listUsageFiles", null, null},
+                {"listUsageRecords", null, null}
             }
         );
     }
@@ -127,7 +135,7 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
         this.clazz = clazz;
         this.expectedIdValue = expectedIdValue;
     }
-    
+
     @Test
     public void testRetrieve() throws Exception {
         Event getRequest = flowRunner(this.flow).run();
