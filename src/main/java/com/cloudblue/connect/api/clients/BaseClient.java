@@ -45,7 +45,6 @@ import org.slf4j.LoggerFactory;
 
 public class BaseClient {
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseClient.class);
-    
     private final Config config;
     private final RequestMarshaller requestMarshaller;
     private final ResponseUnmarshaller responseUnmarshaller;
@@ -208,7 +207,7 @@ public class BaseClient {
     ) throws CBCException {
 
         HttpRequestBase httpRequest = getHttpRequest(method, url);
-
+        LOGGER.info("Request: {}", httpRequest);
         this.setHeaders(httpRequest);
 
         if (headers != null && !headers.isEmpty()) {
@@ -240,7 +239,6 @@ public class BaseClient {
                             new StringEntity(requestBody, ContentType.APPLICATION_JSON)
                     );
                 }
-
             } catch (Exception e) {
                 throw new CBCException(e.getMessage());
             }
@@ -257,7 +255,6 @@ public class BaseClient {
             TypeReference<S> typeInfo
     ) throws CBCException {
         Object result = null;
-
         HttpResponse response = exchange(url, request, method, headers);
 
         if (typeInfo != null && response != null) {

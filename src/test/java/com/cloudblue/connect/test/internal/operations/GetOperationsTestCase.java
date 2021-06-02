@@ -1,6 +1,12 @@
 package com.cloudblue.connect.test.internal.operations;
 
 import com.cloudblue.connect.api.models.*;
+import com.cloudblue.connect.api.models.CBCAccount;
+import com.cloudblue.connect.api.models.CBCAsset;
+import com.cloudblue.connect.api.models.CBCRequest;
+import com.cloudblue.connect.api.models.CBCCase;
+import com.cloudblue.connect.api.models.CBCProduct;
+import com.cloudblue.connect.api.models.CBCProductItem;
 import com.cloudblue.connect.api.models.usage.CBCUsageRecord;
 import com.cloudblue.connect.api.models.usage.CBCUsageReport;
 import com.cloudblue.connect.test.internal.common.BaseMuleFlowTestCase;
@@ -35,8 +41,11 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
     private static final String TIERCONFIG_ID = "TC-0000-0000";
     private static final String TIERCONFIGREQUEST_ID = "TCR-0000-0000";
     private static final String USAGE_REPORT_ID = "UF-0000-00-0000-0000";
+    private static final String PRODUCT_ID = "PRD-0000-0000";
+    private static final String PRODUCTITEM_ID = "PRD-0000-0000-001";
+
     private static final String USAGE_RECORD_ID = "UR-0000-00-0000-0000-0000-0000";
-    
+
     @Rule
     public DynamicPort listenPort = new DynamicPort("port");
     
@@ -68,6 +77,13 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
     public SystemProperty usageReportIdSystemProperty = new SystemProperty("usage_report_id", USAGE_REPORT_ID);
 
     @Rule
+    public SystemProperty productIdSystemProperty = new SystemProperty("product_id", PRODUCT_ID);
+
+    @Rule
+    public SystemProperty productItemIdSystemProperty = new SystemProperty("productItem_id", PRODUCTITEM_ID);
+
+
+    @Rule
     public SystemProperty usageRecordIdSystemProperty = new SystemProperty("usage_record_id", USAGE_RECORD_ID);
 
     private final String flow;
@@ -84,6 +100,8 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
                 {"getTierAccountRequest", CBCAccountRequest.class, TIERACCOUNTREQUEST_ID},
                 {"getTierConfig", CBCTierConfig.class, TIERCONFIG_ID},
                 {"getTierConfigRequest", CBCTierConfigRequest.class, TIERCONFIGREQUEST_ID},
+                {"getProduct", CBCProduct.class, PRODUCT_ID},
+                {"getProductItem", CBCProductItem.class, PRODUCTITEM_ID},
                 {"getUsageFile", CBCUsageReport.class, USAGE_REPORT_ID},
                 {"getUsageRecords", CBCUsageRecord.class, USAGE_RECORD_ID},
                 {"listRequestsWithFilter", null, null},
@@ -102,6 +120,10 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
                 {"listTierConfigsWithoutFilter", null, null},
                 {"listTierConfigRequestsWithFilter", null, null},
                 {"listTierConfigRequestsWithoutFilter", null, null},
+                {"listProductsWithFilter", null, null},
+                {"listProductsWithoutFilter", null, null},
+                {"listProductItemsWithFilter", null, null},
+                {"listProductItemsWithoutFilter", null, null},
                 {"listUsageFiles", null, null},
                 {"listUsageRecords", null, null}
             }
@@ -113,8 +135,7 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
         this.clazz = clazz;
         this.expectedIdValue = expectedIdValue;
     }
-    
-    
+
     @Test
     public void testRetrieve() throws Exception {
         Event getRequest = flowRunner(this.flow).run();

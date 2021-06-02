@@ -150,6 +150,7 @@
                                         <exclude>com.cloudblue.connect.api.models.enums</exclude>
                                         <exclude>com.cloudblue.connect.api.parameters</exclude>
                                         <exclude>com.cloudblue.connect.api.parameters.requests</exclude>
+                                        <exclude>com.cloudblue.connect.api.parameters.products</exclude>
                                         <exclude>com.cloudblue.connect.api.parameters.filters</exclude>
                                         <exclude>com.cloudblue.connect.api.parameters.filters.common</exclude>
                                         <exclude>com.cloudblue.connect.api.exceptions</exclude>
