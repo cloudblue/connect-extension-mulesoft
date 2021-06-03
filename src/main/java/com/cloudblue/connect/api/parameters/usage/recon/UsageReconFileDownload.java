@@ -1,6 +1,6 @@
-package com.cloudblue.connect.api.parameters.usage.chunk;
+package com.cloudblue.connect.api.parameters.usage.recon;
 
-import com.cloudblue.connect.api.parameters.common.ResourceActionParameter;
+import com.cloudblue.connect.api.parameters.common.AbstractResourceMultiAction;
 import org.mule.runtime.api.meta.model.display.PathModel;
 import org.mule.runtime.extension.api.annotation.Expression;
 import org.mule.runtime.extension.api.annotation.param.Parameter;
@@ -8,8 +8,7 @@ import org.mule.runtime.extension.api.annotation.param.display.DisplayName;
 import org.mule.runtime.extension.api.annotation.param.display.Path;
 import org.mule.runtime.extension.api.annotation.param.display.Placement;
 
-public class DownloadChunkFile extends ResourceActionParameter {
-
+public class UsageReconFileDownload extends AbstractResourceMultiAction {
     @Parameter
     @DisplayName("Download Location")
     @Path(type = PathModel.Type.DIRECTORY, location = PathModel.Location.EXTERNAL)
@@ -18,7 +17,12 @@ public class DownloadChunkFile extends ResourceActionParameter {
     private String location;
 
     @Parameter
+    @DisplayName("File name")
     private String fileName;
+
+    @Parameter
+    @DisplayName("Download File Type")
+    private ReconDownloadType fileType;
 
     public String getLocation() {
         return location;
@@ -34,5 +38,23 @@ public class DownloadChunkFile extends ResourceActionParameter {
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
+    }
+
+    public ReconDownloadType getFileType() {
+        return fileType;
+    }
+
+    public void setFileType(ReconDownloadType fileType) {
+        this.fileType = fileType;
+    }
+
+    @Override
+    public Object buildEntity() {
+        return null;
+    }
+
+    @Override
+    public String action() {
+        return fileType.getAction();
     }
 }
