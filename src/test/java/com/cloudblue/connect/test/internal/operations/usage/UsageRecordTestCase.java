@@ -5,20 +5,16 @@ import com.cloudblue.connect.test.internal.common.BaseMuleFlowTestCase;
 
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runners.Parameterized;
 
 import org.mule.runtime.api.event.Event;
 import org.mule.tck.junit4.rule.DynamicPort;
 import org.mule.tck.junit4.rule.SystemProperty;
-import org.mule.test.runner.RunnerDelegateTo;
 
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-@RunnerDelegateTo(Parameterized.class)
 public class UsageRecordTestCase extends BaseMuleFlowTestCase {
 
     private static final String USAGE_RECORD_ID = "UR-0000-00-0000-0000-0000-0000";
@@ -29,29 +25,22 @@ public class UsageRecordTestCase extends BaseMuleFlowTestCase {
     @Rule
     public SystemProperty usageRecordIdSystemProperty = new SystemProperty("usage_record_id", USAGE_RECORD_ID);
 
-    private final String flow;
-
-    @Parameterized.Parameters
-    public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][] {
-                {"closeUsageRecords"},
-                {"updateUsageRecords"}
-        });
-    }
-
-    public UsageRecordTestCase(String flow) {
-        this.flow = flow;
-    }
-
     @Override
     protected String getConfigFile() {
         return "test-mule-config-usage-record.xml";
     }
 
     @Test
-    public void testUsageRecord() throws Exception {
-        Event event = flowRunner(this.flow).run();
+    public void testUpdateUsageRecord() throws Exception {
+        Event event = flowRunner("updateUsageRecords").run();
         CBCUsageRecord usageRecord = (CBCUsageRecord)event.getMessage().getPayload().getValue();
         assertThat(usageRecord.getId(), is(USAGE_RECORD_ID));
+    }
+
+    @Test
+    public void testBulkCloseUsageRecord() throws Exception {
+        Event event = flowRunner("closeUsageRecords").run();
+        List<CBCUsageRecord> usageRecord = (List<CBCUsageRecord>)event.getMessage().getPayload().getValue();
+        assertThat(usageRecord.get(0).getId(), is(USAGE_RECORD_ID));
     }
 }

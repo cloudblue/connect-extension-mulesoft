@@ -4,6 +4,7 @@ import com.cloudblue.connect.api.clients.constants.HttpMethod;
 import com.cloudblue.connect.api.exceptions.CBCException;
 import com.cloudblue.connect.api.models.usage.CBCUsageRecord;
 import com.cloudblue.connect.api.parameters.common.ResourceActionParameter;
+import com.cloudblue.connect.api.parameters.usage.record.BulkCloseUsageRecord;
 import com.cloudblue.connect.api.parameters.usage.record.CloseUsageRecord;
 import com.cloudblue.connect.api.parameters.usage.record.UpdateUsageRecord;
 import com.cloudblue.connect.internal.operations.connections.CBCConnection;
@@ -14,6 +15,9 @@ import org.mule.runtime.extension.api.annotation.param.Connection;
 import org.mule.runtime.extension.api.annotation.param.MediaType;
 import org.mule.runtime.extension.api.annotation.param.ParameterGroup;
 import org.mule.runtime.extension.api.annotation.param.display.DisplayName;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.cloudblue.connect.api.clients.constants.CBCAPIConstants.CollectionKeys.*;
 import static org.mule.runtime.extension.api.annotation.param.MediaType.ANY;
@@ -33,16 +37,20 @@ public class UsageRecordOperations {
     }
 
     @MediaType(value = ANY, strict = false)
-    @DisplayName("Close Usage Record")
-    public  CBCUsageRecord closeUsageRecord(
+    @DisplayName("Bulk Close Usage Record")
+    public List<CBCUsageRecord> bulkCloseUsageRecord(
             @Connection CBCConnection connection,
-            @ParameterGroup(name="Close Usage Record Details") CloseUsageRecord closeUsageRecordDetails
+            @ParameterGroup(name="Bulk Close Usage Record Details") BulkCloseUsageRecord bulkCloseRecordDetails
     ) throws CBCException {
-        return (CBCUsageRecord) connection
-                .newQ(new TypeReference<CBCUsageRecord>() {})
+        return (List<CBCUsageRecord>) connection
+                .newQ(new TypeReference<ArrayList<CBCUsageRecord>>() {})
                 .collection(USAGE)
-                .collection(RECORDS, closeUsageRecordDetails.getId())
-                .action("close", HttpMethod.POST, closeUsageRecordDetails.buildEntity());
+                .collection(RECORDS)
+                .action(
+                        "close-records",
+                        HttpMethod.POST,
+                        bulkCloseRecordDetails.buildEntity()
+                );
     }
 
     @MediaType(value = ANY, strict = false)

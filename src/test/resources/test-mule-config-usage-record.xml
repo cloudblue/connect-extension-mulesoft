@@ -20,9 +20,9 @@
     </flow>
 
     <flow name="closeUsageRecordServer">
-        <http:listener path="/usage/records/${usage_record_id}/close"
+        <http:listener path="/usage/records/close-records"
                        config-ref="listenerConfig"/>
-        <set-payload value="{'id':'${usage_record_id}'}"/>
+        <set-payload value="[{'id':'${usage_record_id}'}]"/>
     </flow>
 
     <cloudblue-connect:config name="CloudBlue_Connect_Config_Test">
@@ -31,13 +31,16 @@
                                       endpoint="http://localhost:${port}"/>
     </cloudblue-connect:config>
 
-
     <flow name="closeUsageRecords">
-        <cloudblue-connect:close-usage-record
-                config-ref="CloudBlue_Connect_Config_Test"
-                id="${usage_record_id}"
-                externalBillingId="EXT-0001"
-                externalBillingNote="Closed on friday"/>
+        <cloudblue-connect:bulk-close-usage-record
+                config-ref="CloudBlue_Connect_Config_Test">
+            <cloudblue-connect:bulk-close-details>
+                <cloudblue-connect:close-usage-record
+                        id="${usage_record_id}"
+                        externalBillingId="EXT-000-0001"
+                        externalBillingNote="Closed" />
+            </cloudblue-connect:bulk-close-details>
+        </cloudblue-connect:bulk-close-usage-record>
     </flow>
 
     <flow name="updateUsageRecords">
