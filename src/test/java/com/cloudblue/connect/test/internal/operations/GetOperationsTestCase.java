@@ -97,6 +97,8 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
 
     @Rule
     public SystemProperty usageReconIdSystemProperty = new SystemProperty("usage_recon_id", USAGE_RECON_ID);
+
+    @Rule
     public SystemProperty versionSystemProperty = new SystemProperty("tierAccountVersion", TIERACCOUNTVERSION);
 
 
