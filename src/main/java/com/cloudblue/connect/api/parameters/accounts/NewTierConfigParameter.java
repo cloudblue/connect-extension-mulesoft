@@ -3,6 +3,7 @@ package com.cloudblue.connect.api.parameters.accounts;
 import com.cloudblue.connect.api.models.*;
 import com.cloudblue.connect.api.models.marketplace.CBCConnection;
 import com.cloudblue.connect.api.models.marketplace.CBCMarketplace;
+import com.cloudblue.connect.api.models.product.CBCProduct;
 import com.cloudblue.connect.api.models.subscription.CBCRequestParam;
 import com.cloudblue.connect.api.models.tier.CBCTierConfig;
 import com.cloudblue.connect.api.parameters.Embeddable;

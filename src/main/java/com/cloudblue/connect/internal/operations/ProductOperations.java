@@ -1,15 +1,17 @@
 package com.cloudblue.connect.internal.operations;
 
 import com.cloudblue.connect.internal.operations.connections.CBCConnection;
-import com.cloudblue.connect.api.models.CBCProduct;
-import com.cloudblue.connect.api.models.CBCProductItem;
+import com.cloudblue.connect.api.models.product.CBCProduct;
+import com.cloudblue.connect.api.models.product.CBCProductItem;
+import com.cloudblue.connect.api.models.product.CBCProductParameter;
+import com.cloudblue.connect.api.models.product.CBCProductConfigurationParameter;
 import com.cloudblue.connect.api.exceptions.CBCException;
 import com.cloudblue.connect.api.clients.Client;
 import com.cloudblue.connect.api.parameters.common.ResourceActionParameter;
 import com.cloudblue.connect.api.parameters.products.SearchProductItemParameter;
 import com.cloudblue.connect.api.parameters.products.NewProductParameter;
 import com.cloudblue.connect.api.parameters.products.NewProductItemParameter;
-
+import com.cloudblue.connect.api.parameters.products.SearchProductParameterParameter;
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.mule.runtime.extension.api.annotation.param.Connection;
 import org.mule.runtime.extension.api.annotation.param.MediaType;
@@ -100,5 +102,45 @@ public class ProductOperations extends BaseListOperation {
 
         resolve(q);
         return (List<CBCProductItem>) q.get();
-    } 
+    }
+    
+    @MediaType(value = ANY, strict = false) 
+    @DisplayName("Get Product Parameter")    
+    public CBCProductParameter getProductParameter(
+        @Connection CBCConnection connection,
+        @ParameterGroup(name="Product Parameter") SearchProductParameterParameter getProductParameter
+    ) throws CBCException {
+        return (CBCProductParameter) connection
+            .newQ(new TypeReference <CBCProductParameter>() {})
+            .collection("products", getProductParameter.getProductId())
+            .collection("parameters", getProductParameter.getParameterId())
+            .get();
+    }
+
+    @MediaType(value = ANY, strict = false)
+    @DisplayName("List Product Parameters")
+    public List<CBCProductParameter> listProductParameters(
+        @Connection CBCConnection connection,
+        @ParameterGroup(name="Product ID") ResourceActionParameter getProductParameter
+    ) throws CBCException {
+        Client.Q q = connection
+                .newQ(new TypeReference<ArrayList<CBCProductParameter>>() {})
+                .collection("products", getProductParameter.getId())
+                .collection("parameters");
+        resolve(q);
+        return (List<CBCProductParameter>) q.get();
+    }    
+   
+    @MediaType(value = ANY, strict = false) 
+    @DisplayName("Get Product Configuration Parameter")    
+    public CBCProductConfigurationParameter getProductConfigurationParameter(
+        @Connection CBCConnection connection,
+        @ParameterGroup(name="Product Id") ResourceActionParameter getProductId
+    ) throws CBCException {
+        return (CBCProductConfigurationParameter) connection
+            .newQ(new TypeReference <CBCProductConfigurationParameter>() {})
+            .collection("products", getProductId.getId())
+            .collection("configurations")
+            .get();
+    }
 }

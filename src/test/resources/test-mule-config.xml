@@ -138,6 +138,16 @@
         <set-payload value="[{'id':'${productItem_id}'}]"/>
     </flow>
 
+    <flow name="getProductParameterServer">
+        <http:listener path="/products/${product_id}/parameters/${productParameter_id}" config-ref="listenerConfig"/>
+        <set-payload value="{'id':'${productParameter_id}'}"/>
+    </flow>
+
+    <flow name="listProductParametersServer">
+        <http:listener path="/products/${product_id}/parameters" config-ref="listenerConfig"/>
+        <set-payload value="[{'id':'${productParameter_id}'}]"/>
+    </flow>
+
     <flow name="listUsageRecordServer">
         <http:listener path="/usage/records/"
                        config-ref="listenerConfig"/>
@@ -223,6 +233,16 @@
                                         id="${product_id}"/>
     </flow>
 
+    <flow name="getProductItem">
+        <cloudblue-connect:get-product-item config-ref="CloudBlue_Connect_Config_Test"
+                                        productId="${product_id}" productItemId="${productItem_id}"/>
+    </flow>
+
+    <flow name="getProductParameter">
+        <cloudblue-connect:get-product-parameter config-ref="CloudBlue_Connect_Config_Test"
+                                        productId="${product_id}" parameterId="${productParameter_id}"/>
+    </flow>
+
     <flow name="listRequestsWithFilter">
         <cloudblue-connect:list-requests config-ref="CloudBlue_Connect_Config_Test">
             <cloudblue-connect:filter >
@@ -239,11 +259,6 @@
                 </cloudblue-connect:properties>
             </cloudblue-connect:order-by>
         </cloudblue-connect:list-requests>
-    </flow>
-
-    <flow name="getProductItem">
-        <cloudblue-connect:get-product-item config-ref="CloudBlue_Connect_Config_Test"
-                                        productId="${product_id}" productItemId="${productItem_id}"/>
     </flow>
 
     <flow name="listRequestsWithoutFilter">
@@ -438,6 +453,23 @@
         </cloudblue-connect:list-product-items>
     </flow>
 
+    <flow name="listProductParametersWithoutFilter">
+        <cloudblue-connect:list-product-parameters config-ref="CloudBlue_Connect_Config_Test" id="${product_id}"/>
+    </flow>
+
+    <flow name="listProductParametersWithFilter">
+        <cloudblue-connect:list-product-parameters config-ref="CloudBlue_Connect_Config_Test" id="${product_id}">
+            <cloudblue-connect:filter >
+                <cloudblue-connect:list-filter type="AND" >
+                    <cloudblue-connect:filters >
+                        <cloudblue-connect:mono-filter type="EQ" property="type" value="text" />
+                        <cloudblue-connect:mono-filter type="NE" property="name" value="pepe" />
+                    </cloudblue-connect:filters>
+                </cloudblue-connect:list-filter>
+            </cloudblue-connect:filter>
+        </cloudblue-connect:list-product-parameters>
+    </flow>
+
     <flow name="listUsageChunkFiles">
         <cloudblue-connect:list-usage-chunk-files
                 config-ref="CloudBlue_Connect_Config_Test">
@@ -463,6 +495,7 @@
                 config-ref="CloudBlue_Connect_Config_Test"
                 id="${usage_recon_id}"/>
     </flow>
+<<<<<<< HEAD
 
     <flow name="listUsageAggregates">
         <cloudblue-connect:list-usage-aggregates
@@ -478,4 +511,6 @@
                 config-ref="CloudBlue_Connect_Config_Test"
                 assetId="${asset_id}"/>
     </flow>
+=======
+>>>>>>> Reorganize product models
 </mule>

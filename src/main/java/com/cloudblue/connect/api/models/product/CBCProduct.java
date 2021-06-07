@@ -1,5 +1,8 @@
-package com.cloudblue.connect.api.models;
+package com.cloudblue.connect.api.models.product;
 
+import com.cloudblue.connect.api.models.CBCConfigurations;
+import com.cloudblue.connect.api.models.CBCCustomerUiSettings;
+import com.cloudblue.connect.api.models.CBCUsageRule;
 import com.cloudblue.connect.api.models.common.CBCCommonEntity;
 import com.cloudblue.connect.api.models.common.CBCEntity;
 

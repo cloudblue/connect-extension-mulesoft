@@ -1,4 +1,4 @@
-package com.cloudblue.connect.api.models;
+package com.cloudblue.connect.api.models.product;
 
 import com.cloudblue.connect.api.models.common.CBCEntity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -7,16 +7,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CBCStats implements CBCEntity {
+public class CBCReservationCapabilities implements CBCEntity {
 
     @JsonProperty
-    private Integer versions;
-    
-    public Integer getVersions() {
-        return versions;
+    private Boolean consumption;
+
+    public Boolean getConsumption() {
+        return consumption;
     }
 
-    public void setVersions(Integer versions) {
-        this.versions = versions;
+    public void setConsumption(Boolean consumption) {
+        this.consumption = consumption;
     }    
 }

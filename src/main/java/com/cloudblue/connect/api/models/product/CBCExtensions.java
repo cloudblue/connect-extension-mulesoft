@@ -1,32 +1,26 @@
-package com.cloudblue.connect.api.models;
+package com.cloudblue.connect.api.models.product;
 
 import com.cloudblue.connect.api.models.common.CBCEntity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.cloudblue.connect.api.models.enums.CBCExtensionStatus;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CBCUnit implements CBCEntity {
-
+public class CBCExtensions implements CBCEntity {
     @JsonProperty
     private String id;
+    
+    @JsonProperty
+    private String icon;
 
     @JsonProperty
     private String name;
-    
 
     @JsonProperty
-    private String title;
+    private CBCExtensionStatus status;
 
-    @JsonProperty
-    private String unit;
-
-    public CBCUnit(String unit) {
-        this.unit = unit;
-    }
-
-    public CBCUnit() {}
 
     public String getId() {
         return id;
@@ -34,7 +28,7 @@ public class CBCUnit implements CBCEntity {
 
     public void setId(String id) {
         this.id = id;
-    }    
+    }
 
     public String getName() {
         return name;
@@ -42,21 +36,22 @@ public class CBCUnit implements CBCEntity {
 
     public void setName(String name) {
         this.name = name;
-    }    
-
-    public String getTitle() {
-        return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }    
-
-    public String getUnit() {
-        return unit;
+    public String getIcon() {
+        return icon;
     }
 
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }    
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+    
+    public CBCExtensionStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(CBCExtensionStatus status) {
+        this.status = status;
+    }
+    
 }
