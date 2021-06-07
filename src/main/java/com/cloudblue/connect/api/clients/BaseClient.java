@@ -37,6 +37,8 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
@@ -230,7 +232,10 @@ public class BaseClient {
                     builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
 
                     for (Map.Entry<String, File> entry : ((FileEntity)request).getFiles().entrySet())
-                        builder.addBinaryBody(entry.getKey(), entry.getValue());
+                        builder.addPart(entry.getKey(), new FileBody(entry.getValue()));
+
+                    for (Map.Entry<String, String> entry: ((FileEntity)request).getValues().entrySet())
+                        builder.addTextBody(entry.getKey(), entry.getValue());
 
                     enclosingRequest.setEntity(builder.build());
                 } else {

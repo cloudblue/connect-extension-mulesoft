@@ -1,6 +1,8 @@
 package com.cloudblue.connect.internal.operations;
 
 import com.cloudblue.connect.internal.operations.connections.CBCConnectionProvider;
+import com.cloudblue.connect.internal.operations.usage.*;
+
 import org.mule.runtime.extension.api.annotation.Operations;
 import org.mule.runtime.extension.api.annotation.connectivity.ConnectionProviders;
 
@@ -20,7 +22,9 @@ import org.mule.runtime.extension.api.annotation.connectivity.ConnectionProvider
     ListTierAccountOperation.class,
     ProductOperations.class,
     ListChunkFileOperation.class,
-    ChunkFileOperations.class
+    ChunkFileOperations.class,
+    ListReconciliationOperation.class,
+    UsageReconciliationOperations.class
 })
 @ConnectionProviders(CBCConnectionProvider.class)
 public class CBCConfiguration {}

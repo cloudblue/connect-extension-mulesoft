@@ -31,7 +31,7 @@ public class UploadUsageReport extends UsageReportAction {
     @Override
     public Object buildEntity() {
         return new FileEntity()
-                .add("usage_file", new File(usageFile));
+                .addFile("usage_file", new File(usageFile));
     }
 
     @Override

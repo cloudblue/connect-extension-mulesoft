@@ -140,6 +140,18 @@
         <set-payload value="{'id':'${usage_record_id}'}"/>
     </flow>
 
+    <flow name="listUsageReconServer">
+        <http:listener path="/usage/reconciliations/"
+                       config-ref="listenerConfig"/>
+        <set-payload value="[{'id':'${usage_recon_id}'}]"/>
+    </flow>
+
+    <flow name="getUsageReconServer">
+        <http:listener path="/usage/reconciliations/${usage_recon_id}"
+                       config-ref="listenerConfig"/>
+        <set-payload value="{'id':'${usage_recon_id}'}"/>
+    </flow>
+
     <cloudblue-connect:config name="CloudBlue_Connect_Config_Test">
         <cloudblue-connect:connection token="ApiKey SU-000-000-000:fake-token-001"
                                       connectionTimeout="20000"
@@ -408,5 +420,16 @@
         <cloudblue-connect:get-chunk-files
                 config-ref="CloudBlue_Connect_Config_Test"
                 id="${chunk_file_id}"/>
+    </flow>
+
+    <flow name="listUsageReconciliations">
+        <cloudblue-connect:list-usage-reconciliations
+                config-ref="CloudBlue_Connect_Config_Test"/>
+    </flow>
+
+    <flow name="getUsageReconciliations">
+        <cloudblue-connect:get-usage-reconciliation
+                config-ref="CloudBlue_Connect_Config_Test"
+                id="${usage_recon_id}"/>
     </flow>
 </mule>
