@@ -4,12 +4,14 @@ import com.cloudblue.connect.api.models.tier.CBCAccount;
 import com.cloudblue.connect.api.models.subscription.CBCAsset;
 import com.cloudblue.connect.api.models.subscription.CBCRequest;
 import com.cloudblue.connect.api.models.ticketing.CBCCase;
-import com.cloudblue.connect.api.models.CBCProduct;
-import com.cloudblue.connect.api.models.CBCProductItem;
+import com.cloudblue.connect.api.models.product.CBCProduct;
+import com.cloudblue.connect.api.models.product.CBCProductItem;
+import com.cloudblue.connect.api.models.product.CBCProductParameter;
 import com.cloudblue.connect.api.models.tier.CBCAccountRequest;
 import com.cloudblue.connect.api.models.tier.CBCTierConfig;
 import com.cloudblue.connect.api.models.tier.CBCTierConfigRequest;
 import com.cloudblue.connect.api.models.usage.CBCUsageChunkFile;
+import com.cloudblue.connect.api.models.usage.CBCUsageReconciliation;
 import com.cloudblue.connect.api.models.usage.CBCUsageRecord;
 import com.cloudblue.connect.api.models.usage.CBCUsageReport;
 import com.cloudblue.connect.test.internal.common.BaseMuleFlowTestCase;
@@ -46,8 +48,10 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
     private static final String USAGE_REPORT_ID = "UF-0000-00-0000-0000";
     private static final String PRODUCT_ID = "PRD-0000-0000";
     private static final String PRODUCTITEM_ID = "PRD-0000-0000-001";
+    private static final String PRODUCTPARAMETER_ID = "PRM-000-000";
     private static final String USAGE_RECORD_ID = "UR-0000-00-0000-0000-0000-0000";
     private static final String USAGE_CHUNK_FILE_ID = "UFC-0000-00-0000-0000-001";
+    private static final String USAGE_RECON_ID = "RCF-0000-00-0000-0000-001";
 
     @Rule
     public DynamicPort listenPort = new DynamicPort("port");
@@ -86,10 +90,16 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
     public SystemProperty productItemIdSystemProperty = new SystemProperty("productItem_id", PRODUCTITEM_ID);
 
     @Rule
+    public SystemProperty productParameterIdSystemProperty = new SystemProperty("productParameter_id", PRODUCTPARAMETER_ID);
+
+    @Rule
     public SystemProperty usageRecordIdSystemProperty = new SystemProperty("usage_record_id", USAGE_RECORD_ID);
 
     @Rule
     public SystemProperty usageChunkFileIdSystemProperty = new SystemProperty("chunk_file_id", USAGE_CHUNK_FILE_ID);
+
+    @Rule
+    public SystemProperty usageReconIdSystemProperty = new SystemProperty("usage_recon_id", USAGE_RECON_ID);
 
     private final String flow;
     private final Class clazz;
@@ -102,14 +112,17 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
                 {"getAsset", CBCAsset.class, ASSERT_ID},
                 {"getCase", CBCCase.class, CASE_ID},
                 {"getTierAccount", CBCAccount.class, TIERACCOUNT_ID},
+                {"getTierAccountVersion", CBCAccount.class, TIERACCOUNT_ID},
                 {"getTierAccountRequest", CBCAccountRequest.class, TIERACCOUNTREQUEST_ID},
                 {"getTierConfig", CBCTierConfig.class, TIERCONFIG_ID},
                 {"getTierConfigRequest", CBCTierConfigRequest.class, TIERCONFIGREQUEST_ID},
                 {"getProduct", CBCProduct.class, PRODUCT_ID},
                 {"getProductItem", CBCProductItem.class, PRODUCTITEM_ID},
+                {"getProductParameter", CBCProductParameter.class, PRODUCTPARAMETER_ID},
                 {"getUsageFile", CBCUsageReport.class, USAGE_REPORT_ID},
                 {"getUsageRecords", CBCUsageRecord.class, USAGE_RECORD_ID},
                 {"getUsageChunkFiles", CBCUsageChunkFile.class, USAGE_CHUNK_FILE_ID},
+                {"getUsageReconciliations", CBCUsageReconciliation.class, USAGE_RECON_ID},
                 {"listRequestsWithFilter", null, null},
                 {"listRequestsWithoutFilter", null, null},
                 {"listAssetsWithFilter", null, null},
@@ -130,9 +143,12 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
                 {"listProductsWithoutFilter", null, null},
                 {"listProductItemsWithFilter", null, null},
                 {"listProductItemsWithoutFilter", null, null},
+                {"listProductParametersWithFilter", null, null},
+                {"listProductParametersWithoutFilter", null, null},
                 {"listUsageFiles", null, null},
                 {"listUsageRecords", null, null},
-                {"listUsageChunkFiles", null, null}
+                {"listUsageChunkFiles", null, null},
+                {"listUsageReconciliations", null, null}
             }
         );
     }

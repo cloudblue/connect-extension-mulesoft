@@ -9,6 +9,7 @@ import com.cloudblue.connect.api.models.enums.CBCUsageReportSchema;
 import com.cloudblue.connect.api.models.enums.CBCUsageReportStatus;
 
 import com.cloudblue.connect.api.models.marketplace.CBCMarketplace;
+import com.cloudblue.connect.api.models.product.CBCProduct;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;

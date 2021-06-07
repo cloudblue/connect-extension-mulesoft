@@ -1,6 +1,6 @@
 package com.cloudblue.connect.test.internal.operations.products;
 
-import com.cloudblue.connect.api.models.CBCProductItem;
+import com.cloudblue.connect.api.models.product.CBCProductItem;
 import com.cloudblue.connect.test.internal.common.BaseMuleFlowTestCase;
 
 import org.junit.Rule;

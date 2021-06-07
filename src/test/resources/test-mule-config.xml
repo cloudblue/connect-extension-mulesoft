@@ -58,6 +58,16 @@
         <set-payload value="[{'id':'${tierAccount_id}'}]"/>
     </flow>
 
+    <flow name="getTierAccountVersionServer">
+        <http:listener path="/tier/accounts/${tierAccount_id}/versions/${tierAccountVersion}" config-ref="listenerConfig"/>
+        <set-payload value="{'id':'${tierAccount_id}'}"/>
+    </flow>
+
+    <flow name="listTierAccountVersionsServer">
+        <http:listener path="/tier/accounts/${tierAccount_id}/versions" config-ref="listenerConfig"/>
+        <set-payload value="[{'id':'${tierAccount_id}'}]"/>
+    </flow>
+
     <flow name="getTierAccountRequestServer">
         <http:listener path="/tier/account-requests/${tierAccountRequest_id}" config-ref="listenerConfig"/>
         <set-payload value="{'id':'${tierAccountRequest_id}'}"/>
@@ -128,6 +138,16 @@
         <set-payload value="[{'id':'${productItem_id}'}]"/>
     </flow>
 
+    <flow name="getProductParameterServer">
+        <http:listener path="/products/${product_id}/parameters/${productParameter_id}" config-ref="listenerConfig"/>
+        <set-payload value="{'id':'${productParameter_id}'}"/>
+    </flow>
+
+    <flow name="listProductParametersServer">
+        <http:listener path="/products/${product_id}/parameters" config-ref="listenerConfig"/>
+        <set-payload value="[{'id':'${productParameter_id}'}]"/>
+    </flow>
+
     <flow name="listUsageRecordServer">
         <http:listener path="/usage/records/"
                        config-ref="listenerConfig"/>
@@ -138,6 +158,18 @@
         <http:listener path="/usage/records/${usage_record_id}"
                        config-ref="listenerConfig"/>
         <set-payload value="{'id':'${usage_record_id}'}"/>
+    </flow>
+
+    <flow name="listUsageReconServer">
+        <http:listener path="/usage/reconciliations/"
+                       config-ref="listenerConfig"/>
+        <set-payload value="[{'id':'${usage_recon_id}'}]"/>
+    </flow>
+
+    <flow name="getUsageReconServer">
+        <http:listener path="/usage/reconciliations/${usage_recon_id}"
+                       config-ref="listenerConfig"/>
+        <set-payload value="{'id':'${usage_recon_id}'}"/>
     </flow>
 
     <cloudblue-connect:config name="CloudBlue_Connect_Config_Test">
@@ -165,6 +197,11 @@
                                         id="${tierAccount_id}"/>
     </flow>
 
+    <flow name="getTierAccountVersion">
+        <cloudblue-connect:get-tier-account-version config-ref="CloudBlue_Connect_Config_Test" 
+                                        id="${tierAccount_id}" version="${tierAccountVersion}"/>
+    </flow>
+
     <flow name="getTierAccountRequest">
         <cloudblue-connect:get-tier-account-request config-ref="CloudBlue_Connect_Config_Test" 
                                         id="${tierAccountRequest_id}"/>
@@ -184,6 +221,16 @@
                                         id="${product_id}"/>
     </flow>
 
+    <flow name="getProductItem">
+        <cloudblue-connect:get-product-item config-ref="CloudBlue_Connect_Config_Test"
+                                        productId="${product_id}" productItemId="${productItem_id}"/>
+    </flow>
+
+    <flow name="getProductParameter">
+        <cloudblue-connect:get-product-parameter config-ref="CloudBlue_Connect_Config_Test"
+                                        productId="${product_id}" parameterId="${productParameter_id}"/>
+    </flow>
+
     <flow name="listRequestsWithFilter">
         <cloudblue-connect:list-requests config-ref="CloudBlue_Connect_Config_Test">
             <cloudblue-connect:filter >
@@ -200,11 +247,6 @@
                 </cloudblue-connect:properties>
             </cloudblue-connect:order-by>
         </cloudblue-connect:list-requests>
-    </flow>
-
-    <flow name="getProductItem">
-        <cloudblue-connect:get-product-item config-ref="CloudBlue_Connect_Config_Test"
-                                        productId="${product_id}" productItemId="${productItem_id}"/>
     </flow>
 
     <flow name="listRequestsWithoutFilter">
@@ -277,6 +319,10 @@
                 </cloudblue-connect:list-filter>
             </cloudblue-connect:filter>
         </cloudblue-connect:list-tier-accounts>
+    </flow>
+
+    <flow name="listTierAccountVersions">
+        <cloudblue-connect:list-tier-account-versions config-ref="CloudBlue_Connect_Config_Test" id="TA-0000-0000"/>
     </flow>
 
     <flow name="listTierAccountRequestsWithoutFilter">
@@ -395,6 +441,23 @@
         </cloudblue-connect:list-product-items>
     </flow>
 
+    <flow name="listProductParametersWithoutFilter">
+        <cloudblue-connect:list-product-parameters config-ref="CloudBlue_Connect_Config_Test" id="${product_id}"/>
+    </flow>
+
+    <flow name="listProductParametersWithFilter">
+        <cloudblue-connect:list-product-parameters config-ref="CloudBlue_Connect_Config_Test" id="${product_id}">
+            <cloudblue-connect:filter >
+                <cloudblue-connect:list-filter type="AND" >
+                    <cloudblue-connect:filters >
+                        <cloudblue-connect:mono-filter type="EQ" property="type" value="text" />
+                        <cloudblue-connect:mono-filter type="NE" property="name" value="pepe" />
+                    </cloudblue-connect:filters>
+                </cloudblue-connect:list-filter>
+            </cloudblue-connect:filter>
+        </cloudblue-connect:list-product-parameters>
+    </flow>
+
     <flow name="listUsageChunkFiles">
         <cloudblue-connect:list-usage-chunk-files
                 config-ref="CloudBlue_Connect_Config_Test">
@@ -408,5 +471,16 @@
         <cloudblue-connect:get-chunk-files
                 config-ref="CloudBlue_Connect_Config_Test"
                 id="${chunk_file_id}"/>
+    </flow>
+
+    <flow name="listUsageReconciliations">
+        <cloudblue-connect:list-usage-reconciliations
+                config-ref="CloudBlue_Connect_Config_Test"/>
+    </flow>
+
+    <flow name="getUsageReconciliations">
+        <cloudblue-connect:get-usage-reconciliation
+                config-ref="CloudBlue_Connect_Config_Test"
+                id="${usage_recon_id}"/>
     </flow>
 </mule>

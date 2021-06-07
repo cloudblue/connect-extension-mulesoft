@@ -3,6 +3,7 @@ package com.cloudblue.connect.api.parameters;
 import com.cloudblue.connect.api.models.*;
 import com.cloudblue.connect.api.models.common.CBCUser;
 import com.cloudblue.connect.api.models.enums.CBCCaseType;
+import com.cloudblue.connect.api.models.product.CBCProduct;
 
 import java.util.List;
 import java.util.ArrayList;

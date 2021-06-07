@@ -1,8 +1,8 @@
 package com.cloudblue.connect.api.models.ticketing;
 import com.cloudblue.connect.api.models.common.CBCEvents;
-import com.cloudblue.connect.api.models.CBCProduct;
 import com.cloudblue.connect.api.models.enums.CBCCaseState;
 import com.cloudblue.connect.api.models.enums.CBCCaseType;
+import com.cloudblue.connect.api.models.product.CBCProduct;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;

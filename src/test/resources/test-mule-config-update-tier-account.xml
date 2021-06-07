@@ -12,17 +12,10 @@
     <http:listener-config name="listenerConfig">
         <http:listener-connection host="localhost" port="${port}"/>
     </http:listener-config>
-
-    <flow name="updateUsageRecordServer">
-        <http:listener path="/usage/records/${usage_record_id}"
-                       config-ref="listenerConfig"/>
-        <set-payload value="{'id':'${usage_record_id}'}"/>
-    </flow>
-
-    <flow name="closeUsageRecordServer">
-        <http:listener path="/usage/records/close-records"
-                       config-ref="listenerConfig"/>
-        <set-payload value="[{'id':'${usage_record_id}'}]"/>
+    
+    <flow name="updateTierAccountServer">
+        <http:listener path="/tier/accounts/${tierAccount_id}" config-ref="listenerConfig"/>
+        <set-payload value="{'id':'${tierAccount_id}'}"/>
     </flow>
 
     <cloudblue-connect:config name="CloudBlue_Connect_Config_Test">
@@ -31,21 +24,27 @@
                                       endpoint="http://localhost:${port}"/>
     </cloudblue-connect:config>
 
-    <flow name="closeUsageRecords">
-        <cloudblue-connect:bulk-close-usage-record
-                config-ref="CloudBlue_Connect_Config_Test">
-            <cloudblue-connect:bulk-close-details>
-                <cloudblue-connect:close-usage-record
-                        id="${usage_record_id}"
-                        externalBillingId="EXT-000-0001"
-                        externalBillingNote="Closed" />
-            </cloudblue-connect:bulk-close-details>
-        </cloudblue-connect:bulk-close-usage-record>
-    </flow>
-
-    <flow name="updateUsageRecords">
-        <cloudblue-connect:update-usage-record
-                config-ref="CloudBlue_Connect_Config_Test"
-                id="${usage_record_id}"/>
+    <flow name="updateTierAccount">
+        <cloudblue-connect:update-tier-account 
+            config-ref="CloudBlue_Connect_Config_Test"
+            id="TA-0000-0000"
+            type="customer"
+            externalId="123344"
+            name="pepe"
+            taxId="1234">
+            <cloudblue-connect:contact-info addressLine1="H-23"
+                addressLine2="Lone Street"
+                city="MSW" state="CI"
+                postalCode="762635" country="US">
+                <cloudblue-connect:contact firstName="First"
+                    lastName="Last"
+                    email="first.last@example.com">
+                    <cloudblue-connect:phone-number areaCode="00"
+                        countryCode="+34"
+                        extension="0"
+                        phoneNumber="555555555"/>
+                    </cloudblue-connect:contact>                               
+                </cloudblue-connect:contact-info>
+        </cloudblue-connect:update-tier-account>
     </flow>
 </mule>

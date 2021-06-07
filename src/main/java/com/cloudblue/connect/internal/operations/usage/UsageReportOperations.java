@@ -1,4 +1,4 @@
-package com.cloudblue.connect.internal.operations;
+package com.cloudblue.connect.internal.operations.usage;
 
 
 import com.cloudblue.connect.api.clients.constants.HttpMethod;

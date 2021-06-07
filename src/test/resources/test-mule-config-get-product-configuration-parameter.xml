@@ -12,17 +12,10 @@
     <http:listener-config name="listenerConfig">
         <http:listener-connection host="localhost" port="${port}"/>
     </http:listener-config>
-
-    <flow name="updateUsageRecordServer">
-        <http:listener path="/usage/records/${usage_record_id}"
-                       config-ref="listenerConfig"/>
-        <set-payload value="{'id':'${usage_record_id}'}"/>
-    </flow>
-
-    <flow name="closeUsageRecordServer">
-        <http:listener path="/usage/records/close-records"
-                       config-ref="listenerConfig"/>
-        <set-payload value="[{'id':'${usage_record_id}'}]"/>
+    
+    <flow name="getProductConfigurationParameterServer">
+        <http:listener path="/products/${product_id}/configurations" config-ref="listenerConfig"/>
+        <set-payload value="{'value':'${value}'}"/>
     </flow>
 
     <cloudblue-connect:config name="CloudBlue_Connect_Config_Test">
@@ -31,21 +24,10 @@
                                       endpoint="http://localhost:${port}"/>
     </cloudblue-connect:config>
 
-    <flow name="closeUsageRecords">
-        <cloudblue-connect:bulk-close-usage-record
-                config-ref="CloudBlue_Connect_Config_Test">
-            <cloudblue-connect:bulk-close-details>
-                <cloudblue-connect:close-usage-record
-                        id="${usage_record_id}"
-                        externalBillingId="EXT-000-0001"
-                        externalBillingNote="Closed" />
-            </cloudblue-connect:bulk-close-details>
-        </cloudblue-connect:bulk-close-usage-record>
+    <flow name="getProductConfigurationParameter">
+		<cloudblue-connect:get-product-configuration-parameter 
+            config-ref="CloudBlue_Connect_Config_Test" 
+            id="${product_id}"/>
     </flow>
 
-    <flow name="updateUsageRecords">
-        <cloudblue-connect:update-usage-record
-                config-ref="CloudBlue_Connect_Config_Test"
-                id="${usage_record_id}"/>
-    </flow>
 </mule>

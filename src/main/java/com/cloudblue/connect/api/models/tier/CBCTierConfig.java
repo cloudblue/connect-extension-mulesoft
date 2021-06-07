@@ -6,6 +6,7 @@ import com.cloudblue.connect.api.models.common.CBCEvent;
 import com.cloudblue.connect.api.models.common.CBCUser;
 import com.cloudblue.connect.api.models.marketplace.CBCConnection;
 import com.cloudblue.connect.api.models.marketplace.CBCMarketplace;
+import com.cloudblue.connect.api.models.product.CBCProduct;
 import com.cloudblue.connect.api.models.subscription.CBCRequestParam;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;

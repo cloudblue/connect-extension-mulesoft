@@ -9,6 +9,7 @@ import java.util.UUID;
 
 import com.cloudblue.connect.api.models.marketplace.CBCConnection;
 import com.cloudblue.connect.api.models.marketplace.CBCMarketplace;
+import com.cloudblue.connect.api.models.product.CBCProduct;
 import com.cloudblue.connect.api.models.subscription.CBCAsset;
 import com.cloudblue.connect.api.models.subscription.CBCRequest;
 import com.cloudblue.connect.api.models.subscription.CBCRequestItem;

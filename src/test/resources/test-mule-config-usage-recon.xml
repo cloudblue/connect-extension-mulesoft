@@ -13,16 +13,22 @@
         <http:listener-connection host="localhost" port="${port}"/>
     </http:listener-config>
 
-    <flow name="updateUsageRecordServer">
-        <http:listener path="/usage/records/${usage_record_id}"
+    <flow name="createUsageReconServer">
+        <http:listener path="/usage/reconciliations"
                        config-ref="listenerConfig"/>
-        <set-payload value="{'id':'${usage_record_id}'}"/>
+        <set-payload value="{'id':'${usage_recon_id}'}"/>
     </flow>
 
-    <flow name="closeUsageRecordServer">
-        <http:listener path="/usage/records/close-records"
+    <flow name="getUsageReconServer">
+        <http:listener path="/usage/reconciliations/${usage_recon_id}"
                        config-ref="listenerConfig"/>
-        <set-payload value="[{'id':'${usage_record_id}'}]"/>
+        <set-payload value="{'id':'${usage_recon_id}'}"/>
+    </flow>
+
+    <flow name="downloadProcessedUsageReconServer">
+        <http:listener path="/usage/reconciliations/${usage_recon_id}/processedfile"
+                       config-ref="listenerConfig"/>
+        <set-payload value="Test Data!"/>
     </flow>
 
     <cloudblue-connect:config name="CloudBlue_Connect_Config_Test">
@@ -31,21 +37,19 @@
                                       endpoint="http://localhost:${port}"/>
     </cloudblue-connect:config>
 
-    <flow name="closeUsageRecords">
-        <cloudblue-connect:bulk-close-usage-record
-                config-ref="CloudBlue_Connect_Config_Test">
-            <cloudblue-connect:bulk-close-details>
-                <cloudblue-connect:close-usage-record
-                        id="${usage_record_id}"
-                        externalBillingId="EXT-000-0001"
-                        externalBillingNote="Closed" />
-            </cloudblue-connect:bulk-close-details>
-        </cloudblue-connect:bulk-close-usage-record>
+    <flow name="createUsageRecon">
+        <cloudblue-connect:upload-usage-reconciliation-file
+                config-ref="CloudBlue_Connect_Config_Test"
+                uploadNote="Uploaded for test"
+                reconFile="${filePath}"/>
     </flow>
 
-    <flow name="updateUsageRecords">
-        <cloudblue-connect:update-usage-record
+    <flow name="downloadUsageReconFile">
+        <cloudblue-connect:usage-reconciliation-action
+                fileType="Processed"
                 config-ref="CloudBlue_Connect_Config_Test"
-                id="${usage_record_id}"/>
+                id="${usage_recon_id}"
+                location="${tempFilePath}"
+                fileName="${usage_recon_id}.txt"/>
     </flow>
 </mule>

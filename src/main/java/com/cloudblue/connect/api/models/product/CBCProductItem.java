@@ -1,5 +1,6 @@
-package com.cloudblue.connect.api.models;
+package com.cloudblue.connect.api.models.product;
 
+import com.cloudblue.connect.api.models.CBCCommitment;
 import com.cloudblue.connect.api.models.common.CBCEntity;
 import com.cloudblue.connect.api.models.common.CBCEvents;
 import com.cloudblue.connect.api.models.enums.CBCProductItemPrecision;
