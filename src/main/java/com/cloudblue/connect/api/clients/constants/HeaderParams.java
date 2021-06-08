@@ -14,4 +14,6 @@ public class HeaderParams {
 
     public static final String AUTHORIZATION = "Authorization";
 
+    public static final String AUTHENTICATION = "Authentication";
+
 }

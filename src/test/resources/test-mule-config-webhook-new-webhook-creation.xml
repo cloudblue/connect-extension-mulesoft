@@ -32,12 +32,12 @@
 
     <flow name="postWebhooksServer">
         <http:listener path="/notifications/webhooks" config-ref="listenerConfig" allowedMethods="POST"/>
-        <set-payload value="{'id':'${webhook_id}', 'object_class': 'fulfillment_request', 'external_url': 'https://localhost/webhook/fulfilment/fulfillment_request', 'jwt_secret': 'ABCD-EFGH-XYZ1', 'active': true, 'product': {'id':'PRD-000-000-000'}}"/>
+        <set-payload value="{'id':'${webhook_id}', 'object_class': 'fulfillment_request', 'external_url': 'https://localhost/webhook/fulfilment/fulfillment_request', 'jwt_secret': '${jwt_secret}', 'active': true, 'product': {'id':'PRD-000-000-000'}}"/>
     </flow>
 
     <flow name="getWebhookServer">
         <http:listener path="/notifications/webhooks/${webhook_id}" config-ref="listenerConfig"/>
-        <set-payload value="{'id':'${webhook_id}', 'object_class': 'fulfillment_request', 'external_url': 'https://localhost/webhook/fulfilment/fulfillment_request', 'jwt_secret': 'ABCD-EFGH-XYZ1', 'active': true, 'product': {'id':'PRD-000-000-000'}}"/>
+        <set-payload value="{'id':'${webhook_id}', 'object_class': 'fulfillment_request', 'external_url': 'https://localhost/webhook/fulfilment/fulfillment_request', 'jwt_secret': '${jwt_secret}', 'active': true, 'product': {'id':'PRD-000-000-000'}}"/>
     </flow>
 
     <cloudblue-connect:config name="CloudBlue_Connect_Config_Test">
@@ -48,7 +48,7 @@
 
     <flow name="webhookFlow">
         <cloudblue-connect:webhook-source config-ref="CloudBlue_Connect_Webhook_config" path="/fulfilment"
-                                          authenticationToken="ABCD-EFGH-XYZ1"
+                                          authenticationToken="${jwt_secret}"
                                           webhookEventType="FULFILLMENT_REQUEST" productId="PRD-000-000-000"/>
         <cloudblue-connect:list-requests config-ref="CloudBlue_Connect_Config_Test">
             <cloudblue-connect:filter >
@@ -79,7 +79,7 @@
                 <![CDATA[#[output application/java
                     ---
                     {
-	                    Authorization : 'ABCD-EFGH-XYZ1'
+	                    Authentication : 'Bearer ${jwt_token}'
                     }
                 ]]]>
             </http:headers>

@@ -198,6 +198,7 @@ public class WebhookSource extends Source<CBCWebhookEvent, WebhookRequestAttribu
                 }
 
             } catch (Exception e) {
+                LOGGER.error("Error during processing request", e);
                 throw new MuleRuntimeException(e);
             }
         });

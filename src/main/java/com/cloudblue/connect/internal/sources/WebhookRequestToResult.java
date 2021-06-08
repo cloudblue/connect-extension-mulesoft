@@ -21,6 +21,8 @@ public class WebhookRequestToResult {
 
     public static Result<CBCWebhookEvent, WebhookRequestAttributes> transform(final HttpRequestContext requestContext)
             throws Exception {
+        String authHeader;
+        String token = null;
         final HttpRequest request = requestContext.getRequest();
 
         final HttpEntity entity = request.getEntity();
@@ -33,8 +35,14 @@ public class WebhookRequestToResult {
         MultiMap<String, String> headers = request.getHeaders();
 
         WebhookRequestAttributes attributes = new WebhookRequestAttributes();
-        if (headers.containsKey(HeaderParams.AUTHORIZATION.toLowerCase()))
-            attributes.setToken(headers.get(HeaderParams.AUTHORIZATION.toLowerCase()));
+        if (headers.containsKey(HeaderParams.AUTHENTICATION.toLowerCase())){
+            authHeader = headers.get(HeaderParams.AUTHENTICATION.toLowerCase());
+            if (authHeader != null && authHeader.contains("Bearer ")) {
+                token = authHeader.split(" ")[1];
+            }
+
+            attributes.setToken(token);
+        }
 
         Result.Builder<CBCWebhookEvent, WebhookRequestAttributes> resultBuilder = Result.builder();
 

@@ -11,6 +11,10 @@ import org.mule.tck.junit4.rule.SystemProperty;
 
 public class NewWebhookCreationTestCase extends BaseMuleFlowTestCase {
     private static final String WEBHOOK_ID = "WB-0000-0000-0000";
+    private static final String secret = "Test-token-key-for-webhook-based-authentication";
+
+    private static final String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ3ZWJob29rX2lkIjoi" +
+            "V0gtNjMyLTcyNS0xNjkiLCJleHAiOjQ3MjMwNTc0NzF9.4agSUe4nQtU957sK_YDoBn8HRVUlboFlOV4zcNmKWGg";
 
     @Rule
     public DynamicPort listenPort = new DynamicPort("port");
@@ -20,6 +24,12 @@ public class NewWebhookCreationTestCase extends BaseMuleFlowTestCase {
 
     @Rule
     public SystemProperty webhookIdSystemProperty = new SystemProperty("webhook_id", WEBHOOK_ID);
+
+    @Rule
+    public SystemProperty tokenSystemProperty = new SystemProperty("jwt_token", token);
+
+    @Rule
+    public SystemProperty secretSystemProperty = new SystemProperty("jwt_secret", secret);
 
     @Override
     protected String getConfigFile() {
