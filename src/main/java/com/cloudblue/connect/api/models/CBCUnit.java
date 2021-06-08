@@ -21,7 +21,13 @@ public class CBCUnit implements CBCEntity {
 
     @JsonProperty
     private String unit;
-    
+
+    public CBCUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public CBCUnit() {}
+
     public String getId() {
         return id;
     }

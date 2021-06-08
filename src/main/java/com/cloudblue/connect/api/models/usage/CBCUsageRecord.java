@@ -1,5 +1,6 @@
 package com.cloudblue.connect.api.models.usage;
 
+import com.cloudblue.connect.api.models.CBCProductItem;
 import com.cloudblue.connect.api.models.subscription.CBCAsset;
 import com.cloudblue.connect.api.models.common.CBCEntity;
 import com.cloudblue.connect.api.models.enums.CBCUsageRecordStatus;
@@ -70,7 +71,8 @@ public class CBCUsageRecord implements CBCEntity {
     @JsonProperty("error_details")
     private String errorDetails;
 
-    // TODO Add item ref after item class is available
+    @JsonProperty
+    private CBCProductItem item;
 
 
     public String getId() {
@@ -223,5 +225,13 @@ public class CBCUsageRecord implements CBCEntity {
 
     public void setErrorDetails(String errorDetails) {
         this.errorDetails = errorDetails;
+    }
+
+    public CBCProductItem getItem() {
+        return item;
+    }
+
+    public void setItem(CBCProductItem item) {
+        this.item = item;
     }
 }

@@ -146,7 +146,9 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
                 {"listUsageFiles", null, null},
                 {"listUsageRecords", null, null},
                 {"listUsageChunkFiles", null, null},
-                {"listUsageReconciliations", null, null}
+                {"listUsageReconciliations", null, null},
+                {"listUsageAggregates", null, null},
+                {"listAssetUsageAggregates", null, null}
             }
         );
     }

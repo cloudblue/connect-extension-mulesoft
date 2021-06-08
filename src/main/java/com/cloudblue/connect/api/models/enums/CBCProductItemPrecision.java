@@ -6,6 +6,15 @@ public enum CBCProductItemPrecision {
     @JsonProperty("integer")
     INTEGER,
 
-    @JsonProperty("double")
-    DOUBLE
+    @JsonProperty("decimal(1)")
+    DOUBLE_1,
+
+    @JsonProperty("decimal(2)")
+    DOUBLE_2,
+
+    @JsonProperty("decimal(4)")
+    DOUBLE_4,
+
+    @JsonProperty("decimal(8)")
+    DOUBLE_8,
 }

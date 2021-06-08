@@ -24,7 +24,9 @@ import org.mule.runtime.extension.api.annotation.connectivity.ConnectionProvider
     ListChunkFileOperation.class,
     ChunkFileOperations.class,
     ListReconciliationOperation.class,
-    UsageReconciliationOperations.class
+    UsageReconciliationOperations.class,
+    ListUsageAggregatesOperation.class,
+    ListAssetUsageAggregates.class
 })
 @ConnectionProviders(CBCConnectionProvider.class)
 public class CBCConfiguration {}

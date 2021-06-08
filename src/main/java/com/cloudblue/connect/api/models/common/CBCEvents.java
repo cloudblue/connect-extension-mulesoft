@@ -42,6 +42,9 @@ public class CBCEvents implements CBCEntity {
     @JsonProperty
     private CBCEvent deleted;
 
+    @JsonProperty("last_reported")
+    private CBCEvent lastReported;
+
     public CBCEvent getClosed() {
         return closed;
     }
@@ -128,5 +131,13 @@ public class CBCEvents implements CBCEntity {
 
     public void setDeleted(CBCEvent deleted) {
         this.deleted = deleted;
+    }
+
+    public CBCEvent getLastReported() {
+        return lastReported;
+    }
+
+    public void setLastReported(CBCEvent lastReported) {
+        this.lastReported = lastReported;
     }
 }

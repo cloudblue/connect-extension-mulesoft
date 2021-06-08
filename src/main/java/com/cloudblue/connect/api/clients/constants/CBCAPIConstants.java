@@ -24,5 +24,6 @@ public class CBCAPIConstants {
         public static final String RECORDS = "records";
         public static final String CHUNKS = "chunks";
         public static final String RECONCILIATIONS = "reconciliations";
+        public static final String AGGREGATES = "aggregates";
     }
 }
