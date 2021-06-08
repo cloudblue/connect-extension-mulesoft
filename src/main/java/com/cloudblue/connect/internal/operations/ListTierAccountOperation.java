@@ -14,6 +14,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import org.mule.runtime.extension.api.annotation.param.Connection;
 import org.mule.runtime.extension.api.annotation.param.MediaType;
 import org.mule.runtime.extension.api.annotation.param.display.DisplayName;
+import org.mule.runtime.extension.api.annotation.param.ParameterGroup;
+import com.cloudblue.connect.api.parameters.common.ResourceActionParameter;
 
 import static org.mule.runtime.extension.api.annotation.param.MediaType.ANY;
 
@@ -30,6 +32,21 @@ public class ListTierAccountOperation extends BaseListOperation {
         Client.Q q = connection
                 .newQ(new TypeReference<ArrayList<CBCAccount>>() {})
                 .collection("tier").collection("accounts");
+        resolve(q);
+        return (List<CBCAccount>) q.get();
+    }
+
+    @MediaType(value = ANY, strict = false)
+    @DisplayName("List Tier Account Versions")
+    public List<CBCAccount> listTierAccountVersions(
+            @Connection CBCConnection connection,
+            @ParameterGroup(name="Tier Account ID")
+            ResourceActionParameter tierAccountParameter
+    ) throws CBCException {
+        Client.Q q = connection
+                .newQ(new TypeReference<ArrayList<CBCAccount>>() {})
+                .collection("tier").collection("accounts", tierAccountParameter.getId())
+                .collection("versions");
         resolve(q);
         return (List<CBCAccount>) q.get();
     }

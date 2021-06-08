@@ -8,9 +8,11 @@ import com.cloudblue.connect.api.models.tier.CBCTierConfig;
 import com.cloudblue.connect.api.models.tier.CBCTierConfigRequest;
 import com.cloudblue.connect.api.parameters.accounts.IgnoreTierAccountRequestParameter;
 import com.cloudblue.connect.api.parameters.accounts.NewTierAccountParameter;
+import com.cloudblue.connect.api.parameters.accounts.UpdateTierAccountParameter;
 import com.cloudblue.connect.api.parameters.accounts.NewTierConfigParameter;
 import com.cloudblue.connect.api.parameters.accounts.ApproveTierConfigRequestParameter;
 import com.cloudblue.connect.api.parameters.accounts.UpdateTierConfigRequestParameter;
+import com.cloudblue.connect.api.parameters.accounts.GetTierAccountVersionParameter;
 import com.cloudblue.connect.api.exceptions.CBCException;
 import com.cloudblue.connect.api.parameters.common.ResourceActionParameter;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -37,7 +39,21 @@ public class TierAccountOperations {
     }
    
     @MediaType(value = ANY, strict = false)
-    @DisplayName("Create/Update Tier Account")
+    @DisplayName("Get Tier Account Version")
+    public CBCAccount getTierAccountVersion(
+            @Connection CBCConnection connection,
+            @ParameterGroup(name="Tier Account") GetTierAccountVersionParameter getTierAccountVersionParameter
+    ) throws CBCException {
+        return (CBCAccount) connection
+            .newQ(new TypeReference<CBCAccount>() {})
+            .collection("tier")
+            .collection("accounts", getTierAccountVersionParameter.getId())
+            .collection("versions", getTierAccountVersionParameter.getVersion())
+            .get();
+    }
+
+    @MediaType(value = ANY, strict = false)
+    @DisplayName("Create Tier Account")
     public CBCAccount createTierAccount(
             @Connection CBCConnection connection,
             @ParameterGroup(name="Create/Update Tier Account")
@@ -48,6 +64,19 @@ public class TierAccountOperations {
             .create(newRequestParameter.buildEntity());
     }
     
+    @MediaType(value = ANY, strict = false)
+    @DisplayName("Update Tier Account")
+    public CBCAccount updateTierAccount(
+        @Connection CBCConnection connection,
+        @ParameterGroup(name="Update Tier Account")
+        UpdateTierAccountParameter newRequestParameter
+    ) throws CBCException {
+        return (CBCAccount) connection.newQ(new TypeReference<CBCAccount>() {})
+            .collection("tier")
+            .collection("accounts",newRequestParameter.getId())
+            .update(newRequestParameter.buildEntity());
+        }  
+
     @MediaType(value = ANY, strict = false)
     @DisplayName("Get Tier Account Request")
     public CBCAccountRequest getTierAccountRequest(

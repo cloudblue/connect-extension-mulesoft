@@ -50,6 +50,8 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
     private static final String USAGE_RECORD_ID = "UR-0000-00-0000-0000-0000-0000";
     private static final String USAGE_CHUNK_FILE_ID = "UFC-0000-00-0000-0000-001";
     private static final String USAGE_RECON_ID = "RCF-0000-00-0000-0000-001";
+    private static final String TIERACCOUNTVERSION = "1";
+
 
     @Rule
     public DynamicPort listenPort = new DynamicPort("port");
@@ -96,6 +98,10 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
     @Rule
     public SystemProperty usageReconIdSystemProperty = new SystemProperty("usage_recon_id", USAGE_RECON_ID);
 
+    @Rule
+    public SystemProperty versionSystemProperty = new SystemProperty("tierAccountVersion", TIERACCOUNTVERSION);
+
+
     private final String flow;
     private final Class clazz;
     private final String expectedIdValue;
@@ -107,6 +113,7 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
                 {"getAsset", CBCAsset.class, ASSERT_ID},
                 {"getCase", CBCCase.class, CASE_ID},
                 {"getTierAccount", CBCAccount.class, TIERACCOUNT_ID},
+                {"getTierAccountVersion", CBCAccount.class, TIERACCOUNT_ID},
                 {"getTierAccountRequest", CBCAccountRequest.class, TIERACCOUNTREQUEST_ID},
                 {"getTierConfig", CBCTierConfig.class, TIERCONFIG_ID},
                 {"getTierConfigRequest", CBCTierConfigRequest.class, TIERCONFIGREQUEST_ID},

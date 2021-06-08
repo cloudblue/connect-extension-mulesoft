@@ -58,6 +58,16 @@
         <set-payload value="[{'id':'${tierAccount_id}'}]"/>
     </flow>
 
+    <flow name="getTierAccountVersionServer">
+        <http:listener path="/tier/accounts/${tierAccount_id}/versions/${tierAccountVersion}" config-ref="listenerConfig"/>
+        <set-payload value="{'id':'${tierAccount_id}'}"/>
+    </flow>
+
+    <flow name="listTierAccountVersionsServer">
+        <http:listener path="/tier/accounts/${tierAccount_id}/versions" config-ref="listenerConfig"/>
+        <set-payload value="[{'id':'${tierAccount_id}'}]"/>
+    </flow>
+
     <flow name="getTierAccountRequestServer">
         <http:listener path="/tier/account-requests/${tierAccountRequest_id}" config-ref="listenerConfig"/>
         <set-payload value="{'id':'${tierAccountRequest_id}'}"/>
@@ -177,6 +187,11 @@
                                         id="${tierAccount_id}"/>
     </flow>
 
+    <flow name="getTierAccountVersion">
+        <cloudblue-connect:get-tier-account-version config-ref="CloudBlue_Connect_Config_Test" 
+                                        id="${tierAccount_id}" version="${tierAccountVersion}"/>
+    </flow>
+
     <flow name="getTierAccountRequest">
         <cloudblue-connect:get-tier-account-request config-ref="CloudBlue_Connect_Config_Test" 
                                         id="${tierAccountRequest_id}"/>
@@ -289,6 +304,10 @@
                 </cloudblue-connect:list-filter>
             </cloudblue-connect:filter>
         </cloudblue-connect:list-tier-accounts>
+    </flow>
+
+    <flow name="listTierAccountVersions">
+        <cloudblue-connect:list-tier-account-versions config-ref="CloudBlue_Connect_Config_Test" id="TA-0000-0000"/>
     </flow>
 
     <flow name="listTierAccountRequestsWithoutFilter">
