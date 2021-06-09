@@ -1,4 +1,4 @@
-package com.cloudblue.connect.api.models;
+package com.cloudblue.connect.api.models.product;
 
 import com.cloudblue.connect.api.models.common.CBCEntity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -7,17 +7,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CBCItemUi implements CBCEntity {
+public class CBCStats implements CBCEntity {
 
     @JsonProperty
-    private Boolean visibility;
+    private Integer versions;
     
-    public Boolean getVisibility() {
-        return visibility;
+    public Integer getVersions() {
+        return versions;
     }
 
-    public void setVisibility(Boolean visibility) {
-        this.visibility = visibility;
+    public void setVersions(Integer versions) {
+        this.versions = versions;
     }    
-
 }

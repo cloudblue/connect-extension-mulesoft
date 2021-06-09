@@ -1,5 +1,6 @@
-package com.cloudblue.connect.api.models;
+package com.cloudblue.connect.api.models.product;
 
+import com.cloudblue.connect.api.models.CBCValidationCapabilities;
 import com.cloudblue.connect.api.models.common.CBCEntity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;

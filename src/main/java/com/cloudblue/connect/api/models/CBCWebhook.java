@@ -1,6 +1,7 @@
 package com.cloudblue.connect.api.models;
 
 import com.cloudblue.connect.api.models.enums.CBCWebhookEventType;
+import com.cloudblue.connect.api.models.product.CBCProduct;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;

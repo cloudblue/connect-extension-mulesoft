@@ -1,7 +1,7 @@
 package com.cloudblue.connect.api.models.subscription;
 
 import com.cloudblue.connect.api.models.marketplace.CBCConnection;
-import com.cloudblue.connect.api.models.CBCProduct;
+import com.cloudblue.connect.api.models.product.CBCProduct;
 import com.cloudblue.connect.api.models.common.CBCEntity;
 import com.cloudblue.connect.api.models.enums.CBCAssetStatus;
 

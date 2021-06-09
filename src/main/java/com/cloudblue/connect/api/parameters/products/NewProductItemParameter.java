@@ -1,12 +1,11 @@
 package com.cloudblue.connect.api.parameters.products;
 
-import com.cloudblue.connect.api.models.CBCProductItem;
 import com.cloudblue.connect.api.models.CBCCommitment;
-import com.cloudblue.connect.api.models.CBCUnit;
-import com.cloudblue.connect.api.models.CBCItemUi;
 import com.cloudblue.connect.api.models.enums.CBCProductItemPrecision;
 import com.cloudblue.connect.api.models.enums.CBCProductItemType;
-
+import com.cloudblue.connect.api.models.product.CBCItemUi;
+import com.cloudblue.connect.api.models.product.CBCProductItem;
+import com.cloudblue.connect.api.models.product.CBCUnit;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.mule.runtime.extension.api.annotation.Expression;
 import org.mule.runtime.extension.api.annotation.param.Parameter;
