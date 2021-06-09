@@ -2,6 +2,9 @@ package com.cloudblue.connect.api.models.product;
 
 import com.cloudblue.connect.api.models.CBCRequestParamConstraints;
 import com.cloudblue.connect.api.models.common.CBCEntity;
+import com.cloudblue.connect.api.models.enums.CBCProductParameterType;
+import com.cloudblue.connect.api.models.enums.CBCProductParameterScope;
+import com.cloudblue.connect.api.models.enums.CBCProductParameterPhase;
 
 import com.cloudblue.connect.api.models.common.CBCEvents;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -25,13 +28,13 @@ public class CBCProductParameter implements CBCEntity {
     private String description;
 
     @JsonProperty
-    private String type;
+    private CBCProductParameterType type;
 
     @JsonProperty
-    private String scope;
+    private CBCProductParameterScope scope;
 
     @JsonProperty
-    private String phase;
+    private CBCProductParameterPhase phase;
 
     @JsonProperty
     private CBCRequestParamConstraints constraints;
@@ -75,27 +78,27 @@ public class CBCProductParameter implements CBCEntity {
         this.description = description;
     }
 
-    public String getType() {
+    public CBCProductParameterType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(CBCProductParameterType type) {
         this.type = type;
     }
 
-    public String getScope() {
+    public CBCProductParameterScope getScope() {
         return scope;
     }
 
-    public void setScope(String scope) {
+    public void setScope(CBCProductParameterScope scope) {
         this.scope = scope;
     }
 
-    public String getPhase() {
+    public CBCProductParameterPhase getPhase() {
         return phase;
     }
 
-    public void setPhase(String phase) {
+    public void setPhase(CBCProductParameterPhase phase) {
         this.phase = phase;
     }
 
