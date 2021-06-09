@@ -42,6 +42,7 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
     private static final String CASE_ID = "CA-0000-0000";
     private static final String CONVERSATION_ID = "CO-0000-0000";
     private static final String TIERACCOUNT_ID = "TA-0000-0000";
+    private static final String TIERACCOUNTVERSION = "1";
     private static final String TIERACCOUNTREQUEST_ID = "TAR-0000-0000";
     private static final String TIERCONFIG_ID = "TC-0000-0000";
     private static final String TIERCONFIGREQUEST_ID = "TCR-0000-0000";
@@ -55,6 +56,7 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
     private static final String TIERACCOUNTVERSION = "1";
 
 
+    
     @Rule
     public DynamicPort listenPort = new DynamicPort("port");
     
@@ -72,6 +74,9 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
 
     @Rule
     public SystemProperty tierAccountIdSystemProperty = new SystemProperty("tierAccount_id", TIERACCOUNT_ID);
+
+    @Rule
+    public SystemProperty tierAccountVersionSystemProperty = new SystemProperty("tierAccountVersion", TIERACCOUNTVERSION);
 
     @Rule
     public SystemProperty tierAccountRequestIdSystemProperty = new SystemProperty("tierAccountRequest_id", TIERACCOUNTREQUEST_ID);
