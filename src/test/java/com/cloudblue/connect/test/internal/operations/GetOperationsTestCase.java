@@ -53,8 +53,6 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
     private static final String USAGE_RECORD_ID = "UR-0000-00-0000-0000-0000-0000";
     private static final String USAGE_CHUNK_FILE_ID = "UFC-0000-00-0000-0000-001";
     private static final String USAGE_RECON_ID = "RCF-0000-00-0000-0000-001";
-    private static final String TIERACCOUNTVERSION = "1";
-
 
     
     @Rule

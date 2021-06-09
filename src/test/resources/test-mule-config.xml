@@ -495,7 +495,6 @@
                 config-ref="CloudBlue_Connect_Config_Test"
                 id="${usage_recon_id}"/>
     </flow>
-<<<<<<< HEAD
 
     <flow name="listUsageAggregates">
         <cloudblue-connect:list-usage-aggregates
@@ -511,6 +510,4 @@
                 config-ref="CloudBlue_Connect_Config_Test"
                 assetId="${asset_id}"/>
     </flow>
-=======
->>>>>>> Reorganize product models
 </mule>

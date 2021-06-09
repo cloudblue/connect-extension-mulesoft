@@ -1,6 +1,6 @@
 package com.cloudblue.connect.api.models.usage;
 
-import com.cloudblue.connect.api.models.CBCProductItem;
+import com.cloudblue.connect.api.models.product.CBCProductItem;
 import com.cloudblue.connect.api.models.subscription.CBCAsset;
 import com.cloudblue.connect.api.models.common.CBCEntity;
 import com.cloudblue.connect.api.models.enums.CBCUsageRecordStatus;
