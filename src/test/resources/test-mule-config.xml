@@ -172,6 +172,7 @@
         <set-payload value="{'id':'${usage_recon_id}'}"/>
     </flow>
 
+<<<<<<< HEAD
     <flow name="listUsageAggregatesServer">
         <http:listener path="/usage/aggregates"
                        config-ref="listenerConfig"/>
@@ -184,6 +185,8 @@
         <set-payload value="[{'item':{'id':'${productItem_id}'}}]"/>
     </flow>
 
+=======
+>>>>>>> c0105cbe6afb9c4ed2b22383ee28be053cd02a32
     <cloudblue-connect:config name="CloudBlue_Connect_Config_Test">
         <cloudblue-connect:connection token="ApiKey SU-000-000-000:fake-token-001"
                                       connectionTimeout="20000"
