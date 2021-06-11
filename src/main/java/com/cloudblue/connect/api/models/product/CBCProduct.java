@@ -132,12 +132,12 @@ public class CBCProduct implements CBCEntity {
     public void setReplacement(CBCExtensions replacement) {
         this.replacement = replacement;
     }
-    
-    public String getEndofSaleNotes() {
+
+    public String getEndOfSaleNotes() {
         return endOfSaleNotes;
     }
 
-    public void setEndOfSaleNote(String endOfSaleNotes) {
+    public void setEndOfSaleNotes(String endOfSaleNotes) {
         this.endOfSaleNotes = endOfSaleNotes;
     }
 
