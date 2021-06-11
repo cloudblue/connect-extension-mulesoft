@@ -43,7 +43,7 @@
 
     <flow name="webhookFlow">
         <cloudblue-connect:webhook-source config-ref="CloudBlue_Connect_Webhook_config" path="/fulfilment"
-                                          authenticationToken="${jwt_secret}"
+                                          jwtSecret="${jwt_secret}"
                                           webhookEventType="FULFILLMENT_REQUEST" productId="PRD-000-000-000"/>
         <raise-error type="MULE:CONNECTIVITY"/>
     </flow>

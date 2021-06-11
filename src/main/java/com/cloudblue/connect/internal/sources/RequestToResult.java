@@ -3,6 +3,7 @@ package com.cloudblue.connect.internal.sources;
 import com.cloudblue.connect.api.clients.constants.HeaderParams;
 import com.cloudblue.connect.api.clients.parsers.jackson.JacksonResponseUnmarshaller;
 import com.cloudblue.connect.api.models.CBCWebhookEvent;
+import com.cloudblue.connect.api.models.subscription.CBCRequest;
 import com.cloudblue.connect.api.webhook.WebhookRequestAttributes;
 import org.apache.commons.io.IOUtils;
 import org.mule.runtime.api.metadata.MediaType;
@@ -16,10 +17,12 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 
-public class WebhookRequestToResult {
-    private WebhookRequestToResult() {}
+public class RequestToResult {
 
-    public static Result<CBCWebhookEvent, WebhookRequestAttributes> transform(final HttpRequestContext requestContext)
+    private RequestToResult() {}
+
+    public static <T> Result<T, WebhookRequestAttributes> transform(
+            final HttpRequestContext requestContext, Class<T> clazz)
             throws Exception {
         String authHeader;
         String token = null;
@@ -30,7 +33,7 @@ public class WebhookRequestToResult {
 
         String payload = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
 
-        CBCWebhookEvent event = new JacksonResponseUnmarshaller().unmarshal(payload, CBCWebhookEvent.class);
+        T object = new JacksonResponseUnmarshaller().unmarshal(payload, clazz);
 
         MultiMap<String, String> headers = request.getHeaders();
 
@@ -44,8 +47,18 @@ public class WebhookRequestToResult {
             attributes.setToken(token);
         }
 
-        Result.Builder<CBCWebhookEvent, WebhookRequestAttributes> resultBuilder = Result.builder();
+        Result.Builder<T, WebhookRequestAttributes> resultBuilder = Result.builder();
 
-        return resultBuilder.output(event).mediaType(MediaType.APPLICATION_JAVA).attributes(attributes).build();
+        return resultBuilder.output(object).mediaType(MediaType.APPLICATION_JAVA).attributes(attributes).build();
+    }
+
+    public static Result<CBCWebhookEvent, WebhookRequestAttributes> transformWebhook(final HttpRequestContext requestContext)
+            throws Exception {
+        return transform(requestContext, CBCWebhookEvent.class);
+    }
+
+    public static Result<CBCRequest, WebhookRequestAttributes> transformRequest(final HttpRequestContext requestContext)
+            throws Exception {
+        return transform(requestContext, CBCRequest.class);
     }
 }

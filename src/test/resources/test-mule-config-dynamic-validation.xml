@@ -20,19 +20,14 @@
         <http:listener-connection host="localhost" port="${port}"/>
     </http:listener-config>
 
-    <flow name="getRequestServer">
-        <http:listener path="/requests" config-ref="listenerConfig"/>
-        <set-payload value="[{'id':'PR-000-000-000'}]"/>
-    </flow>
-
     <flow name="getWebhooksServer">
         <http:listener path="/notifications/webhooks" config-ref="listenerConfig" allowedMethods="GET"/>
-        <set-payload value="[{'id':'${webhook_id}', 'object_class': 'fulfillment_request', 'external_url': 'https://localhost/webhook/fulfilment/fulfillment_request', 'jwt_secret': '${jwt_secret}', 'active': false, 'product': {'id':'PRD-000-000-000'}}]"/>
+        <set-payload value="[{'id':'${webhook_id}', 'object_class': 'fulfillment_request', 'external_url': 'https://localhost/webhook/validation/fulfillment_request', 'jwt_secret': '${jwt_secret}', 'type': 'validator', 'active': false, 'product': {'id':'PRD-000-000-000'}}]"/>
     </flow>
 
     <flow name="getWebhookServer">
         <http:listener path="/notifications/webhooks/${webhook_id}" config-ref="listenerConfig"/>
-        <set-payload value="{'id':'${webhook_id}', 'object_class': 'fulfillment_request', 'external_url': 'https://localhost/webhook/fulfilment/fulfillment_request', 'jwt_secret': '${jwt_secret}', 'active': true, 'product': {'id':'PRD-000-000-000'}}"/>
+        <set-payload value="{'id':'${webhook_id}', 'object_class': 'fulfillment_request', 'external_url': 'https://localhost/webhook/validation/fulfillment_request', 'jwt_secret': '${jwt_secret}', 'type': 'validator', 'active': true, 'product': {'id':'PRD-000-000-000'}}"/>
     </flow>
 
     <cloudblue-connect:config name="CloudBlue_Connect_Config_Test">
@@ -41,21 +36,11 @@
                                       endpoint="http://localhost:${port}"/>
     </cloudblue-connect:config>
 
-    <flow name="webhookFlow">
-        <cloudblue-connect:webhook-source config-ref="CloudBlue_Connect_Webhook_config" path="/fulfilment"
-                                          jwtSecret="${jwt_secret}"
-                                          webhookEventType="FULFILLMENT_REQUEST"
-                                          productId="PRD-000-000-000"/>
-        <cloudblue-connect:list-requests config-ref="CloudBlue_Connect_Config_Test">
-            <cloudblue-connect:filter >
-                <cloudblue-connect:list-filter type="AND" >
-                    <cloudblue-connect:filters >
-                        <cloudblue-connect:mono-filter type="EQ" property="product.id" value="#[payload.productId]"/>
-                        <cloudblue-connect:mono-filter type="EQ" property="status" value="pending" />
-                    </cloudblue-connect:filters>
-                </cloudblue-connect:list-filter>
-            </cloudblue-connect:filter>
-        </cloudblue-connect:list-requests>
+    <flow name="dynamicValidation">
+        <cloudblue-connect:request-validation-source config-ref="CloudBlue_Connect_Webhook_config"
+                                                     path="/validation" productId="PRD-000-000-000"
+                                                     jwtSecret="${jwt_secret}">
+        </cloudblue-connect:request-validation-source>
         <logger level="INFO" message="#[payload.id]"/>
     </flow>
 
@@ -65,10 +50,10 @@
 
     <flow name="testWebhook">
         <http:request method="POST"
-                      config-ref="HTTP_Request_configuration" path="webhook/fulfilment/fulfillment_request">
+                      config-ref="HTTP_Request_configuration" path="webhook/validation/fulfillment_request">
             <http:body >
                 <![CDATA[{
-                    product_id: 'PRD-000-000-000'
+                    id: 'PR-9283-0285-7619-001'
                 }]]>
             </http:body>
             <http:headers >
@@ -80,23 +65,6 @@
                 ]]]>
             </http:headers>
         </http:request>
-    </flow>
-
-    <flow name="testWebhookUnauthorized">
-        <try>
-            <http:request method="POST"
-                          config-ref="HTTP_Request_configuration"
-                          path="webhook/fulfilment/fulfillment_request">
-                <http:body >
-                    <![CDATA[{
-                    product_id: 'PRD-000-000-000'
-                }]]>
-                </http:body>
-            </http:request>
-        </try>
-        <error-handler>
-            <on-error-continue type="HTTP:UNAUTHORIZED" enableNotifications="false" logException="false"/>
-        </error-handler>
     </flow>
 
 </mule>

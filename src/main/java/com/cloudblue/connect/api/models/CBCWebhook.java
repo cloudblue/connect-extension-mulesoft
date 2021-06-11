@@ -1,6 +1,5 @@
 package com.cloudblue.connect.api.models;
 
-import com.cloudblue.connect.api.models.enums.CBCWebhookEventType;
 import com.cloudblue.connect.api.models.product.CBCProduct;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -31,7 +30,7 @@ public class CBCWebhook {
 
     @JsonProperty("jwt_secret")
     @Parameter
-    private String jwtToken;
+    private String jwtSecret;
 
     @JsonProperty
     @Parameter
@@ -52,7 +51,7 @@ public class CBCWebhook {
 
     @JsonProperty("object_class")
     @Parameter
-    private CBCWebhookEventType objectClass;
+    private String objectClass;
 
     @JsonProperty
     private Map<String,String> data = new HashMap<>();
@@ -92,12 +91,12 @@ public class CBCWebhook {
         this.externalUrl = externalUrl;
     }
 
-    public String getJwtToken() {
-        return jwtToken;
+    public String getJwtSecret() {
+        return jwtSecret;
     }
 
-    public void setJwtToken(String jwtToken) {
-        this.jwtToken = jwtToken;
+    public void setJwtSecret(String jwtSecret) {
+        this.jwtSecret = jwtSecret;
     }
 
     public String getDescription() {
@@ -132,11 +131,11 @@ public class CBCWebhook {
         this.type = type;
     }
 
-    public CBCWebhookEventType getObjectClass() {
+    public String getObjectClass() {
         return objectClass;
     }
 
-    public void setObjectClass(CBCWebhookEventType objectClass) {
+    public void setObjectClass(String objectClass) {
         this.objectClass = objectClass;
     }
 
