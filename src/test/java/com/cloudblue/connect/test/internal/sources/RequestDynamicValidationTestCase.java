@@ -9,7 +9,7 @@ import org.mule.runtime.api.event.Event;
 import org.mule.tck.junit4.rule.DynamicPort;
 import org.mule.tck.junit4.rule.SystemProperty;
 
-public class DynamicValidationTestCase extends BaseMuleFlowTestCase {
+public class RequestDynamicValidationTestCase extends BaseMuleFlowTestCase {
     private static final String WEBHOOK_ID = "WB-0000-0000-0000";
     private static final String secret = "Test-token-key-for-webhook-based-authentication";
 
@@ -33,11 +33,11 @@ public class DynamicValidationTestCase extends BaseMuleFlowTestCase {
 
     @Override
     protected String getConfigFile() {
-        return "test-mule-config-dynamic-validation.xml";
+        return "test-mule-config-request-dynamic-validation.xml";
     }
 
     @Test
-    public void testDynamicValidationSource() throws Exception {
+    public void testRequestDynamicValidationSource() throws Exception {
         Event event = flowRunner("testWebhook").run();
         HttpResponseAttributes attributes = (HttpResponseAttributes) event.getMessage().getAttributes().getValue();
 

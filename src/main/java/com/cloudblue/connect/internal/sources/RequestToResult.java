@@ -4,6 +4,7 @@ import com.cloudblue.connect.api.clients.constants.HeaderParams;
 import com.cloudblue.connect.api.clients.parsers.jackson.JacksonResponseUnmarshaller;
 import com.cloudblue.connect.api.models.CBCWebhookEvent;
 import com.cloudblue.connect.api.models.subscription.CBCRequest;
+import com.cloudblue.connect.api.models.tier.CBCTierConfigRequest;
 import com.cloudblue.connect.api.webhook.WebhookRequestAttributes;
 import org.apache.commons.io.IOUtils;
 import org.mule.runtime.api.metadata.MediaType;
@@ -60,5 +61,10 @@ public class RequestToResult {
     public static Result<CBCRequest, WebhookRequestAttributes> transformRequest(final HttpRequestContext requestContext)
             throws Exception {
         return transform(requestContext, CBCRequest.class);
+    }
+
+    public static Result<CBCTierConfigRequest, WebhookRequestAttributes> transformTCR(final HttpRequestContext requestContext)
+            throws Exception {
+        return transform(requestContext, CBCTierConfigRequest.class);
     }
 }

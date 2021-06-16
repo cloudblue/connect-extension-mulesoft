@@ -17,27 +17,21 @@ public class CBCWebhook {
     private String id;
 
     @JsonProperty
-    @Parameter
     private String label;
 
     @JsonProperty("product_id")
-    @Parameter
     private String productId;
 
     @JsonProperty("external_url")
-    @Parameter
     private String externalUrl;
 
     @JsonProperty("jwt_secret")
-    @Parameter
     private String jwtSecret;
 
     @JsonProperty
-    @Parameter
     private String description;
 
     @JsonProperty
-    @Parameter
     private Boolean active;
 
     @JsonProperty
@@ -50,7 +44,6 @@ public class CBCWebhook {
     private String httpMethod = "POST";
 
     @JsonProperty("object_class")
-    @Parameter
     private String objectClass;
 
     @JsonProperty

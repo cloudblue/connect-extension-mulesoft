@@ -2,11 +2,15 @@ package com.cloudblue.connect.api.models.subscription;
 
 import com.cloudblue.connect.api.models.CBCRequestParamConstraints;
 import com.cloudblue.connect.api.models.common.CBCEntity;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import org.mule.runtime.extension.api.annotation.param.Optional;
 import org.mule.runtime.extension.api.annotation.param.Parameter;
+
+import java.util.Map;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -31,12 +35,12 @@ public class CBCRequestParam implements CBCEntity {
 
     @Parameter
     @Optional
-    @JsonProperty
-    private String structuredValue;
+    @JsonProperty("structured_value")
+    private Map<String, Object> structuredValue;
 
     @Parameter
     @Optional    
-    @JsonProperty
+    @JsonProperty("value_error")
     private String valueError;
 
     @Parameter
@@ -130,11 +134,11 @@ public class CBCRequestParam implements CBCEntity {
         this.constraints = constraints;
     }
 
-    public String getStructuredValue() {
+    public Map<String, Object> getStructuredValue() {
         return structuredValue;
     }
 
-    public void setStructuredValue(String structuredValue) {
+    public void setStructuredValue(Map<String, Object> structuredValue) {
         this.structuredValue = structuredValue;
     }
 }
