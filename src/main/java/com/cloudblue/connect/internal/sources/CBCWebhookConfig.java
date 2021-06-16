@@ -11,7 +11,7 @@ import org.mule.runtime.extension.api.annotation.param.display.Placement;
 
 @Configuration(name = "webhookConfig")
 @ConnectionProviders(WebhookListenerProvider.class)
-@Sources({WebhookSource.class, RequestValidationSource.class})
+@Sources({WebhookSource.class, RequestValidationSource.class, TCRValidationSource.class})
 public class CBCWebhookConfig {
 
     @Parameter

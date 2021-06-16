@@ -38,8 +38,10 @@
 
     <flow name="dynamicValidation">
         <cloudblue-connect:request-validation-source config-ref="CloudBlue_Connect_Webhook_config"
-                                                     path="/validation" productId="PRD-000-000-000"
-                                                     jwtSecret="${jwt_secret}">
+                                                     path="/validation"
+                                                     productId="PRD-000-000-000"
+                                                     jwtSecret="${jwt_secret}"
+                                                     validationType="Draft_Validator">
         </cloudblue-connect:request-validation-source>
         <logger level="INFO" message="#[payload.id]"/>
     </flow>
