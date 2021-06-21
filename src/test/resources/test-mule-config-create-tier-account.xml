@@ -33,7 +33,7 @@
             externalUid="dsfdsfdsfsd2">
             <cloudblue-connect:contact-info addressLine1="H-23"
                 addressLine2="Lone Street"
-                city="MSW" state="CI"
+                city="MSW"
                 postalCode="762635" country="US">
                 <cloudblue-connect:contact firstName="First"
                     lastName="Last"
