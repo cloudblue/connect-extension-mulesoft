@@ -47,11 +47,10 @@
                 config-ref="CloudBlue_Connect_Config_Test"
                 productId="PRD-658-058-034" connectionId="CT-1564-0655"
                 marketplaceId="MP-38701" externalId="TEST-ASSET-REQUEST-0001">
-            <cloudblue-connect:customer companyName="Test Corp. US">
+            <cloudblue-connect:customer externalId="TEST-CUSTOMER-0001" companyName="Test Corp. US">
                 <cloudblue-connect:contact-info addressLine1="H-23"
                                                 addressLine2="Lone Street"
-                                                city="MSW" state="CI"
-                                                postalCode="762635" country="US">
+                                                city="MSW" postalCode="762635" country="US">
                     <cloudblue-connect:contact firstName="First"
                                                lastName="Last"
                                                email="first.last@example.com"/>
