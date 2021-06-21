@@ -1,13 +1,16 @@
 package com.cloudblue.connect.api.models.ticketing;
+
+import com.cloudblue.connect.api.models.common.CBCEntity;
 import com.cloudblue.connect.api.models.common.CBCEvents;
 import com.cloudblue.connect.api.models.common.CBCUser;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CBCConversationMessages {
+public class CBCConversationMessages implements CBCEntity {
     @JsonProperty
     private String id;
 

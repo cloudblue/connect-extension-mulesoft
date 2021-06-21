@@ -52,7 +52,8 @@ public class CBCConnectionProvider implements PoolingConnectionProvider<CBCConne
     @Override
     public void disconnect(CBCConnection connection) {
         try {
-            connection.close();
+            if (connection != null)
+                connection.close();
         } catch (Exception e) {
             logger.error("Error while disconnecting Connect Connection: " + e.getMessage(), e);
         }

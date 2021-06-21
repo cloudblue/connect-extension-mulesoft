@@ -9,6 +9,7 @@ import com.cloudblue.connect.internal.operations.connections.CBCConnection;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 
+import org.mule.runtime.extension.api.annotation.Ignore;
 import org.mule.runtime.extension.api.annotation.param.Connection;
 import org.mule.runtime.extension.api.annotation.param.MediaType;
 import org.mule.runtime.extension.api.annotation.param.ParameterGroup;
@@ -19,11 +20,10 @@ import static com.cloudblue.connect.api.clients.constants.CBCAPIConstants.Collec
 import static org.mule.runtime.extension.api.annotation.param.MediaType.ANY;
 
 public class UsageReconciliationOperations {
-    @MediaType(value = ANY, strict = false)
-    @DisplayName("Get Usage Reconciliation")
+    @Ignore
     public CBCUsageReconciliation getUsageReconciliation(
-            @Connection CBCConnection connection,
-            @ParameterGroup(name="Usage Reconciliations ID") ResourceActionParameter resourceActionParameter
+            CBCConnection connection,
+            ResourceActionParameter resourceActionParameter
     ) throws CBCException {
 
         return (CBCUsageReconciliation) connection

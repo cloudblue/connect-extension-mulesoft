@@ -164,6 +164,7 @@
                                         <exclude>com.cloudblue.connect.api.clients.parsers.jackson</exclude>
                                         <exclude>com.cloudblue.connect.internal</exclude>
                                         <exclude>com.cloudblue.connect.internal.sources.connections</exclude>
+                                        <exclude>com.cloudblue.connect.internal.operations.connections</exclude>
                                     </excludes>
                                     <limits>
                                         <limit>

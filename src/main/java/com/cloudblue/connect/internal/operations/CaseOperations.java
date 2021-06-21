@@ -22,19 +22,6 @@ import static org.mule.runtime.extension.api.annotation.param.MediaType.ANY;
 public class CaseOperations {
 
     @MediaType(value = ANY, strict = false)
-    @DisplayName("Get Helpdesk Case")
-    public CBCCase getCase(
-            @Connection CBCConnection connection,
-            @ParameterGroup(name="Case ID") ResourceActionParameter getCaseParameter
-    ) throws CBCException {
-        return (CBCCase) connection
-                .newQ(new TypeReference<CBCCase>() {})
-                .collection(HELPDESK)
-                .collection(CASES, getCaseParameter.getId())
-                .get();
-    }
-
-    @MediaType(value = ANY, strict = false)
     @DisplayName("Create Helpdesk Case")
     public CBCCase createHelpdeskCase(
             @Connection CBCConnection connection,

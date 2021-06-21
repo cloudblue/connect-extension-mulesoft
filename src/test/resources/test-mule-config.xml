@@ -44,7 +44,7 @@
     </flow>
 
     <flow name="listConversationMessagesServer">
-        <http:listener path="/conversations/${conversation_id}/conversations" config-ref="listenerConfig"/>
+        <http:listener path="/conversations/${conversation_id}/messages" config-ref="listenerConfig"/>
         <set-payload value="[{'id':'${conversation_id}'}]"/>
     </flow>
 
@@ -191,21 +191,21 @@
     </cloudblue-connect:config>
     
     <flow name="getRequest">
-        <cloudblue-connect:get-request config-ref="CloudBlue_Connect_Config_Test"
+        <cloudblue-connect:get-resources resourceType="Request" config-ref="CloudBlue_Connect_Config_Test"
                                        id="${request_id}"/>
     </flow>
     
     <flow name="getAsset">
-        <cloudblue-connect:get-asset config-ref="CloudBlue_Connect_Config_Test"
+        <cloudblue-connect:get-resources resourceType="Asset" config-ref="CloudBlue_Connect_Config_Test"
                                      id="${asset_id}"/>
     </flow>
 
     <flow name="getCase">
-        <cloudblue-connect:get-case config-ref="CloudBlue_Connect_Config_Test" id="${case_id}"/>
+        <cloudblue-connect:get-resources resourceType="Case" config-ref="CloudBlue_Connect_Config_Test" id="${case_id}"/>
     </flow>
 
     <flow name="getTierAccount">
-        <cloudblue-connect:get-tier-account config-ref="CloudBlue_Connect_Config_Test" 
+        <cloudblue-connect:get-resources resourceType="TierAccount" config-ref="CloudBlue_Connect_Config_Test"
                                         id="${tierAccount_id}"/>
     </flow>
 
@@ -215,21 +215,21 @@
     </flow>
 
     <flow name="getTierAccountRequest">
-        <cloudblue-connect:get-tier-account-request config-ref="CloudBlue_Connect_Config_Test" 
+        <cloudblue-connect:get-resources resourceType="TierAccountRequest" config-ref="CloudBlue_Connect_Config_Test"
                                         id="${tierAccountRequest_id}"/>
     </flow>
 
     <flow name="getTierConfig">
-        <cloudblue-connect:get-tier-config config-ref="CloudBlue_Connect_Config_Test" 
+        <cloudblue-connect:get-resources resourceType="TierConfig" config-ref="CloudBlue_Connect_Config_Test"
                                         id="${tierConfig_id}"/>
     </flow>
 
     <flow name="getTierConfigRequest">
-        <cloudblue-connect:get-tier-config-request config-ref="CloudBlue_Connect_Config_Test" 
+        <cloudblue-connect:get-resources resourceType="TierConfigRequest" config-ref="CloudBlue_Connect_Config_Test"
                                         id="${tierConfigRequest_id}"/>
     </flow>
     <flow name="getProduct">
-        <cloudblue-connect:get-product config-ref="CloudBlue_Connect_Config_Test"
+        <cloudblue-connect:get-resources resourceType="Product" config-ref="CloudBlue_Connect_Config_Test"
                                         id="${product_id}"/>
     </flow>
 
@@ -244,7 +244,7 @@
     </flow>
 
     <flow name="listRequestsWithFilter">
-        <cloudblue-connect:list-requests config-ref="CloudBlue_Connect_Config_Test">
+        <cloudblue-connect:list-resources resourceType="Request" config-ref="CloudBlue_Connect_Config_Test">
             <cloudblue-connect:filter >
                 <cloudblue-connect:list-filter type="OR" >
                     <cloudblue-connect:filters >
@@ -258,15 +258,15 @@
                     <cloudblue-connect:property value="-created" />
                 </cloudblue-connect:properties>
             </cloudblue-connect:order-by>
-        </cloudblue-connect:list-requests>
+        </cloudblue-connect:list-resources>
     </flow>
 
     <flow name="listRequestsWithoutFilter">
-        <cloudblue-connect:list-requests config-ref="CloudBlue_Connect_Config_Test"/>
+        <cloudblue-connect:list-resources resourceType="Request" config-ref="CloudBlue_Connect_Config_Test"/>
     </flow>
 
     <flow name="listAssetsWithFilter">
-        <cloudblue-connect:list-assets config-ref="CloudBlue_Connect_Config_Test">
+        <cloudblue-connect:list-resources resourceType="Asset" config-ref="CloudBlue_Connect_Config_Test">
             <cloudblue-connect:filter >
                 <cloudblue-connect:list-filter type="AND" >
                     <cloudblue-connect:filters >
@@ -275,15 +275,15 @@
                     </cloudblue-connect:filters>
                 </cloudblue-connect:list-filter>
             </cloudblue-connect:filter>
-        </cloudblue-connect:list-assets>
+        </cloudblue-connect:list-resources>
     </flow>
 
     <flow name="listAssetsWithoutFilter">
-        <cloudblue-connect:list-assets config-ref="CloudBlue_Connect_Config_Test"/>
+        <cloudblue-connect:list-resources resourceType="Asset" config-ref="CloudBlue_Connect_Config_Test"/>
     </flow>
 
     <flow name="listCasesWithFilter">
-        <cloudblue-connect:list-cases config-ref="CloudBlue_Connect_Config_Test">
+        <cloudblue-connect:list-resources resourceType="Case" config-ref="CloudBlue_Connect_Config_Test">
             <cloudblue-connect:filter >
                 <cloudblue-connect:list-filter type="AND" >
                     <cloudblue-connect:filters >
@@ -292,19 +292,21 @@
                     </cloudblue-connect:filters>
                 </cloudblue-connect:list-filter>
             </cloudblue-connect:filter>
-        </cloudblue-connect:list-cases>
+        </cloudblue-connect:list-resources>
     </flow>
 
     <flow name="listCasesWithoutFilter">
-        <cloudblue-connect:list-cases config-ref="CloudBlue_Connect_Config_Test"/>
+        <cloudblue-connect:list-resources resourceType="Case" config-ref="CloudBlue_Connect_Config_Test"/>
     </flow>
 
     <flow name="listConversationMessagesWithoutFilter">
-        <cloudblue-connect:list-assets config-ref="CloudBlue_Connect_Config_Test"/>
+        <cloudblue-connect:list-conversation-messages id="${conversation_id}"
+                                                      config-ref="CloudBlue_Connect_Config_Test"/>
     </flow>
 
     <flow name="listConversationMessagesWithFilter">
-        <cloudblue-connect:list-assets config-ref="CloudBlue_Connect_Config_Test">
+        <cloudblue-connect:list-conversation-messages id="${conversation_id}"
+                                                      config-ref="CloudBlue_Connect_Config_Test">
             <cloudblue-connect:filter >
                 <cloudblue-connect:list-filter type="AND" >
                     <cloudblue-connect:filters >
@@ -313,15 +315,15 @@
                     </cloudblue-connect:filters>
                 </cloudblue-connect:list-filter>
             </cloudblue-connect:filter>
-        </cloudblue-connect:list-assets>
+        </cloudblue-connect:list-conversation-messages>
     </flow>
 
     <flow name="listTierAccountsWithoutFilter">
-        <cloudblue-connect:list-tier-accounts config-ref="CloudBlue_Connect_Config_Test"/>
+        <cloudblue-connect:list-resources resourceType="TierAccount" config-ref="CloudBlue_Connect_Config_Test"/>
     </flow>
 
     <flow name="listTierAccountsWithFilter">
-        <cloudblue-connect:list-tier-accounts config-ref="CloudBlue_Connect_Config_Test">
+        <cloudblue-connect:list-resources resourceType="TierAccount" config-ref="CloudBlue_Connect_Config_Test">
             <cloudblue-connect:filter >
                 <cloudblue-connect:list-filter type="AND" >
                     <cloudblue-connect:filters >
@@ -330,7 +332,7 @@
                     </cloudblue-connect:filters>
                 </cloudblue-connect:list-filter>
             </cloudblue-connect:filter>
-        </cloudblue-connect:list-tier-accounts>
+        </cloudblue-connect:list-resources>
     </flow>
 
     <flow name="listTierAccountVersions">
@@ -338,11 +340,11 @@
     </flow>
 
     <flow name="listTierAccountRequestsWithoutFilter">
-        <cloudblue-connect:list-tier-account-requests config-ref="CloudBlue_Connect_Config_Test"/>
+        <cloudblue-connect:list-resources resourceType="TierAccountRequest" config-ref="CloudBlue_Connect_Config_Test"/>
     </flow>
 
     <flow name="listTierAccountRequestsWithFilter">
-        <cloudblue-connect:list-tier-account-requests config-ref="CloudBlue_Connect_Config_Test">
+        <cloudblue-connect:list-resources resourceType="TierAccountRequest" config-ref="CloudBlue_Connect_Config_Test">
             <cloudblue-connect:filter >
                 <cloudblue-connect:list-filter type="AND" >
                     <cloudblue-connect:filters >
@@ -351,15 +353,15 @@
                     </cloudblue-connect:filters>
                 </cloudblue-connect:list-filter>
             </cloudblue-connect:filter>
-        </cloudblue-connect:list-tier-account-requests>
+        </cloudblue-connect:list-resources>
     </flow>
 
     <flow name="listTierConfigsWithoutFilter">
-        <cloudblue-connect:list-tier-configs config-ref="CloudBlue_Connect_Config_Test"/>
+        <cloudblue-connect:list-resources resourceType="TierConfig" config-ref="CloudBlue_Connect_Config_Test"/>
     </flow>
 
     <flow name="listTierConfigsWithFilter">
-        <cloudblue-connect:list-tier-configs config-ref="CloudBlue_Connect_Config_Test">
+        <cloudblue-connect:list-resources resourceType="TierConfig" config-ref="CloudBlue_Connect_Config_Test">
             <cloudblue-connect:filter >
                 <cloudblue-connect:list-filter type="AND" >
                     <cloudblue-connect:filters >
@@ -368,15 +370,15 @@
                     </cloudblue-connect:filters>
                 </cloudblue-connect:list-filter>
             </cloudblue-connect:filter>
-        </cloudblue-connect:list-tier-configs>
+        </cloudblue-connect:list-resources>
     </flow>
 
     <flow name="listTierConfigRequestsWithoutFilter">
-        <cloudblue-connect:list-tier-config-requests config-ref="CloudBlue_Connect_Config_Test"/>
+        <cloudblue-connect:list-resources resourceType="TierConfigRequest" config-ref="CloudBlue_Connect_Config_Test"/>
     </flow>
 
     <flow name="listTierConfigRequestsWithFilter">
-        <cloudblue-connect:list-tier-config-requests config-ref="CloudBlue_Connect_Config_Test">
+        <cloudblue-connect:list-resources resourceType="TierConfigRequest" config-ref="CloudBlue_Connect_Config_Test">
             <cloudblue-connect:filter >
                 <cloudblue-connect:list-filter type="AND" >
                     <cloudblue-connect:filters >
@@ -385,11 +387,11 @@
                     </cloudblue-connect:filters>
                 </cloudblue-connect:list-filter>
             </cloudblue-connect:filter>
-        </cloudblue-connect:list-tier-config-requests>
+        </cloudblue-connect:list-resources>
     </flow>
 
     <flow name="listUsageFiles">
-        <cloudblue-connect:list-usage-reports
+        <cloudblue-connect:list-resources resourceType="UsageReport"
                 config-ref="CloudBlue_Connect_Config_Test">
             <cloudblue-connect:filter >
                 <cloudblue-connect:in-filter property="status" >
@@ -399,32 +401,32 @@
                     </cloudblue-connect:values>
                 </cloudblue-connect:in-filter>
             </cloudblue-connect:filter>
-        </cloudblue-connect:list-usage-reports>
+        </cloudblue-connect:list-resources>
     </flow>
 
     <flow name="getUsageFile">
-        <cloudblue-connect:get-usage-report
+        <cloudblue-connect:get-resources resourceType="UsageReport"
                 config-ref="CloudBlue_Connect_Config_Test"
                 id="${usage_report_id}"/>
     </flow>
 
     <flow name="listUsageRecords">
-        <cloudblue-connect:list-usage-records
+        <cloudblue-connect:list-resources resourceType="UsageRecord"
                 config-ref="CloudBlue_Connect_Config_Test"/>
     </flow>
 
     <flow name="getUsageRecords">
-        <cloudblue-connect:get-usage-record
+        <cloudblue-connect:get-resources resourceType="UsageRecord"
                 config-ref="CloudBlue_Connect_Config_Test"
                 id="${usage_record_id}"/>
     </flow>
 
     <flow name="listProductsWithoutFilter">
-        <cloudblue-connect:list-products config-ref="CloudBlue_Connect_Config_Test"/>
+        <cloudblue-connect:list-resources resourceType="Product" config-ref="CloudBlue_Connect_Config_Test"/>
     </flow>
 
     <flow name="listProductsWithFilter">
-        <cloudblue-connect:list-products config-ref="CloudBlue_Connect_Config_Test">
+        <cloudblue-connect:list-resources resourceType="Product" config-ref="CloudBlue_Connect_Config_Test">
             <cloudblue-connect:filter >
                 <cloudblue-connect:list-filter type="AND" >
                     <cloudblue-connect:filters >
@@ -433,7 +435,7 @@
                     </cloudblue-connect:filters>
                 </cloudblue-connect:list-filter>
             </cloudblue-connect:filter>
-        </cloudblue-connect:list-products>
+        </cloudblue-connect:list-resources>
     </flow>
 
     <flow name="listProductItemsWithoutFilter">
@@ -471,38 +473,38 @@
     </flow>
 
     <flow name="listUsageChunkFiles">
-        <cloudblue-connect:list-usage-chunk-files
-                config-ref="CloudBlue_Connect_Config_Test">
+        <cloudblue-connect:list-resources resourceType="UsageChunk"
+                                          config-ref="CloudBlue_Connect_Config_Test">
             <cloudblue-connect:filter >
                 <cloudblue-connect:mono-filter type="EQ" property="usagefile.id" value="${usage_report_id}" />
             </cloudblue-connect:filter>
-        </cloudblue-connect:list-usage-chunk-files>
+        </cloudblue-connect:list-resources>
     </flow>
 
     <flow name="getUsageChunkFiles">
-        <cloudblue-connect:get-chunk-files
+        <cloudblue-connect:get-resources resourceType="UsageChunk"
                 config-ref="CloudBlue_Connect_Config_Test"
                 id="${chunk_file_id}"/>
     </flow>
 
     <flow name="listUsageReconciliations">
-        <cloudblue-connect:list-usage-reconciliations
+        <cloudblue-connect:list-resources resourceType="UsageReconciliation"
                 config-ref="CloudBlue_Connect_Config_Test"/>
     </flow>
 
     <flow name="getUsageReconciliations">
-        <cloudblue-connect:get-usage-reconciliation
+        <cloudblue-connect:get-resources resourceType="UsageReconciliation"
                 config-ref="CloudBlue_Connect_Config_Test"
                 id="${usage_recon_id}"/>
     </flow>
 
     <flow name="listUsageAggregates">
-        <cloudblue-connect:list-usage-aggregates
+        <cloudblue-connect:list-resources resourceType="UsageAggregate"
                 config-ref="CloudBlue_Connect_Config_Test">
             <cloudblue-connect:filter >
                 <cloudblue-connect:mono-filter type="EQ" property="asset.id" value="${asset_id}" />
             </cloudblue-connect:filter>
-        </cloudblue-connect:list-usage-aggregates>
+        </cloudblue-connect:list-resources>
     </flow>
 
     <flow name="listAssetUsageAggregates">
