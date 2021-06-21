@@ -51,7 +51,7 @@
                                           jwtSecret="${jwt_secret}"
                                           webhookEventType="FULFILLMENT_REQUEST"
                                           productId="PRD-000-000-000"/>
-        <cloudblue-connect:list-requests config-ref="CloudBlue_Connect_Config_Test">
+        <cloudblue-connect:list-resources resourceType="Request" config-ref="CloudBlue_Connect_Config_Test">
             <cloudblue-connect:filter >
                 <cloudblue-connect:list-filter type="AND" >
                     <cloudblue-connect:filters >
@@ -60,7 +60,7 @@
                     </cloudblue-connect:filters>
                 </cloudblue-connect:list-filter>
             </cloudblue-connect:filter>
-        </cloudblue-connect:list-requests>
+        </cloudblue-connect:list-resources>
         <logger level="INFO" message="#[payload.id]"/>
     </flow>
 

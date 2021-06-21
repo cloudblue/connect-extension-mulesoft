@@ -1,13 +1,11 @@
 package com.cloudblue.connect.internal.operations;
 
 import com.cloudblue.connect.api.clients.constants.HttpMethod;
-import com.cloudblue.connect.api.models.subscription.CBCAsset;
 import com.cloudblue.connect.api.parameters.AdminHoldRequestParameter;
 import com.cloudblue.connect.api.parameters.Embeddable;
 import com.cloudblue.connect.api.models.subscription.CBCRequest;
 import com.cloudblue.connect.api.exceptions.CBCException;
 import com.cloudblue.connect.api.parameters.NewPurchaseRequestParameter;
-import com.cloudblue.connect.api.parameters.common.ResourceActionParameter;
 import com.cloudblue.connect.api.parameters.requests.RequestAction;
 import com.cloudblue.connect.api.parameters.requests.UpdateRequestParameter;
 import com.cloudblue.connect.internal.operations.connections.CBCConnection;
@@ -24,32 +22,6 @@ import static org.mule.runtime.extension.api.annotation.param.MediaType.ANY;
 
 
 public class SubscriptionOperations {
-
-    @MediaType(value = ANY, strict = false)
-    @DisplayName("Get Request")
-    public CBCRequest getRequest(
-            @Connection CBCConnection connection,
-            @ParameterGroup(name="Request ID") ResourceActionParameter getRequestParameter
-    ) throws CBCException {
-
-        return (CBCRequest) connection
-                .newQ(new TypeReference<CBCRequest>() {})
-                .collection(REQUESTS, getRequestParameter.getId())
-                .get();
-    }
-    
-    @MediaType(value = ANY, strict = false)
-    @DisplayName("Get Asset")
-    public CBCAsset getAsset(
-            @Connection CBCConnection connection,
-            @ParameterGroup(name="Asset ID")  ResourceActionParameter getAssetParameter
-    ) throws CBCException {
-
-        return (CBCAsset) connection
-                .newQ(new TypeReference<CBCAsset>() {})
-                .collection(ASSETS, getAssetParameter.getId())
-                .get();
-    }
 
     private CBCRequest createRequest(
             CBCConnection connection, Embeddable embeddable

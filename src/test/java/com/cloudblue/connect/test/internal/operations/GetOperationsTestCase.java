@@ -34,7 +34,6 @@ import org.mule.tck.junit4.rule.DynamicPort;
 import org.mule.tck.junit4.rule.SystemProperty;
 import org.mule.test.runner.RunnerDelegateTo;
 
-@RunnerDelegateTo(Parameterized.class)
 public class GetOperationsTestCase extends BaseMuleFlowTestCase {
     
     private static final String REQUEST_ID = "PR-0000-0000-0000-001";
@@ -110,11 +109,6 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
     public SystemProperty versionSystemProperty = new SystemProperty("tierAccountVersion", TIERACCOUNTVERSION);
 
 
-    private final String flow;
-    private final Class clazz;
-    private final String expectedIdValue;
-    
-    @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
                 {"getRequest", CBCRequest.class, REQUEST_ID},
@@ -137,16 +131,16 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
                 {"listAssetsWithFilter", null, null},
                 {"listAssetsWithoutFilter", null, null},
                 {"listCasesWithFilter", null, null},
-                {"listCasesWithoutFilter", null, null},
-                {"listConversationMessagesWithFilter", null, null},
+                    {"listCasesWithoutFilter", null, null},
+                    {"listConversationMessagesWithFilter", null, null},
                 {"listConversationMessagesWithoutFilter", null, null},
                 {"listTierAccountsWithFilter", null, null},
                 {"listTierAccountsWithoutFilter", null, null},
                 {"listTierAccountRequestsWithFilter", null, null},
                 {"listTierAccountRequestsWithoutFilter", null, null},
                 {"listTierConfigsWithFilter", null, null},
-                {"listTierConfigsWithoutFilter", null, null},
-                {"listTierConfigRequestsWithFilter", null, null},
+                    {"listTierConfigsWithoutFilter", null, null},
+                    {"listTierConfigRequestsWithFilter", null, null},
                 {"listTierConfigRequestsWithoutFilter", null, null},
                 {"listProductsWithFilter", null, null},
                 {"listProductsWithoutFilter", null, null},
@@ -164,25 +158,22 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
         );
     }
 
-    public GetOperationsTestCase(String flow, Class clazz, String expectedIdValue) {
-        this.flow = flow;
-        this.clazz = clazz;
-        this.expectedIdValue = expectedIdValue;
-    }
-
     @Test
     public void testRetrieve() throws Exception {
-        Event getRequest = flowRunner(this.flow).run();
-        Object object = getRequest.getMessage().getPayload().getValue();
+        for (Object[] objects : data()) {
+            Event getRequest = flowRunner((String) objects[0]).run();
+            Object object = getRequest.getMessage().getPayload().getValue();
 
-        if (this.clazz != null) {
-            Method idMethod = this.clazz.getDeclaredMethod("getId");
-            String idValue = (String)idMethod.invoke(object);
+            if (objects[1] != null) {
+                Method idMethod = ((Class)objects[1]).getDeclaredMethod("getId");
+                String idValue = (String)idMethod.invoke(object);
 
-            assertThat(idValue, is(this.expectedIdValue));
-        } else {
-            assertTrue(object instanceof List);
-            assertEquals(1, ((List)object).size());
+                assertThat(idValue, is(objects[2]));
+            } else {
+                System.out.println("Flow: " + objects[0] + " Objects: " + object);
+                assertTrue(object instanceof List);
+                assertEquals(1, ((List)object).size());
+            }
         }
 
     }

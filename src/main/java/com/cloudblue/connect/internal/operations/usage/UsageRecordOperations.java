@@ -3,9 +3,7 @@ package com.cloudblue.connect.internal.operations.usage;
 import com.cloudblue.connect.api.clients.constants.HttpMethod;
 import com.cloudblue.connect.api.exceptions.CBCException;
 import com.cloudblue.connect.api.models.usage.CBCUsageRecord;
-import com.cloudblue.connect.api.parameters.common.ResourceActionParameter;
 import com.cloudblue.connect.api.parameters.usage.record.BulkCloseUsageRecord;
-import com.cloudblue.connect.api.parameters.usage.record.CloseUsageRecord;
 import com.cloudblue.connect.api.parameters.usage.record.UpdateUsageRecord;
 import com.cloudblue.connect.internal.operations.connections.CBCConnection;
 
@@ -23,19 +21,6 @@ import static com.cloudblue.connect.api.clients.constants.CBCAPIConstants.Collec
 import static org.mule.runtime.extension.api.annotation.param.MediaType.ANY;
 
 public class UsageRecordOperations {
-    @MediaType(value = ANY, strict = false)
-    @DisplayName("Get Usage Record")
-    public CBCUsageRecord getUsageRecord(
-            @Connection CBCConnection connection,
-            @ParameterGroup(name="Usage Record ID") ResourceActionParameter resourceActionParameter
-    ) throws CBCException {
-        return (CBCUsageRecord) connection
-                .newQ(new TypeReference<CBCUsageRecord>() {})
-                .collection(USAGE)
-                .collection(RECORDS, resourceActionParameter.getId())
-                .get();
-    }
-
     @MediaType(value = ANY, strict = false)
     @DisplayName("Bulk Close Usage Record")
     public List<CBCUsageRecord> bulkCloseUsageRecord(

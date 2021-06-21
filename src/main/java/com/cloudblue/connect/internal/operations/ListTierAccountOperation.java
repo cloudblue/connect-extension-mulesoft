@@ -3,10 +3,6 @@ package com.cloudblue.connect.internal.operations;
 import com.cloudblue.connect.api.clients.Client;
 import com.cloudblue.connect.api.exceptions.CBCException;
 import com.cloudblue.connect.api.models.tier.CBCAccount;
-import com.cloudblue.connect.api.models.tier.CBCAccountRequest;
-import com.cloudblue.connect.api.models.tier.CBCTierConfig;
-import com.cloudblue.connect.api.models.tier.CBCTierConfigRequest;
-
 
 import com.cloudblue.connect.internal.operations.connections.CBCConnection;
 
@@ -25,18 +21,6 @@ import java.util.List;
 public class ListTierAccountOperation extends BaseListOperation {
 
     @MediaType(value = ANY, strict = false)
-    @DisplayName("List Tier Accounts")
-    public List<CBCAccount> listTierAccounts(
-            @Connection CBCConnection connection
-    ) throws CBCException {
-        Client.Q q = connection
-                .newQ(new TypeReference<ArrayList<CBCAccount>>() {})
-                .collection("tier").collection("accounts");
-        resolve(q);
-        return (List<CBCAccount>) q.get();
-    }
-
-    @MediaType(value = ANY, strict = false)
     @DisplayName("List Tier Account Versions")
     public List<CBCAccount> listTierAccountVersions(
             @Connection CBCConnection connection,
@@ -50,41 +34,4 @@ public class ListTierAccountOperation extends BaseListOperation {
         resolve(q);
         return (List<CBCAccount>) q.get();
     }
-
-    @MediaType(value = ANY, strict = false)
-    @DisplayName("List Tier Account Requests")
-    public List<CBCAccountRequest> listTierAccountRequests(
-            @Connection CBCConnection connection
-    ) throws CBCException {
-        Client.Q q = connection
-                .newQ(new TypeReference<ArrayList<CBCAccountRequest>>() {})
-                .collection("tier").collection("account-requests");
-        resolve(q);
-        return (List<CBCAccountRequest>) q.get();
-    }
-
-    @MediaType(value = ANY, strict = false)
-    @DisplayName("List Tier Configs")
-    public List<CBCTierConfig> listTierConfigs(
-            @Connection CBCConnection connection
-    ) throws CBCException {
-        Client.Q q = connection
-                .newQ(new TypeReference<ArrayList<CBCTierConfig>>() {})
-                .collection("tier").collection("configs");
-        resolve(q);
-        return (List<CBCTierConfig>) q.get();
-    }
-
-    @MediaType(value = ANY, strict = false)
-    @DisplayName("List Tier Config Requests")
-    public List<CBCTierConfigRequest> listTierConfigRequests(
-            @Connection CBCConnection connection
-    ) throws CBCException {
-        Client.Q q = connection
-                .newQ(new TypeReference<ArrayList<CBCTierConfigRequest>>() {})
-                .collection("tier").collection("config-requests");
-        resolve(q);
-        return (List<CBCTierConfigRequest>) q.get();
-    }    
-
 }

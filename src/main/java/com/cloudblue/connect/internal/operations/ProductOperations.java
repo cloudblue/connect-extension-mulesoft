@@ -19,6 +19,7 @@ import org.mule.runtime.extension.api.annotation.param.ParameterGroup;
 import org.mule.runtime.extension.api.annotation.param.display.DisplayName;
 
 import static org.mule.runtime.extension.api.annotation.param.MediaType.ANY;
+import static com.cloudblue.connect.api.clients.constants.CBCAPIConstants.CollectionKeys.*;
 import java.util.ArrayList;
 import java.util.List; 
 
@@ -32,35 +33,9 @@ public class ProductOperations extends BaseListOperation {
                     NewProductParameter newRequestParameter
     ) throws CBCException {
         return (CBCProduct) connection.newQ(new TypeReference<CBCProduct>() {})
-            .collection("products")
+            .collection(PRODUCTS)
             .create(newRequestParameter.buildEntity());
     }
-
-    @MediaType(value = ANY, strict = false) 
-    @DisplayName("Get Product")    
-    public CBCProduct getProduct(
-        @Connection CBCConnection connection,
-        @ParameterGroup(name="Product ID") ResourceActionParameter getProductParameter
-    ) throws CBCException {
-        return (CBCProduct) connection
-            .newQ(new TypeReference<CBCProduct>() {})
-            .collection("products", getProductParameter.getId())
-            .get();
-    }
-
-    @MediaType(value = ANY, strict = false)
-    @DisplayName("List Products")
-    public List<CBCProduct> listProducts(
-            @Connection CBCConnection connection
-    ) throws CBCException {
-
-        Client.Q q = connection
-                .newQ(new TypeReference<ArrayList<CBCProduct>>() {})
-                .collection("products");
-
-        resolve(q);
-        return (List<CBCProduct>) q.get();
-    }    
 
     @MediaType(value = ANY, strict = false)
     @DisplayName("Create Product Item")
@@ -70,7 +45,7 @@ public class ProductOperations extends BaseListOperation {
                     NewProductItemParameter newRequestParameter
     ) throws CBCException {
         return (CBCProductItem) connection.newQ(new TypeReference<CBCProductItem>() {})
-        .collection("products", newRequestParameter.getProductId())
+        .collection(PRODUCTS, newRequestParameter.getProductId())
         .collection("items")
         .create(newRequestParameter.buildEntity());
     }
@@ -83,7 +58,7 @@ public class ProductOperations extends BaseListOperation {
     ) throws CBCException {
         return (CBCProductItem) connection
             .newQ(new TypeReference <CBCProductItem>() {})
-            .collection("products", getProductParameter.getProductId())
+            .collection(PRODUCTS, getProductParameter.getProductId())
             .collection("items", getProductParameter.getProductItemId())
             .get();
     }
@@ -97,7 +72,7 @@ public class ProductOperations extends BaseListOperation {
 
         Client.Q q = connection
                 .newQ(new TypeReference<ArrayList<CBCProductItem>>() {})
-                .collection("products", getProductParameter.getId())
+                .collection(PRODUCTS, getProductParameter.getId())
                 .collection("items");
 
         resolve(q);
@@ -112,7 +87,7 @@ public class ProductOperations extends BaseListOperation {
     ) throws CBCException {
         return (CBCProductParameter) connection
             .newQ(new TypeReference <CBCProductParameter>() {})
-            .collection("products", getProductParameter.getProductId())
+            .collection(PRODUCTS, getProductParameter.getProductId())
             .collection("parameters", getProductParameter.getParameterId())
             .get();
     }
@@ -125,7 +100,7 @@ public class ProductOperations extends BaseListOperation {
     ) throws CBCException {
         Client.Q q = connection
                 .newQ(new TypeReference<ArrayList<CBCProductParameter>>() {})
-                .collection("products", getProductParameter.getId())
+                .collection(PRODUCTS, getProductParameter.getId())
                 .collection("parameters");
         resolve(q);
         return (List<CBCProductParameter>) q.get();
@@ -139,7 +114,7 @@ public class ProductOperations extends BaseListOperation {
     ) throws CBCException {
         return (CBCProductConfigurationParameter) connection
             .newQ(new TypeReference <CBCProductConfigurationParameter>() {})
-            .collection("products", getProductId.getId())
+            .collection(PRODUCTS, getProductId.getId())
             .collection("configurations")
             .get();
     }

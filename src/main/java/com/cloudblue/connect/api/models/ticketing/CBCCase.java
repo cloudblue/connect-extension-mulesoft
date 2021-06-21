@@ -1,15 +1,18 @@
 package com.cloudblue.connect.api.models.ticketing;
+
+import com.cloudblue.connect.api.models.common.CBCEntity;
 import com.cloudblue.connect.api.models.common.CBCEvents;
 import com.cloudblue.connect.api.models.enums.CBCCaseState;
 import com.cloudblue.connect.api.models.enums.CBCCaseType;
 import com.cloudblue.connect.api.models.product.CBCProduct;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CBCCase {
+public class CBCCase implements CBCEntity {
     @JsonProperty
     private String id;
 

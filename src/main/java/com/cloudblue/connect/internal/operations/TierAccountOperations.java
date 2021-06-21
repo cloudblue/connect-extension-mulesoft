@@ -4,7 +4,6 @@ import com.cloudblue.connect.api.clients.constants.HttpMethod;
 import com.cloudblue.connect.internal.operations.connections.CBCConnection;
 import com.cloudblue.connect.api.models.tier.CBCAccount;
 import com.cloudblue.connect.api.models.tier.CBCAccountRequest;
-import com.cloudblue.connect.api.models.tier.CBCTierConfig;
 import com.cloudblue.connect.api.models.tier.CBCTierConfigRequest;
 import com.cloudblue.connect.api.parameters.accounts.IgnoreTierAccountRequestParameter;
 import com.cloudblue.connect.api.parameters.accounts.NewTierAccountParameter;
@@ -26,18 +25,6 @@ import static org.mule.runtime.extension.api.annotation.param.MediaType.ANY;
 
 public class TierAccountOperations {
     
-    @MediaType(value = ANY, strict = false)
-    @DisplayName("Get Tier Account")
-    public CBCAccount getTierAccount(
-            @Connection CBCConnection connection,
-            @ParameterGroup(name="Tier Account ID") ResourceActionParameter getTierAccountParameter
-    ) throws CBCException {
-        return (CBCAccount) connection
-            .newQ(new TypeReference<CBCAccount>() {})
-            .collection("tier").collection("accounts", getTierAccountParameter.getId())
-            .get();
-    }
-   
     @MediaType(value = ANY, strict = false)
     @DisplayName("Get Tier Account Version")
     public CBCAccount getTierAccountVersion(
@@ -78,18 +65,6 @@ public class TierAccountOperations {
         }  
 
     @MediaType(value = ANY, strict = false)
-    @DisplayName("Get Tier Account Request")
-    public CBCAccountRequest getTierAccountRequest(
-            @Connection CBCConnection connection,
-            @ParameterGroup(name="Tier Account Request ID") ResourceActionParameter getTierAccountParameter
-    ) throws CBCException {
-        return (CBCAccountRequest) connection
-            .newQ(new TypeReference<CBCAccountRequest>() {})
-            .collection("tier").collection("account-requests", getTierAccountParameter.getId())
-            .get();
-    }
-
-    @MediaType(value = ANY, strict = false)
     @DisplayName("Create Tier Account Request")
     public CBCAccountRequest createTierAccountRequest(
             @Connection CBCConnection connection,
@@ -126,30 +101,6 @@ public class TierAccountOperations {
             .collection("account-requests",newRequestParameter.getTierAccountRequestId())
             .action("ignore", HttpMethod.POST,newRequestParameter.getReason());
         }           
-
-    @MediaType(value = ANY, strict = false)
-    @DisplayName("Get Tier Config")
-    public CBCTierConfig getTierConfig(
-        @Connection CBCConnection connection,
-        @ParameterGroup(name="Tier Config ID") ResourceActionParameter getTierConfigParameter
-    ) throws CBCException {
-        return (CBCTierConfig) connection
-            .newQ(new TypeReference<CBCTierConfig>() {})
-            .collection("tier").collection("configs", getTierConfigParameter.getId())
-            .get();
-        }
-
-    @MediaType(value = ANY, strict = false)
-    @DisplayName("Get Tier Config Request")
-    public CBCTierConfigRequest getTierConfigRequest(
-        @Connection CBCConnection connection,
-        @ParameterGroup(name="Tier Config Request ID") ResourceActionParameter getTierConfigParameter
-    ) throws CBCException {
-        return (CBCTierConfigRequest) connection
-            .newQ(new TypeReference<CBCTierConfigRequest>() {})
-            .collection("tier").collection("config-requests", getTierConfigParameter.getId())
-            .get();
-        }
 
     @MediaType(value = ANY, strict = false)
     @DisplayName("Create Tier Config Request")
