@@ -1,13 +1,11 @@
 package com.cloudblue.connect.api.parameters;
 
-import com.cloudblue.connect.api.models.*;
 import com.cloudblue.connect.api.models.common.CBCUser;
 import com.cloudblue.connect.api.models.enums.CBCCaseType;
 import com.cloudblue.connect.api.models.product.CBCProduct;
 
 import java.util.List;
 import java.util.ArrayList;
-
 
 import com.cloudblue.connect.api.models.ticketing.CBCCase;
 import com.cloudblue.connect.api.models.ticketing.CBCCaseIssuer;
@@ -112,7 +110,7 @@ public class NewHelpdeskCaseParameter implements Embeddable {
         request.getReceiver().getAccount().setId(this.receiverAccount);
 
         request.setIssuer(new CBCCaseIssuer());
-        List<CBCUser> recipients = new ArrayList<CBCUser>();
+        List<CBCUser> recipients = new ArrayList<>();
         CBCUser element = new CBCUser();
         recipients.add(element);
         element.setId(this.issuerRecipient);

@@ -201,6 +201,19 @@ public class BaseClient {
         httpRequest.addHeader(HeaderParams.AUTHORIZATION, this.config.getToken());
     }
 
+    private void encloseFileEntity(FileEntity request, HttpEntityEnclosingRequestBase enclosingRequest) {
+        MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+        builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+
+        for (Map.Entry<String, File> entry : request.getFiles().entrySet())
+            builder.addPart(entry.getKey(), new FileBody(entry.getValue()));
+
+        for (Map.Entry<String, String> entry: request.getValues().entrySet())
+            builder.addTextBody(entry.getKey(), entry.getValue());
+
+        enclosingRequest.setEntity(builder.build());
+    }
+
     public <T> HttpResponse exchange(
             String url,
             T request,
@@ -227,16 +240,7 @@ public class BaseClient {
                     StringEntity params = new StringEntity(requestBody);
                     enclosingRequest.setEntity(params);
                 } else if (request instanceof FileEntity) {
-                    MultipartEntityBuilder builder = MultipartEntityBuilder.create();
-                    builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
-
-                    for (Map.Entry<String, File> entry : ((FileEntity)request).getFiles().entrySet())
-                        builder.addPart(entry.getKey(), new FileBody(entry.getValue()));
-
-                    for (Map.Entry<String, String> entry: ((FileEntity)request).getValues().entrySet())
-                        builder.addTextBody(entry.getKey(), entry.getValue());
-
-                    enclosingRequest.setEntity(builder.build());
+                    encloseFileEntity((FileEntity) request, enclosingRequest);
                 } else {
                     requestBody = this.requestMarshaller.marshal(request);
                     httpRequest.addHeader(HeaderParams.CONTENT_TYPE, "application/json");
@@ -297,7 +301,7 @@ public class BaseClient {
                     }
                 }
             } else {
-                LOGGER.error("Error during creation of file " + fullFileLocation);
+                LOGGER.error("Error during creation of file {}.", fullFileLocation);
                 throw new CBCException("Not able to create file " + fullFileLocation);
             }
 

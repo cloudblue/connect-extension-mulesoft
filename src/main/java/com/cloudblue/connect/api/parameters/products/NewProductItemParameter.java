@@ -6,7 +6,9 @@ import com.cloudblue.connect.api.models.enums.CBCProductItemType;
 import com.cloudblue.connect.api.models.product.CBCItemUi;
 import com.cloudblue.connect.api.models.product.CBCProductItem;
 import com.cloudblue.connect.api.models.product.CBCUnit;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import org.mule.runtime.extension.api.annotation.Expression;
 import org.mule.runtime.extension.api.annotation.param.Parameter;
 
@@ -163,7 +165,7 @@ public class NewProductItemParameter {
         productItem.setPrecision(this.precision);
         CBCItemUi visibility = new CBCItemUi();
         visibility.setVisibility(this.uiVisibility);
-        productItem.setVisibility(visibility);;  
+        productItem.setVisibility(visibility);
         return productItem;    
     }    
 }

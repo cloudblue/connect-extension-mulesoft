@@ -26,5 +26,13 @@ public class CBCAPIConstants {
         public static final String RECONCILIATIONS = "reconciliations";
         public static final String AGGREGATES = "aggregates";
         public static final String PRODUCTS = "products";
+        public static final String ITEMS = "items";
+        public static final String PARAMETERS = "parameters";
+        public static final String CONFIGURATIONS = "configurations";
+        public static final String TIER = "tier";
+        public static final String ACCOUNTS = "accounts";
+        public static final String VERSIONS = "versions";
+        public static final String ACCOUNT_REQUESTS = "account-requests";
+        public static final String CONFIG_REQUESTS = "config-requests";
     }
 }

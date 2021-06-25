@@ -46,7 +46,7 @@ public class ProductOperations extends BaseListOperation {
     ) throws CBCException {
         return (CBCProductItem) connection.newQ(new TypeReference<CBCProductItem>() {})
         .collection(PRODUCTS, newRequestParameter.getProductId())
-        .collection("items")
+        .collection(ITEMS)
         .create(newRequestParameter.buildEntity());
     }
 
@@ -59,7 +59,7 @@ public class ProductOperations extends BaseListOperation {
         return (CBCProductItem) connection
             .newQ(new TypeReference <CBCProductItem>() {})
             .collection(PRODUCTS, getProductParameter.getProductId())
-            .collection("items", getProductParameter.getProductItemId())
+            .collection(ITEMS, getProductParameter.getProductItemId())
             .get();
     }
 
@@ -73,7 +73,7 @@ public class ProductOperations extends BaseListOperation {
         Client.Q q = connection
                 .newQ(new TypeReference<ArrayList<CBCProductItem>>() {})
                 .collection(PRODUCTS, getProductParameter.getId())
-                .collection("items");
+                .collection(ITEMS);
 
         resolve(q);
         return (List<CBCProductItem>) q.get();
@@ -88,7 +88,7 @@ public class ProductOperations extends BaseListOperation {
         return (CBCProductParameter) connection
             .newQ(new TypeReference <CBCProductParameter>() {})
             .collection(PRODUCTS, getProductParameter.getProductId())
-            .collection("parameters", getProductParameter.getParameterId())
+            .collection(PARAMETERS, getProductParameter.getParameterId())
             .get();
     }
 
@@ -101,7 +101,7 @@ public class ProductOperations extends BaseListOperation {
         Client.Q q = connection
                 .newQ(new TypeReference<ArrayList<CBCProductParameter>>() {})
                 .collection(PRODUCTS, getProductParameter.getId())
-                .collection("parameters");
+                .collection(PARAMETERS);
         resolve(q);
         return (List<CBCProductParameter>) q.get();
     }    
@@ -115,7 +115,7 @@ public class ProductOperations extends BaseListOperation {
         return (CBCProductConfigurationParameter) connection
             .newQ(new TypeReference <CBCProductConfigurationParameter>() {})
             .collection(PRODUCTS, getProductId.getId())
-            .collection("configurations")
+            .collection(CONFIGURATIONS)
             .get();
     }
 }

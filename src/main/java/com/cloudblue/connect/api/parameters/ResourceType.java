@@ -16,91 +16,94 @@ import java.util.ArrayList;
 import static com.cloudblue.connect.api.clients.constants.CBCAPIConstants.CollectionKeys.*;
 
 public enum ResourceType {
-    Request(
+    REQUEST(
             REQUESTS,
             new TypeReference<ArrayList<CBCRequest>>() {},
             new TypeReference<CBCRequest>() {},
             CBCRequest.class),
 
-    Asset(
+    ASSET(
             ASSETS,
             new TypeReference<ArrayList<CBCAsset>>() {},
             new TypeReference<CBCAsset>() {},
             CBCAsset.class),
 
-    TierAccount(
+    TIER_ACCOUNT(
             "tier/accounts",
             new TypeReference<ArrayList<CBCAccount>>() {},
             new TypeReference<CBCAccount>() {},
             CBCAccount.class),
 
-    TierAccountRequest(
+    TIER_ACCOUNT_REQUEST(
             "tier/account-requests",
             new TypeReference<ArrayList<CBCAccountRequest>>() {},
             new TypeReference<CBCAccountRequest>() {},
             CBCAccountRequest.class),
 
-    TierConfigRequest(
+    TIER_CONFIG_REQUEST(
             "tier/config-requests",
             new TypeReference<ArrayList<CBCTierConfigRequest>>() {},
             new TypeReference<CBCTierConfigRequest>() {},
             CBCTierConfigRequest.class),
 
-    TierConfig(
+    TIER_CONFIG(
             "tier/configs",
             new TypeReference<ArrayList<CBCTierConfig>>() {},
             new TypeReference<CBCTierConfig>() {},
             CBCTierConfig.class),
 
-    Product(
+    PRODUCT(
             PRODUCTS,
             new TypeReference<ArrayList<CBCProduct>>() {},
             new TypeReference<CBCProduct>() {},
             CBCProduct.class),
 
-    UsageReport(
+    USAGE_REPORT(
             USAGE + "/" + FILES,
             new TypeReference<ArrayList<CBCUsageReport>>() {},
             new TypeReference<CBCUsageReport>() {},
             CBCUsageReport.class),
 
-    UsageRecord(
+    USAGE_RECORD(
             USAGE + "/" + RECORDS,
             new TypeReference<ArrayList<CBCUsageRecord>>() {},
             new TypeReference<CBCUsageRecord>() {},
             CBCUsageRecord.class),
 
-    UsageChunk(
+    USAGE_CHUNK(
             USAGE + "/" + CHUNKS,
             new TypeReference<ArrayList<CBCUsageChunkFile>>() {},
             new TypeReference<CBCUsageChunkFile>() {},
             CBCUsageChunkFile.class),
 
-    UsageReconciliation(
+    USAGE_RECONCILIATION(
             USAGE + "/" + RECONCILIATIONS,
             new TypeReference<ArrayList<CBCUsageReconciliation>>() {},
             new TypeReference<CBCUsageReconciliation>() {},
             CBCUsageReconciliation.class),
 
-    UsageAggregate(
+    USAGE_AGGREGATE(
             USAGE + "/" + AGGREGATES,
             new TypeReference<ArrayList<CBCUsageAggregate>>() {},
             new TypeReference<CBCUsageAggregate>() {},
             CBCUsageAggregate.class
     ),
 
-    Case(
+    CASE(
             HELPDESK + "/" + CASES,
             new TypeReference<ArrayList<CBCCase>>() {},
             new TypeReference<CBCCase>() {},
             CBCCase.class);
 
-    private String collection;
-    private TypeReference listTypeRef;
-    private TypeReference objectTypeRef;
-    private Class clazz;
+    private final String collection;
+    private final TypeReference<? extends Object> listTypeRef;
+    private final TypeReference<? extends Object> objectTypeRef;
+    private final Class<? extends Object> clazz;
 
-    ResourceType(String collection, TypeReference listTypeRef, TypeReference objectTypeRef, Class clazz) {
+    ResourceType(String collection,
+                 TypeReference<? extends Object> listTypeRef,
+                 TypeReference<? extends Object> objectTypeRef,
+                 Class<? extends Object> clazz) {
         this.collection = collection;
         this.listTypeRef = listTypeRef;
         this.objectTypeRef = objectTypeRef;

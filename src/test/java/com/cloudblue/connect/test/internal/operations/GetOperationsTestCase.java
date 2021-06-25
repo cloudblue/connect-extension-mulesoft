@@ -1,5 +1,7 @@
 package com.cloudblue.connect.test.internal.operations;
 
+import com.cloudblue.connect.api.models.common.CBCCommonEntity;
+import com.cloudblue.connect.api.models.ticketing.CBCConversationMessages;
 import com.cloudblue.connect.api.models.tier.CBCAccount;
 import com.cloudblue.connect.api.models.subscription.CBCAsset;
 import com.cloudblue.connect.api.models.subscription.CBCRequest;
@@ -10,10 +12,7 @@ import com.cloudblue.connect.api.models.product.CBCProductParameter;
 import com.cloudblue.connect.api.models.tier.CBCAccountRequest;
 import com.cloudblue.connect.api.models.tier.CBCTierConfig;
 import com.cloudblue.connect.api.models.tier.CBCTierConfigRequest;
-import com.cloudblue.connect.api.models.usage.CBCUsageChunkFile;
-import com.cloudblue.connect.api.models.usage.CBCUsageReconciliation;
-import com.cloudblue.connect.api.models.usage.CBCUsageRecord;
-import com.cloudblue.connect.api.models.usage.CBCUsageReport;
+import com.cloudblue.connect.api.models.usage.*;
 import com.cloudblue.connect.test.internal.common.BaseMuleFlowTestCase;
 
 import java.lang.reflect.Method;
@@ -126,32 +125,32 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
                 {"getUsageRecords", CBCUsageRecord.class, USAGE_RECORD_ID},
                 {"getUsageChunkFiles", CBCUsageChunkFile.class, USAGE_CHUNK_FILE_ID},
                 {"getUsageReconciliations", CBCUsageReconciliation.class, USAGE_RECON_ID},
-                {"listRequestsWithFilter", null, null},
-                {"listRequestsWithoutFilter", null, null},
-                {"listAssetsWithFilter", null, null},
-                {"listAssetsWithoutFilter", null, null},
-                {"listCasesWithFilter", null, null},
-                    {"listCasesWithoutFilter", null, null},
-                    {"listConversationMessagesWithFilter", null, null},
-                {"listConversationMessagesWithoutFilter", null, null},
-                {"listTierAccountsWithFilter", null, null},
-                {"listTierAccountsWithoutFilter", null, null},
-                {"listTierAccountRequestsWithFilter", null, null},
-                {"listTierAccountRequestsWithoutFilter", null, null},
-                {"listTierConfigsWithFilter", null, null},
-                    {"listTierConfigsWithoutFilter", null, null},
-                    {"listTierConfigRequestsWithFilter", null, null},
-                {"listTierConfigRequestsWithoutFilter", null, null},
-                {"listProductsWithFilter", null, null},
-                {"listProductsWithoutFilter", null, null},
-                {"listProductItemsWithFilter", null, null},
-                {"listProductItemsWithoutFilter", null, null},
-                {"listProductParametersWithFilter", null, null},
-                {"listProductParametersWithoutFilter", null, null},
-                {"listUsageFiles", null, null},
-                {"listUsageRecords", null, null},
-                {"listUsageChunkFiles", null, null},
-                {"listUsageReconciliations", null, null},
+                {"listRequestsWithFilter", CBCRequest.class, REQUEST_ID},
+                {"listRequestsWithoutFilter", CBCRequest.class, REQUEST_ID},
+                {"listAssetsWithFilter", CBCAsset.class, ASSERT_ID},
+                {"listAssetsWithoutFilter", CBCAsset.class, ASSERT_ID},
+                {"listCasesWithFilter", CBCCase.class, CASE_ID},
+                {"listCasesWithoutFilter", CBCCase.class, CASE_ID},
+                {"listConversationMessagesWithFilter", CBCConversationMessages.class, CONVERSATION_ID},
+                {"listConversationMessagesWithoutFilter", CBCConversationMessages.class, CONVERSATION_ID},
+                {"listTierAccountsWithFilter", CBCAccount.class, TIERACCOUNT_ID},
+                {"listTierAccountsWithoutFilter", CBCAccount.class, TIERACCOUNT_ID},
+                {"listTierAccountRequestsWithFilter", CBCAccountRequest.class, TIERACCOUNTREQUEST_ID},
+                {"listTierAccountRequestsWithoutFilter", CBCAccountRequest.class, TIERACCOUNTREQUEST_ID},
+                {"listTierConfigsWithFilter", CBCTierConfig.class, TIERCONFIG_ID},
+                {"listTierConfigsWithoutFilter", CBCTierConfig.class, TIERCONFIG_ID},
+                {"listTierConfigRequestsWithFilter", CBCTierConfigRequest.class, TIERCONFIGREQUEST_ID},
+                {"listTierConfigRequestsWithoutFilter", CBCTierConfigRequest.class, TIERCONFIGREQUEST_ID},
+                {"listProductsWithFilter", CBCProduct.class, PRODUCT_ID},
+                {"listProductsWithoutFilter", CBCProduct.class, PRODUCT_ID},
+                {"listProductItemsWithFilter", CBCProductItem.class, PRODUCTITEM_ID},
+                {"listProductItemsWithoutFilter", CBCProductItem.class, PRODUCTITEM_ID},
+                {"listProductParametersWithFilter", CBCProductParameter.class, PRODUCTPARAMETER_ID},
+                {"listProductParametersWithoutFilter", CBCProductParameter.class, PRODUCTPARAMETER_ID},
+                {"listUsageFiles", CBCUsageReport.class, USAGE_REPORT_ID},
+                {"listUsageRecords", CBCUsageRecord.class, USAGE_RECORD_ID},
+                {"listUsageChunkFiles", CBCUsageChunkFile.class, USAGE_CHUNK_FILE_ID},
+                {"listUsageReconciliations", CBCUsageReconciliation.class, USAGE_RECON_ID},
                 {"listUsageAggregates", null, null},
                 {"listAssetUsageAggregates", null, null}
             }
@@ -164,15 +163,25 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
             Event getRequest = flowRunner((String) objects[0]).run();
             Object object = getRequest.getMessage().getPayload().getValue();
 
+            if (object instanceof List) {
+                List list = (List)object;
+                assertEquals(1, list.size());
+                object = (list.get(0));
+            }
+
             if (objects[1] != null) {
-                Method idMethod = ((Class)objects[1]).getDeclaredMethod("getId");
+                Class<?> aClass = (Class)objects[1];
+
+                Class<?> superClass = aClass.getSuperclass();
+
+                if (superClass == CBCCommonEntity.class)
+                    aClass = superClass;
+
+
+                Method idMethod = aClass.getDeclaredMethod("getId");
                 String idValue = (String)idMethod.invoke(object);
 
                 assertThat(idValue, is(objects[2]));
-            } else {
-                System.out.println("Flow: " + objects[0] + " Objects: " + object);
-                assertTrue(object instanceof List);
-                assertEquals(1, ((List)object).size());
             }
         }
 
