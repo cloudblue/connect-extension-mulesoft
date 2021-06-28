@@ -25,6 +25,7 @@ jobs:
   scan:
     name: Scan
     runs-on: ubuntu-latest
+    needs: build
     steps:
       - uses: actions/checkout@v2
         with:
