@@ -41,7 +41,7 @@
                                                  path="/validation"
                                                  productId="PRD-000-000-000"
                                                  jwtSecret="${jwt_secret}"
-                                                 validationType="Draft_TCR_T1_Validator">
+                                                 validationType="DRAFT_TCR_T1_VALIDATION">
         </cloudblue-connect:tcr-validation-source>
         <logger level="INFO" message="#[payload.id]"/>
     </flow>

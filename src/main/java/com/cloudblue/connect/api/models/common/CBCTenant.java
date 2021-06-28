@@ -1,6 +1,5 @@
 package com.cloudblue.connect.api.models.common;
 
-import com.cloudblue.connect.api.models.common.CBCEntity;
 import com.cloudblue.connect.api.models.enums.CBCAccountType;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;

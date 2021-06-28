@@ -43,11 +43,11 @@ public class CloseUsageRecord implements Embeddable {
 
     @Override
     public Object buildEntity() {
-        CBCUsageRecord record = new CBCUsageRecord();
-        record.setId(id);
-        record.setExternalBillingId(externalBillingId);
-        record.setExternalBillingNote(externalBillingNote);
+        CBCUsageRecord usageRecord = new CBCUsageRecord();
+        usageRecord.setId(id);
+        usageRecord.setExternalBillingId(externalBillingId);
+        usageRecord.setExternalBillingNote(externalBillingNote);
 
-        return record;
+        return usageRecord;
     }
 }

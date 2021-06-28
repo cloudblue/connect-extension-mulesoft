@@ -46,7 +46,7 @@
 
     <flow name="downloadUsageReconFile">
         <cloudblue-connect:usage-reconciliation-action
-                fileType="Processed"
+                fileType="PROCESSED_FILE"
                 config-ref="CloudBlue_Connect_Config_Test"
                 id="${usage_recon_id}"
                 location="${tempFilePath}"

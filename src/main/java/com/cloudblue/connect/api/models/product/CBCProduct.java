@@ -4,7 +4,6 @@ import com.cloudblue.connect.api.models.CBCConfigurations;
 import com.cloudblue.connect.api.models.CBCCustomerUiSettings;
 import com.cloudblue.connect.api.models.CBCUsageRule;
 import com.cloudblue.connect.api.models.common.CBCCommonEntity;
-import com.cloudblue.connect.api.models.common.CBCEntity;
 
 import com.cloudblue.connect.api.models.common.CBCEvents;
 import com.cloudblue.connect.api.models.contract.CBCAgreement;
@@ -16,13 +15,7 @@ import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CBCProduct implements CBCEntity {
-
-    @JsonProperty
-    private String id;
-
-    @JsonProperty
-    private String name;
+public class CBCProduct extends CBCCommonEntity {
 
     @JsonProperty
     private String status;
@@ -92,22 +85,6 @@ public class CBCProduct implements CBCEntity {
 
     @JsonProperty
     private CBCExtensions extensions;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getStatus() {
         return status;

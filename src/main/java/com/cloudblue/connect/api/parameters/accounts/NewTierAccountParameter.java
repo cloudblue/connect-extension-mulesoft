@@ -11,11 +11,7 @@ import org.mule.runtime.extension.api.annotation.param.Optional;
 import org.mule.runtime.extension.api.annotation.param.Parameter;
 
 public class NewTierAccountParameter implements Embeddable {
-    
-    @Parameter
-    @Optional
-    private String id;
-    
+
     @Parameter
     private String type;
    
@@ -35,14 +31,10 @@ public class NewTierAccountParameter implements Embeddable {
 
     @Parameter
     private CBCContactInfo contactInfo;
-    
-    public String getId() {
-        return id;
-    }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    @Parameter
+    @Optional
+    private String taxId;
 
     public String getType() {
         return type;
@@ -94,14 +86,19 @@ public class NewTierAccountParameter implements Embeddable {
         this.contactInfo = contactInfo;
     }
 
+    public String getTaxId() {
+        return taxId;
+    }
+
+    public void setTaxId(String taxId) {
+        this.taxId = taxId;
+    }
+
     @Override
     @JsonIgnore
     public Object buildEntity() {
 
         CBCAccount tierAccount = new CBCAccount();
-        if (this.id != null){
-            tierAccount.setId(this.id);
-        }
         tierAccount.setType(this.type);
         if (this.externalId != null){
             tierAccount.setExternalId(this.externalId);
@@ -114,6 +111,7 @@ public class NewTierAccountParameter implements Embeddable {
         }    
         tierAccount.setCompanyName(this.name);
         tierAccount.setContactInfo(this.contactInfo);
+        tierAccount.setTaxId(this.taxId);
         return tierAccount;    
     }
 }
