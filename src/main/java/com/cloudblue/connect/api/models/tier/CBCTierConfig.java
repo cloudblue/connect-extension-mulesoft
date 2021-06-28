@@ -1,6 +1,5 @@
 package com.cloudblue.connect.api.models.tier;
 
-import com.cloudblue.connect.api.models.*;
 import com.cloudblue.connect.api.models.common.CBCEntity;
 import com.cloudblue.connect.api.models.common.CBCEvent;
 import com.cloudblue.connect.api.models.common.CBCUser;

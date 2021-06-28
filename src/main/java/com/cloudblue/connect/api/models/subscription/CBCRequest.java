@@ -5,7 +5,7 @@ import com.cloudblue.connect.api.models.contract.CBCContract;
 import com.cloudblue.connect.api.models.enums.CBCRequestStatus;
 import com.cloudblue.connect.api.models.enums.CBCRequestType;
 import com.cloudblue.connect.api.models.marketplace.CBCMarketplace;
-import com.cloudblue.connect.api.models.subscription.CBCAsset;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;

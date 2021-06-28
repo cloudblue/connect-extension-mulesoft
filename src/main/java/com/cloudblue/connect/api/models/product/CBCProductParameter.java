@@ -1,7 +1,7 @@
 package com.cloudblue.connect.api.models.product;
 
 import com.cloudblue.connect.api.models.CBCRequestParamConstraints;
-import com.cloudblue.connect.api.models.common.CBCEntity;
+import com.cloudblue.connect.api.models.common.CBCCommonEntity;
 import com.cloudblue.connect.api.models.enums.CBCProductParameterType;
 import com.cloudblue.connect.api.models.enums.CBCProductParameterScope;
 import com.cloudblue.connect.api.models.enums.CBCProductParameterPhase;
@@ -13,13 +13,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CBCProductParameter implements CBCEntity {
-
-    @JsonProperty
-    private String id;
-
-    @JsonProperty
-    private String name;
+public class CBCProductParameter extends CBCCommonEntity {
 
     @JsonProperty
     private String title;
@@ -44,23 +38,6 @@ public class CBCProductParameter implements CBCEntity {
 
     @JsonProperty
     private CBCEvents events;
-
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getTitle() {
         return title;
@@ -118,4 +95,11 @@ public class CBCProductParameter implements CBCEntity {
         this.events = events;
     }
 
+    public Integer getPosition() {
+        return position;
+    }
+
+    public void setPosition(Integer position) {
+        this.position = position;
+    }
 }

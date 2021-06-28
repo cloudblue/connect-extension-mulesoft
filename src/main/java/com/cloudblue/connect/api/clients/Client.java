@@ -19,7 +19,7 @@ public class Client extends BaseClient {
         private final List<String> orderBys = new ArrayList<>();
         private int limit = 100;
 
-        private final TypeReference type;
+        private final TypeReference<? extends Object> type;
 
         private final Client client;
 

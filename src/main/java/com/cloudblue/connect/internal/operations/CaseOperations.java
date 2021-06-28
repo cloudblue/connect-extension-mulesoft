@@ -7,8 +7,9 @@ import com.cloudblue.connect.api.parameters.NewConversationMessageParameter;
 import com.cloudblue.connect.api.exceptions.CBCException;
 import com.cloudblue.connect.api.parameters.NewHelpdeskCaseParameter;
 import com.cloudblue.connect.api.parameters.ChangeStatusHelpdeskCaseParameter;
-import com.cloudblue.connect.api.parameters.common.ResourceActionParameter;
+
 import com.fasterxml.jackson.core.type.TypeReference;
+
 import org.mule.runtime.extension.api.annotation.param.Connection;
 import org.mule.runtime.extension.api.annotation.param.MediaType;
 import org.mule.runtime.extension.api.annotation.param.ParameterGroup;

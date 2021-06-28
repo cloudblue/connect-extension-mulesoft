@@ -1,9 +1,9 @@
 package com.cloudblue.connect.api.models.enums;
 
 public enum RequestValidationType {
-    Draft_Validator("validator"),
-    Inquiring_Validator("inquiring_validator"),
-    Change_Validator("change_validator");
+    DRAFT_VALIDATION("validator"),
+    INQUIRING_VALIDATION("inquiring_validator"),
+    CHANGE_VALIDATION("change_validator");
 
     private String type;
 
