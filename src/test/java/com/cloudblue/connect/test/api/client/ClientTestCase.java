@@ -32,6 +32,10 @@ public class ClientTestCase {
                 q.getFinalUrl(null)
         );
         Assert.assertEquals(
+                "/xyz?cncb=hjgsf&" + Url.encode("asset.id=AS-000-000-000&limit=5"),
+                q.getFinalUrl("")
+        );
+        Assert.assertEquals(
                 "/xyz?cncb=hjgsf/suspend&" + Url.encode("asset.id=AS-000-000-000&limit=5"),
                 q.getFinalUrl("suspend")
         );
@@ -51,5 +55,33 @@ public class ClientTestCase {
                 "/abc?" + Url.encode("(eq(asset.id,AS-000)&eq(status,pending))&limit=5"),
                 q.getFinalUrl(null)
         );
+    }
+
+    @Test
+    public void testEmptyCollection() {
+        Client client = new Client(getConfig());
+        Client.Q q = client.newQ(null)
+                .filter("asset.id", "AS-000-000-000")
+                .limit(5);
+
+        Assert.assertEquals(
+                "?" + Url.encode("asset.id=AS-000-000-000&limit=5"),
+                q.getFinalUrl(null));
+
+    }
+
+    @Test
+    public void testCollectionWithQuestionMark() {
+        Client client = new Client(getConfig());
+        Client.Q q = client.newQ(null)
+                .collection("xyz?")
+                .filter("asset.id", "AS-000-000-000")
+                .limit(5);
+
+        Assert.assertEquals(
+                "/xyz?" + Url.encode("asset.id=AS-000-000-000&limit=5"),
+                q.getFinalUrl(null)
+        );
+
     }
 }
