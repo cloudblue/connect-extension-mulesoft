@@ -1,6 +1,7 @@
 package com.cloudblue.connect.test.internal.operations;
 
 import com.cloudblue.connect.api.models.common.CBCCommonEntity;
+import com.cloudblue.connect.api.models.product.CBCTemplate;
 import com.cloudblue.connect.api.models.ticketing.CBCConversationMessages;
 import com.cloudblue.connect.api.models.tier.CBCAccount;
 import com.cloudblue.connect.api.models.subscription.CBCAsset;
@@ -51,6 +52,7 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
     private static final String USAGE_RECORD_ID = "UR-0000-00-0000-0000-0000-0000";
     private static final String USAGE_CHUNK_FILE_ID = "UFC-0000-00-0000-0000-001";
     private static final String USAGE_RECON_ID = "RCF-0000-00-0000-0000-001";
+    private static final String PRODUCT_TEMPLATE_ID = "TMP-000-000";
 
     
     @Rule
@@ -107,6 +109,9 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
     @Rule
     public SystemProperty versionSystemProperty = new SystemProperty("tierAccountVersion", TIERACCOUNTVERSION);
 
+    @Rule
+    public SystemProperty productTemplateSystemProperty = new SystemProperty("productTemplateId", PRODUCT_TEMPLATE_ID);
+
 
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
@@ -125,6 +130,7 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
                 {"getUsageRecords", CBCUsageRecord.class, USAGE_RECORD_ID},
                 {"getUsageChunkFiles", CBCUsageChunkFile.class, USAGE_CHUNK_FILE_ID},
                 {"getUsageReconciliations", CBCUsageReconciliation.class, USAGE_RECON_ID},
+                {"getProductTemplate", CBCTemplate.class, PRODUCT_TEMPLATE_ID},
                 {"listRequestsWithFilter", CBCRequest.class, REQUEST_ID},
                 {"listRequestsWithoutFilter", CBCRequest.class, REQUEST_ID},
                 {"listAssetsWithFilter", CBCAsset.class, ASSERT_ID},
@@ -153,7 +159,8 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
                 {"listUsageChunkFiles", CBCUsageChunkFile.class, USAGE_CHUNK_FILE_ID},
                 {"listUsageReconciliations", CBCUsageReconciliation.class, USAGE_RECON_ID},
                 {"listUsageAggregates", null, null},
-                {"listAssetUsageAggregates", null, null}
+                {"listAssetUsageAggregates", null, null},
+                {"listProductTemplates", CBCTemplate.class, PRODUCT_TEMPLATE_ID}
             }
         );
     }

@@ -86,8 +86,7 @@ public enum ResourceType {
             USAGE + "/" + AGGREGATES,
             new TypeReference<ArrayList<CBCUsageAggregate>>() {},
             new TypeReference<CBCUsageAggregate>() {},
-            CBCUsageAggregate.class
-    ),
+            CBCUsageAggregate.class),
 
     CASE(
             HELPDESK + "/" + CASES,
