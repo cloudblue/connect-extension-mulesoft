@@ -20,7 +20,9 @@ import org.mule.runtime.extension.api.annotation.connectivity.ConnectionProvider
     UsageReconciliationOperations.class,
     ListAssetUsageAggregates.class,
     ListResourcesOperation.class,
-    GetResourcesOperation.class
+    GetResourcesOperation.class,
+    ListProductTemplates.class,
+    ProductTemplateOperations.class
 })
 @ConnectionProviders(CBCConnectionProvider.class)
 public class CBCConfiguration {}

@@ -34,5 +34,6 @@ public class CBCAPIConstants {
         public static final String VERSIONS = "versions";
         public static final String ACCOUNT_REQUESTS = "account-requests";
         public static final String CONFIG_REQUESTS = "config-requests";
+        public static final String TEMPLATES = "templates";
     }
 }

@@ -148,6 +148,16 @@
         <set-payload value="[{'id':'${productParameter_id}'}]"/>
     </flow>
 
+    <flow name="listProductTemplatesServer">
+        <http:listener path="/products/${product_id}/templates" config-ref="listenerConfig"/>
+        <set-payload value="[{'id':'${productTemplateId}'}]"/>
+    </flow>
+
+    <flow name="getProductTemplatesServer">
+        <http:listener path="/products/${product_id}/templates/${productTemplateId}" config-ref="listenerConfig"/>
+        <set-payload value="{'id':'${productTemplateId}'}"/>
+    </flow>
+
     <flow name="listUsageRecordServer">
         <http:listener path="/usage/records/"
                        config-ref="listenerConfig"/>
@@ -511,5 +521,18 @@
         <cloudblue-connect:list-asset-usage-aggregates
                 config-ref="CloudBlue_Connect_Config_Test"
                 assetId="${asset_id}"/>
+    </flow>
+
+    <flow name="listProductTemplates">
+        <cloudblue-connect:list-product-templates
+                config-ref="CloudBlue_Connect_Config_Test"
+                id="${product_id}"/>
+    </flow>
+
+    <flow name="getProductTemplate">
+        <cloudblue-connect:get-product-template
+                config-ref="CloudBlue_Connect_Config_Test"
+                productId="${product_id}"
+                templateId="${productTemplateId}"/>
     </flow>
 </mule>

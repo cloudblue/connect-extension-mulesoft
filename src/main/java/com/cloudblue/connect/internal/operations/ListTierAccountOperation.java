@@ -13,6 +13,7 @@ import org.mule.runtime.extension.api.annotation.param.display.DisplayName;
 import org.mule.runtime.extension.api.annotation.param.ParameterGroup;
 import com.cloudblue.connect.api.parameters.common.ResourceActionParameter;
 
+import static com.cloudblue.connect.api.clients.constants.CBCAPIConstants.CollectionKeys.*;
 import static org.mule.runtime.extension.api.annotation.param.MediaType.ANY;
 
 import java.util.ArrayList;
@@ -29,8 +30,8 @@ public class ListTierAccountOperation extends BaseListOperation {
     ) throws CBCException {
         Client.Q q = connection
                 .newQ(new TypeReference<ArrayList<CBCAccount>>() {})
-                .collection("tier").collection("accounts", tierAccountParameter.getId())
-                .collection("versions");
+                .collection(TIER).collection(ACCOUNTS, tierAccountParameter.getId())
+                .collection(VERSIONS);
         resolve(q);
         return (List<CBCAccount>) q.get();
     }
