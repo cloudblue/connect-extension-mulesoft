@@ -135,6 +135,7 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
                 {"listConversationMessagesWithoutFilter", CBCConversationMessages.class, CONVERSATION_ID},
                 {"listTierAccountsWithFilter", CBCAccount.class, TIERACCOUNT_ID},
                 {"listTierAccountsWithoutFilter", CBCAccount.class, TIERACCOUNT_ID},
+                {"listTierAccountVersions", CBCAccount.class, TIERACCOUNT_ID},
                 {"listTierAccountRequestsWithFilter", CBCAccountRequest.class, TIERACCOUNTREQUEST_ID},
                 {"listTierAccountRequestsWithoutFilter", CBCAccountRequest.class, TIERACCOUNTREQUEST_ID},
                 {"listTierConfigsWithFilter", CBCTierConfig.class, TIERCONFIG_ID},
