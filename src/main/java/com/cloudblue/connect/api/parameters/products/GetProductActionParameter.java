@@ -3,14 +3,14 @@ package com.cloudblue.connect.api.parameters.products;
 import org.mule.runtime.extension.api.annotation.Expression;
 import org.mule.runtime.extension.api.annotation.param.Parameter;
 
-public class SearchProductParameterParameter {
+public class GetProductActionParameter {
     @Parameter
     @Expression
     private String productId;
 
     @Parameter
     @Expression
-    private String parameterId;
+    private String actionId;
 
     public String getProductId() {
         return productId;
@@ -20,11 +20,11 @@ public class SearchProductParameterParameter {
         this.productId = productId;
     }
 
-    public String getParameterId() {
-        return parameterId;
+    public String getActionId() {
+        return actionId;
     }
 
-    public void setParameterId(String parameterId) {
-        this.parameterId = parameterId;
+    public void setActionId(String actionId) {
+        this.actionId = actionId;
     }
 }

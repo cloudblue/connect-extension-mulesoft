@@ -26,6 +26,7 @@ public class CBCAPIConstants {
         public static final String RECONCILIATIONS = "reconciliations";
         public static final String AGGREGATES = "aggregates";
         public static final String PRODUCTS = "products";
+        public static final String ACTIONS = "actions";
         public static final String ITEMS = "items";
         public static final String PARAMETERS = "parameters";
         public static final String CONFIGURATIONS = "configurations";

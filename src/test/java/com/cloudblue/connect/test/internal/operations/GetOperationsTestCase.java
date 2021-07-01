@@ -1,15 +1,12 @@
 package com.cloudblue.connect.test.internal.operations;
 
 import com.cloudblue.connect.api.models.common.CBCCommonEntity;
-import com.cloudblue.connect.api.models.product.CBCTemplate;
+import com.cloudblue.connect.api.models.product.*;
 import com.cloudblue.connect.api.models.ticketing.CBCConversationMessages;
 import com.cloudblue.connect.api.models.tier.CBCAccount;
 import com.cloudblue.connect.api.models.subscription.CBCAsset;
 import com.cloudblue.connect.api.models.subscription.CBCRequest;
 import com.cloudblue.connect.api.models.ticketing.CBCCase;
-import com.cloudblue.connect.api.models.product.CBCProduct;
-import com.cloudblue.connect.api.models.product.CBCProductItem;
-import com.cloudblue.connect.api.models.product.CBCProductParameter;
 import com.cloudblue.connect.api.models.tier.CBCAccountRequest;
 import com.cloudblue.connect.api.models.tier.CBCTierConfig;
 import com.cloudblue.connect.api.models.tier.CBCTierConfigRequest;
@@ -50,6 +47,8 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
     private static final String USAGE_CHUNK_FILE_ID = "UFC-0000-00-0000-0000-001";
     private static final String USAGE_RECON_ID = "RCF-0000-00-0000-0000-001";
     private static final String PRODUCT_TEMPLATE_ID = "TMP-000-000";
+    private static final String PRODUCT_ACTION_ID = "ACT-982-018-837-001";
+    private static final String PRODUCT_ACTION_LINK = "https://www.example.com";
 
     
     @Rule
@@ -109,6 +108,12 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
     @Rule
     public SystemProperty productTemplateSystemProperty = new SystemProperty("productTemplateId", PRODUCT_TEMPLATE_ID);
 
+    @Rule
+    public SystemProperty productActionSystemProperty = new SystemProperty("action_id", PRODUCT_ACTION_ID);
+
+    @Rule
+    public SystemProperty productActionLinkSystemProperty = new SystemProperty("action_link", PRODUCT_ACTION_LINK);
+
 
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
@@ -129,6 +134,7 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
                 {"getUsageReconciliations", CBCUsageReconciliation.class, USAGE_RECON_ID},
                 {"getProductTemplate", CBCTemplate.class, PRODUCT_TEMPLATE_ID},
                 {"getBillingRequestAttributes", null, null},
+                {"getProductAction", CBCProductAction.class, PRODUCT_ACTION_ID},
                 {"listRequestsWithFilter", CBCRequest.class, REQUEST_ID},
                 {"listRequestsWithoutFilter", CBCRequest.class, REQUEST_ID},
                 {"listAssetsWithFilter", CBCAsset.class, ASSERT_ID},
@@ -158,7 +164,8 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
                 {"listUsageReconciliations", CBCUsageReconciliation.class, USAGE_RECON_ID},
                 {"listUsageAggregates", null, null},
                 {"listAssetUsageAggregates", null, null},
-                {"listProductTemplates", CBCTemplate.class, PRODUCT_TEMPLATE_ID}
+                {"listProductTemplates", CBCTemplate.class, PRODUCT_TEMPLATE_ID},
+                {"listProductActions", CBCProductAction.class, PRODUCT_ACTION_ID}
             }
         );
     }
@@ -190,6 +197,13 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
                 assertThat(idValue, is(objects[2]));
             }
         }
+    }
 
+    @Test
+    public void testActionLink() throws Exception {
+        Event getRequest = flowRunner("getProductActionLink").run();
+        String url = (String) getRequest.getMessage().getPayload().getValue();
+
+        assertThat(url, is(PRODUCT_ACTION_LINK));
     }
 }

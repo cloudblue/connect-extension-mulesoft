@@ -10,6 +10,8 @@ import org.mule.runtime.api.event.Event;
 import org.mule.tck.junit4.rule.DynamicPort;
 import org.mule.tck.junit4.rule.SystemProperty;
 
+import java.util.List;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -36,8 +38,8 @@ public class GetProductConfigurationParameterTestCase extends BaseMuleFlowTestCa
 
     @Test
     public void testGetProductConfigurationParameterCase() throws Exception {
-        Event event = flowRunner("getProductConfigurationParameter").run();
-        CBCProductConfigurationParameter record = (CBCProductConfigurationParameter)event.getMessage().getPayload().getValue();
-        assertThat(record.getValue(), is(VALUE));
+        Event event = flowRunner("listProductConfigurationParameter").run();
+        List<CBCProductConfigurationParameter> records = (List<CBCProductConfigurationParameter>)event.getMessage().getPayload().getValue();
+        assertThat(records.get(0).getValue(), is(VALUE));
     }    
 }

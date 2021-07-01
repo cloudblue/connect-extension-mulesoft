@@ -18,6 +18,7 @@ public class Client extends BaseClient {
         private final List<R> rqlFilters = new ArrayList<>();
         private final List<String> orderBys = new ArrayList<>();
         private int limit = 100;
+        private boolean encode = true;
 
         private final TypeReference<? extends Object> type;
 
@@ -76,8 +77,13 @@ public class Client extends BaseClient {
 
             queryStrings.add("limit=" + limit);
 
+            String queryString = String.join("&", queryStrings);
 
-            return url.concat(Url.encode(String.join("&", queryStrings)));
+            if (this.encode) {
+                queryString = Url.encode(queryString);
+            }
+
+            return url.concat(queryString);
         }
 
         public String getFinalUrl(String action) {
@@ -94,6 +100,12 @@ public class Client extends BaseClient {
         public Q collection(String ns, String key) {
             this.ns.add(ns);
             this.nsKeyMap.put(this.ns.size() - 1, key);
+
+            return this;
+        }
+
+        public Q encode(boolean encode) {
+            this.encode = encode;
 
             return this;
         }
