@@ -15,7 +15,7 @@
     
     <flow name="getRequestServer">
         <http:listener path="/requests/${request_id}" config-ref="listenerConfig"/>
-        <set-payload value="{'id':'${request_id}'}"/>
+        <set-payload value="{'id':'${request_id}', 'type':'adjustment'}"/>
     </flow>
 
     <flow name="listRequestsServer">
