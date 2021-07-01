@@ -19,5 +19,11 @@ public enum CBCRequestType {
     CANCEL,
 
     @JsonProperty("adjustment")
-    ADJUSTMENT
+    ADJUSTMENT,
+
+    @JsonProperty("provider")
+    PROVIDER,
+
+    @JsonProperty("vendor")
+    VENDOR
 }

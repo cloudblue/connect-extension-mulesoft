@@ -37,7 +37,8 @@ public class CreateRequestTestCase extends BaseMuleFlowTestCase {
                 {"createPurchaseRequest"},
                 {"createSuspendRequest"},
                 {"createResumeRequest"},
-                {"createCancelRequest"}
+                {"createCancelRequest"},
+                {"createBillingRequest"}
         }
         );
     }

@@ -22,6 +22,11 @@
         <http:listener path="/requests" config-ref="listenerConfig"/>
         <set-payload value="[{'id':'${request_id}'}]"/>
     </flow>
+
+    <flow name="listBillingRequestsAttributesServer">
+        <http:listener path="/subscriptions/requests/${request_id}/attributes" config-ref="listenerConfig"/>
+        <set-payload value="{'vendor':{'key':'value'}}"/>
+    </flow>
     
     <flow name="getAssetServer">
         <http:listener path="/assets/${asset_id}" config-ref="listenerConfig"/>
@@ -534,5 +539,10 @@
                 config-ref="CloudBlue_Connect_Config_Test"
                 productId="${product_id}"
                 templateId="${productTemplateId}"/>
+    </flow>
+
+    <flow name="getBillingRequestAttributes">
+        <cloudblue-connect:get-billing-request-attributes
+                config-ref="CloudBlue_Connect_Config_Test" id="${request_id}"/>
     </flow>
 </mule>

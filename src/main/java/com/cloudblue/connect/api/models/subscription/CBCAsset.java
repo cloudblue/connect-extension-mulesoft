@@ -43,6 +43,9 @@ public class CBCAsset implements CBCEntity {
     @JsonProperty
     private Map<String, CBCAccount> tiers;
 
+    @JsonProperty
+    private CBCBilling billing;
+
     public String getId() {
         return id;
     }
@@ -114,5 +117,12 @@ public class CBCAsset implements CBCEntity {
     public void setTiers(Map<String, CBCAccount> tiers) {
         this.tiers = tiers;
     }
-    
+
+    public CBCBilling getBilling() {
+        return billing;
+    }
+
+    public void setBilling(CBCBilling billing) {
+        this.billing = billing;
+    }
 }
