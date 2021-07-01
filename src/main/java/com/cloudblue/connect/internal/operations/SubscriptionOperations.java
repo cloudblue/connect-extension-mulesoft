@@ -1,11 +1,14 @@
 package com.cloudblue.connect.internal.operations;
 
 import com.cloudblue.connect.api.clients.constants.HttpMethod;
+import com.cloudblue.connect.api.models.subscription.CBCBillingAttributes;
 import com.cloudblue.connect.api.parameters.AdminHoldRequestParameter;
 import com.cloudblue.connect.api.parameters.Embeddable;
 import com.cloudblue.connect.api.models.subscription.CBCRequest;
 import com.cloudblue.connect.api.exceptions.CBCException;
 import com.cloudblue.connect.api.parameters.NewPurchaseRequestParameter;
+import com.cloudblue.connect.api.parameters.common.ResourceActionParameter;
+import com.cloudblue.connect.api.parameters.requests.NewBillingRequest;
 import com.cloudblue.connect.api.parameters.requests.RequestAction;
 import com.cloudblue.connect.api.parameters.requests.UpdateRequestParameter;
 import com.cloudblue.connect.internal.operations.connections.CBCConnection;
@@ -40,6 +43,31 @@ public class SubscriptionOperations {
                     NewPurchaseRequestParameter newRequestParameter
     ) throws CBCException {
         return this.createRequest(connection, newRequestParameter);
+    }
+
+    @MediaType(value = ANY, strict = false)
+    @DisplayName("Create Billing Request")
+    public CBCRequest createBillingRequest(
+            @Connection CBCConnection connection,
+            NewBillingRequest newBillingRequest
+    ) throws CBCException {
+        return (CBCRequest) connection.newQ(new TypeReference<CBCRequest>() {})
+                .collection(SUBSCRIPTIONS)
+                .collection(REQUESTS)
+                .create(newBillingRequest.buildEntity());
+    }
+
+    @MediaType(value = ANY, strict = false)
+    @DisplayName("Get Billing Request Attributes")
+    public CBCBillingAttributes getBillingRequestAttributes(
+            @Connection CBCConnection connection,
+            @ParameterGroup(name="Request Details") ResourceActionParameter resourceActionParameter
+            ) throws CBCException {
+        return (CBCBillingAttributes) connection.newQ(new TypeReference<CBCBillingAttributes>() {})
+                .collection(SUBSCRIPTIONS)
+                .collection(REQUESTS, resourceActionParameter.getId())
+                .collection(ATTRIBUTES)
+                .get();
     }
 
     @MediaType(value = ANY, strict = false)

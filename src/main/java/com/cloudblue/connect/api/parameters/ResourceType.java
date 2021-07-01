@@ -28,6 +28,18 @@ public enum ResourceType {
             new TypeReference<CBCAsset>() {},
             CBCAsset.class),
 
+    SUBSCRIPTION_REQUEST(
+            SUBSCRIPTIONS + "/" + REQUESTS,
+            new TypeReference<ArrayList<CBCRequest>>() {},
+            new TypeReference<CBCRequest>() {},
+            CBCRequest.class),
+
+    SUBSCRIPTION_ASSET(
+            SUBSCRIPTIONS + "/" + ASSETS,
+            new TypeReference<ArrayList<CBCAsset>>() {},
+            new TypeReference<CBCAsset>() {},
+            CBCAsset.class),
+
     TIER_ACCOUNT(
             "tier/accounts",
             new TypeReference<ArrayList<CBCAccount>>() {},

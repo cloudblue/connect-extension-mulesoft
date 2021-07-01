@@ -27,12 +27,9 @@ import static org.junit.Assert.*;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.junit.runners.Parameterized;
-
 import org.mule.runtime.api.event.Event;
 import org.mule.tck.junit4.rule.DynamicPort;
 import org.mule.tck.junit4.rule.SystemProperty;
-import org.mule.test.runner.RunnerDelegateTo;
 
 public class GetOperationsTestCase extends BaseMuleFlowTestCase {
     
@@ -131,6 +128,7 @@ public class GetOperationsTestCase extends BaseMuleFlowTestCase {
                 {"getUsageChunkFiles", CBCUsageChunkFile.class, USAGE_CHUNK_FILE_ID},
                 {"getUsageReconciliations", CBCUsageReconciliation.class, USAGE_RECON_ID},
                 {"getProductTemplate", CBCTemplate.class, PRODUCT_TEMPLATE_ID},
+                {"getBillingRequestAttributes", null, null},
                 {"listRequestsWithFilter", CBCRequest.class, REQUEST_ID},
                 {"listRequestsWithoutFilter", CBCRequest.class, REQUEST_ID},
                 {"listAssetsWithFilter", CBCAsset.class, ASSERT_ID},

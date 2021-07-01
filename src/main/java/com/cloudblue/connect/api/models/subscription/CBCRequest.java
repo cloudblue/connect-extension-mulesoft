@@ -58,6 +58,12 @@ public class CBCRequest implements CBCEntity {
     @JsonProperty
     private CBCMarketplace marketplace;
 
+    @JsonProperty
+    private CBCBillingAttributes attributes;
+
+    @JsonProperty
+    private CBCBillingPeriod period;
+
     public String getId() {
         return id;
     }
@@ -169,7 +175,20 @@ public class CBCRequest implements CBCEntity {
     public void setMarketplace(CBCMarketplace marketplace) {
         this.marketplace = marketplace;
     }
-    
-    
-    
+
+    public CBCBillingAttributes getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(CBCBillingAttributes attributes) {
+        this.attributes = attributes;
+    }
+
+    public CBCBillingPeriod getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(CBCBillingPeriod period) {
+        this.period = period;
+    }
 }
