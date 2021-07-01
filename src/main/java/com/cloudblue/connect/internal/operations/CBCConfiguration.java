@@ -21,7 +21,7 @@ import org.mule.runtime.extension.api.annotation.connectivity.ConnectionProvider
     ListAssetUsageAggregates.class,
     ListResourcesOperation.class,
     GetResourcesOperation.class,
-    ListProductTemplates.class,
+    ListProductOperations.class,
     ProductTemplateOperations.class
 })
 @ConnectionProviders(CBCConnectionProvider.class)

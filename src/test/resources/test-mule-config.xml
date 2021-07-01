@@ -143,6 +143,21 @@
         <set-payload value="[{'id':'${productItem_id}'}]"/>
     </flow>
 
+    <flow name="getProductActionServer">
+        <http:listener path="/products/${product_id}/actions/${action_id}" config-ref="listenerConfig"/>
+        <set-payload value="{'id':'${action_id}'}"/>
+    </flow>
+
+    <flow name="getProductActionLinkServer">
+        <http:listener path="/products/${product_id}/actions/${action_id}/actionLink" config-ref="listenerConfig"/>
+        <set-payload value="{'link':'${action_link}'}"/>
+    </flow>
+
+    <flow name="listProductActionsServer">
+        <http:listener path="/products/${product_id}/actions" config-ref="listenerConfig"/>
+        <set-payload value="[{'id':'${action_id}'}]"/>
+    </flow>
+
     <flow name="getProductParameterServer">
         <http:listener path="/products/${product_id}/parameters/${productParameter_id}" config-ref="listenerConfig"/>
         <set-payload value="{'id':'${productParameter_id}'}"/>
@@ -544,5 +559,24 @@
     <flow name="getBillingRequestAttributes">
         <cloudblue-connect:get-billing-request-attributes
                 config-ref="CloudBlue_Connect_Config_Test" id="${request_id}"/>
+    </flow>
+    <flow name="listProductActions">
+        <cloudblue-connect:list-product-actions
+                config-ref="CloudBlue_Connect_Config_Test" id="${product_id}"/>
+    </flow>
+
+    <flow name="getProductAction">
+        <cloudblue-connect:get-product-action
+                config-ref="CloudBlue_Connect_Config_Test"
+                productId="${product_id}"
+                actionId="${action_id}"/>
+    </flow>
+
+    <flow name="getProductActionLink">
+        <cloudblue-connect:get-product-action-link
+                config-ref="CloudBlue_Connect_Config_Test"
+                productId="${product_id}"
+                actionId="${action_id}"
+                assetId="${asset_id}"/>
     </flow>
 </mule>

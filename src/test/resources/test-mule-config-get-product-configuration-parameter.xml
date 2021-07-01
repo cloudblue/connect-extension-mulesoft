@@ -13,9 +13,9 @@
         <http:listener-connection host="localhost" port="${port}"/>
     </http:listener-config>
     
-    <flow name="getProductConfigurationParameterServer">
+    <flow name="listProductConfigurationParameterServer">
         <http:listener path="/products/${product_id}/configurations" config-ref="listenerConfig"/>
-        <set-payload value="{'value':'${value}'}"/>
+        <set-payload value="[{'value':'${value}'}]"/>
     </flow>
 
     <cloudblue-connect:config name="CloudBlue_Connect_Config_Test">
@@ -24,8 +24,8 @@
                                       endpoint="http://localhost:${port}"/>
     </cloudblue-connect:config>
 
-    <flow name="getProductConfigurationParameter">
-		<cloudblue-connect:get-product-configuration-parameter 
+    <flow name="listProductConfigurationParameter">
+		<cloudblue-connect:list-product-configuration-parameters
             config-ref="CloudBlue_Connect_Config_Test" 
             id="${product_id}"/>
     </flow>

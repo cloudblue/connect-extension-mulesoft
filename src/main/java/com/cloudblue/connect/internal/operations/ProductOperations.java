@@ -1,29 +1,23 @@
 package com.cloudblue.connect.internal.operations;
 
+import com.cloudblue.connect.api.clients.constants.HttpMethod;
+import com.cloudblue.connect.api.models.product.*;
+import com.cloudblue.connect.api.parameters.products.*;
 import com.cloudblue.connect.internal.operations.connections.CBCConnection;
-import com.cloudblue.connect.api.models.product.CBCProduct;
-import com.cloudblue.connect.api.models.product.CBCProductItem;
-import com.cloudblue.connect.api.models.product.CBCProductParameter;
-import com.cloudblue.connect.api.models.product.CBCProductConfigurationParameter;
 import com.cloudblue.connect.api.exceptions.CBCException;
-import com.cloudblue.connect.api.clients.Client;
-import com.cloudblue.connect.api.parameters.common.ResourceActionParameter;
-import com.cloudblue.connect.api.parameters.products.SearchProductItemParameter;
-import com.cloudblue.connect.api.parameters.products.NewProductParameter;
-import com.cloudblue.connect.api.parameters.products.NewProductItemParameter;
-import com.cloudblue.connect.api.parameters.products.SearchProductParameterParameter;
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.mule.runtime.extension.api.annotation.param.Connection;
 import org.mule.runtime.extension.api.annotation.param.MediaType;
 import org.mule.runtime.extension.api.annotation.param.ParameterGroup;
 import org.mule.runtime.extension.api.annotation.param.display.DisplayName;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.mule.runtime.extension.api.annotation.param.MediaType.ANY;
 import static com.cloudblue.connect.api.clients.constants.CBCAPIConstants.CollectionKeys.*;
-import java.util.ArrayList;
-import java.util.List; 
 
-public class ProductOperations extends BaseListOperation {
+public class ProductOperations {
 
     @MediaType(value = ANY, strict = false)
     @DisplayName("Create Product")
@@ -54,31 +48,15 @@ public class ProductOperations extends BaseListOperation {
     @DisplayName("Get Product Items")    
     public CBCProductItem getProductItem(
         @Connection CBCConnection connection,
-        @ParameterGroup(name="Product ID") SearchProductItemParameter getProductParameter
+        @ParameterGroup(name="Product Item Details") SearchProductItemParameter getProductParameter
     ) throws CBCException {
         return (CBCProductItem) connection
-            .newQ(new TypeReference <CBCProductItem>() {})
+            .newQ(new TypeReference<CBCProductItem>() {})
             .collection(PRODUCTS, getProductParameter.getProductId())
             .collection(ITEMS, getProductParameter.getProductItemId())
             .get();
     }
 
-    @MediaType(value = ANY, strict = false)
-    @DisplayName("List Product Items")
-    public List<CBCProductItem> listProductItems(
-        @Connection CBCConnection connection,
-        @ParameterGroup(name="Product ID") ResourceActionParameter getProductParameter
-    ) throws CBCException {
-
-        Client.Q q = connection
-                .newQ(new TypeReference<ArrayList<CBCProductItem>>() {})
-                .collection(PRODUCTS, getProductParameter.getId())
-                .collection(ITEMS);
-
-        resolve(q);
-        return (List<CBCProductItem>) q.get();
-    }
-    
     @MediaType(value = ANY, strict = false) 
     @DisplayName("Get Product Parameter")    
     public CBCProductParameter getProductParameter(
@@ -86,36 +64,45 @@ public class ProductOperations extends BaseListOperation {
         @ParameterGroup(name="Product Parameter") SearchProductParameterParameter getProductParameter
     ) throws CBCException {
         return (CBCProductParameter) connection
-            .newQ(new TypeReference <CBCProductParameter>() {})
+            .newQ(new TypeReference<CBCProductParameter>() {})
             .collection(PRODUCTS, getProductParameter.getProductId())
             .collection(PARAMETERS, getProductParameter.getParameterId())
             .get();
     }
 
+
     @MediaType(value = ANY, strict = false)
-    @DisplayName("List Product Parameters")
-    public List<CBCProductParameter> listProductParameters(
-        @Connection CBCConnection connection,
-        @ParameterGroup(name="Product ID") ResourceActionParameter getProductParameter
+    @DisplayName("Get Product Action")
+    public CBCProductAction getProductAction(
+            @Connection CBCConnection connection,
+            @ParameterGroup(name="Product Action Details") GetProductActionParameter productActionParameter
     ) throws CBCException {
-        Client.Q q = connection
-                .newQ(new TypeReference<ArrayList<CBCProductParameter>>() {})
-                .collection(PRODUCTS, getProductParameter.getId())
-                .collection(PARAMETERS);
-        resolve(q);
-        return (List<CBCProductParameter>) q.get();
-    }    
-   
-    @MediaType(value = ANY, strict = false) 
-    @DisplayName("Get Product Configuration Parameter")    
-    public CBCProductConfigurationParameter getProductConfigurationParameter(
-        @Connection CBCConnection connection,
-        @ParameterGroup(name="Product Id") ResourceActionParameter getProductId
+        return (CBCProductAction) connection
+                .newQ(new TypeReference<CBCProductAction>() {})
+                .collection(PRODUCTS, productActionParameter.getProductId())
+                .collection(ACTIONS, productActionParameter.getActionId())
+                .get();
+    }
+
+    @MediaType(value = ANY, strict = false)
+    @DisplayName("Get Product Action Link")
+    public String getProductActionLink(
+            @Connection CBCConnection connection,
+            @ParameterGroup(name="Product Action Details") GetProductActionLinkParameter productActionLinkParameter
     ) throws CBCException {
-        return (CBCProductConfigurationParameter) connection
-            .newQ(new TypeReference <CBCProductConfigurationParameter>() {})
-            .collection(PRODUCTS, getProductId.getId())
-            .collection(CONFIGURATIONS)
-            .get();
+        String link = null;
+        Map<String, String> actionLink = (Map<String, String>) connection
+                .newQ(new TypeReference<HashMap<String, String>>() {})
+                .encode(false)
+                .collection(PRODUCTS, productActionLinkParameter.getProductId())
+                .collection(ACTIONS, productActionLinkParameter.getActionId())
+                .filter("asset_id", productActionLinkParameter.getAssetId())
+                .action("actionLink", HttpMethod.GET, null);
+
+        if (actionLink != null && actionLink.keySet().contains("link")) {
+            link = actionLink.get("link");
+        }
+
+        return link;
     }
 }
