@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.cloudblue</groupId>
     <artifactId>connect-mulesoft-extension</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>23.0.0</version>
     <packaging>mule-extension</packaging>
     <name>CloudBlue Connect Extension MuleSoft</name>
 
