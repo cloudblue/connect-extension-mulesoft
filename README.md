@@ -33,7 +33,7 @@ To use this connector, you must be familiar with:
 
 ## Getting Started
 
-In this repository you will find the code to deploy the Cloudblue Connect Mulesoft Extension. Also you can download from Maven repository. 
+In this repository you will find the code of the Cloudblue Connect Mulesoft Extension. To include and use in your Mulesoft Applications use the Maven Central Repository version.
 Once clonning the repo, depending of the scenario, the instalation is different. 
 
 ### Install Connector to use in Anypoint Studio
