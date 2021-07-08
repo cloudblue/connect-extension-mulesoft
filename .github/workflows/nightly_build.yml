@@ -1,3 +1,5 @@
+  name: Nigthly Build of MuleSoft Extension for CloudBlue Connect
+  
   on:
     schedule:
       - cron: '0 2 * * *'
