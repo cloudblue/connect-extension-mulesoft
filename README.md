@@ -60,6 +60,7 @@ The description of the funcions are available [here](https://connect.cloudblue.c
 
 ## Contribute
 If you want to contribute to the Cloudblue Connect Mulesoft Extension development feel free to open issues or fork the github repository and submit your pull request.
+In this [link] (https://javadoc.io/doc/com.cloudblue/connect-mulesoft-extension/latest/index.html) you will see the javadoc documentation.
 
 ## License
 The Cloudblue Connect Mulesoft Extension is licensed under the Apache License 2.0.
