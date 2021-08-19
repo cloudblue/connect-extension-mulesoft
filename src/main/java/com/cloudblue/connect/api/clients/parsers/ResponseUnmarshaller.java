@@ -1,7 +1,9 @@
 package com.cloudblue.connect.api.clients.parsers;
 
-public interface ResponseUnmarshaller {
-    <T> T unmarshal(String stringResponse, Class<T> responseType) throws Exception;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
-    Object unmarshal(String stringResponse, Object typeInfo) throws Exception;
+public interface ResponseUnmarshaller {
+    <T> T unmarshal(String stringResponse, Class<T> responseType) throws JsonProcessingException;
+
+    Object unmarshal(String stringResponse, Object typeInfo) throws JsonProcessingException;
 }

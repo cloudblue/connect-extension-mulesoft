@@ -30,7 +30,6 @@ public class R {
     private String property;
     private Object[] values;
 
-
     private static R expr(LiteralType literalType, String property) {
         R r = new R();
         r.type = Type.LITERAL;
@@ -40,14 +39,12 @@ public class R {
         return r;
     }
 
-
     private static R comp(LiteralType literalType, String property, Object... values) {
         R r = expr(literalType, property);
         r.values = values;
 
         return r;
     }
-
 
     public static R eq(String property, Object value) {
         return comp(LiteralType.EQ, property, value);
@@ -135,7 +132,6 @@ public class R {
             return s;
         }).toArray();
     }
-
 
     private void toStringForLiteral(StringBuilder rql) {
         Object[] processedValues = this.preprocessValues();

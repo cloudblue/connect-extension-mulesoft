@@ -22,11 +22,8 @@ public class BaseClientTestCase {
         String url = "test/url";
         HttpMethod[] httpMethods = {
                 HttpMethod.DELETE,
-                HttpMethod.HEAD,
-                HttpMethod.OPTIONS,
                 HttpMethod.PATCH,
                 HttpMethod.INVALID,
-                HttpMethod.TRACE
         };
 
         for (HttpMethod method : httpMethods) {

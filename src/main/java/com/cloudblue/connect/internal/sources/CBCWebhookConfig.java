@@ -28,14 +28,14 @@ public class CBCWebhookConfig {
     }
 
     private void append(StringBuilder pathSuffix, String sniffed) {
-
+        String modifiedSniffed = sniffed;
         if (sniffed!= null && !sniffed.isEmpty()) {
             if (!sniffed.startsWith("/"))
-                sniffed = "/" + sniffed;
+                modifiedSniffed = "/" + sniffed;
             if (sniffed.endsWith("/"))
-                sniffed = sniffed.substring(0, sniffed.lastIndexOf("/"));
+                modifiedSniffed = sniffed.substring(0, sniffed.lastIndexOf("/"));
 
-            pathSuffix.append(sniffed);
+            pathSuffix.append(modifiedSniffed);
         }
     }
 

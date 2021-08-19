@@ -29,7 +29,7 @@ public class RequestValidationSource extends BaseWebhookSource<CBCRequest, Webho
     }
 
     @Override
-    protected String getToken(Result<CBCRequest, WebhookRequestAttributes> result) throws Throwable {
+    protected String getToken(Result<CBCRequest, WebhookRequestAttributes> result) throws MuleRuntimeException {
         return result.getAttributes().orElseThrow(() -> new MuleRuntimeException(
                 createStaticMessage("Webhook Request Attributes are not found.")
         )).getToken();
@@ -37,7 +37,7 @@ public class RequestValidationSource extends BaseWebhookSource<CBCRequest, Webho
 
     @Override
     protected Result<CBCRequest, WebhookRequestAttributes> transformResult(
-            HttpRequestContext requestContext) throws Exception {
+            HttpRequestContext requestContext) throws MuleRuntimeException {
         return RequestToResult.transformRequest(requestContext);
     }
 }

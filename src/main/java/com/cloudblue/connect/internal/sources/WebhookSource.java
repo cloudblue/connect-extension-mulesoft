@@ -33,14 +33,14 @@ public class WebhookSource extends BaseWebhookSource<CBCWebhookEvent, WebhookReq
     }
 
     @Override
-    protected String getToken(Result<CBCWebhookEvent, WebhookRequestAttributes> result) throws Throwable {
+    protected String getToken(Result<CBCWebhookEvent, WebhookRequestAttributes> result) throws MuleRuntimeException {
         return result.getAttributes().orElseThrow(() -> new MuleRuntimeException(
                 createStaticMessage("Webhook Request Attributes are not found.")
         )).getToken();
     }
 
     @Override
-    protected Result<CBCWebhookEvent, WebhookRequestAttributes> transformResult(HttpRequestContext requestContext) throws Exception {
+    protected Result<CBCWebhookEvent, WebhookRequestAttributes> transformResult(HttpRequestContext requestContext) throws MuleRuntimeException {
         return RequestToResult.transformWebhook(requestContext);
     }
 }

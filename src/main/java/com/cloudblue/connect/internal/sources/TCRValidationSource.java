@@ -29,14 +29,14 @@ public class TCRValidationSource extends BaseWebhookSource<CBCTierConfigRequest,
     }
 
     @Override
-    protected String getToken(Result<CBCTierConfigRequest, WebhookRequestAttributes> result) throws Throwable {
+    protected String getToken(Result<CBCTierConfigRequest, WebhookRequestAttributes> result) throws MuleRuntimeException {
         return result.getAttributes().orElseThrow(() -> new MuleRuntimeException(
                 createStaticMessage("Webhook Request Attributes are not found.")
         )).getToken();
     }
 
     @Override
-    protected Result<CBCTierConfigRequest, WebhookRequestAttributes> transformResult(HttpRequestContext requestContext) throws Exception {
+    protected Result<CBCTierConfigRequest, WebhookRequestAttributes> transformResult(HttpRequestContext requestContext) throws MuleRuntimeException {
         return RequestToResult.transformTCR(requestContext);
     }
 }

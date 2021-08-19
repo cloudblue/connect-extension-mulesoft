@@ -20,9 +20,6 @@ import org.mule.runtime.extension.api.runtime.source.*;
 import org.mule.runtime.http.api.domain.request.HttpRequestContext;
 import org.mule.runtime.http.api.server.HttpServer;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import javax.inject.Inject;
 
 import static org.mule.runtime.api.metadata.DataType.STRING;
@@ -31,8 +28,6 @@ import static org.mule.runtime.extension.api.annotation.param.MediaType.ANY;
 @EmitsResponse
 @MediaType(value = ANY, strict = false)
 public abstract class BaseWebhookSource<T, H> extends Source<T, H> {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(BaseWebhookSource.class);
 
     @Inject
     private TransformationService transformationService;
@@ -85,14 +80,10 @@ public abstract class BaseWebhookSource<T, H> extends Source<T, H> {
 
         server.addRequestHandler(listenerPath, (requestContext, responseCallback) -> {
             try {
-
-                Result<T, H> result = transformResult(requestContext);
-
+                Result<T, H> result = BaseWebhookSource.this.transformResult(requestContext);
                 WebhookResponseContext responseContext = new WebhookResponseContext();
                 responseContext.setResponseCallback(responseCallback);
-
-                String token = getToken(result);
-
+                String token = BaseWebhookSource.this.getToken(result);
                 if (!authProvider.authenticate(token))
                     webhookSourceHelper.sendResponse(401, new TypedValue<>("Authentication failed.", STRING), responseCallback);
                 else {
@@ -100,17 +91,15 @@ public abstract class BaseWebhookSource<T, H> extends Source<T, H> {
                     context.addVariable("RESPONSE_CONTEXT", responseContext);
                     sourceCallback.handle(result, context);
                 }
-
-            } catch (Throwable e) {
-                LOGGER.error("Error during processing request", e);
+            } catch (Exception e) {
                 throw new MuleRuntimeException(e);
             }
         });
     }
 
-    protected abstract String getToken(Result<T, H> result) throws Throwable;
+    protected abstract String getToken(Result<T, H> result) throws MuleRuntimeException;
 
-    protected abstract Result<T, H> transformResult(HttpRequestContext requestContext) throws Exception;
+    protected abstract Result<T, H> transformResult(HttpRequestContext requestContext) throws MuleRuntimeException;
 
     @OnSuccess
     public void onSuccess(

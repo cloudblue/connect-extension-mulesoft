@@ -44,6 +44,62 @@ public class WebhookSourceHelper {
         this.transformationService = transformationService;
     }
 
+    private CBCWebhook identifyWebhook(String productId,
+                                       String objectClass,
+                                       String webhookType,
+                                       String jwtSecret,
+                                       String path,
+                                       List<CBCWebhook> webhooks) {
+        CBCWebhook webhook = null;
+        for (CBCWebhook w : webhooks) {
+            if (w.getProduct().getId().equals(productId) &&
+                    w.getExternalUrl().equals(path) &&
+                    w.getJwtSecret().equals(jwtSecret) &&
+                    w.getObjectClass().equals(objectClass) &&
+                    w.getType().equals(webhookType)) {
+                webhook = w;
+                break;
+            }
+        }
+        return webhook;
+    }
+
+    private CBCWebhook updateOrCreateWebhook(String productId, String objectClass,
+                                             String webhookType, String jwtSecret,
+                                             String path, CBCWebhook webhook) throws CBCException {
+        CBCWebhook updatedWebhook = null;
+
+        if (webhook == null) {
+
+            webhook = new CBCWebhook();
+            webhook.setDescription("Webhook for Mule Extension Source " + path);
+            webhook.setLabel("Webhook for Mule Extension Source");
+            webhook.setProductId(productId);
+            webhook.setActive(Boolean.TRUE);
+            webhook.setExternalUrl(path);
+            webhook.setJwtSecret(jwtSecret);
+            webhook.setObjectClass(objectClass);
+            webhook.setType(webhookType);
+
+            updatedWebhook = (CBCWebhook) cbcConnection.newQ(new TypeReference<CBCWebhook>() {})
+                    .collection(NOTIFICATIONS)
+                    .collection(WEBHOOKS)
+                    .create(webhook);
+
+        } else if (Boolean.FALSE.equals(webhook.getActive())) {
+            CBCWebhook updateWebhook = new CBCWebhook();
+            updateWebhook.setActive(Boolean.TRUE);
+
+            updatedWebhook = (CBCWebhook) cbcConnection.newQ(new TypeReference<CBCWebhook>() {})
+                    .collection(NOTIFICATIONS)
+                    .collection(WEBHOOKS, webhook.getId())
+                    .update(updateWebhook);
+
+        }
+
+        return updatedWebhook;
+    }
+
     public String updateWebhookObject(
             String productId, String objectClass, String webhookType, String jwtSecret, String path
     ) throws MuleRuntimeException {
@@ -61,47 +117,16 @@ public class WebhookSourceHelper {
             CBCWebhook webhook = null;
             if (webhooks != null && !webhooks.isEmpty()) {
 
-                for (CBCWebhook w : webhooks) {
-                    if (w.getProduct().getId().equals(productId) &&
-                            w.getExternalUrl().equals(listenerPath) &&
-                            w.getJwtSecret().equals(jwtSecret) &&
-                            w.getObjectClass().equals(objectClass) &&
-                            w.getType().equals(webhookType)) {
-                        webhook = w;
-                        break;
-                    }
-                }
+                webhook = identifyWebhook(productId, objectClass, webhookType,
+                        jwtSecret, listenerPath, webhooks);
             }
 
-            if (webhook == null) {
+            webhook = updateOrCreateWebhook(
+                    productId, objectClass, webhookType,
+                    jwtSecret, listenerPath, webhook
+            );
 
-                webhook = new CBCWebhook();
-                webhook.setDescription("Webhook for Mule Extension Source " + listenerPath);
-                webhook.setLabel("Webhook for Mule Extension Source");
-                webhook.setProductId(productId);
-                webhook.setActive(Boolean.TRUE);
-                webhook.setExternalUrl(listenerPath);
-                webhook.setJwtSecret(jwtSecret);
-                webhook.setObjectClass(objectClass);
-                webhook.setType(webhookType);
-
-                webhook = (CBCWebhook) cbcConnection.newQ(new TypeReference<CBCWebhook>() {})
-                        .collection(NOTIFICATIONS)
-                        .collection(WEBHOOKS)
-                        .create(webhook);
-
-            } else if (Boolean.FALSE.equals(webhook.getActive())) {
-                CBCWebhook updateWebhook = new CBCWebhook();
-                updateWebhook.setActive(Boolean.TRUE);
-
-                cbcConnection.newQ(new TypeReference<CBCWebhook>() {})
-                        .collection(NOTIFICATIONS)
-                        .collection(WEBHOOKS, webhook.getId())
-                        .update(updateWebhook);
-
-            }
-
-            return webhook.getId();
+            return webhook != null? webhook.getId() : null;
         } catch (CBCException e) {
             throw new MuleRuntimeException(e);
         }

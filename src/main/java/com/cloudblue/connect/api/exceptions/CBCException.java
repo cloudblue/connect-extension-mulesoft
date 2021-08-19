@@ -24,6 +24,14 @@ public class CBCException extends Exception {
         connectAPiError = null;
     }
 
+    public CBCException(String message, Throwable throwable) {
+        super(message, throwable);
+        errorCode = null;
+        errorTitle = null;
+        detailedErrormessage = null;
+        connectAPiError = null;
+    }
+
     public CBCException(String errorCode, String errorTitle, String detailedErrormessage) {
         super(errorTitle);
         this.errorCode = errorCode;
@@ -31,8 +39,23 @@ public class CBCException extends Exception {
         this.detailedErrormessage = detailedErrormessage;
         this.connectAPiError = null;
     }
+    public CBCException(String errorCode, String errorTitle, String detailedErrormessage, Throwable throwable) {
+        super(errorTitle, throwable);
+        this.errorCode = errorCode;
+        this.errorTitle = errorTitle;
+        this.detailedErrormessage = detailedErrormessage;
+        this.connectAPiError = null;
+    }
     public CBCException(String errorCode, String errorTitle, CBCError error) {
         super(error.errorDetail());
+        this.errorCode = errorCode;
+        this.errorTitle = errorTitle;
+        this.detailedErrormessage = error.errorDetail();
+        this.connectAPiError =error;
+    }
+
+    public CBCException(String errorCode, String errorTitle, CBCError error, Throwable throwable) {
+        super(error.errorDetail(), throwable);
         this.errorCode = errorCode;
         this.errorTitle = errorTitle;
         this.detailedErrormessage = error.errorDetail();

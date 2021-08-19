@@ -26,13 +26,10 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpHead;
-import org.apache.http.client.methods.HttpOptions;
 import org.apache.http.client.methods.HttpPatch;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpRequestBase;
-import org.apache.http.client.methods.HttpTrace;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.entity.mime.HttpMultipartMode;
@@ -46,7 +43,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class BaseClient {
-    private static final Logger LOGGER = LoggerFactory.getLogger(BaseClient.class);
+    private static final Logger logger = LoggerFactory.getLogger(BaseClient.class);
     private final Config config;
     private final RequestMarshaller requestMarshaller;
     private final ResponseUnmarshaller responseUnmarshaller;
@@ -61,9 +58,10 @@ public class BaseClient {
 
     public void close(){
         try{
-           if (this.httpClient !=null)this.httpClient.close();
+           if (this.httpClient !=null)
+               this.httpClient.close();
         }catch(IOException ex){
-            LOGGER.error("Unable to close HTTP client due to error details.", ex);
+            logger.error("Unable to close HTTP client due to error details.", ex);
         }
     }
 
@@ -75,7 +73,8 @@ public class BaseClient {
             throw new CBCException(
                     ErrorCodes.CONNECTAPI_ERROR.getValue(),
                     "In valid HTTP Response Code",
-                    ex.getMessage()
+                    ex.getMessage(),
+                    ex
             );
         }
         return statusCode;
@@ -96,32 +95,33 @@ public class BaseClient {
             throw new CBCException(
                     ErrorCodes.EXTENSION_ERROR.getValue(),
                     "Failed to Parse HTTP Response",
-                    ex.getMessage()
+                    ex.getMessage(),
+                    ex
             );
         }
 
         return responseBody;
     }
 
-    public HttpRequestBase getHttpRequest(HttpMethod method, String uri) throws CBCException {
-        HttpRequestBase request;
+    private String getCompleteUrl(String uri) {
         String baseUrl = this.config.getHost();
         if (baseUrl.endsWith("/")) {
             baseUrl = baseUrl.substring(0, baseUrl.lastIndexOf("/"));
         }
-        String completeUrl = baseUrl + uri;
+        return baseUrl + uri;
+    }
+
+    public HttpRequestBase getHttpRequest(HttpMethod method, String uri) throws CBCException {
+        HttpRequestBase request;
+
+        String completeUrl = getCompleteUrl(uri);
+
         switch (method) {
             case DELETE:
                 request = new HttpDelete(completeUrl);
                 break;
             case GET:
                 request = new HttpGet(completeUrl);
-                break;
-            case HEAD:
-                request = new HttpHead(completeUrl);
-                break;
-            case OPTIONS:
-                request = new HttpOptions(completeUrl);
                 break;
             case PATCH:
                 request = new HttpPatch(completeUrl);
@@ -131,9 +131,6 @@ public class BaseClient {
                 break;
             case PUT:
                 request = new HttpPut(completeUrl);
-                break;
-            case TRACE:
-                request = new HttpTrace(completeUrl);
                 break;
             default:
                 throw new CBCException(
@@ -146,17 +143,48 @@ public class BaseClient {
         return request;
     }
 
+    private void handleError(HttpStatus httpStatus, CloseableHttpResponse response) throws CBCException {
+        try {
+            String responseBody = getResponseBody(response);
+            CBCError error = this.responseUnmarshaller.unmarshal(
+                    responseBody, CBCError.class
+            );
+
+            if (error!=null){
+                error.setStatus(httpStatus);
+                throw new CBCException(
+                        ErrorCodes.CONNECTAPI_ERROR.getValue(),
+                        "API execution error",
+                        error
+                );
+            }
+            else{
+                throw new CBCException("No error details found in HTTP response");
+            }
+        } catch(CBCException ex){
+            throw ex;
+        } catch (Exception ex) {
+            throw new CBCException(
+                    ErrorCodes.CONNECTAPI_ERROR.getValue(),
+                    ex.getMessage(),
+                    ex.getLocalizedMessage(),
+                    ex
+            );
+        }
+    }
+
     public HttpResponse exchange(HttpRequestBase request) throws CBCException {
 
         CloseableHttpResponse response;
         try {
             response = this.httpClient.execute(request);
-            LOGGER.trace("HTTP Response: {}", response);
+            logger.trace("HTTP Response: {}", response);
         } catch (IOException ex) {
             throw new CBCException(
                     ErrorCodes.CONNECTAPI_ERROR.getValue(),
                     ex.getMessage(),
-                    ex.getLocalizedMessage()
+                    ex.getLocalizedMessage(),
+                    ex
             );
         }
 
@@ -165,32 +193,7 @@ public class BaseClient {
         if (httpStatus == HttpStatus.NOT_FOUND) {
             response = null;
         } else  if (hasError(httpStatus)) {
-            try {
-                String responseBody = getResponseBody(response);
-                CBCError error = this.responseUnmarshaller.unmarshal(
-                        responseBody, CBCError.class
-                );
-                
-                if (error!=null){
-                    error.setStatus(httpStatus);
-                    throw new CBCException(
-                            ErrorCodes.CONNECTAPI_ERROR.getValue(),
-                            "API execution error",
-                            error
-                    );
-                }
-                else{
-                    throw new CBCException("No error details found in HTTP response");
-                }
-            } catch(CBCException ex){
-                throw ex;
-            } catch (Exception ex) {
-                throw new CBCException(
-                        ErrorCodes.CONNECTAPI_ERROR.getValue(),
-                        ex.getMessage(),
-                        ex.getLocalizedMessage()
-                );
-            }
+            handleError(httpStatus, response);
         }
         return response;
     }
@@ -214,6 +217,28 @@ public class BaseClient {
         enclosingRequest.setEntity(builder.build());
     }
 
+    private <T> void handleEntityRequest(T request, HttpRequestBase httpRequest) throws CBCException {
+        HttpEntityEnclosingRequestBase enclosingRequest = (HttpEntityEnclosingRequestBase) httpRequest;
+        String requestBody;
+        try {
+            if (request instanceof String) {
+                requestBody = (String) request;
+                StringEntity params = new StringEntity(requestBody);
+                enclosingRequest.setEntity(params);
+            } else if (request instanceof FileEntity) {
+                encloseFileEntity((FileEntity) request, enclosingRequest);
+            } else {
+                requestBody = this.requestMarshaller.marshal(request);
+                httpRequest.addHeader(HeaderParams.CONTENT_TYPE, "application/json");
+                enclosingRequest.setEntity(
+                        new StringEntity(requestBody, ContentType.APPLICATION_JSON)
+                );
+            }
+        } catch (Exception e) {
+            throw new CBCException(e.getMessage(), e);
+        }
+    }
+
     public <T> HttpResponse exchange(
             String url,
             T request,
@@ -222,7 +247,7 @@ public class BaseClient {
     ) throws CBCException {
 
         HttpRequestBase httpRequest = getHttpRequest(method, url);
-        LOGGER.info("Request: {}", httpRequest);
+        logger.trace("Request: {}", httpRequest);
         this.setHeaders(httpRequest);
 
         if (headers != null && !headers.isEmpty()) {
@@ -232,28 +257,25 @@ public class BaseClient {
         }
 
         if (httpRequest instanceof HttpEntityEnclosingRequestBase && request != null) {
-            HttpEntityEnclosingRequestBase enclosingRequest = (HttpEntityEnclosingRequestBase) httpRequest;
-            String requestBody;
-            try {
-                if (request instanceof String) {
-                    requestBody = (String) request;
-                    StringEntity params = new StringEntity(requestBody);
-                    enclosingRequest.setEntity(params);
-                } else if (request instanceof FileEntity) {
-                    encloseFileEntity((FileEntity) request, enclosingRequest);
-                } else {
-                    requestBody = this.requestMarshaller.marshal(request);
-                    httpRequest.addHeader(HeaderParams.CONTENT_TYPE, "application/json");
-                    enclosingRequest.setEntity(
-                            new StringEntity(requestBody, ContentType.APPLICATION_JSON)
-                    );
-                }
-            } catch (Exception e) {
-                throw new CBCException(e.getMessage());
-            }
+            handleEntityRequest(request, httpRequest);
         }
 
         return exchange(httpRequest);
+    }
+
+    private <S> S getResult(HttpResponse response, TypeReference<S> typeInfo) throws CBCException {
+        S result = null;
+        try {
+            String responseBody = getResponseBody(response);
+            if (responseBody != null && !responseBody.isEmpty()) {
+                responseBody = responseBody.replace("\n", "");
+                result = (S) this.responseUnmarshaller.unmarshal(responseBody, typeInfo);
+            }
+        } catch (Exception e) {
+            throw new CBCException(e.getMessage(), e);
+        }
+
+        return result;
     }
 
 
@@ -263,21 +285,13 @@ public class BaseClient {
             Map<String, String> headers,
             TypeReference<S> typeInfo
     ) throws CBCException {
-        Object result = null;
+
         HttpResponse response = exchange(url, request, method, headers);
 
         if (typeInfo != null && response != null) {
-            try {
-                String responseBody = getResponseBody(response);
-                if (responseBody != null && !responseBody.isEmpty()) {
-                    responseBody = responseBody.replace("\n", "");
-                    result = this.responseUnmarshaller.unmarshal(responseBody, typeInfo);
-                }
-            } catch (Exception e) {
-                throw new CBCException(e.getMessage());
-            }
+            return getResult(response, typeInfo);
         }
-        return (S) result;
+        return null;
     }
 
     public void download(
@@ -301,13 +315,12 @@ public class BaseClient {
                     }
                 }
             } else {
-                LOGGER.error("Error during creation of file {}.", fullFileLocation);
+                logger.error("Error during creation of file {}.", fullFileLocation);
                 throw new CBCException("Not able to create file " + fullFileLocation);
             }
 
         } catch (IOException e) {
-            LOGGER.error("Error during download of file.", e);
-            throw new CBCException("Not able to download file.");
+            throw new CBCException("Not able to download file.", e);
         }
 
     }

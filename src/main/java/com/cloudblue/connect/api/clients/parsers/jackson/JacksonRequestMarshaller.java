@@ -3,6 +3,7 @@ package com.cloudblue.connect.api.clients.parsers.jackson;
 import com.cloudblue.connect.api.clients.parsers.RequestMarshaller;
 
 import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -23,7 +24,7 @@ public class JacksonRequestMarshaller implements RequestMarshaller {
     }
 
     @Override
-    public String marshal(Object request) throws Exception {
+    public String marshal(Object request) throws JsonProcessingException {
         return getObjectMapper().writeValueAsString(request);
     }
 }
