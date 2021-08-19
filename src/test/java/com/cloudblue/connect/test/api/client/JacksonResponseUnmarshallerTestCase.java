@@ -25,22 +25,4 @@ public class JacksonResponseUnmarshallerTestCase {
 
         Assert.assertEquals(value, returnValue);
     }
-
-    @Test
-    public void testUnmarshalWithSigningKeyClass() throws Exception {
-        String value = "sign-string-{'id': 'PR-000-000'}";
-        CBCRequest request = unmarshaller.unmarshal(value, CBCRequest.class);
-
-        Assert.assertNotNull(request);
-        Assert.assertEquals("PR-000-000", request.getId());
-    }
-
-    @Test
-    public void testUnmarshalWithSigningKeyType() throws Exception {
-        String value = "sign-string-{'id': 'PR-000-000'}";
-        CBCRequest request = (CBCRequest) unmarshaller.unmarshal(value, new TypeReference<CBCRequest>() {});
-
-        Assert.assertNotNull(request);
-        Assert.assertEquals("PR-000-000", request.getId());
-    }
 }

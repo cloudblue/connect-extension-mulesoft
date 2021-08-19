@@ -4,8 +4,12 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class WebhookAuthProvider {
+    private static final Logger logger = LoggerFactory.getLogger(WebhookAuthProvider.class);
+
     private String token;
 
     public static final class Builder {
@@ -37,6 +41,7 @@ public class WebhookAuthProvider {
                 return false;
             }
         } catch (JWTVerificationException exception){
+            logger.error("Error during webhook auth validation.", exception);
             return false;
         }
     }

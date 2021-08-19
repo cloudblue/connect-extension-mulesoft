@@ -27,6 +27,8 @@ import org.mule.runtime.http.api.HttpConstants;
 import org.mule.runtime.http.api.HttpService;
 import org.mule.runtime.http.api.server.HttpServerConfiguration;
 import org.mule.runtime.http.api.server.ServerCreationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -40,6 +42,8 @@ import static org.mule.runtime.extension.api.annotation.param.display.Placement.
 
 @Alias("listener")
 public class WebhookListenerProvider implements CachedConnectionProvider<WebhookListener>, Lifecycle {
+    private static final Logger logger = LoggerFactory.getLogger(WebhookListenerProvider.class);
+
     public static final class ListenerParams {
 
         @Parameter
@@ -49,7 +53,7 @@ public class WebhookListenerProvider implements CachedConnectionProvider<Webhook
         private HttpConstants.Protocol protocol;
 
         @Parameter
-        @Example("0.0.0.0")
+        @Example("For example 0.0.0.0")
         @Expression(NOT_SUPPORTED)
         @Placement(order = 2)
         private String host;
@@ -130,6 +134,7 @@ public class WebhookListenerProvider implements CachedConnectionProvider<Webhook
 
             return ConnectionValidationResult.success();
         } catch (ConnectionException e) {
+            logger.error("Error during validating connection.", e);
             return ConnectionValidationResult.failure(e.getMessage(), e);
         }
     }
@@ -139,13 +144,7 @@ public class WebhookListenerProvider implements CachedConnectionProvider<Webhook
         webhookListener.getHttpServer().dispose();
     }
 
-    @Override
-    public void initialise() throws InitialisationException {
-        if (listenerParams.port == null) {
-            listenerParams.port = listenerParams.protocol.getDefaultPort();
-        }
-        webhookListener = new WebhookListener();
-
+    private void validate() throws InitialisationException {
         if (listenerParams.protocol == HttpConstants.Protocol.HTTPS && tlsContext == null) {
             throw new InitialisationException(
                     createStaticMessage(
@@ -165,6 +164,16 @@ public class WebhookListenerProvider implements CachedConnectionProvider<Webhook
                     this
             );
         }
+    }
+
+    @Override
+    public void initialise() throws InitialisationException {
+        if (listenerParams.port == null) {
+            listenerParams.port = listenerParams.protocol.getDefaultPort();
+        }
+        webhookListener = new WebhookListener();
+
+        validate();
 
         if (tlsContext != null) {
             initialiseIfNeeded(tlsContext);
@@ -234,6 +243,7 @@ public class WebhookListenerProvider implements CachedConnectionProvider<Webhook
             Field result = httpService.getServerFactory().getClass().getDeclaredField("USE_IO_SCHEDULER");
             return result.getBoolean(httpService);
         } catch (NoSuchFieldException | IllegalAccessException e) {
+            logger.info("Error during using IO scheduler.", e);
             return false;
         }
     }

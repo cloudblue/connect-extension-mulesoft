@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class CBCConnectionProvider implements PoolingConnectionProvider<CBCConnection> {
 
-    private final Logger logger = LoggerFactory.getLogger(CBCConnectionProvider.class);
+    private static final Logger logger = LoggerFactory.getLogger(CBCConnectionProvider.class);
 
     public static final class ConnectionParams {
 
