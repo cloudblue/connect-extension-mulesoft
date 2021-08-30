@@ -1,0 +1,19 @@
+{
+  "$schema" : "http://json-schema.org/draft-07/schema#",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties" : {
+      "external_billing_id" : {
+        "type" : "string"
+      },
+      "external_billing_note" : {
+        "type" : "string"
+      },
+      "id" : {
+        "type" : "string"
+      }
+    },
+    "required": ["id", "external_billing_id"]
+  }
+}

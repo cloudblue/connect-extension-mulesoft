@@ -1,0 +1,20 @@
+{
+  "$schema" : "http://json-schema.org/draft-07/schema#",
+  "type" : "object",
+  "properties" : {
+    "error_codes" : {
+      "type" : "string"
+    },
+    "error_details" : {
+      "type" : "string"
+    },
+    "id" : {
+      "type" : "string"
+    },
+    "status" : {
+      "type" : "string",
+      "enum" : [ "valid", "invalid", "approved", "rejected", "closed" ]
+    }
+  },
+  "required": ["id", "status"]
+}

@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.cloudblue</groupId>
     <artifactId>connect-mulesoft-extension</artifactId>
-    <version>23.0.2-SNAPSHOT</version>
+    <version>23.0.49-SNAPSHOT</version>
     <packaging>mule-extension</packaging>
     <name>CloudBlue Connect Extension MuleSoft</name>
 
@@ -166,7 +166,6 @@
     </dependencies>
 
     <build>
-        <finalName>maven-code-coverage</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

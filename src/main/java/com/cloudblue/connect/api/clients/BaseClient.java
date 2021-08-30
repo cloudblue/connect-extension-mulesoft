@@ -1,3 +1,10 @@
+/*
+ * Copyright © 2021 Ingram Micro Inc. All rights reserved.
+ * The software in this package is published under the terms of the Apache-2.0
+ * license, a copy of which has been included with this distribution in the
+ * LICENSE file.
+ */
+
 package com.cloudblue.connect.api.clients;
 
 import com.cloudblue.connect.api.clients.entity.FileEntity;
@@ -6,7 +13,7 @@ import com.cloudblue.connect.api.clients.constants.HeaderParams;
 import com.cloudblue.connect.api.clients.constants.HttpMethod;
 import com.cloudblue.connect.api.clients.constants.HttpStatus;
 import com.cloudblue.connect.api.clients.constants.RestConstants;
-import com.cloudblue.connect.api.exceptions.CBCException;
+import com.cloudblue.connect.internal.error.exception.CBCException;
 import com.cloudblue.connect.api.clients.errors.ErrorCodes;
 import com.cloudblue.connect.api.clients.parsers.RequestMarshaller;
 import com.cloudblue.connect.api.clients.parsers.ResponseUnmarshaller;
