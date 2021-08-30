@@ -26,4 +26,4 @@ jobs:
       - id: publish-to-central
         name: Publish to Central Repository
         run: |
-            mvn --no-transfer-progress --batch-mode -Dgpg.passphrase=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }} clean deploy
+            mvn -f gitBuildPom.xml --no-transfer-progress --batch-mode -Dgpg.passphrase=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }} clean deploy
