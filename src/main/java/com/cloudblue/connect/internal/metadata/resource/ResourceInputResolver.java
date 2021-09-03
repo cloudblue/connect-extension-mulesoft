@@ -27,13 +27,10 @@ public class ResourceInputResolver {
             throw new MetadataResolvingException("No Metadata is available.",
                     FailureCode.NO_DYNAMIC_TYPE_AVAILABLE);
         } else if (actionMetadata.getInput() != null) {
-            return actionMetadata.getInput().getMetadataType(context, metadata);
+            return actionMetadata.getInput().getMetadataType(context, metadata, actionMetadata);
         } else {
             return context.getTypeBuilder().voidType().build();
         }
     }
 
-    public String getCategoryName() {
-        return "Resources";
-    }
 }

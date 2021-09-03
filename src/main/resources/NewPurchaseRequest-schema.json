@@ -11,7 +11,8 @@
             "id" : {
               "type" : "string"
             }
-          }
+          },
+          "required": ["id"]
         },
         "external_id" : {
           "type" : "string"
@@ -30,7 +31,8 @@
               "quantity" : {
                 "type" : "integer"
               }
-            }
+            },
+            "required": ["id", "quantity"]
           }
         },
         "params" : {
@@ -56,7 +58,8 @@
             "id" : {
               "type" : "string"
             }
-          }
+          },
+          "required": ["id"]
         },
         "tiers" : {
           "type" : "object",
@@ -276,7 +279,8 @@
             }
           }
         }
-      }
+      },
+      "required": ["product", "params", "items", "connection", "external_id", "external_uid", "tiers"]
     },
     "marketplace" : {
       "type" : "object",
@@ -284,11 +288,13 @@
         "id" : {
           "type" : "string"
         }
-      }
+      },
+      "required": ["id"]
     },
     "type" : {
       "type" : "string",
       "enum" : [ "purchase"]
     }
-  }
+  },
+  "required": ["type", "asset", "marketplace"]
 }

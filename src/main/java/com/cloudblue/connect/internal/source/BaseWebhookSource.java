@@ -22,20 +22,20 @@ import org.mule.runtime.extension.api.annotation.execution.OnSuccess;
 import org.mule.runtime.extension.api.annotation.execution.OnTerminate;
 import org.mule.runtime.extension.api.annotation.param.*;
 import org.mule.runtime.extension.api.annotation.param.display.Placement;
-import org.mule.runtime.extension.api.annotation.source.EmitsResponse;
 import org.mule.runtime.extension.api.runtime.operation.Result;
 import org.mule.runtime.extension.api.runtime.source.*;
-import org.mule.runtime.http.api.domain.request.HttpRequestContext;
 import org.mule.runtime.http.api.server.HttpServer;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 
 import static org.mule.runtime.api.metadata.DataType.STRING;
-import static org.mule.runtime.extension.api.annotation.param.MediaType.ANY;
 
-@EmitsResponse
-@MediaType(value = ANY, strict = false)
 public abstract class BaseWebhookSource<T, H> extends Source<T, H> {
+
+    private static final Logger logger = LoggerFactory.getLogger(BaseWebhookSource.class);
 
     @Inject
     private TransformationService transformationService;
@@ -82,9 +82,14 @@ public abstract class BaseWebhookSource<T, H> extends Source<T, H> {
         CBCConnection cbcConnection = webhookListener.getCbcConnection();
         webhookSourceHelper = new WebhookSourceHelper(webhookConfig, webhookListener, cbcConnection, transformationService);
 
+        webhookId = webhookSourceHelper.updateWebhookObject(
+                productId, getObjectClass(), getWebhookType(), jwtSecret, path
+        );
+
         server.addRequestHandler(listenerPath, (requestContext, responseCallback) -> {
             try {
-                Result<T, H> result = BaseWebhookSource.this.transformResult(requestContext);
+                Result<T, H> result = (Result<T, H>) RequestToResult.transform(requestContext);
+
                 WebhookResponseContext responseContext = new WebhookResponseContext();
                 responseContext.setResponseCallback(responseCallback);
                 String token = BaseWebhookSource.this.getToken(result);
@@ -102,8 +107,6 @@ public abstract class BaseWebhookSource<T, H> extends Source<T, H> {
     }
 
     protected abstract String getToken(Result<T, H> result) throws MuleRuntimeException;
-
-    protected abstract Result<T, H> transformResult(HttpRequestContext requestContext) throws MuleRuntimeException;
 
     @OnSuccess
     public void onSuccess(
@@ -137,6 +140,11 @@ public abstract class BaseWebhookSource<T, H> extends Source<T, H> {
 
     @Override
     public void onStop() {
-        server.stop();
+        try {
+            server.stop();
+            webhookSourceHelper.disableWebhook(webhookId);
+        } catch (MuleException e) {
+            logger.error("Error during stopping services.", e);
+        }
     }
 }

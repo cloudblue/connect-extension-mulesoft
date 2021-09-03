@@ -69,20 +69,22 @@ public class Metadata {
         return this;
     }
 
-    public Metadata includeListAction() {
+    public Metadata includeListAction(Keys... filters) {
         this.addActionMetaData(Action.LIST,
                 new ActionMetadata()
                         .output(schema)
-                        .input(isSubCollection? new ParentMetadataProvider(): null));
+                        .input(isSubCollection? new ParentMetadataProvider(): null)
+                        .filter(filters));
 
         return this;
     }
 
-    public Metadata includeGetAction() {
+    public Metadata includeGetAction(Keys... filters) {
         this.addActionMetaData(Action.GET,
                 new ActionMetadata()
                         .output(schema)
-                        .input(new BaseMetadataProvider()));
+                        .input(new BaseMetadataProvider())
+                        .filter(filters));
 
         return this;
     }

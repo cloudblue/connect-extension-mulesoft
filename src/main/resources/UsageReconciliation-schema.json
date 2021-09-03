@@ -542,7 +542,7 @@
     },
     "status" : {
       "type" : "string",
-      "enum" : [ "UPLOADED", "PROCESSING", "PROCESSED", "FAILED" ]
+      "enum" : [ "uploaded", "processing", "processed", "failed" ]
     },
     "usagefile" : {
       "type" : "object",
@@ -558,7 +558,7 @@
         },
         "schema" : {
           "type" : "string",
-          "enum" : [ "QT", "TR", "PR", "CR" ]
+          "enum" : [ "qt", "tr", "pr", "cr" ]
         }
       }
     }

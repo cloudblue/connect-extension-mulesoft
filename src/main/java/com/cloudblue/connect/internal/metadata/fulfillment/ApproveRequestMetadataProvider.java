@@ -7,17 +7,22 @@
 
 package com.cloudblue.connect.internal.metadata.fulfillment;
 
+import com.cloudblue.connect.internal.metadata.ActionMetadata;
 import com.cloudblue.connect.internal.metadata.Keys;
 import com.cloudblue.connect.internal.metadata.Metadata;
 import com.cloudblue.connect.internal.metadata.MetadataProvider;
 import org.mule.metadata.api.builder.ObjectTypeBuilder;
 import org.mule.metadata.api.model.MetadataType;
 import org.mule.runtime.api.metadata.MetadataContext;
+import org.mule.runtime.api.metadata.MetadataResolvingException;
 
 public class ApproveRequestMetadataProvider
         extends BaseRequestMetadataProvider implements MetadataProvider {
     @Override
-    public MetadataType getMetadataType(MetadataContext context, Metadata metadata) {
+    public MetadataType getMetadataType(MetadataContext context,
+                                        Metadata metadata,
+                                        ActionMetadata actionMetadata)
+            throws MetadataResolvingException {
         final ObjectTypeBuilder objectBuilder = context.getTypeBuilder().objectType();
 
         includeId(objectBuilder, metadata);

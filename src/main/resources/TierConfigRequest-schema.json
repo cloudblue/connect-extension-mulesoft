@@ -196,9 +196,6 @@
                       }
                     }
                   },
-                  "default" : {
-                    "type" : "object"
-                  },
                   "hidden" : {
                     "type" : "boolean"
                   },
@@ -1274,9 +1271,6 @@
                     }
                   }
                 }
-              },
-              "default" : {
-                "type" : "object"
               },
               "hidden" : {
                 "type" : "boolean"

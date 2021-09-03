@@ -44,7 +44,8 @@ public enum Keys {
     CONVERSATION_ID("conversation_id", "Conversation ID"),
     ACTION_ID("action_id", "Action ID"),
     ITEM_ID("item_id", "Item ID"),
-    PARAMETER_ID("parameter_id", "Parameter ID");
+    PARAMETER_ID("parameter_id", "Parameter ID"),
+    UPLOAD_NOTE("upload_note", "Upload Note");
 
     private final String field;
     private final String label;

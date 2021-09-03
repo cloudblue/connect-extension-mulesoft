@@ -12,5 +12,8 @@ import org.mule.runtime.api.metadata.MetadataContext;
 import org.mule.runtime.api.metadata.MetadataResolvingException;
 
 public interface MetadataProvider {
-    MetadataType getMetadataType(MetadataContext context, Metadata metadata) throws MetadataResolvingException;
+    MetadataType getMetadataType(MetadataContext context,
+                                 Metadata metadata,
+                                 ActionMetadata actionMetadata)
+            throws MetadataResolvingException;
 }

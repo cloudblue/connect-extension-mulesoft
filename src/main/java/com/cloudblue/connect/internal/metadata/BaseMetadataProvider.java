@@ -13,7 +13,9 @@ import org.mule.runtime.api.metadata.MetadataContext;
 
 public class BaseMetadataProvider implements MetadataProvider {
     @Override
-    public MetadataType getMetadataType(MetadataContext context, Metadata metadata) {
+    public MetadataType getMetadataType(MetadataContext context,
+                                        Metadata metadata,
+                                        ActionMetadata actionMetadata) {
         final ObjectTypeBuilder objectBuilder = context.getTypeBuilder().objectType();
 
         if (metadata.isSubCollection()) {
@@ -31,6 +33,28 @@ public class BaseMetadataProvider implements MetadataProvider {
                 .required()
                 .value()
                 .stringType();
+
+        if (!actionMetadata.getFilters().isEmpty()) {
+            for (Keys filter : actionMetadata.getFilters()) {
+                objectBuilder.addField()
+                        .key(filter.getField())
+                        .label(filter.getLabel())
+                        .required()
+                        .value()
+                        .stringType();
+            }
+        }
+
+        if (!actionMetadata.getFormAttributes().isEmpty()) {
+            for (Keys attributes : actionMetadata.getFormAttributes()) {
+                objectBuilder.addField()
+                        .key(attributes.getField())
+                        .label(attributes.getLabel())
+                        .required()
+                        .value()
+                        .stringType();
+            }
+        }
 
         return objectBuilder.build();
     }

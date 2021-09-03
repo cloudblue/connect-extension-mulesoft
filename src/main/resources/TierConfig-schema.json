@@ -209,9 +209,6 @@
                   }
                 }
               },
-              "default" : {
-                "type" : "object"
-              },
               "hidden" : {
                 "type" : "boolean"
               },

@@ -341,7 +341,7 @@
     },
     "schema" : {
       "type" : "string",
-      "enum" : [ "QT", "TR", "PR", "CR" ]
+      "enum" : [ "qt", "tr", "pr", "cr" ]
     },
     "stats" : {
       "type" : "object",
@@ -368,7 +368,7 @@
     },
     "status" : {
       "type" : "string",
-      "enum" : [ "DRAFT", "UPLOADING", "UPLOADED", "PROCESSING", "INVALID", "READY", "REJECTED", "PENDING", "ACCEPTED", "CLOSED", "DELETED" ]
+      "enum" : [ "draft", "uploading", "uploaded", "processing", "invalid", "ready", "rejected", "pending", "accepted", "closed", "deleted" ]
     },
     "usage_file_uri" : {
       "type" : "string"

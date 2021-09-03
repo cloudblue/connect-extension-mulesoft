@@ -212,9 +212,6 @@
                   }
                 }
               },
-              "default" : {
-                "type" : "object"
-              },
               "hidden" : {
                 "type" : "boolean"
               },
@@ -295,7 +292,7 @@
     },
     "status" : {
       "type" : "string",
-      "enum" : [ "ACTIVE", "DRAFT", "PROCESSING", "REJECTED", "TERMINATING", "SUSPENDED", "TERMINATED" ]
+      "enum" : [ "active", "draft", "processing", "rejected", "terminating", "suspended", "terminated" ]
     },
     "tiers" : {
       "type" : "object",

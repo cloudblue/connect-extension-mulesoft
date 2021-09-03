@@ -626,7 +626,7 @@
     },
     "type" : {
       "type" : "string",
-      "enum" : [ "customer", "reseller" ]
+      "const" : "update"
     },
     "vendor" : {
       "type" : "object",

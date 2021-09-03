@@ -8,6 +8,10 @@
 package com.cloudblue.connect.internal.metadata;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static org.mule.runtime.http.api.HttpConstants.Method;
 
 public class ActionMetadata {
@@ -17,6 +21,9 @@ public class ActionMetadata {
     private String action;
     private boolean includePayload = true;
     private boolean collectionAction = false;
+    private final List<Keys> filters = new ArrayList<>();
+    private final List<Keys> formAttributes = new ArrayList<>();
+    private String fileName;
 
     public ActionMetadata output(String output) {
         this.output = output;
@@ -25,6 +32,11 @@ public class ActionMetadata {
 
     public ActionMetadata input(MetadataProvider input) {
         this.input = input;
+        return this;
+    }
+
+    public ActionMetadata input(String input) {
+        this.input = new JsonMetadataProvider(input);
         return this;
     }
 
@@ -45,6 +57,24 @@ public class ActionMetadata {
 
     public ActionMetadata collectionAction(boolean collectionAction) {
         this.collectionAction = collectionAction;
+        return this;
+    }
+
+    public ActionMetadata filter(Keys... filter) {
+        this.filters.addAll(Arrays.asList(filter));
+
+        return this;
+    }
+
+    public ActionMetadata formAttributes(Keys... attributes) {
+        this.formAttributes.addAll(Arrays.asList(attributes));
+
+        return this;
+    }
+
+    public ActionMetadata fileName(String fileName) {
+        this.fileName = fileName;
+
         return this;
     }
 
@@ -70,5 +100,17 @@ public class ActionMetadata {
 
     public boolean isCollectionAction() {
         return collectionAction;
+    }
+
+    public List<Keys> getFilters() {
+        return filters;
+    }
+
+    public List<Keys> getFormAttributes() {
+        return formAttributes;
+    }
+
+    public String getFileName() {
+        return fileName;
     }
 }

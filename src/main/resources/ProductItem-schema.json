@@ -125,7 +125,7 @@
     },
     "precision" : {
       "type" : "string",
-      "enum" : [ "integer", "decimal(1)", "decimal(2)", "decimal(4)", "decimal(8)" ]
+      "enum" : [ "integer", "decimal_1", "decimal_2", "decimal_4", "decimal_8" ]
     },
     "replacement" : {
       "type" : "object",

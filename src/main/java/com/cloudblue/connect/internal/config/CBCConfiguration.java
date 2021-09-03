@@ -9,28 +9,18 @@ package com.cloudblue.connect.internal.config;
 
 import com.cloudblue.connect.internal.connection.provider.CBCConnectionProvider;
 import com.cloudblue.connect.internal.operation.*;
-import com.cloudblue.connect.internal.operation.helpdesk.ConversationMessageOperations;
-import com.cloudblue.connect.internal.operation.resource.GetResourceOperation;
-import com.cloudblue.connect.internal.operation.resource.ListResourcesOperation;
-import com.cloudblue.connect.internal.operation.helpdesk.CaseOperations;
-import com.cloudblue.connect.internal.operation.resource.ResourceActionOperation;
-import com.cloudblue.connect.internal.operation.usage.*;
 
 import org.mule.runtime.extension.api.annotation.Operations;
 import org.mule.runtime.extension.api.annotation.connectivity.ConnectionProviders;
 
 @Operations({
-        SubscriptionOperations.class,
-        CaseOperations.class,
-        ConversationMessageOperations.class,
-        UsageReportOperations.class,
-        TierAccountOperations.class,
-        ProductOperations.class,
-        ChunkFileOperations.class,
-        UsageReconciliationOperations.class,
         ListResourcesOperation.class,
         GetResourceOperation.class,
-        ResourceActionOperation.class
+        CreateResourceOperation.class,
+        UpdateResourceOperation.class,
+        ResourceActionOperation.class,
+        DownloadResourceFileOperation.class,
+        UploadResourceFileOperation.class
 })
 @ConnectionProviders(CBCConnectionProvider.class)
 public class CBCConfiguration {}

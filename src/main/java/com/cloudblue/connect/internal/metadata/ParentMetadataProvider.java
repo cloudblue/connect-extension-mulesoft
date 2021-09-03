@@ -13,7 +13,10 @@ import org.mule.runtime.api.metadata.MetadataContext;
 
 public class ParentMetadataProvider implements MetadataProvider {
     @Override
-    public MetadataType getMetadataType(MetadataContext context, Metadata metadata) {
+    public MetadataType getMetadataType(MetadataContext context,
+                                        Metadata metadata,
+                                        ActionMetadata actionMetadata) {
+
         final ObjectTypeBuilder objectBuilder = context.getTypeBuilder().objectType();
 
         objectBuilder.addField()

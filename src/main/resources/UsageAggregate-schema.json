@@ -278,11 +278,11 @@
         },
         "precision" : {
           "type" : "string",
-          "enum" : [ "INTEGER", "DOUBLE_1", "DOUBLE_2", "DOUBLE_4", "DOUBLE_8" ]
+          "enum" : [ "integer", "decimal_1", "decimal_2", "decimal_4", "decimal_8" ]
         },
         "type" : {
           "type" : "string",
-          "enum" : [ "RESERVATION", "PPU" ]
+          "enum" : [ "reservation", "ppu" ]
         },
         "unit" : {
           "type" : "string"

@@ -566,7 +566,7 @@
     },
     "status" : {
       "type" : "string",
-      "enum" : [ "DRAFT", "READY", "CLOSED", "FAILED" ]
+      "enum" : [ "draft", "ready", "closed", "failed" ]
     },
     "usagefile" : {
       "type" : "object",
@@ -582,7 +582,7 @@
         },
         "schema" : {
           "type" : "string",
-          "enum" : [ "QT", "TR", "PR", "CR" ]
+          "enum" : [ "qt", "tr", "pr", "cr" ]
         }
       }
     }

@@ -7,15 +7,15 @@
 
 package com.cloudblue.connect.internal.connection;
 
-import com.cloudblue.connect.api.clients.constants.ContentType;
-import com.cloudblue.connect.api.clients.constants.HeaderParams;
-import com.cloudblue.connect.api.clients.constants.RestConstants;
-import com.cloudblue.connect.api.clients.entity.FileEntity;
-import com.cloudblue.connect.api.clients.parsers.jackson.JacksonRequestMarshaller;
-import com.cloudblue.connect.api.clients.rql.R;
-import com.cloudblue.connect.api.clients.utils.RequestUtil;
-import com.cloudblue.connect.api.clients.utils.Url;
-import com.cloudblue.connect.api.models.CBCResponseAttributes;
+import com.cloudblue.connect.internal.clients.constants.ContentType;
+import com.cloudblue.connect.internal.clients.constants.HeaderParams;
+import com.cloudblue.connect.internal.clients.constants.RestConstants;
+import com.cloudblue.connect.internal.clients.entity.FileEntity;
+import com.cloudblue.connect.internal.clients.parsers.jackson.JacksonRequestMarshaller;
+import com.cloudblue.connect.internal.clients.rql.R;
+import com.cloudblue.connect.internal.clients.utils.RequestUtil;
+import com.cloudblue.connect.internal.clients.utils.Url;
+import com.cloudblue.connect.api.parameters.filters.CBCResponseAttributes;
 import com.cloudblue.connect.internal.connection.provider.CBCConnectionProvider;
 
 import org.mule.runtime.api.exception.DefaultMuleException;

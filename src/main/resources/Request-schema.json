@@ -221,9 +221,6 @@
                       }
                     }
                   },
-                  "default" : {
-                    "type" : "object"
-                  },
                   "hidden" : {
                     "type" : "boolean"
                   },
@@ -304,7 +301,7 @@
         },
         "status" : {
           "type" : "string",
-          "enum" : [ "ACTIVE", "DRAFT", "PROCESSING", "REJECTED", "TERMINATING", "SUSPENDED", "TERMINATED" ]
+          "enum" : [ "active", "draft", "processing", "rejected", "terminating", "suspended", "terminated" ]
         },
         "tiers" : {
           "type" : "object",
@@ -1442,14 +1439,14 @@
     },
     "status" : {
       "type" : "string",
-      "enum" : [ "DRAFT", "PENDING", "INQUIRING", "FAILED", "APPROVED" ]
+      "enum" : [ "draft", "pending", "inquiring", "failed", "approved" ]
     },
     "template" : {
       "type" : "object"
     },
     "type" : {
       "type" : "string",
-      "enum" : [ "PURCHASE", "CHANGE", "SUSPEND", "RESUME", "CANCEL", "ADJUSTMENT", "PROVIDER", "VENDOR" ]
+      "enum" : [ "purchase", "change", "suspend", "resume", "cancel", "adjustment", "provider", "vendor" ]
     },
     "updated" : {
       "type" : "string"

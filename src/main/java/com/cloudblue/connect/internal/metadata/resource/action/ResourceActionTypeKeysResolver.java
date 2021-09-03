@@ -7,13 +7,12 @@
 
 package com.cloudblue.connect.internal.metadata.resource.action;
 
+import com.cloudblue.connect.internal.metadata.Constants;
 import com.cloudblue.connect.internal.metadata.MetadataUtil;
 
-import org.mule.runtime.api.connection.ConnectionException;
 import org.mule.runtime.api.metadata.MetadataContext;
 import org.mule.runtime.api.metadata.MetadataKey;
 import org.mule.runtime.api.metadata.MetadataKeyBuilder;
-import org.mule.runtime.api.metadata.MetadataResolvingException;
 import org.mule.runtime.api.metadata.resolving.TypeKeysResolver;
 
 import java.util.HashSet;
@@ -22,8 +21,7 @@ import java.util.Set;
 public class ResourceActionTypeKeysResolver implements TypeKeysResolver {
 
     @Override
-    public Set<MetadataKey> getKeys(MetadataContext context)
-            throws MetadataResolvingException, ConnectionException {
+    public Set<MetadataKey> getKeys(MetadataContext context) {
         Set<MetadataKey> keys = new HashSet<>();
         for(String resourceType : MetadataUtil.getActionResourceTypes()){
             MetadataKeyBuilder key = MetadataKeyBuilder.newKey(resourceType);
@@ -42,6 +40,6 @@ public class ResourceActionTypeKeysResolver implements TypeKeysResolver {
 
     @Override
     public String getCategoryName() {
-        return "ResourceAction";
+        return Constants.ACTION_RESOLVER_CATEGORY;
     }
 }

@@ -1,0 +1,38 @@
+{
+  "$schema" : "http://json-schema.org/draft-07/schema#",
+  "type" : "object",
+  "properties" : {
+    "configuration" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        }
+      },
+      "required": ["id"]
+    },
+    "params" : {
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "structured_value" : {
+            "type" : "object"
+          },
+          "value" : {
+            "type" : "string"
+          }
+        },
+        "required": ["id"]
+      }
+    },
+    "type" : {
+      "type" : "string",
+      "const" : "update"
+    }
+  },
+  "required": ["type", "params", "configuration"]
+}

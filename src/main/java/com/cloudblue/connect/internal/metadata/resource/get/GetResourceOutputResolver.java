@@ -7,11 +7,11 @@
 
 package com.cloudblue.connect.internal.metadata.resource.get;
 
+import com.cloudblue.connect.internal.metadata.Constants;
 import com.cloudblue.connect.internal.metadata.resource.ResourceOutputResolver;
 import com.cloudblue.connect.internal.model.resource.Action;
 
 import org.mule.metadata.api.model.MetadataType;
-import org.mule.runtime.api.connection.ConnectionException;
 import org.mule.runtime.api.metadata.MetadataContext;
 import org.mule.runtime.api.metadata.MetadataResolvingException;
 import org.mule.runtime.api.metadata.resolving.OutputTypeResolver;
@@ -26,7 +26,12 @@ public class GetResourceOutputResolver
 
     @Override
     public MetadataType getOutputType(MetadataContext context, String resourceType)
-            throws MetadataResolvingException, ConnectionException {
+            throws MetadataResolvingException {
         return getOutputType(context, resourceType, Action.GET.name());
+    }
+
+    @Override
+    public String getCategoryName() {
+        return Constants.GET_RESOLVER_CATEGORY;
     }
 }
