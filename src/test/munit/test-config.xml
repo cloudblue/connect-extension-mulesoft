@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ Copyright © 2021 Ingram Micro Inc. All rights reserved.
+  ~ The software in this package is published under the terms of the Apache-2.0
+  ~ license, a copy of which has been included with this distribution in the
+  ~ LICENSE file.
+  -->
+
+<mule xmlns:wiremock="http://www.mulesoft.org/schema/mule/wiremock"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+      xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/wiremock http://www.mulesoft.org/schema/mule/wiremock/current/mule-wiremock.xsd">
+
+    <wiremock:config name="WireMock_Config" >
+        <wiremock:connection host="localhost" port="${http.port}"/>
+    </wiremock:config>
+</mule>

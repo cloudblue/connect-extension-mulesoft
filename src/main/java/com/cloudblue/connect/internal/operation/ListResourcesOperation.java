@@ -7,7 +7,7 @@
 
 package com.cloudblue.connect.internal.operation;
 
-import com.cloudblue.connect.api.parameters.filters.CBCResponseAttributes;
+import com.cloudblue.connect.api.parameters.CBCResponseAttributes;
 import com.cloudblue.connect.internal.connection.CBCConnection;
 import com.cloudblue.connect.internal.metadata.MetadataUtil;
 import com.cloudblue.connect.internal.metadata.Metadata;

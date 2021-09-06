@@ -7,6 +7,7 @@
 
 package com.cloudblue.connect.internal.metadata;
 
+import com.cloudblue.connect.internal.model.resource.Action;
 import org.apache.commons.io.IOUtils;
 
 import org.mule.metadata.api.model.MetadataType;
@@ -20,7 +21,14 @@ import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 public class JsonMetadataBuilder {
-    public MetadataType getType(String schemaFileName)
+
+    private static final String LIST_SCHEMA_TEMPLATE = "{\"$schema\" : \"http://json-schema.org/draft-07/schema#\", \"type\": \"array\", \"items\": %s}";
+
+    private String makeListSchema(String objectSchema) {
+        return String.format(LIST_SCHEMA_TEMPLATE, objectSchema);
+    }
+
+    public MetadataType getType(String schemaFileName, Action action)
             throws MetadataResolvingException {
         MetadataResolvingException resolvingException = new MetadataResolvingException("No Metadata is available.",
                 FailureCode.NO_DYNAMIC_TYPE_AVAILABLE);
@@ -29,6 +37,10 @@ public class JsonMetadataBuilder {
             InputStream stream = classLoader.getResourceAsStream(schemaFileName);
             String schema = IOUtils.toString(Objects.requireNonNull(stream), StandardCharsets.UTF_8);
 
+            if (action == Action.LIST) {
+                schema = makeListSchema(schema);
+            }
+
             return new JsonTypeLoader(schema).load(null).orElseThrow(
                     () -> resolvingException
             );
@@ -36,4 +48,5 @@ public class JsonMetadataBuilder {
             throw resolvingException;
         }
     }
+
 }

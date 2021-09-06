@@ -15,7 +15,7 @@ import com.cloudblue.connect.internal.clients.parsers.jackson.JacksonRequestMars
 import com.cloudblue.connect.internal.clients.rql.R;
 import com.cloudblue.connect.internal.clients.utils.RequestUtil;
 import com.cloudblue.connect.internal.clients.utils.Url;
-import com.cloudblue.connect.api.parameters.filters.CBCResponseAttributes;
+import com.cloudblue.connect.api.parameters.CBCResponseAttributes;
 import com.cloudblue.connect.internal.connection.provider.CBCConnectionProvider;
 
 import org.mule.runtime.api.exception.DefaultMuleException;

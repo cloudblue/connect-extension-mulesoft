@@ -11,6 +11,7 @@ import com.cloudblue.connect.internal.metadata.ActionMetadata;
 import com.cloudblue.connect.internal.metadata.JsonMetadataBuilder;
 import com.cloudblue.connect.internal.metadata.MetadataUtil;
 
+import com.cloudblue.connect.internal.model.resource.Action;
 import org.mule.metadata.api.model.MetadataType;
 import org.mule.runtime.api.metadata.MetadataContext;
 import org.mule.runtime.api.metadata.MetadataResolvingException;
@@ -26,7 +27,7 @@ public class ResourceOutputResolver extends JsonMetadataBuilder {
                     FailureCode.NO_DYNAMIC_TYPE_AVAILABLE);
         } else if (actionMetadata.getOutput() != null
                 && !actionMetadata.getOutput().equals(MetadataUtil.NO_OUTPUT_SCHEMA)) {
-            return getType(actionMetadata.getOutput());
+            return getType(actionMetadata.getOutput(), Action.valueOf(action.toUpperCase()));
         } else {
             return context.getTypeBuilder().voidType().build();
         }

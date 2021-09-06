@@ -11,6 +11,7 @@ import com.cloudblue.connect.internal.metadata.ActionMetadata;
 import com.cloudblue.connect.internal.metadata.Keys;
 import com.cloudblue.connect.internal.metadata.Metadata;
 import com.cloudblue.connect.internal.metadata.MetadataProvider;
+import com.cloudblue.connect.internal.model.resource.Action;
 import org.mule.metadata.api.builder.ObjectTypeBuilder;
 import org.mule.metadata.api.model.MetadataType;
 import org.mule.runtime.api.metadata.MetadataContext;
@@ -20,6 +21,7 @@ public class CloseChunkFileMetadataProvider
     @Override
     public MetadataType getMetadataType(MetadataContext context,
                                         Metadata metadata,
+                                        Action action,
                                         ActionMetadata actionMetadata) {
 
         final ObjectTypeBuilder objectBuilder = context.getTypeBuilder().objectType();

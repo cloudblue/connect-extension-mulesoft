@@ -11,6 +11,7 @@ import com.cloudblue.connect.internal.metadata.ActionMetadata;
 import com.cloudblue.connect.internal.metadata.Metadata;
 import com.cloudblue.connect.internal.metadata.MetadataUtil;
 
+import com.cloudblue.connect.internal.model.resource.Action;
 import org.mule.metadata.api.model.MetadataType;
 import org.mule.runtime.api.metadata.MetadataContext;
 import org.mule.runtime.api.metadata.MetadataResolvingException;
@@ -27,7 +28,8 @@ public class ResourceInputResolver {
             throw new MetadataResolvingException("No Metadata is available.",
                     FailureCode.NO_DYNAMIC_TYPE_AVAILABLE);
         } else if (actionMetadata.getInput() != null) {
-            return actionMetadata.getInput().getMetadataType(context, metadata, actionMetadata);
+            return actionMetadata.getInput().getMetadataType(context, metadata,
+                    Action.valueOf(action.toUpperCase()), actionMetadata);
         } else {
             return context.getTypeBuilder().voidType().build();
         }

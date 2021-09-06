@@ -1,0 +1,160 @@
+{
+    "id": "PR-7957-9623-8221-001",
+    "type": "purchase",
+    "note": "",
+    "asset": {
+        "id": "AS-7957-9623-8221",
+        "status": "processing",
+        "external_id": "TEST-ASSET-REQUEST-0001",
+        "external_uid": "6bb8f704-12cd-4b24-8773-6e9f0a2121e2",
+        "product": {
+            "id": "PRD-635-752-204",
+            "icon": "/media/VA-674-253/PRD-635-752-204/media/PRD-635-752-204-logo_3DsBnkc.png",
+            "name": "CloudBlue Connect",
+            "status": "published"
+        },
+        "connection": {
+            "id": "CT-9564-8635",
+            "type": "production",
+            "status": "approved",
+            "provider": {
+                "id": "PA-080-719",
+                "name": "Connect Labs Provider"
+            },
+            "vendor": {
+                "id": "VA-674-253",
+                "name": "CloudBlue AWS"
+            },
+            "hub": {
+                "id": "HB-5294-7915",
+                "name": "R19-HUB"
+            },
+            "created_at": "2020-09-02T13:31:11+00:00"
+        },
+        "events": {
+            "created": {
+                "at": "2021-04-08T06:33:56+00:00"
+            },
+            "updated": {
+                "at": "2021-04-08T06:33:56+00:00"
+            }
+        },
+        "items": [
+            {
+                "id": "PRD_635_752_204_0002",
+                "global_id": "PRD-635-752-204-0002",
+                "mpn": "BASIC-PPU",
+                "old_quantity": "0",
+                "quantity": "unlimited",
+                "type": "requests",
+                "display_name": "Basic PPU",
+                "period": null,
+                "item_type": "PPU"
+            }
+        ],
+        "params": [
+            {
+                "id": "delivery_add",
+                "name": "delivery_add",
+                "type": "address",
+                "phase": "ordering",
+                "description": "Delivery Address",
+                "value": "",
+                "value_error": "",
+                "title": "Delivery Address",
+                "constraints": {
+                    "default": {
+                        "country": null
+                    },
+                    "meta": {
+                    },
+                    "required": false
+                }
+            },
+            {
+                "id": "subscription_id",
+                "name": "subscription_id",
+                "type": "text",
+                "phase": "fulfillment",
+                "description": "Subscription ID",
+                "value": "",
+                "value_error": "",
+                "title": "Subscription ID",
+                "constraints": {
+                    "placeholder": "Subscription ID",
+                    "hint": "Subscription ID",
+                    "meta": {
+                    },
+                    "required": true,
+                    "reconciliation": true,
+                    "unique": true
+                },
+                "reconciliation": true
+            }
+        ],
+        "tiers": {
+            "customer": {
+                "id": "TA-7581-5990-4741",
+                "external_uid": "29b2caaa-dc2e-4397-9d14-94d0a14d9189",
+                "type": "customer",
+                "name": "Test Corp. US",
+                "contact_info": {
+                    "address_line1": "H-23",
+                    "address_line2": "Lone Street",
+                    "city": "MSW",
+                    "state": "CI",
+                    "postal_code": "762635",
+                    "country": "US",
+                    "contact": {
+                        "first_name": "Rahul",
+                        "last_name": "Mondal",
+                        "email": "rahul.mondal@ingrammicro.com",
+                        "phone_number": {
+                            "country_code": "",
+                            "area_code": "",
+                            "phone_number": "",
+                            "extension": ""
+                        }
+                    }
+                }
+            },
+            "tier1": {
+            },
+            "tier2": {
+            }
+        },
+        "configuration": {
+            "params": [
+            ]
+        },
+        "marketplace": {
+            "id": "MP-78031",
+            "name": "AWS SaaS Marketplace",
+            "icon": "/media/PA-080-719/marketplaces/MP-78031/icon.jpg"
+        },
+        "contract": {
+            "id": "CRD-86700-02029-47865",
+            "type": "distribution",
+            "name": "Contract of Neeladri Distribution Agreement 12"
+        }
+    },
+    "reason": "",
+    "status": "pending",
+    "created": "2021-04-08T06:33:56+00:00",
+    "updated": "2021-04-08T06:33:56+00:00",
+    "answered": false,
+    "assignee": "",
+    "activation_key": "",
+    "external_attributes": {
+    },
+    "marketplace": {
+        "id": "MP-78031",
+        "name": "AWS SaaS Marketplace",
+        "icon": "/media/PA-080-719/marketplaces/MP-78031/icon.jpg"
+    },
+    "contract": {
+        "id": "CRD-86700-02029-47865",
+        "type": "distribution",
+        "name": "Contract of Neeladri Distribution Agreement 12"
+    }
+}

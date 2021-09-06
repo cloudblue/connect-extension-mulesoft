@@ -7,6 +7,7 @@
 
 package com.cloudblue.connect.internal.metadata;
 
+import com.cloudblue.connect.internal.model.resource.Action;
 import org.mule.metadata.api.builder.ObjectTypeBuilder;
 import org.mule.metadata.api.model.MetadataType;
 import org.mule.runtime.api.metadata.MetadataContext;
@@ -15,6 +16,7 @@ public class BaseMetadataProvider implements MetadataProvider {
     @Override
     public MetadataType getMetadataType(MetadataContext context,
                                         Metadata metadata,
+                                        Action action,
                                         ActionMetadata actionMetadata) {
         final ObjectTypeBuilder objectBuilder = context.getTypeBuilder().objectType();
 

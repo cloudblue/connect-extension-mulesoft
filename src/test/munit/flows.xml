@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ Copyright © 2021 Ingram Micro Inc. All rights reserved.
+  ~ The software in this package is published under the terms of the Apache-2.0
+  ~ license, a copy of which has been included with this distribution in the
+  ~ LICENSE file.
+  -->
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+      xmlns:cloudblue-connect="http://www.mulesoft.org/schema/mule/cloudblue-connect"
+      xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/cloudblue-connect http://www.mulesoft.org/schema/mule/cloudblue-connect/current/mule-cloudblue-connect.xsd">
+
+
+    <cloudblue-connect:config name="CloudBlue_Connect_Config_Test">
+        <cloudblue-connect:connection endpoint="http://localhost:${http.port}" token="MOCK_TOKEN" />
+    </cloudblue-connect:config>
+
+    <flow name="list_resource_operation">
+        <cloudblue-connect:list-resources
+                config-ref="CloudBlue_Connect_Config_Test"
+                resourceType="REQUEST" limit="2"/>
+    </flow>
+
+    <flow name="list_resource_operation_with_filter">
+        <cloudblue-connect:list-resources
+                config-ref="CloudBlue_Connect_Config_Test"
+                resourceType="REQUEST" limit="5" offset="5">
+            <cloudblue-connect:filter >
+                <cloudblue-connect:mono-filter type="EQ" property="asset.id" value="AS-000-000" />
+            </cloudblue-connect:filter>
+            <cloudblue-connect:order-by >
+                <cloudblue-connect:properties >
+                    <cloudblue-connect:property value="created" />
+                </cloudblue-connect:properties>
+            </cloudblue-connect:order-by>
+        </cloudblue-connect:list-resources>
+    </flow>
+
+    <flow name="list_sub_collection_resource_operation" >
+        <set-payload value='#[%dw 2.0 output application/java --- { product_id: "PRD-000-000" }]'/>
+        <cloudblue-connect:list-resources resourceType="PRODUCT_ACTION"
+                                          config-ref="CloudBlue_Connect_Config_Test"
+                                          limit="5">
+            <cloudblue-connect:list-resource-parameter ><![CDATA[#[payload]]]></cloudblue-connect:list-resource-parameter>
+        </cloudblue-connect:list-resources>
+    </flow>
+
+    <flow name="get_resource_operation">
+        <set-payload value='#[%dw 2.0 output application/java --- { request_id: "PR-000-000" }]'/>
+        <cloudblue-connect:get-resource
+                resourceType="REQUEST"
+                config-ref="CloudBlue_Connect_Config_Test"/>
+    </flow>
+
+    <flow name="update_resource_operation">
+        <set-payload value='#[%dw 2.0 output application/json --- { parent: { id: "TA-0000-9999" }}]'/>
+        <cloudblue-connect:update-resource resourceType="TIER_ACCOUNT"
+                                           config-ref="CloudBlue_Connect_Config_Test"
+                                           updateResourceIdentifier='#[output application/java --- { tier_account_id: "TA-0000-0000" }]'/>
+    </flow>
+
+</mule>

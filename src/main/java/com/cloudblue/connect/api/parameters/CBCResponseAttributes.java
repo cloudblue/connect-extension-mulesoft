@@ -5,7 +5,7 @@
  * LICENSE file.
  */
 
-package com.cloudblue.connect.api.parameters.filters;
+package com.cloudblue.connect.api.parameters;
 
 import org.mule.runtime.api.util.MultiMap;
 import org.mule.runtime.http.api.domain.message.response.HttpResponse;

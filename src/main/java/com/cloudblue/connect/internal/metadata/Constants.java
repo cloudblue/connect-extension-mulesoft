@@ -18,4 +18,5 @@ public class Constants {
     public static final String UPDATE_RESOLVER_CATEGORY = "UpdateResource";
     public static final String UPLOAD_RESOLVER_CATEGORY = "UploadResourceFile";
     public static final String DOWNLOAD_RESOLVER_CATEGORY = "DownloadResourceFile";
+    public static final String BLANK = "";
 }
