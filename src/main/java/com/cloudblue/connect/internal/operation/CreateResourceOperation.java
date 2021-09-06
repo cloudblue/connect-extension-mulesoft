@@ -20,10 +20,7 @@ import org.mule.runtime.api.exception.MuleException;
 import org.mule.runtime.extension.api.annotation.metadata.MetadataKeyId;
 import org.mule.runtime.extension.api.annotation.metadata.OutputResolver;
 import org.mule.runtime.extension.api.annotation.metadata.TypeResolver;
-import org.mule.runtime.extension.api.annotation.param.Connection;
-import org.mule.runtime.extension.api.annotation.param.Content;
-import org.mule.runtime.extension.api.annotation.param.MediaType;
-import org.mule.runtime.extension.api.annotation.param.Parameter;
+import org.mule.runtime.extension.api.annotation.param.*;
 import org.mule.runtime.extension.api.annotation.param.display.DisplayName;
 import org.mule.runtime.extension.api.annotation.param.display.Placement;
 import org.mule.runtime.extension.api.runtime.operation.Result;
@@ -34,10 +31,10 @@ import static org.mule.runtime.extension.api.annotation.param.MediaType.APPLICAT
 
 public class CreateResourceOperation {
     @Parameter
-    @DisplayName("Resource Action")
-    @MetadataKeyId(CreateResourceTypeKeysResolver.class)
+    @ParameterGroup(name = "Create Resource Type")
     @Placement(order = 1)
-    ActionIdentifier actionIdentifier;
+    @MetadataKeyId(CreateResourceTypeKeysResolver.class)
+    ActionIdentifier identifier;
 
     @MediaType(value = APPLICATION_JSON, strict = false)
     @DisplayName("Create Resource")
@@ -47,7 +44,7 @@ public class CreateResourceOperation {
             @TypeResolver(CreateResourceInputResolver.class)
             @Content InputStream createResourceParameter
     ) throws MuleException {
-        Metadata metadata = MetadataUtil.getMetadata(actionIdentifier.getResourceType());
+        Metadata metadata = MetadataUtil.getMetadata(identifier.getResourceType());
 
         return connection.newQ()
                 .collection(metadata.getCollection())

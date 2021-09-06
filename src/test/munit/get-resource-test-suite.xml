@@ -40,5 +40,33 @@
 		</munit:validation>
 	</munit:test>
 
+	<munit:test name="get_resource_with_filter_operation_test" description="Test Get Resource">
+		<munit:execution >
+			<wiremock:add-stub config-ref="WireMock_Config"
+							   jsonMapping='#[%dw 2.0 output application/json
+---
+{
+  "request" : {
+    "method" : "GET",
+    "url" : "/products/PRD-000-000/actions/ACT-000-000-001?asset_id%3DAS-000-000"
+  },
+  "response" : {
+    "status" : 200,
+    "statusMessage": "Ok",
+    "bodyFileName": "action_link.json"
+  }
+}]'/>
+			<flow-ref name="get_resource_with_filter_operation"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that expression="#[payload]" is="#[MunitTools::notNullValue()]" message="Asset object is null."/>
+			<munit-tools:assert>
+				<munit-tools:that >
+					<![CDATA[#[import * from dw::test::Asserts --- payload must equalToResource("__files/action_link.json", "application/json")]]]>
+				</munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
+
 
 </mule>

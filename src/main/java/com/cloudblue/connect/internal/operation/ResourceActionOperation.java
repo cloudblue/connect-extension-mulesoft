@@ -24,8 +24,6 @@ import org.mule.runtime.extension.api.annotation.param.*;
 import org.mule.runtime.extension.api.annotation.param.display.DisplayName;
 import org.mule.runtime.extension.api.annotation.param.display.Placement;
 import org.mule.runtime.extension.api.runtime.operation.Result;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
 import java.util.Map;
@@ -33,7 +31,6 @@ import java.util.Map;
 import static org.mule.runtime.extension.api.annotation.param.MediaType.APPLICATION_JSON;
 
 public class ResourceActionOperation extends BaseResourceIdentifierOperation {
-    Logger logger = LoggerFactory.getLogger("ResourceActionOperation");
 
     @Parameter
     @ParameterGroup(name = "Resource Action")
@@ -68,12 +65,12 @@ public class ResourceActionOperation extends BaseResourceIdentifierOperation {
         String action = actionMetadata.getAction();
 
         if (action == null) {
-            action = identifier.getAction().toLowerCase();
+            action = identifier.getAction();
         }
 
         if (actionMetadata.isIncludePayload())
-            return q.action(action, actionMetadata.getMethod(), resourceActionParameter);
+            return q.action(action.toLowerCase(), actionMetadata.getMethod(), resourceActionParameter);
         else
-            return q.action(action, actionMetadata.getMethod(), null);
+            return q.action(action.toLowerCase(), actionMetadata.getMethod(), null);
     }
 }

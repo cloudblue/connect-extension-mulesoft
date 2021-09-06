@@ -401,7 +401,7 @@ public class MetadataUtil {
                         .parentCollection(PRODUCTS)
                         .parentId(PRODUCT_ID)
                         .schema(PRODUCT_ACTION_LINK_SCHEMA)
-                        .includeListAction(ASSET_ID));
+                        .includeGetAction(ASSET_ID));
 
         METADATA_STORE.put(ResourceType.BILLING_REQUEST_ATTRIBUTE,
                 new Metadata()

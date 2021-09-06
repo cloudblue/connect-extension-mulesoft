@@ -7,6 +7,8 @@
 
 package com.cloudblue.connect.internal.metadata;
 
+import com.cloudblue.connect.api.parameters.ResourceType;
+
 import org.junit.Test;
 
 import java.util.List;
@@ -19,6 +21,17 @@ public class MetadataUtilTest {
     public void testGetListResourceTypes() {
         List<String> listResourceTypes = MetadataUtil.getListResourceTypes();
 
-        assertEquals(24, listResourceTypes.size());
+        assertEquals(23, listResourceTypes.size());
+    }
+
+    @Test
+    public void testCreateListResourceTypes() {
+        List<String> listResourceTypes = MetadataUtil.getCreateResourceTypes();
+
+        assertEquals(7, listResourceTypes.size());
+
+        List<String> createActions = MetadataUtil.getCreateActions(ResourceType.REQUEST.name());
+
+        assertEquals(3, createActions.size());
     }
 }

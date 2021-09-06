@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:wiremock="http://www.mulesoft.org/schema/mule/wiremock"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit"
+	xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/wiremock http://www.mulesoft.org/schema/mule/wiremock/current/mule-wiremock.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+		
+	<munit:config name="resource-action-test-suite.xml" />
+
+	<munit:test name="resource_action_operation_test" description="Test Resource Action">
+		<munit:execution >
+			<wiremock:add-stub config-ref="WireMock_Config"
+							   jsonMapping='#[%dw 2.0 output application/json
+---
+{
+  "request" : {
+    "method" : "POST",
+    "url" : "/requests/PR-0000-0000-0000-001/approve"
+  },
+  "response" : {
+    "status" : 200,
+    "statusMessage": "Ok",
+    "bodyFileName": "request.json"
+  }
+}]'/>
+			<flow-ref name="resource_action_operation"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that expression="#[payload]" is="#[MunitTools::notNullValue()]" message="Action response object is null."/>
+			<munit-tools:assert>
+				<munit-tools:that >
+					<![CDATA[#[import * from dw::test::Asserts --- payload must equalToResource("__files/request.json", "application/json")]]]>
+				</munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
+
+	<munit:test name="resource_collection_action_operation_test" description="Test Resource Action">
+		<munit:execution >
+			<wiremock:add-stub config-ref="WireMock_Config"
+							   jsonMapping='#[%dw 2.0 output application/json
+---
+{
+  "request" : {
+    "method" : "POST",
+    "url" : "/usage/records/close-records"
+  },
+  "response" : {
+    "status" : 206,
+    "bodyFileName": "usage_bulk_close_response.json"
+  }
+}]'/>
+			<flow-ref name="resource_collection_action_operation"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that expression="#[payload]" is="#[MunitTools::notNullValue()]" message="Action response object is null."/>
+			<munit-tools:assert>
+				<munit-tools:that >
+					<![CDATA[#[import * from dw::test::Asserts --- payload must equalToResource("__files/usage_bulk_close_response.json", "application/json")]]]>
+				</munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
+
+	<munit:test name="resource_no_payload_action_operation_test" description="Test Resource Action">
+		<munit:execution >
+			<wiremock:add-stub config-ref="WireMock_Config"
+							   jsonMapping='#[%dw 2.0 output application/json
+---
+{
+  "request" : {
+    "method" : "POST",
+    "url" : "/usage/files/UF-000-000-000/close"
+  },
+  "response" : {
+    "status" : 200,
+    "bodyFileName": "usage_bulk_close_response.json"
+  }
+}]'/>
+			<flow-ref name="resource_no_payload_action_operation"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that expression="#[payload]" is="#[MunitTools::notNullValue()]" message="Action response object is null."/>
+			<munit-tools:assert>
+				<munit-tools:that >
+					<![CDATA[#[import * from dw::test::Asserts --- payload must equalToResource("__files/usage_bulk_close_response.json", "application/json")]]]>
+				</munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>

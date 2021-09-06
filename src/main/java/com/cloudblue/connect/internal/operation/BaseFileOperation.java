@@ -21,6 +21,6 @@ public class BaseFileOperation extends BaseResourceIdentifierOperation {
             actionName = action;
         }
 
-        return actionName;
+        return actionName.toLowerCase();
     }
 }

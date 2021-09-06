@@ -41,12 +41,11 @@ public class UploadResourceFileOperation extends BaseFileOperation {
     @DisplayName("File Path")
     @Path(type = PathModel.Type.FILE, location = PathModel.Location.EXTERNAL)
     @Expression
-    @Placement(order = 2)
+    @Placement(order = 3)
     String file;
 
     @Parameter
     @ParameterGroup(name = "Resource Action")
-    @Placement(order = 1)
     @MetadataKeyId(ResourceFileUploadTypeKeysResolver.class)
     ActionIdentifier actionIdentifier;
 

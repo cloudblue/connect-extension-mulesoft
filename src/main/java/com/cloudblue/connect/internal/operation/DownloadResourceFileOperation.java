@@ -44,7 +44,6 @@ public class DownloadResourceFileOperation extends BaseFileOperation {
 
     @Parameter
     @ParameterGroup(name = "Resource Action")
-    @Placement(order = 1)
     @MetadataKeyId(ResourceFileDownloadTypeKeysResolver.class)
     ActionIdentifier actionIdentifier;
 

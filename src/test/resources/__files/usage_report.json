@@ -1,0 +1,51 @@
+{
+  "id": "UF-000-000-000",
+  "name": "Usage_Upload_For_2066563",
+  "external_id": "2066563",
+  "status": "closed",
+  "vendor": {
+    "id": "VA-674-253",
+    "name": "CloudBlue AWS"
+  },
+  "provider": {
+    "id": "PA-080-719",
+    "name": "Connect Labs Provider"
+  },
+  "environment": "production",
+  "marketplace": {
+    "id": "MP-69876",
+    "name": "GM-Marketplace"
+  },
+  "contract": {
+    "id": "CRD-90574-88738-44763",
+    "name": "Contract of GM-Distribution-Agreement"
+  },
+  "product": {
+    "id": "PRD-113-628-780",
+    "name": "A-R18-Dropbox-1",
+    "icon": "/media/VA-674-253/PRD-113-628-780/media/PRD-113-628-780-logo_B6AJDgq.png"
+  },
+  "description": "",
+  "schema": "qt",
+  "currency": "USD",
+  "period": {
+    "from": "2029-01-01T00:00:00+00:00",
+    "to": "2029-01-31T00:00:00+00:00"
+  },
+  "stats": {
+  },
+  "events": {
+    "created": {
+      "at": "2021-07-05T11:25:07+00:00",
+      "by": {
+        "id": "SU-972-245-745",
+        "name": "Test"
+      }
+    }
+  },
+  "records": {
+    "valid": 0,
+    "invalid": 0,
+    "closed": 0
+  }
+}

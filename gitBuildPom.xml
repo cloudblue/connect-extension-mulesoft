@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.cloudblue</groupId>
     <artifactId>connect-mulesoft-extension</artifactId>
-    <version>23.0.2-SNAPSHOT</version>
+    <version>23.0.80-SNAPSHOT</version>
     <packaging>mule-extension</packaging>
     <name>CloudBlue Connect Extension MuleSoft</name>
 
@@ -403,6 +403,9 @@
                     <dynamicPorts>
                         <dynamicPort>http.port</dynamicPort>
                     </dynamicPorts>
+                    <environmentVariables>
+                        <TEST_RESOURCE_LOCATION>${project.build.directory}/test-classes</TEST_RESOURCE_LOCATION>
+                    </environmentVariables>
                 </configuration>
                 <dependencies>
                     <dependency>

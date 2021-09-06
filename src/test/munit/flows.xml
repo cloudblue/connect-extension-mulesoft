@@ -63,4 +63,42 @@
                                            updateResourceIdentifier='#[output application/java --- { tier_account_id: "TA-0000-0000" }]'/>
     </flow>
 
+    <flow name="resource_action_operation">
+        <set-payload value='#[%dw 2.0 output application/java --- { request_id: "PR-0000-0000-0000-001", template_id: "TP-000-000-001", effective_date: "2020-03-23T09:32:12+00:00"}]' />
+        <cloudblue-connect:resource-action config-ref="CloudBlue_Connect_Config_Test"
+                                           resourceType="REQUEST" action="APPROVE"/>
+    </flow>
+
+    <flow name="resource_collection_action_operation">
+        <set-payload value='#[%dw 2.0 output application/java --- [{ id: "UR-000-000-000-000-000", external_billing_id: "EXT-001", external_billing_note: "Customer billing no. CU872635" }]]'/>
+        <cloudblue-connect:resource-action config-ref="CloudBlue_Connect_Config_Test"
+                                           resourceType="USAGE_RECORD" action="BULK_CLOSE"/>
+    </flow>
+
+    <flow name="resource_no_payload_action_operation">
+        <set-payload value='#[%dw 2.0 output application/java --- { usage_report_id: "UF-000-000-000" }]'/>
+        <cloudblue-connect:resource-action config-ref="CloudBlue_Connect_Config_Test"
+                                           resourceType="USAGE_REPORT" action="CLOSE"/>
+    </flow>
+
+    <flow name="create_resource_operation">
+        <set-payload value='#[%dw 2.0 output application/json --- { asset: { id: "AS-000-000-000" }, "type": "suspend" }]'/>
+        <cloudblue-connect:create-resource config-ref="CloudBlue_Connect_Config_Test"
+                                           resourceType="REQUEST"
+                                           action="CREATE_ADMIN_HOLD_REQUEST"/>
+    </flow>
+
+    <flow name="get_resource_with_filter_operation">
+        <set-payload value='#[%dw 2.0 output application/java --- { product_id: "PRD-000-000", action_id: "ACT-000-000-001", asset_id: "AS-000-000" }]'/>
+        <cloudblue-connect:get-resource resourceType="PRODUCT_ACTION_LINK"
+                                        config-ref="CloudBlue_Connect_Config_Test"/>
+    </flow>
+
+    <flow name="upload_resources_file_operation">
+        <set-payload value='#[%dw 2.0 output application/java --- { usage_report_id: "UF-0000-0000-0000" }]'/>
+        <cloudblue-connect:upload-file resourceType="USAGE_REPORT"
+                                       action="UPLOAD"
+                                       config-ref="CloudBlue_Connect_Config_Test"
+                                       file="${TEST_RESOURCE_LOCATION}/__files/Usage_File.xlsx"/>
+    </flow>
 </mule>
