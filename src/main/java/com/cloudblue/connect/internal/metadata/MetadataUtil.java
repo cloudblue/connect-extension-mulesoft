@@ -383,7 +383,7 @@ public class MetadataUtil {
         METADATA_STORE.put(ResourceType.CONVERSATION_MESSAGES,
                 new Metadata()
                         .collection(MESSAGES)
-                        .id(CONVERSATION_ID)
+                        .id(MESSAGE_ID)
                         .isSubCollection(true)
                         .parentCollection(CONVERSATION)
                         .parentId(CONVERSATION_ID)

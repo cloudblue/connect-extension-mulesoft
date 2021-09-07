@@ -29,47 +29,4 @@ public class BaseRequestMetadataProvider {
                 .value()
                 .stringType();
     }
-
-    protected ObjectTypeBuilder includeAsset(final ObjectTypeBuilder objectBuilder) {
-        return objectBuilder.addField()
-                .key(Keys.ASSET.getField())
-                .label(Keys.ASSET.getLabel())
-                .required()
-                .value()
-                .objectType();
-    }
-
-    protected void includeParams(final ObjectTypeBuilder objectBuilder) {
-        ObjectTypeBuilder paramTypeBuilder = objectBuilder.addField()
-                .key(Keys.PARAMS.getField())
-                .label(Keys.PARAMS.getLabel())
-                .required()
-                .value()
-                .arrayType().of().objectType();
-
-        paramTypeBuilder.addField()
-                .key(Keys.ID.getField())
-                .label("Parameter ID")
-                .required()
-                .value()
-                .stringType();
-
-        paramTypeBuilder.addField()
-                .key(Keys.VALUE.getField())
-                .label(Keys.VALUE.getLabel())
-                .value()
-                .stringType();
-
-        paramTypeBuilder.addField()
-                .key(Keys.STRUCTURED_VALUE.getField())
-                .label(Keys.STRUCTURED_VALUE.getLabel())
-                .value()
-                .objectType();
-
-        paramTypeBuilder.addField()
-                .key(Keys.VALUE_ERROR.getField())
-                .label(Keys.VALUE_ERROR.getLabel())
-                .value()
-                .stringType();
-    }
 }

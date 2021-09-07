@@ -12,8 +12,8 @@ import com.cloudblue.connect.internal.connection.CBCConnection;
 import com.cloudblue.connect.internal.metadata.resource.get.GetResourceInputResolver;
 import com.cloudblue.connect.internal.metadata.resource.get.GetResourceOutputResolver;
 import com.cloudblue.connect.internal.metadata.resource.get.GetResourceTypeKeysResolver;
-
 import com.cloudblue.connect.internal.model.resource.Action;
+
 import org.mule.runtime.api.exception.MuleException;
 import org.mule.runtime.extension.api.annotation.metadata.MetadataKeyId;
 import org.mule.runtime.extension.api.annotation.metadata.OutputResolver;

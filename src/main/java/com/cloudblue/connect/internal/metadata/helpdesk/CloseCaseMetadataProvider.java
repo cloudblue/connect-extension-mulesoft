@@ -29,6 +29,7 @@ public class CloseCaseMetadataProvider implements MetadataProvider {
         objectBuilder.addField()
                 .key(Keys.CASE_ID.getField())
                 .label(Keys.CASE_ID.getLabel())
+                .required()
                 .value()
                 .stringType();
 
