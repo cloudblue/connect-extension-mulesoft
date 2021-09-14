@@ -318,17 +318,17 @@ public final class CBCConnection {
                         true,
                         null);
 
+                Result.Builder<Void, CBCResponseAttributes> resultBuilder = Result.builder();
+
+                Result<Void, CBCResponseAttributes> result = resultBuilder
+                        .attributes(new CBCResponseAttributes(response))
+                        .build();
+
                 String fullFileLocation = location + File.separator + fileName;
                 File outputFile = new File(fullFileLocation);
                 downloadFile(response, outputFile);
 
-                Result.Builder<Void, CBCResponseAttributes> resultBuilder = Result.builder();
-
-                return resultBuilder
-                        .attributes(new CBCResponseAttributes(response))
-                        .build();
-
-
+                return result;
             } catch (IOException | TimeoutException e) {
                 throw new ConnectionException("Server connection error.", e);
             }

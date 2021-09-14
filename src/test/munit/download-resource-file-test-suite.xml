@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:wiremock="http://www.mulesoft.org/schema/mule/wiremock"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit"
+	xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/wiremock http://www.mulesoft.org/schema/mule/wiremock/current/mule-wiremock.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+		
+	<munit:config name="download-resources-file-test-suite.xml" />
+
+	<munit:test name="download_resources_file_operation_test" description="Test Download Resource File">
+		<munit:execution >
+			<wiremock:add-stub config-ref="WireMock_Config"
+							   jsonMapping='#[%dw 2.0 output application/json
+---
+{
+  "request" : {
+    "method" : "GET",
+    "url" : "/usage/chunks/UFC-2021-03-0000-0000-001/download"
+  },
+  "response" : {
+    "status" : 200,
+    "statusMessage": "Ok",
+    "headers": {
+        "Content-Type": "application/octet-stream"
+    },
+    "base64Body": "VGVzdCBjaHVuayBmaWxlLg=="
+  }
+}]'/>
+			<flow-ref name="download_resources_file_operation"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-equals actual="#[payload]"
+									   expected="Test chunk file."
+									   message="File content does not match."/>
+		</munit:validation>
+	</munit:test>
+
+</mule>

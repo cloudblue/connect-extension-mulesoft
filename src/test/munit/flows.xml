@@ -8,16 +8,20 @@
   -->
 
 <mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:file="http://www.mulesoft.org/schema/mule/file"
       xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
       xmlns:cloudblue-connect="http://www.mulesoft.org/schema/mule/cloudblue-connect"
       xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xsi:schemaLocation="
 		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
-		http://www.mulesoft.org/schema/mule/cloudblue-connect http://www.mulesoft.org/schema/mule/cloudblue-connect/current/mule-cloudblue-connect.xsd">
+		http://www.mulesoft.org/schema/mule/cloudblue-connect http://www.mulesoft.org/schema/mule/cloudblue-connect/current/mule-cloudblue-connect.xsd
+        http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
 
 
     <cloudblue-connect:config name="CloudBlue_Connect_Config_Test">
         <cloudblue-connect:connection endpoint="http://localhost:${http.port}" token="MOCK_TOKEN" />
     </cloudblue-connect:config>
+
+    <file:config name="File_Config"/>
 
     <flow name="list_resource_operation">
         <cloudblue-connect:list-resources
@@ -100,5 +104,19 @@
                                        action="UPLOAD"
                                        config-ref="CloudBlue_Connect_Config_Test"
                                        file="${TEST_RESOURCE_LOCATION}/__files/Usage_File.xlsx"/>
+    </flow>
+
+    <flow name="download_resources_file_operation">
+        <set-payload value='#[%dw 2.0 output application/java --- { usage_chunk_id: "UFC-2021-03-0000-0000-001" }]'/>
+        <cloudblue-connect:download-file
+                config-ref="CloudBlue_Connect_Config_Test"
+                location="${TEST_RESOURCE_LOCATION}/"
+                fileName="UFC-2021-03-0000-0000-001.txt"
+                resourceType="USAGE_CHUNK"
+                action="DOWNLOAD"/>
+        <file:read config-ref="File_Config"
+                   path="${TEST_RESOURCE_LOCATION}/UFC-2021-03-0000-0000-001.txt"
+                   outputEncoding="UTF-8"
+                   outputMimeType="text/plain; charset=UTF-8"/>
     </flow>
 </mule>
