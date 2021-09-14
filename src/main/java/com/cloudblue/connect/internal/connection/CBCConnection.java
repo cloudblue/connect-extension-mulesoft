@@ -17,9 +17,11 @@ import com.cloudblue.connect.internal.clients.utils.RequestUtil;
 import com.cloudblue.connect.internal.clients.utils.Url;
 import com.cloudblue.connect.api.parameters.CBCResponseAttributes;
 import com.cloudblue.connect.internal.connection.provider.CBCConnectionProvider;
+import com.cloudblue.connect.internal.exception.BadRequestException;
+import com.cloudblue.connect.internal.exception.BadServerException;
+import com.cloudblue.connect.internal.exception.ConnectionException;
+import com.cloudblue.connect.internal.exception.UnauthorizedException;
 
-import org.mule.runtime.api.exception.DefaultMuleException;
-import org.mule.runtime.api.exception.MuleException;
 import org.mule.runtime.api.metadata.MediaType;
 import org.mule.runtime.extension.api.runtime.operation.Result;
 import org.mule.runtime.http.api.client.HttpClient;
@@ -218,7 +220,7 @@ public final class CBCConnection {
             builder.entity(new MultipartHttpEntity(parts));
         }
 
-        private <S> void buildEntity(HttpRequestBuilder builder, S payload) throws MuleException {
+        private <S> void buildEntity(HttpRequestBuilder builder, S payload) {
             String requestBody;
             try {
                 if (payload instanceof String) {
@@ -236,11 +238,11 @@ public final class CBCConnection {
                     builder.entity(new ByteArrayHttpEntity(requestBody.getBytes()));
                 }
             } catch (IOException e) {
-                throw new DefaultMuleException(e);
+                throw new BadRequestException("Error occurred during creating request.", e);
             }
         }
 
-        private <S> HttpRequest getRequest(Method method, String action, S payload) throws MuleException {
+        private <S> HttpRequest getRequest(Method method, String action, S payload) {
 
             HttpRequestBuilder builder = HttpRequest.builder()
                     .method(method)
@@ -256,13 +258,27 @@ public final class CBCConnection {
             return builder.build();
         }
 
-        private Result<InputStream, CBCResponseAttributes> execute(HttpRequest request) throws MuleException {
+        private void checkError(HttpResponse response) {
+            int statusCode = response.getStatusCode();
+
+            if (statusCode == 401 || statusCode == 403) {
+                throw new UnauthorizedException("Either authentication token is not valid or resource access is forbidden.");
+            } else if (statusCode > 399 && statusCode < 500) {
+                throw new BadRequestException(response.getReasonPhrase());
+            } else if (statusCode > 499) {
+                throw new BadServerException(response.getReasonPhrase());
+            }
+        }
+
+        private Result<InputStream, CBCResponseAttributes> execute(HttpRequest request) {
             try {
                 HttpResponse response = client.send(
                         request,
                         connectionParams.getMilSecTimeout(),
                         true,
                         null);
+
+                checkError(response);
 
                 Result.Builder<InputStream, CBCResponseAttributes> resultBuilder = Result.builder();
 
@@ -274,24 +290,27 @@ public final class CBCConnection {
 
 
             } catch (IOException | TimeoutException e) {
-                throw new DefaultMuleException(e);
+                throw new ConnectionException("Server connection error.", e);
             }
         }
 
-        private void downloadFile(HttpResponse response, File file) throws IOException {
-            InputStream inputStream = response.getEntity().getContent();
+        private void downloadFile(HttpResponse response, File file) {
+            try {
+                InputStream inputStream = response.getEntity().getContent();
 
-            try (FileOutputStream outputStream = new FileOutputStream(file, false)) {
-                int read;
-                byte[] bytes = new byte[8192];
-                while ((read = inputStream.read(bytes)) != -1) {
-                    outputStream.write(bytes, 0, read);
+                try (FileOutputStream outputStream = new FileOutputStream(file, false)) {
+                    int read;
+                    byte[] bytes = new byte[8192];
+                    while ((read = inputStream.read(bytes)) != -1) {
+                        outputStream.write(bytes, 0, read);
+                    }
                 }
+            } catch (IOException e) {
+                throw new BadRequestException("Error during saving file to specified location.", e);
             }
         }
 
-        private Result<Void, CBCResponseAttributes> download(HttpRequest request, String location, String fileName)
-                throws MuleException {
+        private Result<Void, CBCResponseAttributes> download(HttpRequest request, String location, String fileName) {
             try {
                 HttpResponse response = client.send(
                         request,
@@ -311,38 +330,38 @@ public final class CBCConnection {
 
 
             } catch (IOException | TimeoutException e) {
-                throw new DefaultMuleException(e);
+                throw new ConnectionException("Server connection error.", e);
             }
         }
 
-        public Result<InputStream, CBCResponseAttributes> get() throws MuleException {
+        public Result<InputStream, CBCResponseAttributes> get() {
             return this.execute(getRequest(Method.GET, null, null));
         }
 
-        public void delete() throws MuleException {
+        public void delete() {
             this.execute(getRequest(Method.DELETE, null, null));
         }
 
-        public Result<InputStream, CBCResponseAttributes> first() throws MuleException {
+        public Result<InputStream, CBCResponseAttributes> first() {
             limit = 1;
 
             return this.execute(getRequest(Method.GET, null, null));
         }
 
-        public <S> Result<InputStream, CBCResponseAttributes> create(S payload) throws MuleException {
+        public <S> Result<InputStream, CBCResponseAttributes> create(S payload) {
             return this.execute(getRequest(Method.POST, null, payload));
         }
 
-        public <S> Result<InputStream, CBCResponseAttributes> update(S payload) throws MuleException {
+        public <S> Result<InputStream, CBCResponseAttributes> update(S payload) {
 
             return this.execute(getRequest(Method.PUT, null, payload));
         }
 
-        public <S> Result<InputStream, CBCResponseAttributes> action(String action, Method method, S payload) throws MuleException {
+        public <S> Result<InputStream, CBCResponseAttributes> action(String action, Method method, S payload) {
             return this.execute(getRequest(method, action, payload));
         }
 
-        public Result<Void, CBCResponseAttributes> download(String location, String fileName) throws MuleException {
+        public Result<Void, CBCResponseAttributes> download(String location, String fileName) {
             return this.download(
                     getRequest(Method.GET, null, null),
                     location,

@@ -11,10 +11,12 @@ import com.cloudblue.connect.api.parameters.filters.*;
 import com.cloudblue.connect.internal.config.CBCConfiguration;
 import com.cloudblue.connect.internal.config.CBCWebhookConfig;
 
+import com.cloudblue.connect.internal.error.CBCErrorType;
 import org.mule.runtime.extension.api.annotation.Extension;
 import org.mule.runtime.extension.api.annotation.SubTypeMapping;
 import org.mule.runtime.extension.api.annotation.dsl.xml.Xml;
 import org.mule.runtime.extension.api.annotation.Configurations;
+import org.mule.runtime.extension.api.annotation.error.ErrorTypes;
 
 
 /**
@@ -25,6 +27,7 @@ import org.mule.runtime.extension.api.annotation.Configurations;
 @Xml(prefix = "cloudblue-connect")
 @Extension(name = "CloudBlue Connect", vendor = "CloudBlue")
 @Configurations({CBCConfiguration.class, CBCWebhookConfig.class})
+@ErrorTypes(CBCErrorType.class)
 @SubTypeMapping(
         baseType = Filter.class,
         subTypes = {

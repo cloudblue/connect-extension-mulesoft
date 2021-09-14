@@ -9,6 +9,8 @@ package com.cloudblue.connect.internal.source;
 
 import com.cloudblue.connect.internal.clients.parsers.jackson.JacksonResponseUnmarshaller;
 import com.cloudblue.connect.api.parameters.CBCResponseAttributes;
+import com.cloudblue.connect.internal.exception.ConnectionException;
+import com.cloudblue.connect.internal.exception.WebhookException;
 import com.cloudblue.connect.internal.model.Webhook;
 import com.cloudblue.connect.internal.config.CBCWebhookConfig;
 import com.cloudblue.connect.internal.connection.CBCConnection;
@@ -17,12 +19,12 @@ import com.cloudblue.connect.internal.model.resource.Action;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 
-import org.mule.runtime.api.exception.DefaultMuleException;
 import org.mule.runtime.api.exception.MuleException;
 import org.mule.runtime.api.exception.MuleRuntimeException;
 import org.mule.runtime.api.message.Message;
 import org.mule.runtime.api.metadata.TypedValue;
 import org.mule.runtime.api.transformation.TransformationService;
+import org.mule.runtime.extension.api.exception.ModuleException;
 import org.mule.runtime.extension.api.runtime.operation.Result;
 import org.mule.runtime.extension.api.runtime.source.SourceCallbackContext;
 import org.mule.runtime.http.api.domain.entity.ByteArrayHttpEntity;
@@ -90,13 +92,13 @@ public class WebhookSourceHelper {
             result = q.collection(WEBHOOKS, input.getId()).update(input);
         }
 
-        MuleException muleException = new DefaultMuleException("Not able to list existing Webhook Objects");
+        ModuleException moduleException = new WebhookException("Not able to list existing Webhook Objects");
 
         CBCResponseAttributes attributes = result.getAttributes()
-                .orElseThrow(() -> muleException);
+                .orElseThrow(() -> moduleException);
 
         if (attributes.getStatusCode() != 200) {
-            throw muleException;
+            throw moduleException;
         }
 
         InputStream resultObject = result.getOutput();
@@ -104,7 +106,7 @@ public class WebhookSourceHelper {
         try {
             return unmarshaller.getObjectMapper().readValue(resultObject, Webhook.class);
         } catch (IOException e) {
-            throw muleException;
+            throw moduleException;
         }
     }
 
@@ -151,13 +153,13 @@ public class WebhookSourceHelper {
                     .collection(WEBHOOKS)
                     .get();
 
-            MuleException muleException = new DefaultMuleException("Not able to list existing Webhook Objects");
+            ModuleException moduleException = new WebhookException("Not able to update existing Webhook Objects");
 
             CBCResponseAttributes attributes = result.getAttributes()
-                    .orElseThrow(() -> muleException);
+                    .orElseThrow(() -> moduleException);
 
             if (attributes.getStatusCode() != 200) {
-                throw muleException;
+                throw moduleException;
             }
 
             InputStream resultObject = result.getOutput();
@@ -179,7 +181,7 @@ public class WebhookSourceHelper {
 
             return webhook != null? webhook.getId() : null;
         } catch (IOException e) {
-            throw new DefaultMuleException(e);
+            throw new ConnectionException("Error during updating webhook object", e);
         }
     }
 

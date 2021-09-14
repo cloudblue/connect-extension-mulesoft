@@ -9,6 +9,7 @@ package com.cloudblue.connect.internal.operation;
 
 import com.cloudblue.connect.api.parameters.CBCResponseAttributes;
 import com.cloudblue.connect.internal.connection.CBCConnection;
+import com.cloudblue.connect.internal.error.provider.OperationErrorTypeProvider;
 import com.cloudblue.connect.internal.metadata.MetadataUtil;
 import com.cloudblue.connect.internal.metadata.Metadata;
 import com.cloudblue.connect.internal.metadata.resource.list.ListResourceInputResolver;
@@ -16,6 +17,7 @@ import com.cloudblue.connect.internal.metadata.resource.list.ListResourceOutputR
 import com.cloudblue.connect.internal.metadata.resource.list.ListResourceTypeKeysResolver;
 
 import org.mule.runtime.api.exception.MuleException;
+import org.mule.runtime.extension.api.annotation.error.Throws;
 import org.mule.runtime.extension.api.annotation.metadata.MetadataKeyId;
 import org.mule.runtime.extension.api.annotation.metadata.OutputResolver;
 import org.mule.runtime.extension.api.annotation.metadata.TypeResolver;
@@ -29,6 +31,7 @@ import java.util.Map;
 
 import static org.mule.runtime.extension.api.annotation.param.MediaType.APPLICATION_JSON;
 
+@Throws(OperationErrorTypeProvider.class)
 public class ListResourcesOperation extends BaseListOperation {
 
     @Parameter

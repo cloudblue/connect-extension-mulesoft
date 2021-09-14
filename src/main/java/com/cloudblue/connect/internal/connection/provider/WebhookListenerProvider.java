@@ -13,7 +13,6 @@ import com.cloudblue.connect.internal.connection.WebhookListener;
 import org.mule.runtime.api.connection.CachedConnectionProvider;
 import org.mule.runtime.api.connection.ConnectionException;
 import org.mule.runtime.api.connection.ConnectionValidationResult;
-import org.mule.runtime.api.exception.DefaultMuleException;
 import org.mule.runtime.api.exception.MuleException;
 import org.mule.runtime.api.lifecycle.InitialisationException;
 import org.mule.runtime.api.lifecycle.Lifecycle;
@@ -221,12 +220,9 @@ public class WebhookListenerProvider implements CachedConnectionProvider<Webhook
             httpClient.start();
 
         } catch (IOException e) {
-            throw new DefaultMuleException(
-                    new ConnectionException(
-                            format("Not able to start Webhook Listener with configuration %s", configName),
-                            e
-                    )
-            );
+            throw new ConnectionException(
+                    format("Not able to start Webhook Listener with configuration %s", configName),
+                    e);
         }
     }
 

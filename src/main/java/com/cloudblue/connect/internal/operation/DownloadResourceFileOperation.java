@@ -10,12 +10,14 @@ package com.cloudblue.connect.internal.operation;
 import com.cloudblue.connect.api.parameters.CBCResponseAttributes;
 import com.cloudblue.connect.api.parameters.ActionIdentifier;
 import com.cloudblue.connect.internal.connection.CBCConnection;
+import com.cloudblue.connect.internal.error.provider.OperationErrorTypeProvider;
 import com.cloudblue.connect.internal.metadata.resource.download.ResourceFileDownloadInputResolver;
 import com.cloudblue.connect.internal.metadata.resource.download.ResourceFileDownloadTypeKeysResolver;
 
 import org.mule.runtime.api.exception.MuleException;
 import org.mule.runtime.api.meta.model.display.PathModel;
 import org.mule.runtime.extension.api.annotation.Expression;
+import org.mule.runtime.extension.api.annotation.error.Throws;
 import org.mule.runtime.extension.api.annotation.metadata.MetadataKeyId;
 import org.mule.runtime.extension.api.annotation.metadata.TypeResolver;
 import org.mule.runtime.extension.api.annotation.param.*;
@@ -28,6 +30,7 @@ import java.util.Map;
 
 import static org.mule.runtime.extension.api.annotation.param.MediaType.ANY;
 
+@Throws(OperationErrorTypeProvider.class)
 public class DownloadResourceFileOperation extends BaseFileOperation {
 
     @Parameter

@@ -13,7 +13,6 @@ import org.junit.runners.Parameterized;
 import org.mule.metadata.api.builder.BaseTypeBuilder;
 import org.mule.metadata.api.model.*;
 import org.mule.runtime.api.metadata.MetadataContext;
-import org.mule.runtime.api.metadata.resolving.InputTypeResolver;
 
 import java.util.Optional;
 
