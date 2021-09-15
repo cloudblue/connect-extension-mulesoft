@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	  xmlns:munit="http://www.mulesoft.org/schema/mule/munit"
+	  xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	  xmlns="http://www.mulesoft.org/schema/mule/core"
+	  xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	  xmlns:mtf="http://www.mulesoft.org/schema/mule/mtf"
+	  xmlns:cloudblue-connect="http://www.mulesoft.org/schema/mule/cloudblue-connect"
+	  xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd
+		http://www.mulesoft.org/schema/mule/mtf  http://www.mulesoft.org/schema/mule/mtf/current/mule-mtf.xsd
+		http://www.mulesoft.org/schema/mule/cloudblue-connect http://www.mulesoft.org/schema/mule/cloudblue-connect/current/mule-cloudblue-connect.xsd">
+		
+	<munit:config name="get-resource-test-metadata-suite.xml" />
+
+	<mtf:tooling-test name="get-resource-test-input-metadata" >
+		<mtf:get-input-metadata parameter="getResourceParameter">
+			<cloudblue-connect:get-resource resourceType="REQUEST"
+											  config-ref="CloudBlue_Connect_Config_Test"/>
+		</mtf:get-input-metadata>
+		<mtf:validation>
+			<set-variable variableName="fields" value="#[payload.fields]" />
+			<munit-tools:assert-equals actual="#[payload.format]" expected="#['java']" />
+			<munit-tools:assert-equals actual="#[sizeOf(vars.fields)]" expected="#[1]" />
+			<munit-tools:assert-equals actual="#[vars.fields[0].key.name]" expected="#['request_id']"/>
+			<munit-tools:assert-equals actual="#[vars.fields[0].model.'type']" expected="#['String']"/>
+		</mtf:validation>
+	</mtf:tooling-test>
+
+	<mtf:tooling-test name="get-resource-test-output-metadata" >
+		<mtf:get-output-metadata>
+			<cloudblue-connect:get-resource resourceType="REQUEST"
+											config-ref="CloudBlue_Connect_Config_Test"/>
+		</mtf:get-output-metadata>
+		<mtf:validation>
+			<munit-tools:assert-equals actual="#[payload.format]" expected="#['json']"/>
+			<mtf:assert-type fromSchema="Request-schema.json"/>
+		</mtf:validation>
+	</mtf:tooling-test>
+
+	<mtf:tooling-test name="get-resource-test-metadata-keys" >
+		<mtf:get-metadata-keys>
+			<cloudblue-connect:get-resource resourceType="REQUEST"
+											config-ref="CloudBlue_Connect_Config_Test"/>
+		</mtf:get-metadata-keys>
+		<mtf:validation>
+			<munit-tools:assert-equals actual="#[sizeOf(payload)]" expected="#[21]"/>
+		</mtf:validation>
+	</mtf:tooling-test>
+
+
+</mule>
