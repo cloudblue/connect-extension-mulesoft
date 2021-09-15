@@ -8,5 +8,28 @@
     "product": {
       "id": "PRD-000-000-000"
     }
+  },
+  {
+    "id": "WB-000-000-001",
+    "type": "event",
+    "object_class": "fulfillment_request",
+    "external_url": "http://localhost/webhook/webhook/fulfillment_request",
+    "jwt_secret": "Test-token-key-for-webhook-based-authentication",
+    "active": true,
+    "product": {
+      "id": "PRD-000-000-000"
+    }
+  },
+  {
+    "id": "WB-000-000-002",
+    "type": "draft_tcr_t1_val",
+    "object_class": "tier_config_request",
+    "active": true,
+    "external_url": "http://localhost/webhook/tcr_validation/tier_config_request",
+    "jwt_secret": "Test-token-key-for-webhook-based-authentication",
+    "http_method": "POST",
+    "product": {
+      "id": "PRD-635-752-204"
+    }
   }
 ]

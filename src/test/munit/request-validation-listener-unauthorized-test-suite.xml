@@ -10,11 +10,11 @@
 		http://www.mulesoft.org/schema/mule/wiremock http://www.mulesoft.org/schema/mule/wiremock/current/mule-wiremock.xsd
 		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
 		
-	<munit:config name="request-validation-listener-test-suite.xml" />
+	<munit:config name="request-validation-listener-unauthorized-test-suite.xml" />
 
-	<munit:before-test name="before.test">
-			<wiremock:add-stub config-ref="WireMock_Config"
-							   jsonMapping='#[%dw 2.0 output application/json
+	<munit:before-test name="request_validation_listener_source_unauthorized_test_before">
+		<wiremock:add-stub config-ref="WireMock_Config"
+						   jsonMapping='#[%dw 2.0 output application/json
  ---
 {
   "request" : {
@@ -24,26 +24,34 @@
   "response" : {
 	"status" : 200,
 	"statusMessage": "ok",
-	"bodyFileName": "webhook.json"
+	"bodyFileName": "draft_request_validation_webhook.json"
+  }
+}]'/>
+		<wiremock:add-stub config-ref="WireMock_Config"
+						   jsonMapping='#[%dw 2.0 output application/json
+ ---
+{
+  "request" : {
+    "method" : "POST",
+    "url" : "/notifications/webhooks"
+  },
+  "response" : {
+    "status" : 201,
+    "statusMessage": "Created",
+    "bodyFileName": "draft_request_validation_webhook.json"
   }
 }]'/>
 	</munit:before-test>
 
-	<munit:test name="request_validation_listener_source_test" description="Test Draft Request Validation">
+	<munit:test name="request_validation_listener_source_unauthorized_test"
+				description="Test Draft Request Validation Unauthorized"
+				expectedErrorType="HTTP:UNAUTHORIZED">
 		<munit:enable-flow-sources>
 			<munit:enable-flow-source value="draft_request_validation_source"/>
 		</munit:enable-flow-sources>
 		<munit:execution >
-			<flow-ref name="draft_request_validation_flow"/>
+			<flow-ref name="draft_request_validation_unauthorized_flow"/>
 		</munit:execution>
-		<munit:validation>
-			<munit-tools:assert-that expression="#[payload]"
-									 is="#[MunitTools::notNullValue()]"
-									 message="Action response object is null."/>
-			<munit-tools:assert-equals actual="#[attributes.statusCode]"
-									   expected="#[200]"
-									   message="Response code should be 200."/>
-		</munit:validation>
 	</munit:test>
 
 </mule>

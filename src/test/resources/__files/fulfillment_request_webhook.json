@@ -1,0 +1,11 @@
+{
+  "id": "WB-000-000-001",
+  "type": "event",
+  "object_class": "fulfillment_request",
+  "external_url": "http://localhost/webhook/webhook/fulfillment_request",
+  "jwt_secret": "Test-token-key-for-webhook-based-authentication",
+  "active": true,
+  "product": {
+    "id": "PRD-000-000-000"
+  }
+}

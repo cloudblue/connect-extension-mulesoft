@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:wiremock="http://www.mulesoft.org/schema/mule/wiremock"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit"
+	xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/wiremock http://www.mulesoft.org/schema/mule/wiremock/current/mule-wiremock.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+		
+	<munit:config name="webhook-listener-test-suite.xml" />
+
+	<munit:before-test name="webhook_source_test_before">
+		<wiremock:add-stub config-ref="WireMock_Config"
+						   jsonMapping='#[%dw 2.0 output application/json
+ ---
+{
+  "request" : {
+	"method" : "PUT",
+	"url" : "/notifications/webhooks/WB-000-000-001"
+  },
+  "response" : {
+	"status" : 200,
+	"statusMessage": "ok",
+	"bodyFileName": "fulfillment_request_webhook.json"
+  }
+}]'/>
+		<wiremock:add-stub config-ref="WireMock_Config"
+						   jsonMapping='#[%dw 2.0 output application/json
+ ---
+{
+  "request" : {
+    "method" : "POST",
+    "url" : "/notifications/webhooks"
+  },
+  "response" : {
+    "status" : 201,
+    "statusMessage": "Created",
+    "bodyFileName": "fulfillment_request_webhook.json"
+  }
+}]'/>
+		<wiremock:add-stub config-ref="WireMock_Config"
+						   jsonMapping='#[%dw 2.0 output application/json
+---
+{
+  "request" : {
+    "method" : "GET",
+    "url" : "/requests?%28eq%28product.id%2CPRD-000-000-000%29%26eq%28status%2Cpending%29%29%26limit%3D2%26offset%3D0"
+  },
+  "response" : {
+    "status" : 200,
+    "statusMessage": "Ok",
+    "bodyFileName": "requests.json"
+  }
+}]'/>
+	</munit:before-test>
+
+	<munit:test name="webhook_listener_source_test"
+				description="Test Fulfillment Request Webhook">
+		<munit:enable-flow-sources>
+			<munit:enable-flow-source value="webhook_fulfillment_request_source"/>
+		</munit:enable-flow-sources>
+		<munit:execution >
+			<flow-ref name="webhook_fulfillment_request_flow"/>
+		</munit:execution>
+		<munit:validation>
+			<munit-tools:assert-that expression="#[payload]"
+									 is="#[MunitTools::notNullValue()]"
+									 message="Validation response object should not be null."/>
+			<munit-tools:assert-equals actual="#[attributes.statusCode]"
+									   expected="#[200]"
+									   message="Response code should be 200."/>
+		</munit:validation>
+	</munit:test>
+
+</mule>

@@ -141,7 +141,7 @@
                 validationType="DRAFT_VALIDATION"
                 path="/validation"
                 productId="PRD-000-000-000"
-                jwtSecret="Test-token-key-for-webhook-based-authentication"/>
+                jwtSecret="${JWT_SECRET}"/>
         <set-payload value="#[%dw 2.0 output application/java --- { id: payload.id,	asset: { id: payload.asset.id, params: [{ id: payload.asset.params[0].id, value: payload.asset.params[0].value, value_error: 'The parameter value is not correct'}]}}]" />
     </flow>
 
@@ -190,6 +190,291 @@
                             "id": "MP-00000"
                         },
                         "id": "PR-0000-0000-0000-001"
+                    }
+                ]]>
+            </http:body>
+            <http:headers >
+                <![CDATA[#[output application/java
+                    ---
+                    {
+	                    Authentication : 'Bearer ${JWT_TOKEN}'
+                    }
+                ]]]>
+            </http:headers>
+        </http:request>
+    </flow>
+
+    <flow name="draft_request_validation_unauthorized_flow">
+        <http:request method="POST"
+                      config-ref="HTTP_Request_configuration"
+                      path="webhook/validation/fulfillment_request">
+            <http:body >
+                <![CDATA[
+                    {
+                        "type": "purchase",
+                        "asset": {
+                            "product": {
+                                "id": "PRD-000-000-000"
+                            },
+                            "connection": {
+                                "id": "CT-0000-0000-0000",
+                                "type": "preview"
+                            },
+                            "external_uid": "be1e3556-3e2d-495a-b5f6-ddecbaae6da5",
+                            "external_id": "0ATDNFJIO1",
+                            "items": [
+                                {
+                                    "id": "PRD_000_000_000_0001",
+                                    "quantity": 21,
+                                    "global_id": "PRD-635-752-204-0001"
+                                }
+                            ],
+                            "params": [
+                                {
+                                    "id": "Name",
+                                    "value": "Value A",
+                                    "value_error": ""
+                                }
+                            ],
+                            "tiers": {
+                                "customer": {
+                                    "id": "TA-4418-8261-6628"
+                                },
+                                "tier1": {
+                                    "id": "TA-0000-2559-7285"
+                                }
+                            }
+                        },
+                        "marketplace": {
+                            "id": "MP-00000"
+                        },
+                        "id": "PR-0000-0000-0000-001"
+                    }
+                ]]>
+            </http:body>
+            <http:headers >
+                <![CDATA[#[output application/java
+                    ---
+                    {
+	                    Authentication : 'Bearer INVALID_TOKEN'
+                    }
+                ]]]>
+            </http:headers>
+        </http:request>
+    </flow>
+
+    <flow name="webhook_fulfillment_request_source">
+        <cloudblue-connect:webhook-listener
+                webhookEventType="FULFILLMENT_REQUEST"
+                config-ref="CloudBlue_Connect_Webhook_config"
+                path="/webhook"
+                productId="PRD-000-000-000"
+                jwtSecret="${JWT_SECRET}"/>
+        <cloudblue-connect:list-resources
+                resourceType="REQUEST"
+                config-ref="CloudBlue_Connect_Config_Test"
+                limit="2">
+            <cloudblue-connect:list-resource-parameter ><![CDATA[#[payload]]]></cloudblue-connect:list-resource-parameter>
+            <cloudblue-connect:filter >
+                <cloudblue-connect:list-filter type="AND" >
+                    <cloudblue-connect:filters >
+                        <cloudblue-connect:mono-filter type="EQ" property="product.id" value="PRD-000-000-000" />
+                        <cloudblue-connect:mono-filter type="EQ" property="status" value="pending" />
+                    </cloudblue-connect:filters>
+                </cloudblue-connect:list-filter>
+            </cloudblue-connect:filter>
+        </cloudblue-connect:list-resources>
+    </flow>
+
+    <flow name="webhook_fulfillment_request_flow">
+        <http:request method="POST"
+                      config-ref="HTTP_Request_configuration"
+                      path="webhook/webhook/fulfillment_request">
+            <http:body >
+                <![CDATA[
+                    {
+                        "webhook_id": "WH-000-000-000",
+                        "webhook_name": "Webhook for Mule Extension Source",
+                        "object_class": "fulfillment_request",
+                        "account_id": "VA-000-000",
+                        "product_id": "PRD-000-000-000",
+                        "api_url": "https://api.connect.cloud.im/public/v1",
+                        "data": {}
+                    }
+                ]]>
+            </http:body>
+            <http:headers >
+                <![CDATA[#[output application/java
+                    ---
+                    {
+	                    Authentication : 'Bearer ${JWT_TOKEN}'
+                    }
+                ]]]>
+            </http:headers>
+        </http:request>
+    </flow>
+
+    <flow name="tcr_validation_source">
+        <cloudblue-connect:tcr-validation-listener validationType="DRAFT_TCR_T1_VALIDATION"
+                                                   config-ref="CloudBlue_Connect_Webhook_config"
+                                                   path="/tcr_validation"
+                                                   productId="PRD-000-000-000"
+                                                   jwtSecret="${JWT_SECRET}"/>
+        <set-payload value='#[%dw 2.0 output application/java
+---
+{
+	"id": "TCR-000-000-000-001",
+	"type": "setup",
+	"status": "draft",
+	"configuration": {
+		"params": [
+			{
+				"value": "t2",
+				"id": "t1_param2"
+			},
+			{
+				"value": "t1",
+				"value_error": "Value is not correct.",
+				"id": "t1_param1"
+			}
+    	]
+	}
+}]'/>
+    </flow>
+
+    <flow name="tcr_validation_flow">
+        <http:request method="POST"
+                      config-ref="HTTP_Request_configuration"
+                      path="/webhook/tcr_validation/tier_config_request">
+            <http:body >
+                <![CDATA[
+                    {
+                        "id": "TCR-000-000-000-001",
+                        "type": "setup",
+                        "status": "draft",
+                        "configuration": {
+                            "id": "TC-000-000-000",
+                            "account": {
+                                "id": "TA-5748-6446-1173",
+                                "name": "Barton, Hand and Goodwin",
+                                "type": "customer",
+                                "external_id": "P-1",
+                                "external_uid": "TUID-2",
+                                "contact_info": {
+                                    "address_line1": "Lebsack Mission",
+                                    "address_line2": "Hickle Manors",
+                                    "city": "Amaravathi",
+                                    "state": "Andhra Pradesh",
+                                    "postal_code": "522020",
+                                    "country": "IN",
+                                    "contact": {
+                                        "first_name": "Mauricio",
+                                        "last_name": "Toy",
+                                        "email": "pgupta++Mauricio_Toy@odin.com",
+                                        "phone_number": {
+                                            "country_code": "+91",
+                                            "area_code": "755",
+                                            "phone_number": "5059167",
+                                            "extension": ""
+                                        }
+                                    }
+                                }
+                            },
+                            "product": {
+                                "id": "PRD-000-000-000"
+                            },
+                            "tier_level": 1,
+                            "connection": {
+                                "id": "CT-8522-2170",
+                                "type": "production",
+                                "status": "approved",
+                                "provider": {
+                                    "id": "PA-080-719",
+                                    "name": "Connect Labs Provider",
+                                    "icon": "/media/PA-080-719/media/icon.jpg"
+                                },
+                                "vendor": {
+                                    "id": "VA-674-253",
+                                    "name": "CloudBlue ISV",
+                                    "icon": "/media/VA-674-253/media/icon_fobt0xS.png"
+                                },
+                                "hub": {
+                                    "id": "HB-6797-0983",
+                                    "name": "GM-CB-Hub"
+                                }
+                            },
+                            "params": [
+                                {
+                                    "value": "t2",
+                                    "id": "t1_param2"
+                                },
+                                {
+                                    "value": "t1",
+                                    "id": "t1_param1"
+                                }
+                            ]
+                            "status": "pending"
+                        }
+                        "params": [
+                            {
+                                "value": "t1",
+                                "structured_value": "",
+                                "title": "T1 Param1",
+                                "description": "T1 Param1",
+                                "type": "text",
+                                "scope": "tier1",
+                                "phase": "ordering",
+                                "constraints": {
+                                    "required": true,
+                                    "hidden": false,
+                                    "unique": false
+                                },
+                                "id": "t1_param1"
+                            },
+                            {
+                                "value": "t2",
+                                "structured_value": "",
+                                "title": "T1 Param2",
+                                "description": "T1 Param2",
+                                "type": "text",
+                                "scope": "tier1",
+                                "phase": "ordering",
+                                "constraints": {
+                                    "required": true,
+                                    "hidden": false,
+                                    "unique": false
+                                },
+                                "id": "t1_param2"
+                            }
+                        ],
+                        "tiers": {
+                            "tier1": {
+                                "id": "TA-5748-6446-1173",
+                                "name": "Barton, Hand and Goodwin",
+                                "type": "customer",
+                                "external_id": "P-1",
+                                "external_uid": "TUID-2",
+                                "contact_info": {
+                                    "address_line1": "Lebsack Mission",
+                                    "address_line2": "Hickle Manors",
+                                    "city": "Amaravathi",
+                                    "state": "Andhra Pradesh",
+                                    "postal_code": "522020",
+                                    "country": "IN",
+                                    "contact": {
+                                        "first_name": "Mauricio",
+                                        "last_name": "Toy",
+                                        "email": "pgupta++Mauricio_Toy@odin.com",
+                                        "phone_number": {
+                                            "country_code": "+91",
+                                            "area_code": "755",
+                                            "phone_number": "5059167",
+                                            "extension": ""
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 ]]>
             </http:body>
