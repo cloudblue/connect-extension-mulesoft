@@ -17,7 +17,6 @@ import com.cloudblue.connect.internal.metadata.resource.create.CreateResourceInp
 import com.cloudblue.connect.internal.metadata.resource.create.CreateResourceOutputResolver;
 import com.cloudblue.connect.internal.metadata.resource.create.CreateResourceTypeKeysResolver;
 
-import org.mule.runtime.api.exception.MuleException;
 import org.mule.runtime.extension.api.annotation.error.Throws;
 import org.mule.runtime.extension.api.annotation.metadata.MetadataKeyId;
 import org.mule.runtime.extension.api.annotation.metadata.OutputResolver;
@@ -46,7 +45,7 @@ public class CreateResourceOperation {
             @Connection CBCConnection connection,
             @TypeResolver(CreateResourceInputResolver.class)
             @Content InputStream createResourceParameter
-    ) throws MuleException {
+    ) {
         Metadata metadata = MetadataUtil.getMetadata(identifier.getResourceType());
 
         return connection.newQ()

@@ -202,6 +202,13 @@ public class WebhookListenerProvider implements CachedConnectionProvider<Webhook
             );
         }
 
+        httpClient = httpService.getClientFactory()
+                .create(new HttpClientConfiguration.Builder()
+                        .setProxyConfig(connectionParams.getProxyConfig())
+                        .setName(configName)
+                        .setConnectionIdleTimeout(connectionParams.getMilSecTimeout())
+                        .build());
+
         webhookListener.setCbcConnection(new CBCConnection(this.httpClient, connectionParams));
 
     }
@@ -209,14 +216,8 @@ public class WebhookListenerProvider implements CachedConnectionProvider<Webhook
     @Override
     public void start() throws MuleException {
         try {
-            webhookListener.getHttpServer().start();
 
-            httpClient = httpService.getClientFactory()
-                    .create(new HttpClientConfiguration.Builder()
-                            .setProxyConfig(connectionParams.getProxyConfig())
-                            .setName(configName)
-                            .setConnectionIdleTimeout(connectionParams.getMilSecTimeout())
-                            .build());
+            webhookListener.getHttpServer().start();
             httpClient.start();
 
         } catch (IOException e) {

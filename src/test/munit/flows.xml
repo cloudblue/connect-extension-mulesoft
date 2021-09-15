@@ -11,15 +11,30 @@
       xmlns:file="http://www.mulesoft.org/schema/mule/file"
       xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
       xmlns:cloudblue-connect="http://www.mulesoft.org/schema/mule/cloudblue-connect"
+      xmlns:http="http://www.mulesoft.org/schema/mule/http"
       xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xsi:schemaLocation="
 		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 		http://www.mulesoft.org/schema/mule/cloudblue-connect http://www.mulesoft.org/schema/mule/cloudblue-connect/current/mule-cloudblue-connect.xsd
-        http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+        http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
+        http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
 
 
     <cloudblue-connect:config name="CloudBlue_Connect_Config_Test">
         <cloudblue-connect:connection endpoint="http://localhost:${http.port}" token="MOCK_TOKEN" />
     </cloudblue-connect:config>
+
+    <cloudblue-connect:webhook-config name="CloudBlue_Connect_Webhook_config"
+                                      basePath="webhook" >
+        <cloudblue-connect:listener-connection host="localhost"
+                                               port="${webhook.port}"
+                                               webhookBindingUrl="http://localhost"
+                                               token="MOCK_TOKEN"
+                                               endpoint="http://localhost:${http.port}" />
+    </cloudblue-connect:webhook-config>
+
+    <http:request-config name="HTTP_Request_configuration">
+        <http:request-connection host="localhost" port="${webhook.port}" usePersistentConnections="false" />
+    </http:request-config>
 
     <file:config name="File_Config"/>
 
@@ -118,5 +133,74 @@
                    path="${TEST_RESOURCE_LOCATION}/UFC-2021-03-0000-0000-001.txt"
                    outputEncoding="UTF-8"
                    outputMimeType="text/plain; charset=UTF-8"/>
+    </flow>
+
+    <flow name="draft_request_validation_source">
+        <cloudblue-connect:request-validation-listener
+                config-ref="CloudBlue_Connect_Webhook_config"
+                validationType="DRAFT_VALIDATION"
+                path="/validation"
+                productId="PRD-000-000-000"
+                jwtSecret="Test-token-key-for-webhook-based-authentication"/>
+        <set-payload value="#[%dw 2.0 output application/java --- { id: payload.id,	asset: { id: payload.asset.id, params: [{ id: payload.asset.params[0].id, value: payload.asset.params[0].value, value_error: 'The parameter value is not correct'}]}}]" />
+    </flow>
+
+    <flow name="draft_request_validation_flow">
+        <http:request method="POST"
+                      config-ref="HTTP_Request_configuration"
+                      path="webhook/validation/fulfillment_request">
+            <http:body >
+                <![CDATA[
+                    {
+                        "type": "purchase",
+                        "asset": {
+                            "product": {
+                                "id": "PRD-000-000-000"
+                            },
+                            "connection": {
+                                "id": "CT-0000-0000-0000",
+                                "type": "preview"
+                            },
+                            "external_uid": "be1e3556-3e2d-495a-b5f6-ddecbaae6da5",
+                            "external_id": "0ATDNFJIO1",
+                            "items": [
+                                {
+                                    "id": "PRD_000_000_000_0001",
+                                    "quantity": 21,
+                                    "global_id": "PRD-635-752-204-0001"
+                                }
+                            ],
+                            "params": [
+                                {
+                                    "id": "Name",
+                                    "value": "Value A",
+                                    "value_error": ""
+                                }
+                            ],
+                            "tiers": {
+                                "customer": {
+                                    "id": "TA-4418-8261-6628"
+                                },
+                                "tier1": {
+                                    "id": "TA-0000-2559-7285"
+                                }
+                            }
+                        },
+                        "marketplace": {
+                            "id": "MP-00000"
+                        },
+                        "id": "PR-0000-0000-0000-001"
+                    }
+                ]]>
+            </http:body>
+            <http:headers >
+                <![CDATA[#[output application/java
+                    ---
+                    {
+	                    Authentication : 'Bearer ${JWT_TOKEN}'
+                    }
+                ]]]>
+            </http:headers>
+        </http:request>
     </flow>
 </mule>

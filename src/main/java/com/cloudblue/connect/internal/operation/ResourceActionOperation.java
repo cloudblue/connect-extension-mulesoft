@@ -17,7 +17,6 @@ import com.cloudblue.connect.internal.metadata.ActionMetadata;
 import com.cloudblue.connect.internal.metadata.Metadata;
 import com.cloudblue.connect.internal.metadata.resource.action.*;
 
-import org.mule.runtime.api.exception.MuleException;
 import org.mule.runtime.extension.api.annotation.error.Throws;
 import org.mule.runtime.extension.api.annotation.metadata.MetadataKeyId;
 import org.mule.runtime.extension.api.annotation.metadata.OutputResolver;
@@ -48,7 +47,7 @@ public class ResourceActionOperation extends BaseResourceIdentifierOperation {
             @Connection CBCConnection connection,
             @TypeResolver(ResourceActionInputResolver.class)
             @Content Object resourceActionParameter
-    ) throws MuleException {
+    ) {
         Metadata metadata = MetadataUtil.getMetadata(identifier.getResourceType());
 
         ActionMetadata actionMetadata = MetadataUtil.getActionMetadata(

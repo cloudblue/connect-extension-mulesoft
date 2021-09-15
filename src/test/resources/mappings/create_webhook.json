@@ -1,0 +1,11 @@
+{
+  "request" : {
+    "method" : "POST",
+    "url" : "/notifications/webhooks"
+  },
+  "response" : {
+    "status" : 201,
+    "statusMessage": "Created",
+    "bodyFileName": "webhook.json"
+  }
+}

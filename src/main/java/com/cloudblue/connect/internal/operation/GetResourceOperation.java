@@ -15,7 +15,6 @@ import com.cloudblue.connect.internal.metadata.resource.get.GetResourceOutputRes
 import com.cloudblue.connect.internal.metadata.resource.get.GetResourceTypeKeysResolver;
 import com.cloudblue.connect.internal.model.resource.Action;
 
-import org.mule.runtime.api.exception.MuleException;
 import org.mule.runtime.extension.api.annotation.error.Throws;
 import org.mule.runtime.extension.api.annotation.metadata.MetadataKeyId;
 import org.mule.runtime.extension.api.annotation.metadata.OutputResolver;
@@ -45,7 +44,7 @@ public class GetResourceOperation extends BaseResourceIdentifierOperation {
             @Connection CBCConnection connection,
             @TypeResolver(GetResourceInputResolver.class)
             @Content Map<String, Object> getResourceParameter
-    ) throws MuleException {
+    ) {
 
         return getQ(connection, resourceType, Action.GET.name(), getResourceParameter)
                 .get();

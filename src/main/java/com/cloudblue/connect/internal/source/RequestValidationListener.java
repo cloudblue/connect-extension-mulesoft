@@ -7,45 +7,45 @@
 
 package com.cloudblue.connect.internal.source;
 
-import com.cloudblue.connect.api.webhook.WebhookEventType;
+import com.cloudblue.connect.api.webhook.RequestValidationType;
 import com.cloudblue.connect.api.webhook.WebhookRequestAttributes;
+import com.cloudblue.connect.internal.exception.WebhookException;
 import com.cloudblue.connect.internal.metadata.MetadataUtil;
 
-import org.mule.runtime.api.exception.MuleRuntimeException;
 import org.mule.runtime.extension.api.annotation.metadata.fixed.OutputJsonType;
-import org.mule.runtime.extension.api.annotation.param.*;
+import org.mule.runtime.extension.api.annotation.param.MediaType;
+import org.mule.runtime.extension.api.annotation.param.Parameter;
 import org.mule.runtime.extension.api.annotation.param.display.Placement;
 import org.mule.runtime.extension.api.annotation.source.EmitsResponse;
 import org.mule.runtime.extension.api.runtime.operation.Result;
 
 import java.io.InputStream;
 
-import static org.mule.runtime.api.i18n.I18nMessageFactory.createStaticMessage;
 import static org.mule.runtime.extension.api.annotation.param.MediaType.APPLICATION_JSON;
 
 @EmitsResponse
 @MediaType(value = APPLICATION_JSON, strict = false)
-@OutputJsonType(schema = MetadataUtil.WEBHOOK_EVENT_SCHEMA)
-public class WebhookSource extends BaseWebhookSource<InputStream, WebhookRequestAttributes> {
+@OutputJsonType(schema = MetadataUtil.FULFILLMENT_REQUEST_SCHEMA)
+public class RequestValidationListener extends BaseWebhookSource<InputStream, WebhookRequestAttributes> {
 
     @Parameter
     @Placement(order = 4)
-    private WebhookEventType webhookEventType;
+    private RequestValidationType validationType;
 
     @Override
     protected String getObjectClass() {
-        return webhookEventType.name().toLowerCase();
+        return "fulfillment_request";
     }
 
     @Override
     protected String getWebhookType() {
-        return "event";
+        return validationType.getType();
     }
 
     @Override
-    protected String getToken(Result<InputStream, WebhookRequestAttributes> result) throws MuleRuntimeException {
-        return result.getAttributes().orElseThrow(() -> new MuleRuntimeException(
-                createStaticMessage("Webhook Request Attributes are not found.")
-        )).getToken();
+    protected String getToken(Result<InputStream, WebhookRequestAttributes> result) {
+        return result.getAttributes().orElseThrow(() ->
+                new WebhookException("Webhook Request Attributes are not found."))
+                .getToken();
     }
 }

@@ -408,9 +408,13 @@
                     <runtimeVersion>4.2.1</runtimeVersion>
                     <dynamicPorts>
                         <dynamicPort>http.port</dynamicPort>
+                        <dynamicPort>webhook.port</dynamicPort>
+                        <dynamicPort>http.listener.port</dynamicPort>
                     </dynamicPorts>
                     <environmentVariables>
                         <TEST_RESOURCE_LOCATION>${project.build.directory}/test-classes</TEST_RESOURCE_LOCATION>
+                        <JWT_SECRET>Test-token-key-for-webhook-based-authentication</JWT_SECRET>
+                        <JWT_TOKEN>eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ3ZWJob29rX2lkIjoiV0gtNjMyLTcyNS0xNjkiLCJleHAiOjQ3MjMwNTc0NzF9.4agSUe4nQtU957sK_YDoBn8HRVUlboFlOV4zcNmKWGg</JWT_TOKEN>
                     </environmentVariables>
                 </configuration>
                 <dependencies>

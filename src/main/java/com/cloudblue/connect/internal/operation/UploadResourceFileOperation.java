@@ -18,7 +18,6 @@ import com.cloudblue.connect.internal.metadata.resource.upload.ResourceFileUploa
 import com.cloudblue.connect.internal.metadata.resource.upload.ResourceFileUploadOutputResolver;
 import com.cloudblue.connect.internal.metadata.resource.upload.ResourceFileUploadTypeKeysResolver;
 
-import org.mule.runtime.api.exception.MuleException;
 import org.mule.runtime.api.meta.model.display.PathModel;
 import org.mule.runtime.extension.api.annotation.Expression;
 import org.mule.runtime.extension.api.annotation.error.Throws;
@@ -71,7 +70,7 @@ public class UploadResourceFileOperation extends BaseFileOperation {
     public Result<InputStream, CBCResponseAttributes> uploadFile(
             @Connection CBCConnection connection,
             @TypeResolver(ResourceFileUploadInputResolver.class)
-            @Content Map<String, Object> uploadResourceFileParameter) throws MuleException {
+            @Content Map<String, Object> uploadResourceFileParameter) {
 
         CBCConnection.Q q = getQ(connection, actionIdentifier.getResourceType(),
                 actionIdentifier.getAction(), uploadResourceFileParameter);

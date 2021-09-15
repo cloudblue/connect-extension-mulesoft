@@ -16,7 +16,6 @@ import com.cloudblue.connect.internal.metadata.resource.list.ListResourceInputRe
 import com.cloudblue.connect.internal.metadata.resource.list.ListResourceOutputResolver;
 import com.cloudblue.connect.internal.metadata.resource.list.ListResourceTypeKeysResolver;
 
-import org.mule.runtime.api.exception.MuleException;
 import org.mule.runtime.extension.api.annotation.error.Throws;
 import org.mule.runtime.extension.api.annotation.metadata.MetadataKeyId;
 import org.mule.runtime.extension.api.annotation.metadata.OutputResolver;
@@ -47,7 +46,7 @@ public class ListResourcesOperation extends BaseListOperation {
             @Connection CBCConnection connection,
             @TypeResolver(ListResourceInputResolver.class)
             @Content @Optional Map<String, Object> listResourceParameter
-    ) throws MuleException {
+    ) {
         Metadata metadata = MetadataUtil.getMetadata(resourceType);
 
         CBCConnection.Q q = connection.newQ();

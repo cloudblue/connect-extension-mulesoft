@@ -10,10 +10,10 @@ package com.cloudblue.connect.internal.source;
 import com.cloudblue.connect.internal.config.CBCWebhookConfig;
 import com.cloudblue.connect.internal.connection.CBCConnection;
 import com.cloudblue.connect.internal.connection.WebhookListener;
+import com.cloudblue.connect.internal.exception.WebhookException;
 
 import org.mule.runtime.api.connection.ConnectionProvider;
 import org.mule.runtime.api.exception.MuleException;
-import org.mule.runtime.api.exception.MuleRuntimeException;
 import org.mule.runtime.api.message.Error;
 import org.mule.runtime.api.metadata.TypedValue;
 import org.mule.runtime.api.transformation.TransformationService;
@@ -22,20 +22,22 @@ import org.mule.runtime.extension.api.annotation.execution.OnSuccess;
 import org.mule.runtime.extension.api.annotation.execution.OnTerminate;
 import org.mule.runtime.extension.api.annotation.param.*;
 import org.mule.runtime.extension.api.annotation.param.display.Placement;
+import org.mule.runtime.extension.api.annotation.source.BackPressure;
+import org.mule.runtime.extension.api.annotation.source.ClusterSupport;
+import org.mule.runtime.extension.api.annotation.source.OnBackPressure;
+import org.mule.runtime.extension.api.annotation.source.SourceClusterSupport;
 import org.mule.runtime.extension.api.runtime.operation.Result;
 import org.mule.runtime.extension.api.runtime.source.*;
 import org.mule.runtime.http.api.server.HttpServer;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.mule.runtime.http.api.server.async.HttpResponseReadyCallback;
 
 import javax.inject.Inject;
 
 import static org.mule.runtime.api.metadata.DataType.STRING;
 
+@BackPressure(defaultMode = BackPressureMode.FAIL, supportedModes = {BackPressureMode.FAIL})
+@ClusterSupport(SourceClusterSupport.NOT_SUPPORTED)
 public abstract class BaseWebhookSource<T, H> extends Source<T, H> {
-
-    private static final Logger logger = LoggerFactory.getLogger(BaseWebhookSource.class);
 
     @Inject
     private TransformationService transformationService;
@@ -94,19 +96,20 @@ public abstract class BaseWebhookSource<T, H> extends Source<T, H> {
                 responseContext.setResponseCallback(responseCallback);
                 String token = BaseWebhookSource.this.getToken(result);
                 if (!authProvider.authenticate(token))
-                    webhookSourceHelper.sendResponse(401, new TypedValue<>("Authentication failed.", STRING), responseCallback);
+                    webhookSourceHelper.sendResponse(401,
+                            new TypedValue<>("Authentication failed.", STRING), responseCallback);
                 else {
                     SourceCallbackContext context = sourceCallback.createContext();
                     context.addVariable("RESPONSE_CONTEXT", responseContext);
                     sourceCallback.handle(result, context);
                 }
             } catch (Exception e) {
-                throw new MuleRuntimeException(e);
+                throw new WebhookException("Error during handing webhook request.", e);
             }
         });
     }
 
-    protected abstract String getToken(Result<T, H> result) throws MuleRuntimeException;
+    protected abstract String getToken(Result<T, H> result);
 
     @OnSuccess
     public void onSuccess(
@@ -140,11 +143,28 @@ public abstract class BaseWebhookSource<T, H> extends Source<T, H> {
 
     @Override
     public void onStop() {
+        server.stop();
+        webhookSourceHelper.disableWebhook(webhookId);
+    }
+
+    @OnBackPressure
+    public void onBackPressure(BackPressureContext ctx, SourceCompletionCallback completionCallback) {
         try {
-            server.stop();
-            webhookSourceHelper.disableWebhook(webhookId);
-        } catch (MuleException e) {
-            logger.error("Error during stopping services.", e);
+            final SourceCallbackContext callbackContext = ctx.getSourceCallbackContext();
+
+            final WebhookResponseContext context = callbackContext.<WebhookResponseContext>getVariable("RESPONSE_CONTEXT")
+                    .orElseThrow(() -> new WebhookException("Webhook response context not found."));
+
+            HttpResponseReadyCallback responseCallback = context.getResponseCallback();
+
+            callbackContext.addVariable("responseSendAttempt", true);
+            webhookSourceHelper.sendResponse(503,
+                    new TypedValue<>("Service Unavailable", STRING), responseCallback);
+
+            completionCallback.success();
+        } catch (RuntimeException e) {
+            completionCallback.error(e);
         }
+
     }
 }

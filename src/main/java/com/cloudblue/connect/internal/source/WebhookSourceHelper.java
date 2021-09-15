@@ -19,8 +19,6 @@ import com.cloudblue.connect.internal.model.resource.Action;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 
-import org.mule.runtime.api.exception.MuleException;
-import org.mule.runtime.api.exception.MuleRuntimeException;
 import org.mule.runtime.api.message.Message;
 import org.mule.runtime.api.metadata.TypedValue;
 import org.mule.runtime.api.transformation.TransformationService;
@@ -34,13 +32,14 @@ import org.mule.runtime.http.api.domain.message.response.HttpResponse;
 import org.mule.runtime.http.api.domain.message.response.HttpResponseBuilder;
 import org.mule.runtime.http.api.server.async.HttpResponseReadyCallback;
 import org.mule.runtime.http.api.server.async.ResponseStatusCallback;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
 import static com.cloudblue.connect.internal.clients.constants.APIConstants.CollectionKeys.*;
-import static org.mule.runtime.api.i18n.I18nMessageFactory.createStaticMessage;
 import static org.mule.runtime.api.metadata.DataType.BYTE_ARRAY;
 
 public class WebhookSourceHelper {
@@ -49,6 +48,8 @@ public class WebhookSourceHelper {
     private final CBCConnection connection;
     private final TransformationService transformationService;
     private final JacksonResponseUnmarshaller unmarshaller = new JacksonResponseUnmarshaller();
+
+    private static final Logger logger = LoggerFactory.getLogger(WebhookSourceHelper.class);
 
     public WebhookSourceHelper(
             CBCWebhookConfig webhookConfig,
@@ -81,7 +82,7 @@ public class WebhookSourceHelper {
         return webhook;
     }
 
-    private Webhook webhookAction(Action action, Webhook input) throws MuleException {
+    private Webhook webhookAction(Action action, Webhook input) {
         Result<InputStream, CBCResponseAttributes> result;
 
         CBCConnection.Q q = connection.newQ().collection(NOTIFICATIONS);
@@ -92,12 +93,12 @@ public class WebhookSourceHelper {
             result = q.collection(WEBHOOKS, input.getId()).update(input);
         }
 
-        ModuleException moduleException = new WebhookException("Not able to list existing Webhook Objects");
+        ModuleException moduleException = new WebhookException("Not able to create/update Webhook Object");
 
         CBCResponseAttributes attributes = result.getAttributes()
                 .orElseThrow(() -> moduleException);
 
-        if (attributes.getStatusCode() != 200) {
+        if (attributes.getStatusCode() != 200 && attributes.getStatusCode() != 201) {
             throw moduleException;
         }
 
@@ -106,13 +107,14 @@ public class WebhookSourceHelper {
         try {
             return unmarshaller.getObjectMapper().readValue(resultObject, Webhook.class);
         } catch (IOException e) {
-            throw moduleException;
+            logger.error("Error during unmarshalling of json data", e);
+            throw new WebhookException("Error during unmarshalling of json data");
         }
     }
 
     private Webhook updateOrCreateWebhook(String productId, String objectClass,
                                           String webhookType, String jwtSecret,
-                                          String path, Webhook webhook) throws MuleException {
+                                          String path, Webhook webhook) {
         Webhook updatedWebhook = null;
 
         if (webhook == null) {
@@ -131,6 +133,7 @@ public class WebhookSourceHelper {
 
         } else if (Boolean.FALSE.equals(webhook.getActive())) {
             Webhook updateWebhook = new Webhook();
+            updateWebhook.setId(webhook.getId());
             updateWebhook.setActive(Boolean.TRUE);
 
             updatedWebhook = webhookAction(Action.UPDATE, updateWebhook);
@@ -141,8 +144,10 @@ public class WebhookSourceHelper {
     }
 
     public String updateWebhookObject(
-            String productId, String objectClass, String webhookType, String jwtSecret, String path
-    ) throws MuleException {
+            String productId, String objectClass,
+            String webhookType, String jwtSecret,
+            String path) {
+
         try {
             String listenerPath = webhookListener.getServerEndpoint() + webhookConfig.getFullListenerPath(
                     path, objectClass
@@ -153,7 +158,7 @@ public class WebhookSourceHelper {
                     .collection(WEBHOOKS)
                     .get();
 
-            ModuleException moduleException = new WebhookException("Not able to update existing Webhook Objects");
+            ModuleException moduleException = new WebhookException("Not able to list existing Webhook Objects");
 
             CBCResponseAttributes attributes = result.getAttributes()
                     .orElseThrow(() -> moduleException);
@@ -185,24 +190,20 @@ public class WebhookSourceHelper {
         }
     }
 
-    public void disableWebhook(String webhookId) throws MuleException {
+    public void disableWebhook(String webhookId) {
         if (webhookId != null) {
             Webhook updateWebhook = new Webhook();
+            updateWebhook.setId(webhookId);
             updateWebhook.setActive(Boolean.FALSE);
 
-            connection.newQ()
-                    .collection(NOTIFICATIONS)
-                    .collection(WEBHOOKS, webhookId)
-                    .update(updateWebhook);
+            webhookAction(Action.UPDATE, updateWebhook);
         }
     }
 
     public void sendResponse(Integer responseCode, TypedValue<Object> responseBody, SourceCallbackContext callbackContext) {
 
         WebhookResponseContext responseContext = callbackContext.<WebhookResponseContext>getVariable("RESPONSE_CONTEXT")
-                .orElseThrow(() -> new MuleRuntimeException(
-                        createStaticMessage("Response Context is not present. Could not send response.")
-                ));
+                .orElseThrow(() -> new WebhookException("Response Context is not present. Could not send response."));
 
         final HttpResponseReadyCallback responseCallback = responseContext.getResponseCallback();
 

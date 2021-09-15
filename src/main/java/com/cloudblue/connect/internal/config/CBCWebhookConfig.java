@@ -7,9 +7,9 @@
 
 package com.cloudblue.connect.internal.config;
 
-import com.cloudblue.connect.internal.source.RequestValidationSource;
-import com.cloudblue.connect.internal.source.TCRValidationSource;
-import com.cloudblue.connect.internal.source.WebhookSource;
+import com.cloudblue.connect.internal.source.RequestValidationListener;
+import com.cloudblue.connect.internal.source.TCRValidationListener;
+import com.cloudblue.connect.internal.source.WebhookListener;
 import com.cloudblue.connect.internal.connection.provider.WebhookListenerProvider;
 import org.mule.runtime.extension.api.annotation.Configuration;
 import org.mule.runtime.extension.api.annotation.Sources;
@@ -21,7 +21,7 @@ import org.mule.runtime.extension.api.annotation.param.display.Placement;
 
 @Configuration(name = "webhookConfig")
 @ConnectionProviders(WebhookListenerProvider.class)
-@Sources({WebhookSource.class, RequestValidationSource.class, TCRValidationSource.class})
+@Sources({WebhookListener.class, RequestValidationListener.class, TCRValidationListener.class})
 public class CBCWebhookConfig {
 
     @Parameter
