@@ -11,7 +11,11 @@ import com.cloudblue.connect.internal.clients.rql.R;
 
 import org.mule.runtime.extension.api.annotation.param.Parameter;
 
-public class RawRQLFilter implements Filter {
+import java.io.Serializable;
+
+public class RawRQLFilter implements Filter, Serializable {
+    private static final long serialVersionUID = -6000246210909653283L;
+    
     @Parameter
     private String rawRql;
 

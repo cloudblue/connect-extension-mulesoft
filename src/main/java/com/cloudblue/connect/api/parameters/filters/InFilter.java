@@ -9,7 +9,11 @@ package com.cloudblue.connect.api.parameters.filters;
 
 import com.cloudblue.connect.internal.clients.rql.R;
 
-public class InFilter extends MultiValueFilter {
+import java.io.Serializable;
+
+public class InFilter extends MultiValueFilter implements Serializable {
+
+    private static final long serialVersionUID = -3177297477647016358L;
 
     @Override
     public R toRQL() {

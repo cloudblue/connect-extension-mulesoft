@@ -9,9 +9,12 @@ package com.cloudblue.connect.api.parameters.filters;
 
 import org.mule.runtime.extension.api.annotation.param.Parameter;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class OrderBy {
+public class OrderBy implements Serializable {
+    private static final long serialVersionUID = 3015165648011946081L;
+
     @Parameter
     private List<String> properties;
 

@@ -9,9 +9,11 @@ package com.cloudblue.connect.api.parameters.filters;
 
 import org.mule.runtime.extension.api.annotation.param.Parameter;
 
+import java.io.Serializable;
 import java.util.List;
 
-public abstract class MultiValueFilter implements Filter {
+public abstract class MultiValueFilter implements Filter, Serializable {
+    private static final long serialVersionUID = -6100341255807437427L;
     @Parameter
     private String property;
 

@@ -14,6 +14,8 @@ import org.mule.runtime.extension.api.annotation.param.Parameter;
 import java.util.List;
 
 public class ListFilter implements Filter {
+    private static final long serialVersionUID = 832613678750477025L;
+
     public enum Type {
         AND, OR
     }

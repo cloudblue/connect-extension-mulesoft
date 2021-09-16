@@ -12,6 +12,8 @@ import org.mule.runtime.extension.api.annotation.param.Parameter;
 
 public class NotFilter implements Filter {
 
+    private static final long serialVersionUID = -4492215686446630841L;
+
     @Parameter
     private Filter filter;
 

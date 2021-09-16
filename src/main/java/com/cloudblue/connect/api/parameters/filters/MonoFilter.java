@@ -11,8 +11,12 @@ import com.cloudblue.connect.internal.clients.rql.R;
 
 import org.mule.runtime.extension.api.annotation.param.Parameter;
 
-public class MonoFilter implements Filter {
-    
+import java.io.Serializable;
+
+public class MonoFilter implements Filter, Serializable {
+
+    private static final long serialVersionUID = 7059011858681517170L;
+
     public enum Type {
         EQ, NE, LT, LE, GT, GE, LIKE, ILIKE
     }

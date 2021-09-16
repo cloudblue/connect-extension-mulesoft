@@ -12,7 +12,11 @@ import org.mule.runtime.extension.api.annotation.metadata.MetadataKeyPart;
 import org.mule.runtime.extension.api.annotation.param.Parameter;
 import org.mule.runtime.extension.api.annotation.param.display.DisplayName;
 
-public class ActionIdentifier {
+import java.io.Serializable;
+
+public class ActionIdentifier implements Serializable {
+
+    private static final long serialVersionUID = -5434289955688903780L;
 
     @Parameter
     @MetadataKeyPart(order = 1)
