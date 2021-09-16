@@ -9,7 +9,8 @@ package com.cloudblue.connect.api.parameters.filters;
 
 import com.cloudblue.connect.internal.clients.rql.R;
 
-public interface Filter {
+import java.io.Serializable;
 
+public interface Filter extends Serializable {
     R toRQL();
 }
