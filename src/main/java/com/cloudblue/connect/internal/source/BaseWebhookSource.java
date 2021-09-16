@@ -89,22 +89,18 @@ public abstract class BaseWebhookSource<T, H> extends Source<T, H> {
         );
 
         server.addRequestHandler(listenerPath, (requestContext, responseCallback) -> {
-            try {
-                Result<T, H> result = (Result<T, H>) RequestToResult.transform(requestContext);
+            Result<T, H> result = (Result<T, H>) RequestToResult.transform(requestContext);
 
-                WebhookResponseContext responseContext = new WebhookResponseContext();
-                responseContext.setResponseCallback(responseCallback);
-                String token = BaseWebhookSource.this.getToken(result);
-                if (!authProvider.authenticate(token))
-                    webhookSourceHelper.sendResponse(401,
-                            new TypedValue<>("Authentication failed.", STRING), responseCallback);
-                else {
-                    SourceCallbackContext context = sourceCallback.createContext();
-                    context.addVariable("RESPONSE_CONTEXT", responseContext);
-                    sourceCallback.handle(result, context);
-                }
-            } catch (Exception e) {
-                throw new WebhookException("Error during handing webhook request.", e);
+            WebhookResponseContext responseContext = new WebhookResponseContext();
+            responseContext.setResponseCallback(responseCallback);
+            String token = BaseWebhookSource.this.getToken(result);
+            if (!authProvider.authenticate(token))
+                webhookSourceHelper.sendResponse(401,
+                        new TypedValue<>("Authentication failed.", STRING), responseCallback);
+            else {
+                SourceCallbackContext context = sourceCallback.createContext();
+                context.addVariable("RESPONSE_CONTEXT", responseContext);
+                sourceCallback.handle(result, context);
             }
         });
     }

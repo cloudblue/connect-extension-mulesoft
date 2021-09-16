@@ -409,7 +409,7 @@
                     <dynamicPorts>
                         <dynamicPort>http.port</dynamicPort>
                         <dynamicPort>webhook.port</dynamicPort>
-                        <dynamicPort>http.listener.port</dynamicPort>
+                        <dynamicPort>http.wrong.port</dynamicPort>
                     </dynamicPorts>
                     <environmentVariables>
                         <TEST_RESOURCE_LOCATION>${project.build.directory}/test-classes</TEST_RESOURCE_LOCATION>

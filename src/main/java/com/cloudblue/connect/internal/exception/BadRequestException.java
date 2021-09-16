@@ -11,6 +11,8 @@ import com.cloudblue.connect.internal.error.CBCErrorType;
 import org.mule.runtime.extension.api.exception.ModuleException;
 
 public class BadRequestException extends ModuleException {
+    private static final long serialVersionUID = -2640718043458527581L;
+
     public BadRequestException(String message) {
         super(message, CBCErrorType.BAD_REQUEST);
     }

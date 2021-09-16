@@ -11,9 +11,7 @@ import com.cloudblue.connect.internal.error.CBCErrorType;
 import org.mule.runtime.extension.api.exception.ModuleException;
 
 public class ConnectionException  extends ModuleException {
-    public ConnectionException(String message) {
-        super(message, CBCErrorType.CONNECTIVITY);
-    }
+    private static final long serialVersionUID = 8310037945619413416L;
 
     public ConnectionException(String message, Throwable cause) {
         super(message, CBCErrorType.CONNECTIVITY, cause);

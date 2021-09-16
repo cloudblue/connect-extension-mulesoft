@@ -11,11 +11,9 @@ import com.cloudblue.connect.internal.error.CBCErrorType;
 import org.mule.runtime.extension.api.exception.ModuleException;
 
 public class WebhookException extends ModuleException {
+    private static final long serialVersionUID = -4160991420660108906L;
+
     public WebhookException(String message) {
         super(message, CBCErrorType.REQUEST_UNAUTHORIZED);
-    }
-
-    public WebhookException(String message, Throwable cause) {
-        super(message, CBCErrorType.REQUEST_UNAUTHORIZED, cause);
     }
 }

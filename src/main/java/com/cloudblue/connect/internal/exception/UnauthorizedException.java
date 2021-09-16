@@ -11,11 +11,9 @@ import com.cloudblue.connect.internal.error.CBCErrorType;
 import org.mule.runtime.extension.api.exception.ModuleException;
 
 public class UnauthorizedException extends ModuleException {
+    private static final long serialVersionUID = 6487822397087696596L;
+
     public UnauthorizedException(String message) {
         super(message, CBCErrorType.REQUEST_UNAUTHORIZED);
-    }
-
-    public UnauthorizedException(String message, Throwable cause) {
-        super(message, CBCErrorType.REQUEST_UNAUTHORIZED, cause);
     }
 }

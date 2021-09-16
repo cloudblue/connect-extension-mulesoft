@@ -11,11 +11,9 @@ import com.cloudblue.connect.internal.error.CBCErrorType;
 import org.mule.runtime.extension.api.exception.ModuleException;
 
 public class BadServerException extends ModuleException {
+    private static final long serialVersionUID = -7129256064332254800L;
+
     public BadServerException(String message) {
         super(message, CBCErrorType.BAD_SERVER);
-    }
-
-    public BadServerException(String message, Throwable cause) {
-        super(message, CBCErrorType.BAD_SERVER, cause);
     }
 }

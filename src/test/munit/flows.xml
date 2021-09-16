@@ -121,6 +121,14 @@
                                        file="${TEST_RESOURCE_LOCATION}/__files/Usage_File.xlsx"/>
     </flow>
 
+    <flow name="upload_resources_file_operation_bad_file">
+        <set-payload value='#[%dw 2.0 output application/java --- { usage_report_id: "UF-0000-0000-0000" }]'/>
+        <cloudblue-connect:upload-file resourceType="USAGE_REPORT"
+                                       action="UPLOAD"
+                                       config-ref="CloudBlue_Connect_Config_Test"
+                                       file="${TEST_RESOURCE_LOCATION}/__files/Do_not_exist.xlsx"/>
+    </flow>
+
     <flow name="download_resources_file_operation">
         <set-payload value='#[%dw 2.0 output application/java --- { usage_chunk_id: "UFC-2021-03-0000-0000-001" }]'/>
         <cloudblue-connect:download-file
