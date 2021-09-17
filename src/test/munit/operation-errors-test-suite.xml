@@ -53,7 +53,8 @@
   },
   "response" : {
     "status" : 400,
-    "statusMessage": "Bad Request"
+    "statusMessage": "Bad Request",
+    "bodyFileName": "get_request_error.json"
   }
 }]'/>
 			<flow-ref name="get_resource_operation"/>
