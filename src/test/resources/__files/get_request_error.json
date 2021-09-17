@@ -1,0 +1,12 @@
+{
+  "error_code": "REQ_005",
+  "errors": [
+    "There are empty required parameters."
+  ],
+  "params": {
+    "empty_params": [
+      "param_a",
+      "param_b"
+    ]
+  }
+}

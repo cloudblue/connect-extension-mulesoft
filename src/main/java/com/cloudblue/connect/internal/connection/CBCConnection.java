@@ -38,6 +38,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.*;
 import java.util.concurrent.TimeoutException;
+import java.util.stream.Collectors;
 
 import static org.mule.runtime.http.api.HttpConstants.*;
 
@@ -264,7 +265,11 @@ public final class CBCConnection {
             if (statusCode == 401 || statusCode == 403) {
                 throw new UnauthorizedException("Either authentication token is not valid or resource access is forbidden.");
             } else if (statusCode > 399 && statusCode < 500) {
-                throw new BadRequestException(response.getReasonPhrase());
+                String responseBody = new BufferedReader(
+                        new InputStreamReader(response.getEntity().getContent(), StandardCharsets.UTF_8))
+                        .lines()
+                        .collect(Collectors.joining(""));
+                throw new BadRequestException(responseBody);
             } else if (statusCode > 499) {
                 throw new BadServerException(response.getReasonPhrase());
             }
