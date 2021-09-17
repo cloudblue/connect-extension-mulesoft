@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ Copyright © 2021 Ingram Micro Inc. All rights reserved.
+  ~ The software in this package is published under the terms of the Apache-2.0
+  ~ license, a copy of which has been included with this distribution in the
+  ~ LICENSE file.
+  -->
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+      xmlns:cloudblue-connect="http://www.mulesoft.org/schema/mule/cloudblue-connect"
+      xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/cloudblue-connect http://www.mulesoft.org/schema/mule/cloudblue-connect/current/mule-cloudblue-connect.xsd">
+
+
+    <cloudblue-connect:config name="CloudBlue_Connect_Config_Unit_Test">
+        <cloudblue-connect:connection endpoint="http://localhost:8080" token="MOCK_TOKEN" />
+    </cloudblue-connect:config>
+
+    <flow name="get_resource_operation_ut">
+        <set-payload value='#[%dw 2.0 output application/java --- { request_id: "PR-000-000" }]'/>
+        <cloudblue-connect:get-resource
+                resourceType="REQUEST"
+                config-ref="CloudBlue_Connect_Config_Unit_Test"/>
+    </flow>
+</mule>

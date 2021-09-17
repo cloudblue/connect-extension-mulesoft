@@ -1,0 +1,11 @@
+{
+  "request" : {
+    "method" : "GET",
+    "url" : "/notifications/webhooks"
+  },
+  "response" : {
+    "status" : 200,
+    "statusMessage": "Ok",
+    "bodyFileName": "webhooks.json"
+  }
+}

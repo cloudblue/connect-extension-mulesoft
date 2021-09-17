@@ -1,0 +1,300 @@
+{
+  "$schema" : "http://json-schema.org/draft-07/schema#",
+  "type" : "object",
+  "properties" : {
+    "asset" : {
+      "type" : "object",
+      "properties" : {
+        "connection" : {
+          "type" : "object",
+          "properties" : {
+            "id" : {
+              "type" : "string"
+            }
+          },
+          "required": ["id"]
+        },
+        "external_id" : {
+          "type" : "string"
+        },
+        "external_uid" : {
+          "type" : "string"
+        },
+        "items" : {
+          "type" : "array",
+          "items" : {
+            "type" : "object",
+            "properties" : {
+              "id" : {
+                "type" : "string"
+              },
+              "quantity" : {
+                "type" : "integer"
+              }
+            },
+            "required": ["id", "quantity"]
+          }
+        },
+        "params" : {
+          "type" : "array",
+          "items" : {
+            "type" : "object",
+            "properties" : {
+              "id" : {
+                "type" : "string"
+              },
+              "structured_value" : {
+                "type" : "object"
+              },
+              "value" : {
+                "type" : "string"
+              }
+            }
+          }
+        },
+        "product" : {
+          "type" : "object",
+          "properties" : {
+            "id" : {
+              "type" : "string"
+            }
+          },
+          "required": ["id"]
+        },
+        "tiers" : {
+          "type" : "object",
+          "properties" : {
+            "customer" : {
+              "type" : "object",
+              "properties" : {
+                "contact_info" : {
+                  "type" : "object",
+                  "properties" : {
+                    "address_line1" : {
+                      "type" : "string"
+                    },
+                    "address_line2" : {
+                      "type" : "string"
+                    },
+                    "city" : {
+                      "type" : "string"
+                    },
+                    "contact" : {
+                      "type" : "object",
+                      "properties" : {
+                        "email" : {
+                          "type" : "string"
+                        },
+                        "first_name" : {
+                          "type" : "string"
+                        },
+                        "last_name" : {
+                          "type" : "string"
+                        },
+                        "phone_number" : {
+                          "type" : "object",
+                          "properties" : {
+                            "area_code" : {
+                              "type" : "string"
+                            },
+                            "country_code" : {
+                              "type" : "string"
+                            },
+                            "extension" : {
+                              "type" : "string"
+                            },
+                            "phone_number" : {
+                              "type" : "string"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "country" : {
+                      "type" : "string"
+                    },
+                    "postal_code" : {
+                      "type" : "string"
+                    },
+                    "state" : {
+                      "type" : "string"
+                    }
+                  }
+                },
+                "external_id" : {
+                  "type" : "string"
+                },
+                "external_uid" : {
+                  "type" : "string"
+                },
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "tier1" : {
+              "type" : "object",
+              "properties" : {
+                "contact_info" : {
+                  "type" : "object",
+                  "properties" : {
+                    "address_line1" : {
+                      "type" : "string"
+                    },
+                    "address_line2" : {
+                      "type" : "string"
+                    },
+                    "city" : {
+                      "type" : "string"
+                    },
+                    "contact" : {
+                      "type" : "object",
+                      "properties" : {
+                        "email" : {
+                          "type" : "string"
+                        },
+                        "first_name" : {
+                          "type" : "string"
+                        },
+                        "last_name" : {
+                          "type" : "string"
+                        },
+                        "phone_number" : {
+                          "type" : "object",
+                          "properties" : {
+                            "area_code" : {
+                              "type" : "string"
+                            },
+                            "country_code" : {
+                              "type" : "string"
+                            },
+                            "extension" : {
+                              "type" : "string"
+                            },
+                            "phone_number" : {
+                              "type" : "string"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "country" : {
+                      "type" : "string"
+                    },
+                    "postal_code" : {
+                      "type" : "string"
+                    },
+                    "state" : {
+                      "type" : "string"
+                    }
+                  }
+                },
+                "external_id" : {
+                  "type" : "string"
+                },
+                "external_uid" : {
+                  "type" : "string"
+                },
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "tier2" : {
+              "type" : "object",
+              "properties" : {
+                "contact_info" : {
+                  "type" : "object",
+                  "properties" : {
+                    "address_line1" : {
+                      "type" : "string"
+                    },
+                    "address_line2" : {
+                      "type" : "string"
+                    },
+                    "city" : {
+                      "type" : "string"
+                    },
+                    "contact" : {
+                      "type" : "object",
+                      "properties" : {
+                        "email" : {
+                          "type" : "string"
+                        },
+                        "first_name" : {
+                          "type" : "string"
+                        },
+                        "last_name" : {
+                          "type" : "string"
+                        },
+                        "phone_number" : {
+                          "type" : "object",
+                          "properties" : {
+                            "area_code" : {
+                              "type" : "string"
+                            },
+                            "country_code" : {
+                              "type" : "string"
+                            },
+                            "extension" : {
+                              "type" : "string"
+                            },
+                            "phone_number" : {
+                              "type" : "string"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "country" : {
+                      "type" : "string"
+                    },
+                    "postal_code" : {
+                      "type" : "string"
+                    },
+                    "state" : {
+                      "type" : "string"
+                    }
+                  }
+                },
+                "external_id" : {
+                  "type" : "string"
+                },
+                "external_uid" : {
+                  "type" : "string"
+                },
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "required": ["product", "params", "items", "connection", "external_id", "external_uid", "tiers"]
+    },
+    "marketplace" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        }
+      },
+      "required": ["id"]
+    },
+    "type" : {
+      "type" : "string",
+      "enum" : [ "purchase"]
+    }
+  },
+  "required": ["type", "asset", "marketplace"]
+}

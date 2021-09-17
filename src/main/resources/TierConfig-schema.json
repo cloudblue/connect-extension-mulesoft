@@ -1,0 +1,1023 @@
+{
+  "$schema" : "http://json-schema.org/draft-07/schema#",
+  "type" : "object",
+  "properties" : {
+    "account" : {
+      "type" : "object",
+      "properties" : {
+        "contact_info" : {
+          "type" : "object",
+          "properties" : {
+            "address_line1" : {
+              "type" : "string"
+            },
+            "address_line2" : {
+              "type" : "string"
+            },
+            "city" : {
+              "type" : "string"
+            },
+            "contact" : {
+              "type" : "object",
+              "properties" : {
+                "email" : {
+                  "type" : "string"
+                },
+                "first_name" : {
+                  "type" : "string"
+                },
+                "last_name" : {
+                  "type" : "string"
+                },
+                "phone_number" : {
+                  "type" : "object",
+                  "properties" : {
+                    "area_code" : {
+                      "type" : "string"
+                    },
+                    "country_code" : {
+                      "type" : "string"
+                    },
+                    "extension" : {
+                      "type" : "string"
+                    },
+                    "phone_number" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            },
+            "country" : {
+              "type" : "string"
+            },
+            "postal_code" : {
+              "type" : "string"
+            },
+            "state" : {
+              "type" : "string"
+            }
+          }
+        },
+        "external_id" : {
+          "type" : "string"
+        },
+        "external_uid" : {
+          "type" : "string"
+        },
+        "id" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "tax_id" : {
+          "type" : "string"
+        },
+        "type" : {
+          "type" : "string",
+          "enum" : [ "customer", "reseller" ]
+        }
+      }
+    },
+    "connection" : {
+      "type" : "object",
+      "properties" : {
+        "hub" : {
+          "type" : "object",
+          "properties" : {
+            "id" : {
+              "type" : "string"
+            },
+            "name" : {
+              "type" : "string"
+            }
+          }
+        },
+        "id" : {
+          "type" : "string"
+        },
+        "provider" : {
+          "type" : "object",
+          "properties" : {
+            "id" : {
+              "type" : "string"
+            },
+            "name" : {
+              "type" : "string"
+            }
+          }
+        },
+        "status" : {
+          "type" : "string",
+          "enum" : [ "pending", "approved", "rejected", "revoked", "active" ]
+        },
+        "type" : {
+          "type" : "string",
+          "enum" : [ "production", "test" ]
+        },
+        "vendor" : {
+          "type" : "object",
+          "properties" : {
+            "id" : {
+              "type" : "string"
+            },
+            "name" : {
+              "type" : "string"
+            }
+          }
+        }
+      }
+    },
+    "contract" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        }
+      }
+    },
+    "events" : {
+      "type" : "object",
+      "properties" : {
+        "at" : {
+          "type" : "string"
+        },
+        "by" : {
+          "type" : "object",
+          "properties" : {
+            "id" : {
+              "type" : "string"
+            },
+            "name" : {
+              "type" : "string"
+            }
+          }
+        }
+      }
+    },
+    "id" : {
+      "type" : "string"
+    },
+    "marketplace" : {
+      "type" : "object",
+      "properties" : {
+        "icon" : {
+          "type" : "string"
+        },
+        "id" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        }
+      }
+    },
+    "name" : {
+      "type" : "string"
+    },
+    "open_request" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        }
+      }
+    },
+    "params" : {
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "constraints" : {
+            "type" : "object",
+            "properties" : {
+              "choices" : {
+                "type" : "array",
+                "items" : {
+                  "type" : "object",
+                  "properties" : {
+                    "label" : {
+                      "type" : "string"
+                    },
+                    "value" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              },
+              "hidden" : {
+                "type" : "boolean"
+              },
+              "hint" : {
+                "type" : "string"
+              },
+              "max_length" : {
+                "type" : "integer"
+              },
+              "meta" : {
+                "type" : "object"
+              },
+              "min_length" : {
+                "type" : "integer"
+              },
+              "placeholder" : {
+                "type" : "string"
+              },
+              "reconciliation" : {
+                "type" : "boolean"
+              },
+              "required" : {
+                "type" : "boolean"
+              },
+              "unique" : {
+                "type" : "boolean"
+              }
+            }
+          },
+          "description" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "phase" : {
+            "type" : "string"
+          },
+          "scope" : {
+            "type" : "string"
+          },
+          "structured_value" : {
+            "type" : "object"
+          },
+          "title" : {
+            "type" : "string"
+          },
+          "type" : {
+            "type" : "string",
+            "enum" : [ "text", "dropdown", "password", "email", "checkbox", "subdomain", "domain", "phone", "url", "choice", "address", "object" ]
+          },
+          "value" : {
+            "type" : "string"
+          },
+          "value_error" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "product" : {
+      "type" : "object",
+      "properties" : {
+        "icon" : {
+          "type" : "string"
+        },
+        "id" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "status" : {
+          "type" : "string",
+          "enum" : [ "draft", "published", "endofsale" ]
+        }
+      }
+    },
+    "status" : {
+      "type" : "string",
+      "enum" : [ "active", "processing" ]
+    },
+    "template" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "representation" : {
+          "type" : "string"
+        }
+      }
+    },
+    "tier_level" : {
+      "type" : "integer"
+    },
+    "tiers" : {
+      "type" : "object",
+      "properties" : {
+        "tier1" : {
+          "type" : "object",
+          "properties" : {
+            "contact_info" : {
+              "type" : "object",
+              "properties" : {
+                "address_line1" : {
+                  "type" : "string"
+                },
+                "address_line2" : {
+                  "type" : "string"
+                },
+                "city" : {
+                  "type" : "string"
+                },
+                "contact" : {
+                  "type" : "object",
+                  "properties" : {
+                    "email" : {
+                      "type" : "string"
+                    },
+                    "first_name" : {
+                      "type" : "string"
+                    },
+                    "last_name" : {
+                      "type" : "string"
+                    },
+                    "phone_number" : {
+                      "type" : "object",
+                      "properties" : {
+                        "area_code" : {
+                          "type" : "string"
+                        },
+                        "country_code" : {
+                          "type" : "string"
+                        },
+                        "extension" : {
+                          "type" : "string"
+                        },
+                        "phone_number" : {
+                          "type" : "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "country" : {
+                  "type" : "string"
+                },
+                "postal_code" : {
+                  "type" : "string"
+                },
+                "state" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "events" : {
+              "type" : "object",
+              "properties" : {
+                "accepted" : {
+                  "type" : "object",
+                  "properties" : {
+                    "at" : {
+                      "type" : "string"
+                    },
+                    "by" : {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "string"
+                        },
+                        "name" : {
+                          "type" : "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "closed" : {
+                  "type" : "object",
+                  "properties" : {
+                    "at" : {
+                      "type" : "string"
+                    },
+                    "by" : {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "string"
+                        },
+                        "name" : {
+                          "type" : "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "created" : {
+                  "type" : "object",
+                  "properties" : {
+                    "at" : {
+                      "type" : "string"
+                    },
+                    "by" : {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "string"
+                        },
+                        "name" : {
+                          "type" : "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "deleted" : {
+                  "type" : "object",
+                  "properties" : {
+                    "at" : {
+                      "type" : "string"
+                    },
+                    "by" : {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "string"
+                        },
+                        "name" : {
+                          "type" : "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "inquiring" : {
+                  "type" : "object",
+                  "properties" : {
+                    "at" : {
+                      "type" : "string"
+                    },
+                    "by" : {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "string"
+                        },
+                        "name" : {
+                          "type" : "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "last_reported" : {
+                  "type" : "object",
+                  "properties" : {
+                    "at" : {
+                      "type" : "string"
+                    },
+                    "by" : {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "string"
+                        },
+                        "name" : {
+                          "type" : "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "pending" : {
+                  "type" : "object",
+                  "properties" : {
+                    "at" : {
+                      "type" : "string"
+                    },
+                    "by" : {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "string"
+                        },
+                        "name" : {
+                          "type" : "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "rejected" : {
+                  "type" : "object",
+                  "properties" : {
+                    "at" : {
+                      "type" : "string"
+                    },
+                    "by" : {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "string"
+                        },
+                        "name" : {
+                          "type" : "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "resolved" : {
+                  "type" : "object",
+                  "properties" : {
+                    "at" : {
+                      "type" : "string"
+                    },
+                    "by" : {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "string"
+                        },
+                        "name" : {
+                          "type" : "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "submitted" : {
+                  "type" : "object",
+                  "properties" : {
+                    "at" : {
+                      "type" : "string"
+                    },
+                    "by" : {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "string"
+                        },
+                        "name" : {
+                          "type" : "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "updated" : {
+                  "type" : "object",
+                  "properties" : {
+                    "at" : {
+                      "type" : "string"
+                    },
+                    "by" : {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "string"
+                        },
+                        "name" : {
+                          "type" : "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "uploaded" : {
+                  "type" : "object",
+                  "properties" : {
+                    "at" : {
+                      "type" : "string"
+                    },
+                    "by" : {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "string"
+                        },
+                        "name" : {
+                          "type" : "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "external_id" : {
+              "type" : "string"
+            },
+            "external_uid" : {
+              "type" : "string"
+            },
+            "hub" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "id" : {
+              "type" : "string"
+            },
+            "name" : {
+              "type" : "string"
+            },
+            "owner" : {
+              "type" : "object",
+              "properties" : {
+                "icon" : {
+                  "type" : "string"
+                },
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "parent" : {
+              "type" : "object",
+              "properties" : {
+                "external_id" : {
+                  "type" : "string"
+                },
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "tax_id" : {
+              "type" : "string"
+            },
+            "type" : {
+              "type" : "string",
+              "enum" : [ "customer", "reseller" ]
+            },
+            "version" : {
+              "type" : "integer"
+            }
+          }
+        },
+        "tier2" : {
+          "type" : "object",
+          "properties" : {
+            "contact_info" : {
+              "type" : "object",
+              "properties" : {
+                "address_line1" : {
+                  "type" : "string"
+                },
+                "address_line2" : {
+                  "type" : "string"
+                },
+                "city" : {
+                  "type" : "string"
+                },
+                "contact" : {
+                  "type" : "object",
+                  "properties" : {
+                    "email" : {
+                      "type" : "string"
+                    },
+                    "first_name" : {
+                      "type" : "string"
+                    },
+                    "last_name" : {
+                      "type" : "string"
+                    },
+                    "phone_number" : {
+                      "type" : "object",
+                      "properties" : {
+                        "area_code" : {
+                          "type" : "string"
+                        },
+                        "country_code" : {
+                          "type" : "string"
+                        },
+                        "extension" : {
+                          "type" : "string"
+                        },
+                        "phone_number" : {
+                          "type" : "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "country" : {
+                  "type" : "string"
+                },
+                "postal_code" : {
+                  "type" : "string"
+                },
+                "state" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "events" : {
+              "type" : "object",
+              "properties" : {
+                "accepted" : {
+                  "type" : "object",
+                  "properties" : {
+                    "at" : {
+                      "type" : "string"
+                    },
+                    "by" : {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "string"
+                        },
+                        "name" : {
+                          "type" : "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "closed" : {
+                  "type" : "object",
+                  "properties" : {
+                    "at" : {
+                      "type" : "string"
+                    },
+                    "by" : {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "string"
+                        },
+                        "name" : {
+                          "type" : "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "created" : {
+                  "type" : "object",
+                  "properties" : {
+                    "at" : {
+                      "type" : "string"
+                    },
+                    "by" : {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "string"
+                        },
+                        "name" : {
+                          "type" : "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "deleted" : {
+                  "type" : "object",
+                  "properties" : {
+                    "at" : {
+                      "type" : "string"
+                    },
+                    "by" : {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "string"
+                        },
+                        "name" : {
+                          "type" : "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "inquiring" : {
+                  "type" : "object",
+                  "properties" : {
+                    "at" : {
+                      "type" : "string"
+                    },
+                    "by" : {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "string"
+                        },
+                        "name" : {
+                          "type" : "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "last_reported" : {
+                  "type" : "object",
+                  "properties" : {
+                    "at" : {
+                      "type" : "string"
+                    },
+                    "by" : {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "string"
+                        },
+                        "name" : {
+                          "type" : "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "pending" : {
+                  "type" : "object",
+                  "properties" : {
+                    "at" : {
+                      "type" : "string"
+                    },
+                    "by" : {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "string"
+                        },
+                        "name" : {
+                          "type" : "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "rejected" : {
+                  "type" : "object",
+                  "properties" : {
+                    "at" : {
+                      "type" : "string"
+                    },
+                    "by" : {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "string"
+                        },
+                        "name" : {
+                          "type" : "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "resolved" : {
+                  "type" : "object",
+                  "properties" : {
+                    "at" : {
+                      "type" : "string"
+                    },
+                    "by" : {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "string"
+                        },
+                        "name" : {
+                          "type" : "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "submitted" : {
+                  "type" : "object",
+                  "properties" : {
+                    "at" : {
+                      "type" : "string"
+                    },
+                    "by" : {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "string"
+                        },
+                        "name" : {
+                          "type" : "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "updated" : {
+                  "type" : "object",
+                  "properties" : {
+                    "at" : {
+                      "type" : "string"
+                    },
+                    "by" : {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "string"
+                        },
+                        "name" : {
+                          "type" : "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "uploaded" : {
+                  "type" : "object",
+                  "properties" : {
+                    "at" : {
+                      "type" : "string"
+                    },
+                    "by" : {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "string"
+                        },
+                        "name" : {
+                          "type" : "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "external_id" : {
+              "type" : "string"
+            },
+            "external_uid" : {
+              "type" : "string"
+            },
+            "hub" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "id" : {
+              "type" : "string"
+            },
+            "name" : {
+              "type" : "string"
+            },
+            "owner" : {
+              "type" : "object",
+              "properties" : {
+                "icon" : {
+                  "type" : "string"
+                },
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "parent" : {
+              "type" : "object",
+              "properties" : {
+                "external_id" : {
+                  "type" : "string"
+                },
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "tax_id" : {
+              "type" : "string"
+            },
+            "type" : {
+              "type" : "string",
+              "enum" : [ "customer", "reseller" ]
+            },
+            "version" : {
+              "type" : "integer"
+            }
+          }
+        }
+      }
+    }
+  }
+}

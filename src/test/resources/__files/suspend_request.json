@@ -1,0 +1,222 @@
+{
+  "id": "AS-000-000-000-002",
+  "type": "suspend",
+  "note": "",
+  "asset": {
+    "id": "AS-000-000-000",
+    "status": "active",
+    "external_uid": "6ee79dfa-f636-4507-bbcd-a71f68f81e2c",
+    "product": {
+      "id": "PRD-635-752-204",
+      "icon": "/media/VA-674-253/PRD-635-752-204/media/PRD-635-752-204-logo_3DsBnkc.png",
+      "name": "CloudBlue Connect",
+      "status": "published"
+    },
+    "connection": {
+      "id": "CT-9564-8635",
+      "type": "production",
+      "status": "approved",
+      "provider": {
+        "id": "PA-080-719",
+        "name": "Connect Labs Provider",
+        "icon": "/media/PA-080-719/media/icon.jpg"
+      },
+      "vendor": {
+        "id": "VA-674-253",
+        "name": "CloudBlue ISV",
+        "icon": "/media/VA-674-253/media/icon_fobt0xS.png"
+      },
+      "hub": {
+        "id": "HB-5294-7915",
+        "name": "R19-HUB"
+      },
+      "created_at": "2020-09-02T13:31:11+00:00"
+    },
+    "events": {
+      "created": {
+        "at": "2020-09-02T14:15:07+00:00"
+      },
+      "updated": {
+        "at": "2020-09-04T10:57:27+00:00"
+      }
+    },
+    "items": [
+      {
+        "id": "PRD_635_752_204_0001",
+        "global_id": "PRD-635-752-204-0001",
+        "mpn": "connect-basic",
+        "old_quantity": "1",
+        "quantity": "1",
+        "type": "Requests",
+        "display_name": "Basic",
+        "period": "Monthly",
+        "item_type": "Reservation"
+      }
+    ],
+    "params": [
+      {
+        "id": "subscription_id",
+        "name": "subscription_id",
+        "type": "text",
+        "phase": "fulfillment",
+        "description": "Subscription ID",
+        "value": "sdfghj",
+        "value_error": "",
+        "title": "Subscription ID",
+        "constraints": {
+          "placeholder": "Subscription ID",
+          "hint": "Subscription ID",
+          "meta": {},
+          "reconciliation": false,
+          "unique": true,
+          "required": false
+        }
+      }
+    ],
+    "tiers": {
+      "customer": {
+        "id": "TA-4716-9790-5509",
+        "version": 8,
+        "name": "SMALLSYS INC",
+        "type": "customer",
+        "external_id": "T46FTVbkLrc",
+        "external_uid": "f034fdd5-7a10-4e42-9efb-f57a4d67c8ab",
+        "owner": {
+          "id": "PA-080-719",
+          "name": "Connect Labs Provider",
+          "icon": "/media/PA-080-719/media/icon.jpg"
+        },
+        "scopes": [
+          "customer"
+        ],
+        "hub": {
+          "id": "HB-5294-7915",
+          "name": "R19-HUB"
+        },
+        "events": {
+          "created": {
+            "at": "2020-09-02T14:15:05+00:00",
+            "by": {
+              "id": "SU-994-668-095",
+              "name": "GM Provider Service User"
+            }
+          },
+          "updated": {
+            "at": "2020-09-02T14:15:05+00:00",
+            "by": {
+              "id": "SU-994-668-095",
+              "name": "GM Provider Service User"
+            }
+          }
+        },
+        "contact_info": {
+          "address_line1": "795 E DRAGRAM",
+          "address_line2": "TUCSON",
+          "city": "WA",
+          "state": "WA",
+          "postal_code": "98102",
+          "country": "US",
+          "contact": {
+            "first_name": "CHRIS",
+            "last_name": "NISWANDEE",
+            "email": "CHRIS.NISWANDEE@SMALLSYS.COM",
+            "phone_number": {
+              "country_code": "+91",
+              "area_code": "",
+              "phone_number": "8726515423",
+              "extension": ""
+            }
+          }
+        }
+      },
+      "tier1": {
+        "id": "TA-2025-0398-8247",
+        "version": 3,
+        "name": "Smart Provider LLC",
+        "type": "customer",
+        "external_id": "P-1",
+        "external_uid": "d15c7924-1eab-4710-a71e-906f6677a33b",
+        "owner": {
+          "id": "PA-080-719",
+          "name": "Connect Labs Provider",
+          "icon": "/media/PA-080-719/media/icon.jpg"
+        },
+        "scopes": [
+          "tier1"
+        ],
+        "hub": {
+          "id": "HB-5294-7915",
+          "name": "R19-HUB"
+        },
+        "events": {
+          "created": {
+            "at": "2020-09-02T14:15:06+00:00",
+            "by": {
+              "id": "SU-994-668-095",
+              "name": "GM Provider Service User"
+            }
+          },
+          "updated": {
+            "at": "2020-09-02T14:15:06+00:00",
+            "by": {
+              "id": "SU-994-668-095",
+              "name": "GM Provider Service User"
+            }
+          }
+        },
+        "contact_info": {
+          "address_line1": "2620 Augustine Drive",
+          "address_line2": "Suite 140",
+          "city": "Santa Clara",
+          "state": "CA",
+          "postal_code": "23415-982",
+          "country": "GB",
+          "contact": {
+            "first_name": "Tom",
+            "last_name": "Jack",
+            "email": "rahul.mondal@ingramnicro.com",
+            "phone_number": {
+              "country_code": "+91",
+              "area_code": "",
+              "phone_number": "1234567890",
+              "extension": ""
+            }
+          }
+        }
+      },
+      "tier2": {}
+    },
+    "configuration": {
+      "params": []
+    },
+    "marketplace": {
+      "id": "MP-78031",
+      "name": "AWS SaaS Marketplace",
+      "icon": "/media/PA-080-719/marketplaces/MP-78031/icon.jpg"
+    },
+    "contract": {
+      "id": "CRD-00000-00000-00000",
+      "name": "None"
+    }
+  },
+  "reason": "The product doesn't support suspend/resume operations.",
+  "status": "pending",
+  "created": "2021-04-08T07:04:47+00:00",
+  "updated": "2021-04-08T07:04:47+00:00",
+  "answered": false,
+  "assignee": "",
+  "activation_key": "",
+  "previous_approved_request": {
+    "id": "PR-9271-0414-8227-001"
+  },
+  "effective_date": null,
+  "marketplace": {
+    "id": "MP-78031",
+    "name": "AWS SaaS Marketplace",
+    "icon": "/media/PA-080-719/marketplaces/MP-78031/icon.jpg"
+  },
+  "contract": {
+    "id": "CRD-00000-00000-00000",
+    "name": "None"
+  }
+}

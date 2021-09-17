@@ -1,0 +1,182 @@
+{
+  "$schema" : "http://json-schema.org/draft-07/schema#",
+  "type" : "object",
+  "properties" : {
+    "commitment" : {
+      "type" : "object",
+      "properties" : {
+        "count" : {
+          "type" : "integer"
+        },
+        "multiplier" : {
+          "type" : "string"
+        }
+      }
+    },
+    "depth" : {
+      "type" : "integer"
+    },
+    "description" : {
+      "type" : "string"
+    },
+    "display_name" : {
+      "type" : "string"
+    },
+    "dynamic" : {
+      "type" : "boolean"
+    },
+    "end_of_sale_notes" : {
+      "type" : "string"
+    },
+    "events" : {
+      "type" : "object",
+      "properties" : {
+        "created" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "saleended" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "updated" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "id" : {
+      "type" : "string"
+    },
+    "local_id" : {
+      "type" : "string"
+    },
+    "mpn" : {
+      "type" : "string"
+    },
+    "name" : {
+      "type" : "string"
+    },
+    "parent" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "status" : {
+          "type" : "string",
+          "enum" : [ "draft", "published", "endofsale" ]
+        }
+      }
+    },
+    "period" : {
+      "type" : "string"
+    },
+    "position" : {
+      "type" : "string"
+    },
+    "precision" : {
+      "type" : "string",
+      "enum" : [ "integer", "decimal_1", "decimal_2", "decimal_4", "decimal_8" ]
+    },
+    "replacement" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "status" : {
+          "type" : "string",
+          "enum" : [ "draft", "published", "endofsale" ]
+        }
+      }
+    },
+    "status" : {
+      "type" : "string",
+      "enum" : [ "draft", "published", "endofsale" ]
+    },
+    "type" : {
+      "type" : "string",
+      "enum" : [ "reservation", "ppu" ]
+    },
+    "ui" : {
+      "type" : "object",
+      "properties" : {
+        "visibility" : {
+          "type" : "boolean"
+        }
+      }
+    },
+    "ui_visibility" : {
+      "type" : "string"
+    },
+    "unit" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "title" : {
+          "type" : "string"
+        },
+        "unit" : {
+          "type" : "string"
+        }
+      }
+    }
+  }
+}

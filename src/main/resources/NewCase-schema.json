@@ -1,0 +1,78 @@
+{
+  "$schema" : "http://json-schema.org/draft-07/schema#",
+  "type" : "object",
+  "properties" : {
+    "product" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "required": ["string"],
+          "properties": {
+            "string": {"type": "string"}
+          }
+        }
+      }
+    },
+    "subject" : {
+      "type" : "string",
+      "required": ["string"],
+      "properties": {
+        "string": {"type": "string"}
+      }
+    },
+    "description" : {
+      "type" : "string"
+    },
+    "priority" : {
+      "type" : "integer",
+      "required": ["integer"],
+      "properties": {
+        "integer": {
+          "type": "integer"
+        }
+      }
+    },
+    "type" : {
+      "type" : "string",
+      "enum" : [ "TECHNICAL", "BUSINESS" ]
+    },
+    "receiver" : {
+      "type" : "object",
+      "properties" : {
+        "account" : {
+          "type" : "object",
+          "properties" : {
+            "id" : {
+              "type" : "string",
+              "required": ["string"],
+              "properties": {
+                "string": {"type": "string"}
+              }
+            }
+          }
+        }
+      }
+    },
+    "issuer" : {
+      "type" : "object",
+      "properties" : {
+        "recipients" : {
+          "type" : "array",
+          "items" : {
+            "type" : "object",
+            "properties" : {
+              "id" : {
+                "type" : "string",
+                "required": ["string"],
+                "properties": {
+                  "string": {"type": "string"}
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

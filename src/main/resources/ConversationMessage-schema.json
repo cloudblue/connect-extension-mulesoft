@@ -1,0 +1,279 @@
+{
+  "$schema" : "http://json-schema.org/draft-07/schema#",
+  "type" : "object",
+  "properties" : {
+    "account" : {
+      "type" : "object",
+      "properties" : {
+        "icon" : {
+          "type" : "string"
+        },
+        "id" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        }
+      }
+    },
+    "conversation" : {
+      "type" : "string"
+    },
+    "created" : {
+      "type" : "string"
+    },
+    "creator" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        }
+      }
+    },
+    "events" : {
+      "type" : "object",
+      "properties" : {
+        "accepted" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "closed" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "created" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "deleted" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "inquiring" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "last_reported" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "pending" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "rejected" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "resolved" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "submitted" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "updated" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "uploaded" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "id" : {
+      "type" : "string"
+    },
+    "text" : {
+      "type" : "string"
+    },
+    "type" : {
+      "type" : "string"
+    }
+  }
+}

@@ -1,0 +1,140 @@
+{
+  "$schema" : "http://json-schema.org/draft-07/schema#",
+  "type" : "object",
+  "properties" : {
+    "amount" : {
+      "type" : "number"
+    },
+    "asset" : {
+      "type" : "object",
+      "properties" : {
+        "external_id" : {
+          "type" : "string"
+        },
+        "external_uid" : {
+          "type" : "string"
+        },
+        "id" : {
+          "type" : "string"
+        }
+      }
+    },
+    "category" : {
+      "type" : "object",
+      "properties" : {
+        "description" : {
+          "type" : "string"
+        },
+        "id" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        }
+      }
+    },
+    "closed_at" : {
+      "type" : "string"
+    },
+    "closed_by" : {
+      "type" : "string"
+    },
+    "end_date" : {
+      "type" : "string"
+    },
+    "error_codes" : {
+      "type" : "string"
+    },
+    "error_details" : {
+      "type" : "string"
+    },
+    "external_billing_id" : {
+      "type" : "string"
+    },
+    "external_billing_note" : {
+      "type" : "string"
+    },
+    "id" : {
+      "type" : "string"
+    },
+    "item" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "local_id" : {
+          "type" : "string"
+        },
+        "mpn" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "precision" : {
+          "type" : "string",
+          "enum" : [ "integer", "decimal_1", "decimal_2", "decimal_4", "decimal_8" ]
+        },
+        "type" : {
+          "type" : "string",
+          "enum" : [ "reservation", "ppu" ]
+        },
+        "unit" : {
+          "type" : "string"
+        }
+      }
+    },
+    "multiplier" : {
+      "type" : "integer"
+    },
+    "params" : {
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "parameter_name" : {
+            "type" : "string"
+          },
+          "parameter_value" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "product_id" : {
+      "type" : "string"
+    },
+    "start_date" : {
+      "type" : "string"
+    },
+    "status" : {
+      "type" : "string",
+      "enum" : [ "valid", "invalid", "approved", "rejected", "closed" ]
+    },
+    "tier" : {
+      "type" : "integer"
+    },
+    "usage" : {
+      "type" : "number"
+    },
+    "usageReport" : {
+      "type" : "object",
+      "properties" : {
+        "currency" : {
+          "type" : "string"
+        },
+        "id" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "schema" : {
+          "type" : "string",
+          "enum" : [ "qt", "tr", "pr", "cr" ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,293 @@
+{
+  "$schema" : "http://json-schema.org/draft-07/schema#",
+  "type" : "object",
+  "properties" : {
+    "accepted" : {
+      "type" : "number"
+    },
+    "amount" : {
+      "type" : "number"
+    },
+    "asset" : {
+      "type" : "object",
+      "properties" : {
+        "external_id" : {
+          "type" : "string"
+        },
+        "external_uid" : {
+          "type" : "string"
+        },
+        "id" : {
+          "type" : "string"
+        }
+      }
+    },
+    "consumed" : {
+      "type" : "number"
+    },
+    "currency" : {
+      "type" : "string"
+    },
+    "events" : {
+      "type" : "object",
+      "properties" : {
+        "accepted" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "closed" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "created" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "deleted" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "inquiring" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "last_reported" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "pending" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "rejected" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "resolved" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "submitted" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "updated" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "uploaded" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "item" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "local_id" : {
+          "type" : "string"
+        },
+        "mpn" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "precision" : {
+          "type" : "string",
+          "enum" : [ "integer", "decimal_1", "decimal_2", "decimal_4", "decimal_8" ]
+        },
+        "type" : {
+          "type" : "string",
+          "enum" : [ "reservation", "ppu" ]
+        },
+        "unit" : {
+          "type" : "string"
+        }
+      }
+    }
+  }
+}

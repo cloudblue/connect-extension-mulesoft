@@ -1,0 +1,59 @@
+{
+  "$schema" : "http://json-schema.org/draft-07/schema#",
+  "type" : "object",
+  "properties" : {
+    "commitment" : {
+      "type" : "object",
+      "properties" : {
+        "count" : {
+          "type" : "integer"
+        },
+        "multiplier" : {
+          "type" : "string"
+        }
+      }
+    },
+    "description" : {
+      "type" : "string"
+    },
+    "dynamic" : {
+      "type" : "boolean"
+    },
+    "mpn" : {
+      "type" : "string"
+    },
+    "name" : {
+      "type" : "string"
+    },
+    "period" : {
+      "type" : "string"
+    },
+    "precision" : {
+      "type" : "string",
+      "enum" : [ "integer", "decimal(1)", "decimal(2)", "decimal(4)", "decimal(8)" ]
+    },
+    "type" : {
+      "type" : "string",
+      "enum" : [ "reservation", "ppu" ]
+    },
+    "ui" : {
+      "type" : "object",
+      "properties" : {
+        "visibility" : {
+          "type" : "boolean"
+        }
+      },
+      "required": ["visibility"]
+    },
+    "unit" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        }
+      },
+      "required": ["id"]
+    }
+  },
+  "required": ["name", "type", "commitment", "description", "dynamic", "mpn", "period", "precision", "ui", "unit"]
+}

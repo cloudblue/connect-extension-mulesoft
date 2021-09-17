@@ -1,0 +1,72 @@
+{
+  "$schema" : "http://json-schema.org/draft-07/schema#",
+  "type" : "object",
+  "properties" : {
+    "action" : {
+      "type" : "string"
+    },
+    "description" : {
+      "type" : "string"
+    },
+    "events" : {
+      "type" : "object",
+      "properties" : {
+        "created" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "updated" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "id" : {
+      "type" : "string"
+    },
+    "name" : {
+      "type" : "string"
+    },
+    "scope" : {
+      "type" : "string",
+      "enum" : [ "asset", "tier1", "tier2" ]
+    },
+    "title" : {
+      "type" : "string"
+    },
+    "type" : {
+      "type" : "string",
+      "const" : "button"
+    }
+  }
+}

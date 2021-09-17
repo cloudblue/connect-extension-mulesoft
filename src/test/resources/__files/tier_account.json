@@ -1,0 +1,58 @@
+{
+  "id": "TA-0000-0000",
+  "version": 8,
+  "name": "5Cube",
+  "type": "customer",
+  "external_id": "R-10023",
+  "external_uid": "CBT-66315-33763-3F-R-20",
+  "owner": {
+    "id": "PA-080-719",
+    "name": "Connect Labs Provider",
+    "icon": "/media/PA-080-719/media/icon.jpg"
+  },
+  "parent": {
+    "id": "TA-0000-9999"
+  },
+  "scopes": [
+    "tier1"
+  ],
+  "hub": {
+    "id": "HB-6797-0983",
+    "name": "GM-CB-Hub"
+  },
+  "events": {
+    "created": {
+      "at": "2020-03-23T09:32:12+00:00",
+      "by": {
+        "id": "SU-994-668-095",
+        "name": "GM Provider Service User"
+      }
+    },
+    "updated": {
+      "at": "2020-03-23T09:32:12+00:00",
+      "by": {
+        "id": "SU-994-668-095",
+        "name": "GM Provider Service User"
+      }
+    }
+  },
+  "contact_info": {
+    "address_line1": "",
+    "address_line2": "",
+    "city": "",
+    "state": "",
+    "postal_code": "",
+    "country": "GB",
+    "contact": {
+      "first_name": "Technical",
+      "last_name": "Contact",
+      "email": "dyadav@ensim.comaa",
+      "phone_number": {
+        "country_code": "",
+        "area_code": "",
+        "phone_number": "",
+        "extension": ""
+      }
+    }
+  }
+}

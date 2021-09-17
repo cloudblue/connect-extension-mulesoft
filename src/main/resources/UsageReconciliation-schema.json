@@ -1,0 +1,566 @@
+{
+  "$schema" : "http://json-schema.org/draft-07/schema#",
+  "type" : "object",
+  "properties" : {
+    "binding" : {
+      "type" : "object",
+      "properties" : {
+        "external_id" : {
+          "type" : "string"
+        },
+        "hub" : {
+          "type" : "object",
+          "properties" : {
+            "company" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "description" : {
+              "type" : "string"
+            },
+            "events" : {
+              "type" : "object",
+              "properties" : {
+                "accepted" : {
+                  "type" : "object",
+                  "properties" : {
+                    "at" : {
+                      "type" : "string"
+                    },
+                    "by" : {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "string"
+                        },
+                        "name" : {
+                          "type" : "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "closed" : {
+                  "type" : "object",
+                  "properties" : {
+                    "at" : {
+                      "type" : "string"
+                    },
+                    "by" : {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "string"
+                        },
+                        "name" : {
+                          "type" : "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "created" : {
+                  "type" : "object",
+                  "properties" : {
+                    "at" : {
+                      "type" : "string"
+                    },
+                    "by" : {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "string"
+                        },
+                        "name" : {
+                          "type" : "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "deleted" : {
+                  "type" : "object",
+                  "properties" : {
+                    "at" : {
+                      "type" : "string"
+                    },
+                    "by" : {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "string"
+                        },
+                        "name" : {
+                          "type" : "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "inquiring" : {
+                  "type" : "object",
+                  "properties" : {
+                    "at" : {
+                      "type" : "string"
+                    },
+                    "by" : {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "string"
+                        },
+                        "name" : {
+                          "type" : "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "last_reported" : {
+                  "type" : "object",
+                  "properties" : {
+                    "at" : {
+                      "type" : "string"
+                    },
+                    "by" : {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "string"
+                        },
+                        "name" : {
+                          "type" : "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "pending" : {
+                  "type" : "object",
+                  "properties" : {
+                    "at" : {
+                      "type" : "string"
+                    },
+                    "by" : {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "string"
+                        },
+                        "name" : {
+                          "type" : "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "rejected" : {
+                  "type" : "object",
+                  "properties" : {
+                    "at" : {
+                      "type" : "string"
+                    },
+                    "by" : {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "string"
+                        },
+                        "name" : {
+                          "type" : "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "resolved" : {
+                  "type" : "object",
+                  "properties" : {
+                    "at" : {
+                      "type" : "string"
+                    },
+                    "by" : {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "string"
+                        },
+                        "name" : {
+                          "type" : "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "submitted" : {
+                  "type" : "object",
+                  "properties" : {
+                    "at" : {
+                      "type" : "string"
+                    },
+                    "by" : {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "string"
+                        },
+                        "name" : {
+                          "type" : "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "updated" : {
+                  "type" : "object",
+                  "properties" : {
+                    "at" : {
+                      "type" : "string"
+                    },
+                    "by" : {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "string"
+                        },
+                        "name" : {
+                          "type" : "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "uploaded" : {
+                  "type" : "object",
+                  "properties" : {
+                    "at" : {
+                      "type" : "string"
+                    },
+                    "by" : {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "string"
+                        },
+                        "name" : {
+                          "type" : "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "id" : {
+              "type" : "string"
+            },
+            "name" : {
+              "type" : "string"
+            }
+          }
+        }
+      }
+    },
+    "error" : {
+      "type" : "object"
+    },
+    "events" : {
+      "type" : "object",
+      "properties" : {
+        "accepted" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "closed" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "created" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "deleted" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "inquiring" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "last_reported" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "pending" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "rejected" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "resolved" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "submitted" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "updated" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "uploaded" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "id" : {
+      "type" : "string"
+    },
+    "notes" : {
+      "type" : "object",
+      "properties" : {
+        "processing" : {
+          "type" : "string"
+        },
+        "uploaded" : {
+          "type" : "string"
+        }
+      }
+    },
+    "partusagefile" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "provider" : {
+          "type" : "object",
+          "properties" : {
+            "icon" : {
+              "type" : "string"
+            },
+            "id" : {
+              "type" : "string"
+            },
+            "name" : {
+              "type" : "string"
+            }
+          }
+        }
+      }
+    },
+    "status" : {
+      "type" : "string",
+      "enum" : [ "uploaded", "processing", "processed", "failed" ]
+    },
+    "usagefile" : {
+      "type" : "object",
+      "properties" : {
+        "currency" : {
+          "type" : "string"
+        },
+        "id" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "schema" : {
+          "type" : "string",
+          "enum" : [ "qt", "tr", "pr", "cr" ]
+        }
+      }
+    }
+  }
+}

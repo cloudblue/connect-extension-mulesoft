@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ Copyright © 2021 Ingram Micro Inc. All rights reserved.
+  ~ The software in this package is published under the terms of the Apache-2.0
+  ~ license, a copy of which has been included with this distribution in the
+  ~ LICENSE file.
+  -->
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:file="http://www.mulesoft.org/schema/mule/file"
+      xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+      xmlns:cloudblue-connect="http://www.mulesoft.org/schema/mule/cloudblue-connect"
+      xmlns:http="http://www.mulesoft.org/schema/mule/http"
+      xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/cloudblue-connect http://www.mulesoft.org/schema/mule/cloudblue-connect/current/mule-cloudblue-connect.xsd
+        http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
+        http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+
+
+    <cloudblue-connect:config name="CloudBlue_Connect_Config_Test">
+        <cloudblue-connect:connection endpoint="http://localhost:${http.port}" token="MOCK_TOKEN" />
+    </cloudblue-connect:config>
+
+    <cloudblue-connect:webhook-config name="CloudBlue_Connect_Webhook_config"
+                                      basePath="webhook" >
+        <cloudblue-connect:listener-connection host="localhost"
+                                               port="${webhook.port}"
+                                               webhookBindingUrl="http://localhost"
+                                               token="MOCK_TOKEN"
+                                               endpoint="http://localhost:${http.port}" />
+    </cloudblue-connect:webhook-config>
+
+    <http:request-config name="HTTP_Request_configuration">
+        <http:request-connection host="localhost" port="${webhook.port}" usePersistentConnections="false" />
+    </http:request-config>
+
+    <file:config name="File_Config"/>
+
+    <flow name="list_resource_operation">
+        <cloudblue-connect:list-resources
+                config-ref="CloudBlue_Connect_Config_Test"
+                resourceType="REQUEST" limit="2"/>
+    </flow>
+
+    <flow name="list_resource_operation_with_filter">
+        <cloudblue-connect:list-resources
+                config-ref="CloudBlue_Connect_Config_Test"
+                resourceType="REQUEST" limit="5" offset="5">
+            <cloudblue-connect:filter >
+                <cloudblue-connect:mono-filter type="EQ" property="asset.id" value="AS-000-000" />
+            </cloudblue-connect:filter>
+            <cloudblue-connect:order-by >
+                <cloudblue-connect:properties >
+                    <cloudblue-connect:property value="created" />
+                </cloudblue-connect:properties>
+            </cloudblue-connect:order-by>
+        </cloudblue-connect:list-resources>
+    </flow>
+
+    <flow name="list_sub_collection_resource_operation" >
+        <set-payload value='#[%dw 2.0 output application/java --- { product_id: "PRD-000-000" }]'/>
+        <cloudblue-connect:list-resources resourceType="PRODUCT_ACTION"
+                                          config-ref="CloudBlue_Connect_Config_Test"
+                                          limit="5">
+            <cloudblue-connect:list-resource-parameter ><![CDATA[#[payload]]]></cloudblue-connect:list-resource-parameter>
+        </cloudblue-connect:list-resources>
+    </flow>
+
+    <flow name="get_resource_operation">
+        <set-payload value='#[%dw 2.0 output application/java --- { request_id: "PR-000-000" }]'/>
+        <cloudblue-connect:get-resource
+                resourceType="REQUEST"
+                config-ref="CloudBlue_Connect_Config_Test"/>
+    </flow>
+
+    <flow name="update_resource_operation">
+        <set-payload value='#[%dw 2.0 output application/json --- { parent: { id: "TA-0000-9999" }}]'/>
+        <cloudblue-connect:update-resource resourceType="TIER_ACCOUNT"
+                                           config-ref="CloudBlue_Connect_Config_Test"
+                                           updateResourceIdentifier='#[output application/java --- { tier_account_id: "TA-0000-0000" }]'/>
+    </flow>
+
+    <flow name="resource_action_operation">
+        <set-payload value='#[%dw 2.0 output application/java --- { request_id: "PR-0000-0000-0000-001", template_id: "TP-000-000-001", effective_date: "2020-03-23T09:32:12+00:00"}]' />
+        <cloudblue-connect:resource-action config-ref="CloudBlue_Connect_Config_Test"
+                                           resourceType="REQUEST" action="APPROVE"/>
+    </flow>
+
+    <flow name="resource_collection_action_operation">
+        <set-payload value='#[%dw 2.0 output application/java --- [{ id: "UR-000-000-000-000-000", external_billing_id: "EXT-001", external_billing_note: "Customer billing no. CU872635" }]]'/>
+        <cloudblue-connect:resource-action config-ref="CloudBlue_Connect_Config_Test"
+                                           resourceType="USAGE_RECORD" action="BULK_CLOSE"/>
+    </flow>
+
+    <flow name="resource_no_payload_action_operation">
+        <set-payload value='#[%dw 2.0 output application/java --- { usage_report_id: "UF-000-000-000" }]'/>
+        <cloudblue-connect:resource-action config-ref="CloudBlue_Connect_Config_Test"
+                                           resourceType="USAGE_REPORT" action="CLOSE"/>
+    </flow>
+
+    <flow name="create_resource_operation">
+        <set-payload value='#[%dw 2.0 output application/json --- { asset: { id: "AS-000-000-000" }, "type": "suspend" }]'/>
+        <cloudblue-connect:create-resource config-ref="CloudBlue_Connect_Config_Test"
+                                           resourceType="REQUEST"
+                                           action="CREATE_ADMIN_HOLD_REQUEST"/>
+    </flow>
+
+    <flow name="get_resource_with_filter_operation">
+        <set-payload value='#[%dw 2.0 output application/java --- { product_id: "PRD-000-000", action_id: "ACT-000-000-001", asset_id: "AS-000-000" }]'/>
+        <cloudblue-connect:get-resource resourceType="PRODUCT_ACTION_LINK"
+                                        config-ref="CloudBlue_Connect_Config_Test"/>
+    </flow>
+
+    <flow name="upload_resources_file_operation">
+        <set-payload value='#[%dw 2.0 output application/java --- { usage_report_id: "UF-0000-0000-0000" }]'/>
+        <cloudblue-connect:upload-file resourceType="USAGE_REPORT"
+                                       action="UPLOAD"
+                                       config-ref="CloudBlue_Connect_Config_Test"
+                                       file="${TEST_RESOURCE_LOCATION}/__files/Usage_File.xlsx"/>
+    </flow>
+
+    <flow name="upload_resources_file_operation_bad_file">
+        <set-payload value='#[%dw 2.0 output application/java --- { usage_report_id: "UF-0000-0000-0000" }]'/>
+        <cloudblue-connect:upload-file resourceType="USAGE_REPORT"
+                                       action="UPLOAD"
+                                       config-ref="CloudBlue_Connect_Config_Test"
+                                       file="${TEST_RESOURCE_LOCATION}/__files/Do_not_exist.xlsx"/>
+    </flow>
+
+    <flow name="download_resources_file_operation">
+        <set-payload value='#[%dw 2.0 output application/java --- { usage_chunk_id: "UFC-2021-03-0000-0000-001" }]'/>
+        <cloudblue-connect:download-file
+                config-ref="CloudBlue_Connect_Config_Test"
+                location="${TEST_RESOURCE_LOCATION}/"
+                fileName="UFC-2021-03-0000-0000-001.txt"
+                resourceType="USAGE_CHUNK"
+                action="DOWNLOAD"/>
+        <file:read config-ref="File_Config"
+                   path="${TEST_RESOURCE_LOCATION}/UFC-2021-03-0000-0000-001.txt"
+                   outputEncoding="UTF-8"
+                   outputMimeType="text/plain; charset=UTF-8"/>
+    </flow>
+
+    <flow name="draft_request_validation_source">
+        <cloudblue-connect:request-validation-listener
+                config-ref="CloudBlue_Connect_Webhook_config"
+                validationType="DRAFT_VALIDATION"
+                path="/validation"
+                productId="PRD-000-000-000"
+                jwtSecret="${JWT_SECRET}"/>
+        <set-payload value="#[%dw 2.0 output application/java --- { id: payload.id,	asset: { id: payload.asset.id, params: [{ id: payload.asset.params[0].id, value: payload.asset.params[0].value, value_error: 'The parameter value is not correct'}]}}]" />
+    </flow>
+
+    <flow name="draft_request_validation_flow">
+        <http:request method="POST"
+                      config-ref="HTTP_Request_configuration"
+                      path="webhook/validation/fulfillment_request">
+            <http:body >
+                <![CDATA[
+                    {
+                        "type": "purchase",
+                        "asset": {
+                            "product": {
+                                "id": "PRD-000-000-000"
+                            },
+                            "connection": {
+                                "id": "CT-0000-0000-0000",
+                                "type": "preview"
+                            },
+                            "external_uid": "be1e3556-3e2d-495a-b5f6-ddecbaae6da5",
+                            "external_id": "0ATDNFJIO1",
+                            "items": [
+                                {
+                                    "id": "PRD_000_000_000_0001",
+                                    "quantity": 21,
+                                    "global_id": "PRD-635-752-204-0001"
+                                }
+                            ],
+                            "params": [
+                                {
+                                    "id": "Name",
+                                    "value": "Value A",
+                                    "value_error": ""
+                                }
+                            ],
+                            "tiers": {
+                                "customer": {
+                                    "id": "TA-4418-8261-6628"
+                                },
+                                "tier1": {
+                                    "id": "TA-0000-2559-7285"
+                                }
+                            }
+                        },
+                        "marketplace": {
+                            "id": "MP-00000"
+                        },
+                        "id": "PR-0000-0000-0000-001"
+                    }
+                ]]>
+            </http:body>
+            <http:headers >
+                <![CDATA[#[output application/java
+                    ---
+                    {
+	                    Authentication : 'Bearer ${JWT_TOKEN}'
+                    }
+                ]]]>
+            </http:headers>
+        </http:request>
+    </flow>
+
+    <flow name="draft_request_validation_unauthorized_flow">
+        <http:request method="POST"
+                      config-ref="HTTP_Request_configuration"
+                      path="webhook/validation/fulfillment_request">
+            <http:body >
+                <![CDATA[
+                    {
+                        "type": "purchase",
+                        "asset": {
+                            "product": {
+                                "id": "PRD-000-000-000"
+                            },
+                            "connection": {
+                                "id": "CT-0000-0000-0000",
+                                "type": "preview"
+                            },
+                            "external_uid": "be1e3556-3e2d-495a-b5f6-ddecbaae6da5",
+                            "external_id": "0ATDNFJIO1",
+                            "items": [
+                                {
+                                    "id": "PRD_000_000_000_0001",
+                                    "quantity": 21,
+                                    "global_id": "PRD-635-752-204-0001"
+                                }
+                            ],
+                            "params": [
+                                {
+                                    "id": "Name",
+                                    "value": "Value A",
+                                    "value_error": ""
+                                }
+                            ],
+                            "tiers": {
+                                "customer": {
+                                    "id": "TA-4418-8261-6628"
+                                },
+                                "tier1": {
+                                    "id": "TA-0000-2559-7285"
+                                }
+                            }
+                        },
+                        "marketplace": {
+                            "id": "MP-00000"
+                        },
+                        "id": "PR-0000-0000-0000-001"
+                    }
+                ]]>
+            </http:body>
+            <http:headers >
+                <![CDATA[#[output application/java
+                    ---
+                    {
+	                    Authentication : 'Bearer INVALID_TOKEN'
+                    }
+                ]]]>
+            </http:headers>
+        </http:request>
+    </flow>
+
+    <flow name="webhook_fulfillment_request_source">
+        <cloudblue-connect:webhook-listener
+                webhookEventType="FULFILLMENT_REQUEST"
+                config-ref="CloudBlue_Connect_Webhook_config"
+                path="/webhook"
+                productId="PRD-000-000-000"
+                jwtSecret="${JWT_SECRET}"/>
+        <cloudblue-connect:list-resources
+                resourceType="REQUEST"
+                config-ref="CloudBlue_Connect_Config_Test"
+                limit="2">
+            <cloudblue-connect:list-resource-parameter ><![CDATA[#[payload]]]></cloudblue-connect:list-resource-parameter>
+            <cloudblue-connect:filter >
+                <cloudblue-connect:list-filter type="AND" >
+                    <cloudblue-connect:filters >
+                        <cloudblue-connect:mono-filter type="EQ" property="product.id" value="PRD-000-000-000" />
+                        <cloudblue-connect:mono-filter type="EQ" property="status" value="pending" />
+                    </cloudblue-connect:filters>
+                </cloudblue-connect:list-filter>
+            </cloudblue-connect:filter>
+        </cloudblue-connect:list-resources>
+    </flow>
+
+    <flow name="webhook_fulfillment_request_flow">
+        <http:request method="POST"
+                      config-ref="HTTP_Request_configuration"
+                      path="webhook/webhook/fulfillment_request">
+            <http:body >
+                <![CDATA[
+                    {
+                        "webhook_id": "WH-000-000-000",
+                        "webhook_name": "Webhook for Mule Extension Source",
+                        "object_class": "fulfillment_request",
+                        "account_id": "VA-000-000",
+                        "product_id": "PRD-000-000-000",
+                        "api_url": "https://api.connect.cloud.im/public/v1",
+                        "data": {}
+                    }
+                ]]>
+            </http:body>
+            <http:headers >
+                <![CDATA[#[output application/java
+                    ---
+                    {
+	                    Authentication : 'Bearer ${JWT_TOKEN}'
+                    }
+                ]]]>
+            </http:headers>
+        </http:request>
+    </flow>
+
+    <flow name="tcr_validation_source">
+        <cloudblue-connect:tcr-validation-listener validationType="DRAFT_TCR_T1_VALIDATION"
+                                                   config-ref="CloudBlue_Connect_Webhook_config"
+                                                   path="/tcr_validation"
+                                                   productId="PRD-000-000-000"
+                                                   jwtSecret="${JWT_SECRET}"/>
+        <set-payload value='#[%dw 2.0 output application/java
+---
+{
+	"id": "TCR-000-000-000-001",
+	"type": "setup",
+	"status": "draft",
+	"configuration": {
+		"params": [
+			{
+				"value": "t2",
+				"id": "t1_param2"
+			},
+			{
+				"value": "t1",
+				"value_error": "Value is not correct.",
+				"id": "t1_param1"
+			}
+    	]
+	}
+}]'/>
+    </flow>
+
+    <flow name="tcr_validation_flow">
+        <http:request method="POST"
+                      config-ref="HTTP_Request_configuration"
+                      path="/webhook/tcr_validation/tier_config_request">
+            <http:body >
+                <![CDATA[
+                    {
+                        "id": "TCR-000-000-000-001",
+                        "type": "setup",
+                        "status": "draft",
+                        "configuration": {
+                            "id": "TC-000-000-000",
+                            "account": {
+                                "id": "TA-5748-6446-1173",
+                                "name": "Barton, Hand and Goodwin",
+                                "type": "customer",
+                                "external_id": "P-1",
+                                "external_uid": "TUID-2",
+                                "contact_info": {
+                                    "address_line1": "Lebsack Mission",
+                                    "address_line2": "Hickle Manors",
+                                    "city": "Amaravathi",
+                                    "state": "Andhra Pradesh",
+                                    "postal_code": "522020",
+                                    "country": "IN",
+                                    "contact": {
+                                        "first_name": "Mauricio",
+                                        "last_name": "Toy",
+                                        "email": "pgupta++Mauricio_Toy@odin.com",
+                                        "phone_number": {
+                                            "country_code": "+91",
+                                            "area_code": "755",
+                                            "phone_number": "5059167",
+                                            "extension": ""
+                                        }
+                                    }
+                                }
+                            },
+                            "product": {
+                                "id": "PRD-000-000-000"
+                            },
+                            "tier_level": 1,
+                            "connection": {
+                                "id": "CT-8522-2170",
+                                "type": "production",
+                                "status": "approved",
+                                "provider": {
+                                    "id": "PA-080-719",
+                                    "name": "Connect Labs Provider",
+                                    "icon": "/media/PA-080-719/media/icon.jpg"
+                                },
+                                "vendor": {
+                                    "id": "VA-674-253",
+                                    "name": "CloudBlue ISV",
+                                    "icon": "/media/VA-674-253/media/icon_fobt0xS.png"
+                                },
+                                "hub": {
+                                    "id": "HB-6797-0983",
+                                    "name": "GM-CB-Hub"
+                                }
+                            },
+                            "params": [
+                                {
+                                    "value": "t2",
+                                    "id": "t1_param2"
+                                },
+                                {
+                                    "value": "t1",
+                                    "id": "t1_param1"
+                                }
+                            ]
+                            "status": "pending"
+                        }
+                        "params": [
+                            {
+                                "value": "t1",
+                                "structured_value": "",
+                                "title": "T1 Param1",
+                                "description": "T1 Param1",
+                                "type": "text",
+                                "scope": "tier1",
+                                "phase": "ordering",
+                                "constraints": {
+                                    "required": true,
+                                    "hidden": false,
+                                    "unique": false
+                                },
+                                "id": "t1_param1"
+                            },
+                            {
+                                "value": "t2",
+                                "structured_value": "",
+                                "title": "T1 Param2",
+                                "description": "T1 Param2",
+                                "type": "text",
+                                "scope": "tier1",
+                                "phase": "ordering",
+                                "constraints": {
+                                    "required": true,
+                                    "hidden": false,
+                                    "unique": false
+                                },
+                                "id": "t1_param2"
+                            }
+                        ],
+                        "tiers": {
+                            "tier1": {
+                                "id": "TA-5748-6446-1173",
+                                "name": "Barton, Hand and Goodwin",
+                                "type": "customer",
+                                "external_id": "P-1",
+                                "external_uid": "TUID-2",
+                                "contact_info": {
+                                    "address_line1": "Lebsack Mission",
+                                    "address_line2": "Hickle Manors",
+                                    "city": "Amaravathi",
+                                    "state": "Andhra Pradesh",
+                                    "postal_code": "522020",
+                                    "country": "IN",
+                                    "contact": {
+                                        "first_name": "Mauricio",
+                                        "last_name": "Toy",
+                                        "email": "pgupta++Mauricio_Toy@odin.com",
+                                        "phone_number": {
+                                            "country_code": "+91",
+                                            "area_code": "755",
+                                            "phone_number": "5059167",
+                                            "extension": ""
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]]>
+            </http:body>
+            <http:headers >
+                <![CDATA[#[output application/java
+                    ---
+                    {
+	                    Authentication : 'Bearer ${JWT_TOKEN}'
+                    }
+                ]]]>
+            </http:headers>
+        </http:request>
+    </flow>
+</mule>

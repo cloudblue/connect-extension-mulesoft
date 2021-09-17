@@ -1,0 +1,532 @@
+{
+  "$schema" : "http://json-schema.org/draft-07/schema#",
+  "type" : "object",
+  "properties" : {
+    "capabilities" : {
+      "type" : "object",
+      "properties" : {
+        "cart" : {
+          "type" : "object",
+          "properties" : {
+            "validation" : {
+              "type" : "boolean"
+            }
+          }
+        },
+        "inquiring" : {
+          "type" : "object",
+          "properties" : {
+            "validation" : {
+              "type" : "boolean"
+            }
+          }
+        },
+        "ppu" : {
+          "type" : "object",
+          "properties" : {
+            "dynamic" : {
+              "type" : "boolean"
+            },
+            "future" : {
+              "type" : "boolean"
+            },
+            "predictive" : {
+              "type" : "boolean"
+            },
+            "schema" : {
+              "type" : "string"
+            }
+          }
+        },
+        "reservation" : {
+          "type" : "object",
+          "properties" : {
+            "consumption" : {
+              "type" : "boolean"
+            }
+          }
+        }
+      }
+    },
+    "category" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        }
+      }
+    },
+    "changes_description" : {
+      "type" : "string"
+    },
+    "configurations" : {
+      "type" : "object",
+      "properties" : {
+        "requires_reseller_information" : {
+          "type" : "boolean"
+        },
+        "suspend_resume_supported" : {
+          "type" : "boolean"
+        }
+      }
+    },
+    "customer_ui_settings" : {
+      "type" : "object",
+      "properties" : {
+        "description" : {
+          "type" : "string"
+        },
+        "documents" : {
+          "type" : "array",
+          "items" : {
+            "type" : "object",
+            "properties" : {
+              "title" : {
+                "type" : "string"
+              },
+              "url" : {
+                "type" : "string"
+              },
+              "visibleFor" : {
+                "type" : "string"
+              }
+            }
+          }
+        },
+        "download_links" : {
+          "type" : "array",
+          "items" : {
+            "type" : "object",
+            "properties" : {
+              "title" : {
+                "type" : "string"
+              },
+              "url" : {
+                "type" : "string"
+              },
+              "visibleFor" : {
+                "type" : "string"
+              }
+            }
+          }
+        },
+        "getting_started" : {
+          "type" : "string"
+        },
+        "languages" : {
+          "type" : "object",
+          "properties" : {
+            "id" : {
+              "type" : "string"
+            },
+            "name" : {
+              "type" : "string"
+            }
+          }
+        },
+        "provisioningMessage" : {
+          "type" : "string"
+        }
+      }
+    },
+    "detailed_description" : {
+      "type" : "string"
+    },
+    "end_of_sale_notes" : {
+      "type" : "string"
+    },
+    "events" : {
+      "type" : "object",
+      "properties" : {
+        "accepted" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "closed" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "created" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "deleted" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "inquiring" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "last_reported" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "pending" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "rejected" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "resolved" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "submitted" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "updated" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "uploaded" : {
+          "type" : "object",
+          "properties" : {
+            "at" : {
+              "type" : "string"
+            },
+            "by" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "icon" : {
+      "type" : "string"
+    },
+    "id" : {
+      "type" : "string"
+    },
+    "latest" : {
+      "type" : "boolean"
+    },
+    "media" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "thumbnail" : {
+          "type" : "string"
+        },
+        "type" : {
+          "type" : "string"
+        },
+        "url" : {
+          "type" : "string"
+        }
+      }
+    },
+    "name" : {
+      "type" : "string"
+    },
+    "owner" : {
+      "type" : "object",
+      "properties" : {
+        "icon" : {
+          "type" : "string"
+        },
+        "id" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        }
+      }
+    },
+    "public" : {
+      "type" : "string"
+    },
+    "published_at" : {
+      "type" : "string"
+    },
+    "replacement" : {
+      "type" : "object",
+      "properties" : {
+        "icon" : {
+          "type" : "string"
+        },
+        "id" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "status" : {
+          "type" : "string",
+          "enum" : [ "draft", "published", "endofsale" ]
+        }
+      }
+    },
+    "short_description" : {
+      "type" : "string"
+    },
+    "sourcing" : {
+      "type" : "object",
+      "properties" : {
+        "agreements" : {
+          "type" : "array",
+          "items" : {
+            "type" : "object",
+            "properties" : {
+              "id" : {
+                "type" : "string"
+              },
+              "marketplace" : {
+                "type" : "object",
+                "properties" : {
+                  "icon" : {
+                    "type" : "string"
+                  },
+                  "id" : {
+                    "type" : "string"
+                  },
+                  "name" : {
+                    "type" : "string"
+                  }
+                }
+              },
+              "title" : {
+                "type" : "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "stats" : {
+      "type" : "object",
+      "properties" : {
+        "versions" : {
+          "type" : "integer"
+        }
+      }
+    },
+    "status" : {
+      "type" : "string",
+      "enum" : [ "draft", "published", "endofsale" ]
+    },
+    "usage_rule" : {
+      "type" : "object",
+      "properties" : {
+        "enabled" : {
+          "type" : "boolean"
+        },
+        "providers" : {
+          "type" : "array",
+          "items" : {
+            "type" : "object",
+            "properties" : {
+              "id" : {
+                "type" : "string"
+              },
+              "name" : {
+                "type" : "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "versions" : {
+      "type" : "integer"
+    },
+    "visibility" : {
+      "type" : "object",
+      "properties" : {
+        "catalog" : {
+          "type" : "boolean"
+        },
+        "listing" : {
+          "type" : "boolean"
+        },
+        "owner" : {
+          "type" : "boolean"
+        },
+        "syndication" : {
+          "type" : "boolean"
+        }
+      }
+    }
+  }
+}

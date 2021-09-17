@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:wiremock="http://www.mulesoft.org/schema/mule/wiremock"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit"
+	xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	  xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/wiremock http://www.mulesoft.org/schema/mule/wiremock/current/mule-wiremock.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+		
+	<munit:config name="list-resource-test-suite.xml" />
+
+	<munit:test name="list_resource_operation_test" description="Test List Resources">
+		<munit:execution >
+			<wiremock:add-stub config-ref="WireMock_Config"
+							   jsonMapping='#[%dw 2.0 output application/json
+---
+{
+  "request" : {
+    "method" : "GET",
+    "url" : "/requests?limit%3D2%26offset%3D0"
+  },
+  "response" : {
+    "status" : 200,
+    "statusMessage": "Ok",
+    "bodyFileName": "requests.json"
+  }
+}]'/>
+			<flow-ref name="list_resource_operation"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="ed371311-cdc8-4e68-b810-90228b102a38" expression="#[payload]" is="#[MunitTools::notNullValue()]" message="Asset objects are null."/>
+			<munit-tools:assert doc:name="Assert expression" doc:id="ae448ad2-412e-49af-8a69-be4d561f8410" >
+				<munit-tools:that >
+					<![CDATA[#[import * from dw::test::Asserts --- payload must equalToResource("__files/requests.json", "application/json")]]]>
+				</munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
+
+	<munit:test name="list_resource_operation_with_filter_test" description="Test List Resources">
+		<munit:execution >
+			<wiremock:add-stub config-ref="WireMock_Config"
+							   jsonMapping='#[%dw 2.0 output application/json
+---
+{
+  "request" : {
+    "method" : "GET",
+    "url" : "/requests?eq%28asset.id%2CAS-000-000%29%26ordering%28created%29%26limit%3D5%26offset%3D5"
+  },
+  "response" : {
+    "status" : 200,
+    "statusMessage": "Ok",
+    "bodyFileName": "requests.json"
+  }
+}]'/>
+			<flow-ref name="list_resource_operation_with_filter"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="ed371311-cdc8-4e68-b810-90228b102a38" expression="#[payload]" is="#[MunitTools::notNullValue()]" message="Asset objects are null."/>
+			<munit-tools:assert doc:name="Assert expression" doc:id="ae448ad2-412e-49af-8a69-be4d561f8410" >
+				<munit-tools:that >
+					<![CDATA[#[import * from dw::test::Asserts --- payload must equalToResource("__files/requests.json", "application/json")]]]>
+				</munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
+
+	<munit:test name="list_sub_collection_resource_operation_test" description="Test List Resources">
+		<munit:execution >
+			<wiremock:add-stub config-ref="WireMock_Config"
+							   jsonMapping='#[%dw 2.0 output application/json
+---
+{
+  "request" : {
+    "method" : "GET",
+    "url" : "/products/PRD-000-000/actions?limit%3D5%26offset%3D0"
+  },
+  "response" : {
+    "status" : 200,
+    "statusMessage": "Ok",
+    "bodyFileName": "product_actions.json"
+  }
+}]'/>
+			<flow-ref name="list_sub_collection_resource_operation"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that expression="#[payload]"
+									 is="#[MunitTools::notNullValue()]"
+									 message="Asset objects are null."/>
+			<munit-tools:assert >
+				<munit-tools:that >
+					<![CDATA[#[import * from dw::test::Asserts --- payload must equalToResource("__files/product_actions.json", "application/json")]]]>
+				</munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
+
+</mule>
