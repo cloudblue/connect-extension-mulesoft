@@ -13,6 +13,7 @@ import com.cloudblue.connect.internal.connection.CBCConnection;
 import org.mule.runtime.api.connection.CachedConnectionProvider;
 import org.mule.runtime.api.connection.ConnectionException;
 import org.mule.runtime.api.connection.ConnectionValidationResult;
+import org.mule.runtime.api.exception.MuleRuntimeException;
 import org.mule.runtime.api.lifecycle.Startable;
 import org.mule.runtime.api.lifecycle.Stoppable;
 import org.mule.runtime.extension.api.annotation.Expression;
@@ -28,10 +29,15 @@ import org.mule.runtime.http.api.client.HttpClient;
 import org.mule.runtime.http.api.client.HttpClientConfiguration;
 import org.mule.runtime.http.api.client.proxy.ProxyConfig;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.inject.Inject;
 import java.util.concurrent.TimeUnit;
 
 public class CBCConnectionProvider implements CachedConnectionProvider<CBCConnection>, Startable, Stoppable {
+
+    private static final Logger logger = LoggerFactory.getLogger(CBCConnectionProvider.class);
 
     public static final class ConnectionParams {
 
@@ -126,6 +132,13 @@ public class CBCConnectionProvider implements CachedConnectionProvider<CBCConnec
 
     @Override
     public ConnectionValidationResult validate(CBCConnection connection) {
-        return ConnectionValidationResult.success();
+        try {
+            connection.isConnected();
+
+            return ConnectionValidationResult.success();
+        } catch (MuleRuntimeException e) {
+            logger.error("Error during validating connection.", e);
+            return ConnectionValidationResult.failure(e.getMessage(), e);
+        }
     }
 }

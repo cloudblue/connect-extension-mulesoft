@@ -19,6 +19,8 @@ public class WebhookConnection {
     private String serverEndpoint;
 
     public boolean isConnected() throws ConnectionException {
+        cbcConnection.isConnected();
+
         if (httpServer.isStopped() || httpServer.isStopping()) {
             ServerAddress serverAddress = httpServer.getServerAddress();
             throw new ConnectionException(

@@ -38,8 +38,9 @@ public class APIConstants {
         public static final String ITEMS = "items";
         public static final String PARAMETERS = "parameters";
         public static final String CONFIGURATIONS = "configurations";
+        public static final String ACCOUNTS = "accounts";
         public static final String TIER = "tier";
-        public static final String TIER_ACCOUNTS = TIER + SEPARATOR + "accounts";
+        public static final String TIER_ACCOUNTS = TIER + SEPARATOR + ACCOUNTS;
         public static final String VERSIONS = "versions";
         public static final String TIER_CONFIG = TIER + SEPARATOR + "configs";
         public static final String ACCOUNT_REQUESTS = TIER + SEPARATOR + "account-requests";

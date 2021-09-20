@@ -7,6 +7,7 @@
 
 package com.cloudblue.connect.internal.connection;
 
+import com.cloudblue.connect.internal.clients.constants.APIConstants;
 import com.cloudblue.connect.internal.clients.constants.ContentType;
 import com.cloudblue.connect.internal.clients.constants.HeaderParams;
 import com.cloudblue.connect.internal.clients.constants.RestConstants;
@@ -349,16 +350,6 @@ public final class CBCConnection {
             return this.execute(getRequest(Method.GET, null, null));
         }
 
-        public void delete() {
-            this.execute(getRequest(Method.DELETE, null, null));
-        }
-
-        public Result<InputStream, CBCResponseAttributes> first() {
-            limit = 1;
-
-            return this.execute(getRequest(Method.GET, null, null));
-        }
-
         public <S> Result<InputStream, CBCResponseAttributes> create(S payload) {
             return this.execute(getRequest(Method.POST, null, payload));
         }
@@ -388,6 +379,12 @@ public final class CBCConnection {
 
     public Q newQ() {
         return new Q(client, connectionParams);
+    }
+
+    public boolean isConnected() {
+        newQ().collection(APIConstants.CollectionKeys.ACCOUNTS).get();
+
+        return true;
     }
 
 }

@@ -137,12 +137,12 @@ public class WebhookConnectionProvider implements CachedConnectionProvider<Webho
     }
 
     @Override
-    public void disconnect(WebhookConnection httpServer) {
+    public void disconnect(WebhookConnection webhookConnection) {
         //Webhook listener is sharable, do not do anything
     }
 
     @Override
-    public ConnectionValidationResult validate(WebhookConnection httpServer) {
+    public ConnectionValidationResult validate(WebhookConnection webhookConnection) {
         try {
             webhookConnection.isConnected();
 
