@@ -9,7 +9,7 @@ package com.cloudblue.connect.internal.source;
 
 import com.cloudblue.connect.internal.config.CBCWebhookConfig;
 import com.cloudblue.connect.internal.connection.CBCConnection;
-import com.cloudblue.connect.internal.connection.WebhookListener;
+import com.cloudblue.connect.internal.connection.WebhookConnection;
 import com.cloudblue.connect.internal.exception.WebhookException;
 
 import org.mule.runtime.api.connection.ConnectionProvider;
@@ -21,6 +21,7 @@ import org.mule.runtime.extension.api.annotation.execution.OnError;
 import org.mule.runtime.extension.api.annotation.execution.OnSuccess;
 import org.mule.runtime.extension.api.annotation.execution.OnTerminate;
 import org.mule.runtime.extension.api.annotation.param.*;
+import org.mule.runtime.extension.api.annotation.param.display.DisplayName;
 import org.mule.runtime.extension.api.annotation.param.display.Placement;
 import org.mule.runtime.extension.api.annotation.source.BackPressure;
 import org.mule.runtime.extension.api.annotation.source.ClusterSupport;
@@ -43,20 +44,23 @@ public abstract class BaseWebhookSource<T, H> extends Source<T, H> {
     private TransformationService transformationService;
 
     @Parameter
+    @DisplayName("Path")
     @Placement(order = 1)
     private String path;
 
     @Parameter
     @Placement(order = 2)
+    @DisplayName("Product Id")
     private String productId;
 
     @Parameter
     @Placement(order = 3)
+    @DisplayName("JWT Secret")
     private String jwtSecret;
 
 
     @Connection
-    private ConnectionProvider<WebhookListener> listenerProvider;
+    private ConnectionProvider<WebhookConnection> listenerProvider;
 
     @Config
     private CBCWebhookConfig webhookConfig;
@@ -79,10 +83,10 @@ public abstract class BaseWebhookSource<T, H> extends Source<T, H> {
 
         WebhookAuthProvider authProvider = WebhookAuthProvider.builder().token(jwtSecret).build();
 
-        WebhookListener webhookListener = listenerProvider.connect();
-        server = webhookListener.getHttpServer();
-        CBCConnection cbcConnection = webhookListener.getCbcConnection();
-        webhookSourceHelper = new WebhookSourceHelper(webhookConfig, webhookListener, cbcConnection, transformationService);
+        WebhookConnection webhookConnection = listenerProvider.connect();
+        server = webhookConnection.getHttpServer();
+        CBCConnection cbcConnection = webhookConnection.getCbcConnection();
+        webhookSourceHelper = new WebhookSourceHelper(webhookConfig, webhookConnection, cbcConnection, transformationService);
 
         webhookId = webhookSourceHelper.updateWebhookObject(
                 productId, getObjectClass(), getWebhookType(), jwtSecret, path

@@ -15,10 +15,9 @@ import java.util.Optional;
 import static java.util.Optional.ofNullable;
 
 public enum CBCErrorType implements ErrorTypeDefinition<CBCErrorType> {
-    CONNECTIVITY(MuleErrors.CONNECTIVITY),
     BAD_REQUEST(MuleErrors.VALIDATION),
-    BAD_SERVER,
     REQUEST_UNAUTHORIZED(MuleErrors.SERVER_SECURITY),
+    RESOURCE_NOT_FOUND,
     WEBHOOK_ERROR(MuleErrors.CRITICAL);
 
     private ErrorTypeDefinition<MuleErrors> parentError;

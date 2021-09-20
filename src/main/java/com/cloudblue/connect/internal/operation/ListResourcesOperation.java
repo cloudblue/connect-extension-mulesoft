@@ -33,12 +33,23 @@ import static org.mule.runtime.extension.api.annotation.param.MediaType.APPLICAT
 @Throws(OperationErrorTypeProvider.class)
 public class ListResourcesOperation extends BaseListOperation {
 
+    /**
+     * Resource identifier.
+     */
     @Parameter
     @DisplayName("Resource Type")
     @MetadataKeyId(ListResourceTypeKeysResolver.class)
     @Placement(order = 1)
     private String resourceType;
 
+    /**
+     *
+     * The operation to get list of a specific type of resource on CloudBlue Connect identified by parent Id if any.
+     *
+     * @param connection the connection required to execute the operation.
+     * @param listResourceParameter the resource parent Ids (if any) needed to fetch the resource list.
+     * @return Json representation of resource list as a payload and {@link CBCResponseAttributes} for operation http headers.
+     */
     @MediaType(value = APPLICATION_JSON, strict = false)
     @DisplayName("List Resources")
     @OutputResolver(output = ListResourceOutputResolver.class)

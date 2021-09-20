@@ -20,6 +20,7 @@ import org.mule.runtime.extension.api.annotation.param.Optional;
 import org.mule.runtime.extension.api.annotation.param.Parameter;
 import org.mule.runtime.extension.api.annotation.param.ParameterGroup;
 import org.mule.runtime.extension.api.annotation.param.RefName;
+import org.mule.runtime.extension.api.annotation.param.display.DisplayName;
 import org.mule.runtime.extension.api.annotation.param.display.Placement;
 import org.mule.runtime.extension.api.annotation.param.display.Summary;
 import org.mule.runtime.http.api.HttpService;
@@ -37,29 +38,34 @@ public class CBCConnectionProvider implements CachedConnectionProvider<CBCConnec
         @Parameter
         @Expression
         @Optional(defaultValue = "https://api.connect.cloud.im/public/v1")
+        @DisplayName("API Endpoint")
         @Summary("API endpoint")
         private String endpoint;
 
         @Parameter
         @Expression
+        @DisplayName("Authentication Token")
         @Summary("API authentication token")
         private String token;
 
         @Parameter
         @Optional(defaultValue = "5")
         @Placement(tab = Placement.ADVANCED_TAB, order = 1)
+        @DisplayName("API Timeout Value")
         @Summary("API call timeout timeout value")
         private int connectionTimeout;
 
         @Parameter
         @Optional(defaultValue = "SECONDS")
         @Placement(tab = Placement.ADVANCED_TAB, order = 2)
+        @DisplayName("API Timeout Unit")
         @Summary("Time unit to be used in the Timeout configurations")
         private TimeUnit connectionTimeoutUnit;
 
         @Parameter
         @Optional
         @Summary("Proxy configuration for outbound connections")
+        @DisplayName("Authentication Token")
         @Placement(tab = "Proxy")
         private ProxyConfig proxyConfig;
 

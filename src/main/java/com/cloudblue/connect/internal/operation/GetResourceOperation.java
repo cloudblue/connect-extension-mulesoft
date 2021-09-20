@@ -29,14 +29,28 @@ import java.util.Map;
 
 import static org.mule.runtime.extension.api.annotation.param.MediaType.APPLICATION_JSON;
 
+/***
+ * Get resource operation to fetch details of different type of resources on CloudBlue Connect using Id of the resource.
+ */
 @Throws(OperationErrorTypeProvider.class)
 public class GetResourceOperation extends BaseResourceIdentifierOperation {
+    /**
+     * Resource identifier.
+     */
     @Parameter
     @DisplayName("Resource Type")
     @MetadataKeyId(GetResourceTypeKeysResolver.class)
     @Placement(order = 1)
     private String resourceType;
 
+    /**
+     *
+     * The operation to get details of a resource on CloudBlue Connect identified by resource Id and parent Id if any.
+     *
+     * @param connection the connection required to execute the operation.
+     * @param getResourceParameter the resource Ids needed to fetch the resource details.
+     * @return Json representation of resource details as a payload and {@link CBCResponseAttributes} for operation http headers.
+     */
     @MediaType(value = APPLICATION_JSON, strict = false)
     @DisplayName("Get Resource")
     @OutputResolver(output = GetResourceOutputResolver.class)

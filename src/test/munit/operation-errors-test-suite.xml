@@ -71,7 +71,7 @@
 
 	<munit:test name="get_resource_server_error_operation_test"
 				description="Test Get Resource Server Error"
-				expectedErrorType="CLOUDBLUE-CONNECT:BAD_SERVER">
+				expectedErrorType="CLOUDBLUE-CONNECT:RESOURCE_NOT_FOUND">
 		<munit:execution >
 			<wiremock:add-stub config-ref="WireMock_Config"
 							   jsonMapping='#[%dw 2.0 output application/json
@@ -82,22 +82,11 @@
     "url" : "/requests/PR-000-000"
   },
   "response" : {
-    "status" : 500,
-    "statusMessage": "Internal Server Error"
+    "status" : 404,
+    "statusMessage": "Resource Not Found"
   }
 }]'/>
 			<flow-ref name="get_resource_operation"/>
-		</munit:execution>
-	</munit:test>
-
-	<munit:test name="get_resource_operation_connection_error_test"
-				description="Test Get Resource Connection Error"
-				expectedErrorType="CLOUDBLUE-CONNECT:CONNECTIVITY">
-		<munit:execution>
-			<set-payload value='#[%dw 2.0 output application/java --- { request_id: "PR-000-000" }]'/>
-			<cloudblue-connect:get-resource
-					resourceType="REQUEST"
-					config-ref="CloudBlue_Connect_Wrong_Config_Test"/>
 		</munit:execution>
 	</munit:test>
 

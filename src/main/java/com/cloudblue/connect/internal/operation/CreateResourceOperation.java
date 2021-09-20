@@ -30,14 +30,27 @@ import java.io.InputStream;
 
 import static org.mule.runtime.extension.api.annotation.param.MediaType.APPLICATION_JSON;
 
+/***
+ * Create resource operation to create different type of resources on CloudBlue Connect
+ */
 @Throws(OperationErrorTypeProvider.class)
 public class CreateResourceOperation {
+    /**
+     * Resource identifier.
+     */
     @Parameter
     @ParameterGroup(name = "Create Resource Type")
     @Placement(order = 1)
     @MetadataKeyId(CreateResourceTypeKeysResolver.class)
     ActionIdentifier identifier;
 
+    /***
+     * The operation to create a resource on CloudBlue Connect
+     *
+     * @param connection the connection required to execute the operation.
+     * @param createResourceParameter the constructed request body to perform the resource creation.
+     * @return JSON representation of created resource as result.
+     */
     @MediaType(value = APPLICATION_JSON, strict = false)
     @DisplayName("Create Resource")
     @OutputResolver(output = CreateResourceOutputResolver.class)

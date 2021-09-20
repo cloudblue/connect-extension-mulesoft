@@ -32,6 +32,9 @@ import static org.mule.runtime.extension.api.annotation.param.MediaType.ANY;
 @Throws(OperationErrorTypeProvider.class)
 public class DownloadResourceFileOperation extends BaseFileOperation {
 
+    /***
+     * Location to which downloaded file will be stored.
+     */
     @Parameter
     @DisplayName("Download Location")
     @Path(type = PathModel.Type.DIRECTORY, location = PathModel.Location.EXTERNAL)
@@ -39,16 +42,30 @@ public class DownloadResourceFileOperation extends BaseFileOperation {
     @Placement(order = 4)
     private String location;
 
+    /***
+     * File name to which downloaded file will be stored.
+     */
     @Parameter
     @DisplayName("File Name")
     @Placement(order = 5)
     private String fileName;
 
+    /**
+     * Resource and Action identifier.
+     */
     @Parameter
     @ParameterGroup(name = "Resource Action")
     @MetadataKeyId(ResourceFileDownloadTypeKeysResolver.class)
     ActionIdentifier actionIdentifier;
 
+    /***
+     *
+     * The operation to download a resource file attached with a resource on CloudBlue Connect.
+     *
+     * @param connection the connection required to execute the operation.
+     * @param downloadResourceFileIdentifier the resource Ids needed to perform the resource file download.
+     * @return Void as a payload and {@link CBCResponseAttributes} for operation http headers.
+     */
     @MediaType(value = ANY, strict = false)
     @DisplayName("Download File")
     public Result<Void, CBCResponseAttributes> downloadFile(
