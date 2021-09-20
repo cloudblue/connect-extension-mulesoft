@@ -10,10 +10,10 @@ package com.cloudblue.connect.internal.exception;
 import com.cloudblue.connect.internal.error.CBCErrorType;
 import org.mule.runtime.extension.api.exception.ModuleException;
 
-public class ConnectionException  extends ModuleException {
+public class ResourceNotFoundException extends ModuleException {
     private static final long serialVersionUID = 8310037945619413416L;
 
-    public ConnectionException(String message, Throwable cause) {
-        super(message, CBCErrorType.CONNECTIVITY, cause);
+    public ResourceNotFoundException(String message) {
+        super(message, CBCErrorType.RESOURCE_NOT_FOUND);
     }
 }

@@ -12,7 +12,7 @@ import org.mule.runtime.http.api.server.HttpServer;
 import org.mule.runtime.http.api.server.ServerAddress;
 
 
-public class WebhookListener {
+public class WebhookConnection {
     private HttpServer httpServer;
     private CBCConnection cbcConnection;
 

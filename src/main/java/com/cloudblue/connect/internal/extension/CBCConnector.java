@@ -10,8 +10,9 @@ package com.cloudblue.connect.internal.extension;
 import com.cloudblue.connect.api.parameters.filters.*;
 import com.cloudblue.connect.internal.config.CBCConfiguration;
 import com.cloudblue.connect.internal.config.CBCWebhookConfig;
-
 import com.cloudblue.connect.internal.error.CBCErrorType;
+
+import org.mule.runtime.api.meta.Category;
 import org.mule.runtime.extension.api.annotation.Extension;
 import org.mule.runtime.extension.api.annotation.SubTypeMapping;
 import org.mule.runtime.extension.api.annotation.dsl.xml.Xml;
@@ -25,7 +26,7 @@ import org.mule.runtime.extension.api.annotation.error.ErrorTypes;
  * and sources are going to be declared.
  */
 @Xml(prefix = "cloudblue-connect")
-@Extension(name = "CloudBlue Connect", vendor = "CloudBlue")
+@Extension(name = "CloudBlue Connect", category = Category.CERTIFIED, vendor = "CloudBlue")
 @Configurations({CBCConfiguration.class, CBCWebhookConfig.class})
 @ErrorTypes(CBCErrorType.class)
 @SubTypeMapping(

@@ -34,12 +34,25 @@ import static org.mule.runtime.extension.api.annotation.param.MediaType.APPLICAT
 @Throws(OperationErrorTypeProvider.class)
 public class ResourceActionOperation extends BaseResourceIdentifierOperation {
 
+    /**
+     * Resource and Action identifier.
+     */
     @Parameter
     @ParameterGroup(name = "Resource Action")
     @Placement(order = 1)
     @MetadataKeyId(ResourceActionTypeKeysResolver.class)
     ActionIdentifier identifier;
 
+    /**
+     *
+     * The operation to perform an action on a specific type of resource on CloudBlue Connect
+     * identified by resource Id and parent Id if any.
+     *
+     * @param connection the connection required to execute the operation.
+     * @param resourceActionParameter the constructed request body and resource Id along with parent Id (if any)
+     *                               to perform the resource action.
+     * @return Json representation of resource action output as a payload and {@link CBCResponseAttributes} for operation http headers.
+     */
     @MediaType(value = APPLICATION_JSON, strict = false)
     @DisplayName("Resource Action")
     @OutputResolver(output = ResourceActionOutputResolver.class)

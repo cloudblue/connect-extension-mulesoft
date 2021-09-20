@@ -9,16 +9,16 @@ package com.cloudblue.connect.internal.source;
 
 import com.cloudblue.connect.internal.clients.parsers.jackson.JacksonResponseUnmarshaller;
 import com.cloudblue.connect.api.parameters.CBCResponseAttributes;
-import com.cloudblue.connect.internal.exception.ConnectionException;
 import com.cloudblue.connect.internal.exception.WebhookException;
 import com.cloudblue.connect.internal.model.Webhook;
 import com.cloudblue.connect.internal.config.CBCWebhookConfig;
 import com.cloudblue.connect.internal.connection.CBCConnection;
-import com.cloudblue.connect.internal.connection.WebhookListener;
+import com.cloudblue.connect.internal.connection.WebhookConnection;
 import com.cloudblue.connect.internal.model.resource.Action;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 
+import org.mule.runtime.api.exception.MuleRuntimeException;
 import org.mule.runtime.api.message.Message;
 import org.mule.runtime.api.metadata.TypedValue;
 import org.mule.runtime.api.transformation.TransformationService;
@@ -40,11 +40,12 @@ import java.io.InputStream;
 import java.util.List;
 
 import static com.cloudblue.connect.internal.clients.constants.APIConstants.CollectionKeys.*;
+import static org.mule.runtime.api.i18n.I18nMessageFactory.createStaticMessage;
 import static org.mule.runtime.api.metadata.DataType.BYTE_ARRAY;
 
 public class WebhookSourceHelper {
     private final CBCWebhookConfig webhookConfig;
-    private final WebhookListener webhookListener;
+    private final WebhookConnection webhookConnection;
     private final CBCConnection connection;
     private final TransformationService transformationService;
     private final JacksonResponseUnmarshaller unmarshaller = new JacksonResponseUnmarshaller();
@@ -53,11 +54,11 @@ public class WebhookSourceHelper {
 
     public WebhookSourceHelper(
             CBCWebhookConfig webhookConfig,
-            WebhookListener webhookListener,
+            WebhookConnection webhookConnection,
             CBCConnection connection,
             TransformationService transformationService) {
         this.webhookConfig = webhookConfig;
-        this.webhookListener = webhookListener;
+        this.webhookConnection = webhookConnection;
         this.connection = connection;
         this.transformationService = transformationService;
     }
@@ -149,7 +150,7 @@ public class WebhookSourceHelper {
             String path) {
 
         try {
-            String listenerPath = webhookListener.getServerEndpoint() + webhookConfig.getFullListenerPath(
+            String listenerPath = webhookConnection.getServerEndpoint() + webhookConfig.getFullListenerPath(
                     path, objectClass
             );
 
@@ -186,7 +187,7 @@ public class WebhookSourceHelper {
 
             return webhook != null? webhook.getId() : null;
         } catch (IOException e) {
-            throw new ConnectionException("Error during updating webhook object", e);
+            throw new MuleRuntimeException(createStaticMessage("Error during updating webhook object"), e);
         }
     }
 

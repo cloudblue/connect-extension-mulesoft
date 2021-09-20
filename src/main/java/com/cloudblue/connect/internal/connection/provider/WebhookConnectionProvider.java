@@ -8,7 +8,7 @@
 package com.cloudblue.connect.internal.connection.provider;
 
 import com.cloudblue.connect.internal.connection.CBCConnection;
-import com.cloudblue.connect.internal.connection.WebhookListener;
+import com.cloudblue.connect.internal.connection.WebhookConnection;
 
 import org.mule.runtime.api.connection.CachedConnectionProvider;
 import org.mule.runtime.api.connection.ConnectionException;
@@ -50,26 +50,29 @@ import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNee
 import static org.mule.runtime.extension.api.annotation.param.display.Placement.SECURITY_TAB;
 
 @Alias("listener")
-public class WebhookListenerProvider implements CachedConnectionProvider<WebhookListener>, Lifecycle {
-    private static final Logger logger = LoggerFactory.getLogger(WebhookListenerProvider.class);
+public class WebhookConnectionProvider implements CachedConnectionProvider<WebhookConnection>, Lifecycle {
+    private static final Logger logger = LoggerFactory.getLogger(WebhookConnectionProvider.class);
 
     public static final class ListenerParams {
 
         @Parameter
         @Optional(defaultValue = "HTTP")
         @Expression(NOT_SUPPORTED)
+        @DisplayName("Protocol")
         @Placement(order = 1)
         private HttpConstants.Protocol protocol;
 
         @Parameter
         @Example("For example 0.0.0.0")
         @Expression(NOT_SUPPORTED)
+        @DisplayName("Host")
         @Placement(order = 2)
         private String host;
 
         @Parameter
         @Example("8088")
         @Expression(NOT_SUPPORTED)
+        @DisplayName("Port")
         @Placement(order = 3)
         private Integer port;
 
@@ -77,6 +80,7 @@ public class WebhookListenerProvider implements CachedConnectionProvider<Webhook
         @Parameter
         @Example("https://myintegration.com")
         @Expression(NOT_SUPPORTED)
+        @DisplayName("Webhook Binding URL")
         @Placement(order = 4)
         private String webhookBindingUrl;
 
@@ -124,23 +128,23 @@ public class WebhookListenerProvider implements CachedConnectionProvider<Webhook
     @Inject
     private NotificationListenerRegistry notificationListenerRegistry;
 
-    private WebhookListener webhookListener;
+    private WebhookConnection webhookConnection;
     private HttpClient httpClient;
 
     @Override
-    public WebhookListener connect() throws ConnectionException {
-        return webhookListener;
+    public WebhookConnection connect() throws ConnectionException {
+        return webhookConnection;
     }
 
     @Override
-    public void disconnect(WebhookListener httpServer) {
+    public void disconnect(WebhookConnection httpServer) {
         //Webhook listener is sharable, do not do anything
     }
 
     @Override
-    public ConnectionValidationResult validate(WebhookListener httpServer) {
+    public ConnectionValidationResult validate(WebhookConnection httpServer) {
         try {
-            webhookListener.isConnected();
+            webhookConnection.isConnected();
 
             return ConnectionValidationResult.success();
         } catch (ConnectionException e) {
@@ -151,7 +155,7 @@ public class WebhookListenerProvider implements CachedConnectionProvider<Webhook
 
     @Override
     public void dispose() {
-        webhookListener.getHttpServer().dispose();
+        webhookConnection.getHttpServer().dispose();
     }
 
     private void validate() throws InitialisationException {
@@ -181,7 +185,7 @@ public class WebhookListenerProvider implements CachedConnectionProvider<Webhook
         if (listenerParams.port == null) {
             listenerParams.port = listenerParams.protocol.getDefaultPort();
         }
-        webhookListener = new WebhookListener();
+        webhookConnection = new WebhookConnection();
 
         validate();
 
@@ -192,8 +196,8 @@ public class WebhookListenerProvider implements CachedConnectionProvider<Webhook
         HttpServerConfiguration serverConfiguration = getServerConfiguration();
 
         try {
-            webhookListener.setHttpServer(httpService.getServerFactory().create(serverConfiguration));
-            webhookListener.setServerEndpoint(listenerParams.getWebhookBindingUrl());
+            webhookConnection.setHttpServer(httpService.getServerFactory().create(serverConfiguration));
+            webhookConnection.setServerEndpoint(listenerParams.getWebhookBindingUrl());
         } catch (ServerCreationException e) {
             throw new InitialisationException(
                     createStaticMessage("Not able to create Webhook Listener with configuration %s", configName),
@@ -209,7 +213,7 @@ public class WebhookListenerProvider implements CachedConnectionProvider<Webhook
                         .setConnectionIdleTimeout(connectionParams.getMilSecTimeout())
                         .build());
 
-        webhookListener.setCbcConnection(new CBCConnection(this.httpClient, connectionParams));
+        webhookConnection.setCbcConnection(new CBCConnection(this.httpClient, connectionParams));
 
     }
 
@@ -217,7 +221,7 @@ public class WebhookListenerProvider implements CachedConnectionProvider<Webhook
     public void start() throws MuleException {
         try {
 
-            webhookListener.getHttpServer().start();
+            webhookConnection.getHttpServer().start();
             httpClient.start();
 
         } catch (IOException e) {
@@ -229,9 +233,9 @@ public class WebhookListenerProvider implements CachedConnectionProvider<Webhook
 
     @Override
     public void stop() throws MuleException {
-        if (webhookListener.getHttpServer() != null &&
-                !webhookListener.getHttpServer().isStopped()) {
-            webhookListener.getHttpServer().stop();
+        if (webhookConnection.getHttpServer() != null &&
+                !webhookConnection.getHttpServer().isStopped()) {
+            webhookConnection.getHttpServer().stop();
         }
 
         if (httpClient != null)

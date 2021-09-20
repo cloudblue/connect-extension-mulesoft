@@ -18,10 +18,10 @@ import com.cloudblue.connect.internal.clients.utils.Url;
 import com.cloudblue.connect.api.parameters.CBCResponseAttributes;
 import com.cloudblue.connect.internal.connection.provider.CBCConnectionProvider;
 import com.cloudblue.connect.internal.exception.BadRequestException;
-import com.cloudblue.connect.internal.exception.BadServerException;
-import com.cloudblue.connect.internal.exception.ConnectionException;
+import com.cloudblue.connect.internal.exception.ResourceNotFoundException;
 import com.cloudblue.connect.internal.exception.UnauthorizedException;
 
+import org.mule.runtime.api.exception.MuleRuntimeException;
 import org.mule.runtime.api.metadata.MediaType;
 import org.mule.runtime.extension.api.runtime.operation.Result;
 import org.mule.runtime.http.api.client.HttpClient;
@@ -40,6 +40,7 @@ import java.util.*;
 import java.util.concurrent.TimeoutException;
 import java.util.stream.Collectors;
 
+import static org.mule.runtime.api.i18n.I18nMessageFactory.createStaticMessage;
 import static org.mule.runtime.http.api.HttpConstants.*;
 
 
@@ -259,19 +260,24 @@ public final class CBCConnection {
             return builder.build();
         }
 
+        private String getErrorResponseBody(HttpResponse response) {
+            return new BufferedReader(
+                    new InputStreamReader(response.getEntity().getContent(), StandardCharsets.UTF_8))
+                    .lines()
+                    .collect(Collectors.joining(""));
+        }
+
         private void checkError(HttpResponse response) {
             int statusCode = response.getStatusCode();
 
             if (statusCode == 401 || statusCode == 403) {
                 throw new UnauthorizedException("Either authentication token is not valid or resource access is forbidden.");
+            } else if (statusCode == 404) {
+                throw new ResourceNotFoundException(getErrorResponseBody(response));
             } else if (statusCode > 399 && statusCode < 500) {
-                String responseBody = new BufferedReader(
-                        new InputStreamReader(response.getEntity().getContent(), StandardCharsets.UTF_8))
-                        .lines()
-                        .collect(Collectors.joining(""));
-                throw new BadRequestException(responseBody);
+                throw new BadRequestException(getErrorResponseBody(response));
             } else if (statusCode > 499) {
-                throw new BadServerException(response.getReasonPhrase());
+                throw new MuleRuntimeException(createStaticMessage(response.getReasonPhrase()));
             }
         }
 
@@ -295,7 +301,7 @@ public final class CBCConnection {
 
 
             } catch (IOException | TimeoutException e) {
-                throw new ConnectionException("Server connection error.", e);
+                throw new MuleRuntimeException(createStaticMessage("Server connection error."), e);
             }
         }
 
@@ -335,7 +341,7 @@ public final class CBCConnection {
 
                 return result;
             } catch (IOException | TimeoutException e) {
-                throw new ConnectionException("Server connection error.", e);
+                throw new MuleRuntimeException(createStaticMessage("Server connection error."), e);
             }
         }
 

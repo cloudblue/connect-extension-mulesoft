@@ -14,6 +14,7 @@ import com.cloudblue.connect.internal.metadata.MetadataUtil;
 
 import org.mule.runtime.extension.api.annotation.metadata.fixed.OutputJsonType;
 import org.mule.runtime.extension.api.annotation.param.*;
+import org.mule.runtime.extension.api.annotation.param.display.DisplayName;
 import org.mule.runtime.extension.api.annotation.param.display.Placement;
 import org.mule.runtime.extension.api.annotation.source.EmitsResponse;
 import org.mule.runtime.extension.api.runtime.operation.Result;
@@ -29,6 +30,7 @@ public class WebhookListener extends BaseWebhookSource<InputStream, WebhookReque
 
     @Parameter
     @Placement(order = 4)
+    @DisplayName("Webhook Event Type")
     private WebhookEventType webhookEventType;
 
     @Override

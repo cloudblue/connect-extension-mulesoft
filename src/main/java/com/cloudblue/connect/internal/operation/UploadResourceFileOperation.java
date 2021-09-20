@@ -39,6 +39,9 @@ import static org.mule.runtime.extension.api.annotation.param.MediaType.APPLICAT
 @Throws(OperationErrorTypeProvider.class)
 public class UploadResourceFileOperation extends BaseFileOperation {
 
+    /***
+     * File to upload.
+     */
     @Parameter
     @DisplayName("File Path")
     @Path(type = PathModel.Type.FILE, location = PathModel.Location.EXTERNAL)
@@ -46,6 +49,9 @@ public class UploadResourceFileOperation extends BaseFileOperation {
     @Placement(order = 3)
     String file;
 
+    /**
+     * Upload action identifier for a resource.
+     */
     @Parameter
     @ParameterGroup(name = "Resource Action")
     @MetadataKeyId(ResourceFileUploadTypeKeysResolver.class)
@@ -64,6 +70,15 @@ public class UploadResourceFileOperation extends BaseFileOperation {
         return fileEntity;
     }
 
+    /**
+     *
+     * The operation to upload a resource file for a resource on CloudBlue Connect.
+     *
+     * @param connection the connection required to execute the operation.
+     * @param uploadResourceFileParameter the resource Ids needed to perform the resource file upload.
+     * @return Json representation of resource file upload response (sometimes can be blank) as a payload
+     * and {@link CBCResponseAttributes} for operation http headers.
+     */
     @MediaType(value = APPLICATION_JSON, strict = false)
     @DisplayName("Upload File")
     @OutputResolver(output = ResourceFileUploadOutputResolver.class)

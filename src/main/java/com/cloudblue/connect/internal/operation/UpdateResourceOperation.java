@@ -35,12 +35,26 @@ import static org.mule.runtime.extension.api.annotation.param.MediaType.APPLICAT
 
 @Throws(OperationErrorTypeProvider.class)
 public class UpdateResourceOperation extends BaseResourceIdentifierOperation {
+
+    /**
+     * Resource identifier.
+     */
     @Parameter
     @DisplayName("Resource Type")
     @MetadataKeyId(UpdateResourceTypeKeysResolver.class)
     @Placement(order = 1)
     private String resourceType;
 
+    /**
+     *
+     * The operation to perform update on a specific type of resource on CloudBlue Connect
+     * identified by resource Id and parent Id if any.
+     *
+     * @param connection the connection required to execute the operation.
+     * @param updateResourceIdentifier the resource Ids needed to perform the update operation on the resource.
+     * @param updatePayload the constructed request body to perform the resource update.
+     * @return Json representation of resource update result as a payload and {@link CBCResponseAttributes} for operation http headers.
+     */
     @MediaType(value = APPLICATION_JSON, strict = false)
     @DisplayName("Update Resource")
     @OutputResolver(output = UpdateResourceOutputResolver.class)
