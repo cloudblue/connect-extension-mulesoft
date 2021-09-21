@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:cloudblue-connect="http://www.mulesoft.org/schema/mule/cloudblue-connect"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/cloudblue-connect http://www.mulesoft.org/schema/mule/cloudblue-connect/current/mule-cloudblue-connect.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<cloudblue-connect:config name="Cloudbue Connect" doc:name="CloudBlue Connect Config" doc:id="6d5dc092-7cbe-4280-8aa1-b6dc42bf2d81" >
+		<cloudblue-connect:connection endpoint="https://api.cloudblue.connect.com/public/v1" token="ApiKey SU-000-000-000:000000000000000000000000000000000000000000" />
+	</cloudblue-connect:config>
+	<flow name="approve_requestFlow" doc:id="1f79b683-d250-4e90-bfe6-e420bfe10b2f" >
+		<scheduler doc:name="Scheduler" doc:id="d5cbbcf2-d83a-4a0b-96c9-648726edd480" >
+			<scheduling-strategy >
+				<fixed-frequency frequency="10" timeUnit="SECONDS"/>
+			</scheduling-strategy>
+		</scheduler>
+		<cloudblue-connect:list-resources doc:name="List Resources" doc:id="afc97b53-b4b0-4d6f-98d6-0726bb23c4e1" config-ref="Cloudbue Connect" resourceType="REQUEST" limit="10">
+		</cloudblue-connect:list-resources>
+		<foreach doc:name="For Each" doc:id="8d518726-5510-4008-8984-8562e2ccb995" >
+			<logger level="INFO" doc:name="Logger" doc:id="918f9624-c7e7-4373-a2aa-27fe93530d15" message="#[payload.id]"/>
+			<ee:transform doc:name="Transform Message" doc:id="05798a34-771d-4801-ab81-03277b04d10a" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	id: (payload.id),
+	asset: {
+		params: [{
+			id: "param_a",
+			value: "Param A value"
+		},{
+			id: "param_b",
+			value: "Param B Value"
+		}]
+	}
+}]]></ee:set-payload>
+				</ee:message>
+			</ee:transform>
+			<cloudblue-connect:update-resource resourceType="REQUEST" doc:name="Update Resource" doc:id="cce39220-a031-4205-9592-8be0ee286e84" config-ref="Cloudbue Connect" updateResourceIdentifier="#[output application/java --- {request_id: payload.id}]"/>
+			<ee:transform doc:name="Transform Message" doc:id="80e4ccd8-fec4-4f6d-90c0-12daab7d12f2" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+{
+	request_id: (payload.id),
+	template_id: "TL-650-084-931",
+}]]></ee:set-payload>
+				</ee:message>
+			</ee:transform>
+			<cloudblue-connect:resource-action resourceType="REQUEST" action="APPROVE" doc:name="Resource Action" doc:id="396d7f17-a4b7-4f7f-b5bf-fc1cd78f465c" config-ref="Cloudbue Connect">
+			</cloudblue-connect:resource-action>
+		</foreach>
+	</flow>
+</mule>
