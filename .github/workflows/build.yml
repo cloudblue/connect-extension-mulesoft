@@ -25,6 +25,10 @@ jobs:
           cat <(echo -e "${{ secrets.OSSRH_GPG_SECRET_KEY }}") | gpg --batch --import
           gpg --list-secret-keys --keyid-format LONG
       - name: Build and Test
+        env:
+          server.endpoint: "${{ secrets.SERVER_ENDPOINT }}"
+          server.token.vendor: "${{ secrets.SERVER_TOKEN_VENDOR }}"
+          server.token.provider: "${{ secrets.SERVER_TOKEN_PROVIDER }}"
         run: |
           mvn -f gitBuildPom.xml --no-transfer-progress --batch-mode -Dgpg.passphrase=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }} clean install
       - name: Set up JDK 11
@@ -47,4 +51,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          server.endpoint: "${{ secrets.SERVER_ENDPOINT }}"
+          server.token.vendor: "${{ secrets.SERVER_TOKEN_VENDOR }}"
+          server.token.provider: "${{ secrets.SERVER_TOKEN_PROVIDER }}"
         run: mvn -f gitBuildPom.xml sonar:sonar
