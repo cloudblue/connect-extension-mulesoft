@@ -19,21 +19,7 @@
 	<munit:test name="valid_cbc_connection_test"
 				description="Test CBC Valid Connection">
 		<munit:execution>
-			<wiremock:add-stub config-ref="WireMock_Config"
-							   jsonMapping='#[%dw 2.0 output application/json
----
-{
-  "request" : {
-    "method" : "GET",
-    "url" : "/accounts"
-  },
-  "response" : {
-    "status" : 200,
-    "statusMessage": "Ok",
-    "bodyFileName": "accounts.json"
-  }
-}]'/>
-			<mtf:test-connectivity config-ref="CloudBlue_Connect_Config_Test"/>
+			<mtf:test-connectivity config-ref="CloudBlue_Connect_Config_Sandbox_Vendor"/>
 		</munit:execution>
 	</munit:test>
 
@@ -41,41 +27,14 @@
 				description="Test CBC Invalid Token Connection"
 				expectedErrorType="CLOUDBLUE-CONNECT:REQUEST_UNAUTHORIZED">
 		<munit:execution>
-			<wiremock:add-stub config-ref="WireMock_Config"
-							   jsonMapping='#[%dw 2.0 output application/json
----
-{
-  "request" : {
-    "method" : "GET",
-    "url" : "/accounts"
-  },
-  "response" : {
-    "status" : 401,
-    "statusMessage": "Unauthorized"
-  }
-}]'/>
-			<mtf:test-connectivity config-ref="CloudBlue_Connect_Config_Test"/>
+			<mtf:test-connectivity config-ref="CloudBlue_Connect_Config_Sandbox_Invalid"/>
 		</munit:execution>
 	</munit:test>
 
 	<munit:test name="valid_webhook_connection_test"
 				description="Test Webhook Valid Connection">
 		<munit:execution>
-			<wiremock:add-stub config-ref="WireMock_Config"
-							   jsonMapping='#[%dw 2.0 output application/json
----
-{
-  "request" : {
-    "method" : "GET",
-    "url" : "/accounts"
-  },
-  "response" : {
-    "status" : 200,
-    "statusMessage": "Ok",
-    "bodyFileName": "accounts.json"
-  }
-}]'/>
-			<mtf:test-connectivity config-ref="CloudBlue_Connect_Webhook_config"/>
+			<mtf:test-connectivity config-ref="CloudBlue_Connect_Config_Sandbox_Vendor"/>
 		</munit:execution>
 	</munit:test>
 
@@ -83,20 +42,7 @@
 				description="Test Webhook Invalid Token Connection"
 				expectedErrorDescription="Either authentication token is not valid or resource access is forbidden.">
 		<munit:execution>
-			<wiremock:add-stub config-ref="WireMock_Config"
-							   jsonMapping='#[%dw 2.0 output application/json
----
-{
-  "request" : {
-    "method" : "GET",
-    "url" : "/accounts"
-  },
-  "response" : {
-    "status" : 401,
-    "statusMessage": "Unauthorized"
-  }
-}]'/>
-			<mtf:test-connectivity config-ref="CloudBlue_Connect_Webhook_config"/>
+			<mtf:test-connectivity config-ref="CloudBlue_Connect_Webhook_Config_Invalid"/>
 		</munit:execution>
 	</munit:test>
 

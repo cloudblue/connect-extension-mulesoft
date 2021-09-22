@@ -120,17 +120,17 @@ public class WebhookSourceHelper {
 
         if (webhook == null) {
 
-            webhook = new Webhook();
-            webhook.setDescription("Webhook for Mule Extension Source " + path);
-            webhook.setLabel("Webhook for Mule Extension Source");
-            webhook.setProductId(productId);
-            webhook.setActive(Boolean.TRUE);
-            webhook.setExternalUrl(path);
-            webhook.setJwtSecret(jwtSecret);
-            webhook.setObjectClass(objectClass);
-            webhook.setType(webhookType);
+            Webhook newWebhook = new Webhook();
+            newWebhook.setDescription("Webhook for Mule Extension Source " + path);
+            newWebhook.setLabel("Webhook for Mule Extension Source");
+            newWebhook.setProductId(productId);
+            newWebhook.setActive(Boolean.TRUE);
+            newWebhook.setExternalUrl(path);
+            newWebhook.setJwtSecret(jwtSecret);
+            newWebhook.setObjectClass(objectClass);
+            newWebhook.setType(webhookType);
 
-            updatedWebhook = webhookAction(Action.CREATE, webhook);
+            updatedWebhook = webhookAction(Action.CREATE, newWebhook);
 
         } else if (Boolean.FALSE.equals(webhook.getActive())) {
             Webhook updateWebhook = new Webhook();

@@ -21,30 +21,16 @@
     <munit:config name="update-resource-test-suite.xml" />
 
     <munit:test name="update_resource_operation_test" description="Test List Resources">
-        <munit:execution >
-            <wiremock:add-stub config-ref="WireMock_Config"
-                               jsonMapping='#[%dw 2.0 output application/json
----
-{
-  "request" : {
-    "method" : "PUT",
-    "url" : "/tier/accounts/TA-0000-0000"
-  },
-  "response" : {
-    "status" : 200,
-    "statusMessage": "Ok",
-    "bodyFileName": "tier_account.json"
-  }
-}]'/>
+        <munit:execution>
             <flow-ref name="update_resource_operation"/>
         </munit:execution>
         <munit:validation >
-            <munit-tools:assert-that expression="#[payload]" is="#[MunitTools::notNullValue()]" message="Result object is null."/>
-            <munit-tools:assert>
-                <munit-tools:that >
-                    <![CDATA[#[import * from dw::test::Asserts --- payload must equalToResource("__files/tier_account.json", "application/json")]]]>
-                </munit-tools:that>
-            </munit-tools:assert>
+            <munit-tools:assert-that expression="#[payload]"
+                                     is="#[MunitTools::notNullValue()]"
+                                     message="Update Tier Account resource response body is null."/>
+            <munit-tools:assert-equals actual="#[attributes.statusCode]"
+                                       expected="#[200]"
+                                       message="Response code should be 200 for update Tier Account resource operation."/>
         </munit:validation>
     </munit:test>
 

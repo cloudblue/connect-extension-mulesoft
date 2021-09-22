@@ -18,9 +18,26 @@
         http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
         http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
 
+    <configuration-properties file="credentials.properties"/>
+
 
     <cloudblue-connect:config name="CloudBlue_Connect_Config_Test">
         <cloudblue-connect:connection endpoint="http://localhost:${http.port}" token="MOCK_TOKEN" />
+    </cloudblue-connect:config>
+
+    <cloudblue-connect:config name="CloudBlue_Connect_Config_Sandbox_Vendor">
+        <cloudblue-connect:connection endpoint="${server.endpoint}"
+                                      token="${server.token.vendor}" />
+    </cloudblue-connect:config>
+
+    <cloudblue-connect:config name="CloudBlue_Connect_Config_Sandbox_Provider">
+        <cloudblue-connect:connection endpoint="${server.endpoint}"
+                                      token="${server.token.provider}" />
+    </cloudblue-connect:config>
+
+    <cloudblue-connect:config name="CloudBlue_Connect_Config_Sandbox_Invalid">
+        <cloudblue-connect:connection endpoint="${server.endpoint}"
+                                      token="ApiKey SU-000-000-000:68743kjhdgsf876r54hnf489vndf9384nvoi7r98s" />
     </cloudblue-connect:config>
 
     <cloudblue-connect:webhook-config name="CloudBlue_Connect_Webhook_config"
@@ -32,6 +49,24 @@
                                                endpoint="http://localhost:${http.port}" />
     </cloudblue-connect:webhook-config>
 
+    <cloudblue-connect:webhook-config name="CloudBlue_Connect_Webhook_Config_Vendor"
+                                      basePath="webhook" >
+        <cloudblue-connect:listener-connection host="localhost"
+                                               port="${webhook.port}"
+                                               webhookBindingUrl="http://localhost"
+                                               token="${server.token.vendor}"
+                                               endpoint="${server.endpoint}" />
+    </cloudblue-connect:webhook-config>
+
+    <cloudblue-connect:webhook-config name="CloudBlue_Connect_Webhook_Config_Invalid"
+                                      basePath="webhook" >
+        <cloudblue-connect:listener-connection host="localhost"
+                                               port="${webhook.port}"
+                                               webhookBindingUrl="http://localhost"
+                                               token="ApiKey SU-000-000-000:68743kjhdgsf876r54hnf489vndf9384nvoi7r98s"
+                                               endpoint="${server.endpoint}" />
+    </cloudblue-connect:webhook-config>
+
     <http:request-config name="HTTP_Request_configuration">
         <http:request-connection host="localhost" port="${webhook.port}" usePersistentConnections="false" />
     </http:request-config>
@@ -40,16 +75,16 @@
 
     <flow name="list_resource_operation">
         <cloudblue-connect:list-resources
-                config-ref="CloudBlue_Connect_Config_Test"
+                config-ref="CloudBlue_Connect_Config_Sandbox_Vendor"
                 resourceType="REQUEST" limit="2"/>
     </flow>
 
     <flow name="list_resource_operation_with_filter">
         <cloudblue-connect:list-resources
-                config-ref="CloudBlue_Connect_Config_Test"
+                config-ref="CloudBlue_Connect_Config_Sandbox_Vendor"
                 resourceType="REQUEST" limit="5" offset="5">
             <cloudblue-connect:filter >
-                <cloudblue-connect:mono-filter type="EQ" property="asset.id" value="AS-000-000" />
+                <cloudblue-connect:mono-filter type="EQ" property="asset.id" value="AS-2007-4184-1954" />
             </cloudblue-connect:filter>
             <cloudblue-connect:order-by >
                 <cloudblue-connect:properties >
@@ -60,32 +95,53 @@
     </flow>
 
     <flow name="list_sub_collection_resource_operation" >
-        <set-payload value='#[%dw 2.0 output application/java --- { product_id: "PRD-000-000" }]'/>
+        <set-payload value='#[%dw 2.0 output application/java --- { product_id: "PRD-838-787-106" }]'/>
         <cloudblue-connect:list-resources resourceType="PRODUCT_ACTION"
-                                          config-ref="CloudBlue_Connect_Config_Test"
+                                          config-ref="CloudBlue_Connect_Config_Sandbox_Vendor"
                                           limit="5">
             <cloudblue-connect:list-resource-parameter ><![CDATA[#[payload]]]></cloudblue-connect:list-resource-parameter>
         </cloudblue-connect:list-resources>
     </flow>
 
     <flow name="get_resource_operation">
-        <set-payload value='#[%dw 2.0 output application/java --- { request_id: "PR-000-000" }]'/>
+        <set-payload value='#[%dw 2.0 output application/java --- { request_id: "PR-2007-4184-1954-001" }]'/>
         <cloudblue-connect:get-resource
                 resourceType="REQUEST"
-                config-ref="CloudBlue_Connect_Config_Test"/>
+                config-ref="CloudBlue_Connect_Config_Sandbox_Vendor"/>
+    </flow>
+
+    <flow name="get_resource_operation_not_found">
+        <set-payload value='#[%dw 2.0 output application/java --- { asset_id: "AS-000-000-000" }]'/>
+        <cloudblue-connect:get-resource
+                resourceType="ASSET"
+                config-ref="CloudBlue_Connect_Config_Sandbox_Vendor"/>
+    </flow>
+
+    <flow name="get_resource_operation_unauthorized">
+        <set-payload value='#[%dw 2.0 output application/java --- { request_id: "PR-2007-4184-1954-001" }]'/>
+        <cloudblue-connect:get-resource
+                resourceType="REQUEST"
+                config-ref="CloudBlue_Connect_Config_Sandbox_Invalid"/>
     </flow>
 
     <flow name="update_resource_operation">
-        <set-payload value='#[%dw 2.0 output application/json --- { parent: { id: "TA-0000-9999" }}]'/>
+        <set-payload value='#[%dw 2.0 output application/json --- { name: "Test TA Account for MuleSoft Extension (DO NOT DELETE)", parent: {id: "TA-0000-1125-7285"}}]'/>
         <cloudblue-connect:update-resource resourceType="TIER_ACCOUNT"
-                                           config-ref="CloudBlue_Connect_Config_Test"
-                                           updateResourceIdentifier='#[output application/java --- { tier_account_id: "TA-0000-0000" }]'/>
+                                           config-ref="CloudBlue_Connect_Config_Sandbox_Vendor"
+                                           updateResourceIdentifier='#[output application/java --- { tier_account_id: "TA-2445-3853-9960" }]'/>
+    </flow>
+
+    <flow name="update_resource_operation_bad_request">
+        <set-payload value='#[%dw 2.0 output application/json --- { unknown_property: "Test TA Account"}]'/>
+        <cloudblue-connect:update-resource resourceType="TIER_ACCOUNT"
+                                           config-ref="CloudBlue_Connect_Config_Sandbox_Vendor"
+                                           updateResourceIdentifier='#[output application/java --- { tier_account_id: "TA-2445-3853-9960" }]'/>
     </flow>
 
     <flow name="resource_action_operation">
-        <set-payload value='#[%dw 2.0 output application/java --- { request_id: "PR-0000-0000-0000-001", template_id: "TP-000-000-001", effective_date: "2020-03-23T09:32:12+00:00"}]' />
-        <cloudblue-connect:resource-action config-ref="CloudBlue_Connect_Config_Test"
-                                           resourceType="REQUEST" action="APPROVE"/>
+        <set-payload value='#[%dw 2.0 output application/java --- { request_id: "PR-3760-4524-7147-001", email: "rahul.mondal@ingrammicro.com", force: true }]' />
+        <cloudblue-connect:resource-action config-ref="CloudBlue_Connect_Config_Sandbox_Vendor"
+                                           resourceType="REQUEST" action="ASSIGN"/>
     </flow>
 
     <flow name="resource_collection_action_operation">
@@ -101,23 +157,23 @@
     </flow>
 
     <flow name="create_resource_operation">
-        <set-payload value='#[%dw 2.0 output application/json --- { asset: { id: "AS-000-000-000" }, "type": "suspend" }]'/>
-        <cloudblue-connect:create-resource config-ref="CloudBlue_Connect_Config_Test"
-                                           resourceType="REQUEST"
-                                           action="CREATE_ADMIN_HOLD_REQUEST"/>
+        <set-payload value='#[%dw 2.0 output application/json --- { product: { id: "PRD-404-534-600" }, contract: { id: "CRD-08072-51679-98510" }, description: "Test Usege Report", external_id: "EXT-000-000", name: "Usage Report for current month" }]'/>
+        <cloudblue-connect:create-resource config-ref="CloudBlue_Connect_Config_Sandbox_Vendor"
+                                           resourceType="USAGE_REPORT"
+                                           action="CREATE"/>
     </flow>
 
     <flow name="get_resource_with_filter_operation">
-        <set-payload value='#[%dw 2.0 output application/java --- { product_id: "PRD-000-000", action_id: "ACT-000-000-001", asset_id: "AS-000-000" }]'/>
+        <set-payload value='#[%dw 2.0 output application/java --- { product_id: "PRD-838-787-106", action_id: "festive-zebus-uqdp", asset_id: "AS-2007-4184-1954" }]'/>
         <cloudblue-connect:get-resource resourceType="PRODUCT_ACTION_LINK"
-                                        config-ref="CloudBlue_Connect_Config_Test"/>
+                                        config-ref="CloudBlue_Connect_Config_Sandbox_Vendor"/>
     </flow>
 
     <flow name="upload_resources_file_operation">
-        <set-payload value='#[%dw 2.0 output application/java --- { usage_report_id: "UF-0000-0000-0000" }]'/>
+        <set-payload value='#[%dw 2.0 output application/java --- { usage_report_id: "UF-2020-03-6649-2673" }]'/>
         <cloudblue-connect:upload-file resourceType="USAGE_REPORT"
                                        action="UPLOAD"
-                                       config-ref="CloudBlue_Connect_Config_Test"
+                                       config-ref="CloudBlue_Connect_Config_Sandbox_Vendor"
                                        file="${TEST_RESOURCE_LOCATION}/__files/Usage_File.xlsx"/>
     </flow>
 
@@ -130,17 +186,13 @@
     </flow>
 
     <flow name="download_resources_file_operation">
-        <set-payload value='#[%dw 2.0 output application/java --- { usage_chunk_id: "UFC-2021-03-0000-0000-001" }]'/>
+        <set-payload value='#[%dw 2.0 output application/java --- { usage_chunk_id: "UFC-2020-07-8349-4102-001" }]'/>
         <cloudblue-connect:download-file
-                config-ref="CloudBlue_Connect_Config_Test"
+                config-ref="CloudBlue_Connect_Config_Sandbox_Provider"
                 location="${TEST_RESOURCE_LOCATION}/"
-                fileName="UFC-2021-03-0000-0000-001.txt"
+                fileName="UFC-2020-07-8349-4102-001.xlsx"
                 resourceType="USAGE_CHUNK"
                 action="DOWNLOAD"/>
-        <file:read config-ref="File_Config"
-                   path="${TEST_RESOURCE_LOCATION}/UFC-2021-03-0000-0000-001.txt"
-                   outputEncoding="UTF-8"
-                   outputMimeType="text/plain; charset=UTF-8"/>
     </flow>
 
     <flow name="draft_request_validation_source">

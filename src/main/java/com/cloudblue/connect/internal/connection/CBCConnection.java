@@ -202,7 +202,7 @@ public final class CBCConnection {
             for (Map.Entry<String, File> entry : fileEntity.getFiles().entrySet()) {
                 HttpPart part = new HttpPart(
                         entry.getKey(),
-                        entry.getKey(),
+                        entry.getValue().getName(),
                         Files.readAllBytes(entry.getValue().toPath()),
                         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                         (int)entry.getValue().length());
@@ -229,7 +229,7 @@ public final class CBCConnection {
                 if (payload instanceof String) {
                     requestBody = (String) payload;
                     builder.addHeader(HeaderParams.CONTENT_TYPE, ContentType.JSON.getValue());
-                    builder.entity(new ByteArrayHttpEntity(requestBody.getBytes()));
+                    builder.entity(new ByteArrayHttpEntity(requestBody.getBytes(StandardCharsets.UTF_8)));
                 } else if (payload instanceof FileEntity) {
                     includeFileEntity(builder, (FileEntity) payload);
                 } else if (payload instanceof InputStream) {
@@ -238,7 +238,7 @@ public final class CBCConnection {
                 } else {
                     requestBody = new JacksonRequestMarshaller().marshal(payload);
                     builder.addHeader(HeaderParams.CONTENT_TYPE, ContentType.JSON.getValue());
-                    builder.entity(new ByteArrayHttpEntity(requestBody.getBytes()));
+                    builder.entity(new ByteArrayHttpEntity(requestBody.getBytes(StandardCharsets.UTF_8)));
                 }
             } catch (IOException e) {
                 throw new BadRequestException("Error occurred during creating request.", e);
@@ -262,10 +262,16 @@ public final class CBCConnection {
         }
 
         private String getErrorResponseBody(HttpResponse response) {
-            return new BufferedReader(
-                    new InputStreamReader(response.getEntity().getContent(), StandardCharsets.UTF_8))
-                    .lines()
-                    .collect(Collectors.joining(""));
+
+            try (BufferedReader bufferedReader = new BufferedReader(
+                    new InputStreamReader(response.getEntity().getContent(), StandardCharsets.UTF_8))) {
+
+                return bufferedReader.lines()
+                        .collect(Collectors.joining(""));
+
+            } catch (IOException e) {
+                throw new MuleRuntimeException(createStaticMessage("Error during reading error response body."), e);
+            }
         }
 
         private void checkError(HttpResponse response) {

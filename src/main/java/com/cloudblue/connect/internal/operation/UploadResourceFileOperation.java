@@ -60,7 +60,7 @@ public class UploadResourceFileOperation extends BaseFileOperation {
 
     private FileEntity buildPayload(ActionMetadata actionMetadata, Map<String, Object> params) {
         FileEntity fileEntity = new FileEntity()
-                .addFile((String) params.get(actionMetadata.getFileName()), new File(file));
+                .addFile(actionMetadata.getFileName(), new File(file));
 
         actionMetadata.getFormAttributes()
                 .forEach(attributes -> fileEntity

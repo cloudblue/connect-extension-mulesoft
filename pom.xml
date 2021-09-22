@@ -53,9 +53,6 @@
     <properties>
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
         <sonar.language>java</sonar.language>
-        <sonar.projectKey>connext-extension-mulesoft</sonar.projectKey>
-        <sonar.organization>cloudbluesonarcube</sonar.organization>
-        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <mule.maven.plugin.version>3.4.2</mule.maven.plugin.version>
         <munit.version>2.3.6</munit.version>
         <munit.input.directory>src/test/munit</munit.input.directory>

@@ -11,13 +11,13 @@
       },
       "required": ["id"]
     },
+    "currency" : {
+      "type" : "string"
+    },
     "description" : {
       "type" : "string"
     },
     "external_id" : {
-      "type" : "string"
-    },
-    "id" : {
       "type" : "string"
     },
     "product" : {
@@ -28,7 +28,22 @@
         }
       },
       "required": ["id"]
+    },
+    "name" : {
+      "type" : "string"
+    },
+    "period" : {
+      "type" : "object",
+      "properties" : {
+        "from" : {
+          "type" : "string"
+        },
+        "to" : {
+          "type" : "string"
+        }
+      },
+      "required": ["from", "to"]
     }
   },
-  "required": ["id", "contract", "product"]
+  "required": ["contract", "product", "name"]
 }
