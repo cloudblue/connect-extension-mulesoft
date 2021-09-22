@@ -25,9 +25,5 @@ jobs:
           servers: '[{"id": "ossrh", "username": "${{ secrets.OSSRH_USERNAME }}", "password": "${{ secrets.OSSRH_TOKEN }}"}]'
       - id: publish-to-central
         name: Publish to Central Repository
-        env:
-          server.endpoint: "${{ secrets.SERVER_ENDPOINT }}"
-          server.token.vendor: "${{ secrets.SERVER_TOKEN_VENDOR }}"
-          server.token.provider: "${{ secrets.SERVER_TOKEN_PROVIDER }}"
         run: |
-            mvn -f gitBuildPom.xml --no-transfer-progress --batch-mode -Dgpg.passphrase=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }} clean deploy
+            mvn -f gitBuildPom.xml --no-transfer-progress --batch-mode -Dserver.endpoint="${{ secrets.SERVER_ENDPOINT }}" -Dserver.token.vendor="${{ secrets.SERVER_TOKEN_VENDOR }}" -Dserver.token.provider="${{ secrets.SERVER_TOKEN_PROVIDER }}" -Dgpg.passphrase=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }} clean deploy
