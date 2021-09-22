@@ -14,6 +14,8 @@ import org.mule.metadata.api.model.MetadataType;
 import org.mule.metadata.json.api.JsonTypeLoader;
 import org.mule.runtime.api.metadata.MetadataResolvingException;
 import org.mule.runtime.api.metadata.resolving.FailureCode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,6 +23,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 public class JsonMetadataBuilder {
+
+    private static final Logger logger = LoggerFactory.getLogger(JsonMetadataBuilder.class);
 
     private static final String LIST_SCHEMA_TEMPLATE = "{\"$schema\" : \"http://json-schema.org/draft-07/schema#\", \"type\": \"array\", \"items\": %s}";
 
@@ -45,6 +49,7 @@ public class JsonMetadataBuilder {
                     () -> resolvingException
             );
         } catch (IOException e) {
+            logger.error("Error during loading JSON metadata from file " + schemaFileName, e);
             throw resolvingException;
         }
     }

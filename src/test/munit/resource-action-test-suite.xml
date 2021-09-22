@@ -14,29 +14,15 @@
 
 	<munit:test name="resource_action_operation_test" description="Test Resource Action">
 		<munit:execution >
-			<wiremock:add-stub config-ref="WireMock_Config"
-							   jsonMapping='#[%dw 2.0 output application/json
----
-{
-  "request" : {
-    "method" : "POST",
-    "url" : "/requests/PR-0000-0000-0000-001/approve"
-  },
-  "response" : {
-    "status" : 200,
-    "statusMessage": "Ok",
-    "bodyFileName": "request.json"
-  }
-}]'/>
 			<flow-ref name="resource_action_operation"/>
 		</munit:execution>
 		<munit:validation >
-			<munit-tools:assert-that expression="#[payload]" is="#[MunitTools::notNullValue()]" message="Action response object is null."/>
-			<munit-tools:assert>
-				<munit-tools:that >
-					<![CDATA[#[import * from dw::test::Asserts --- payload must equalToResource("__files/request.json", "application/json")]]]>
-				</munit-tools:that>
-			</munit-tools:assert>
+			<munit-tools:assert-that expression="#[payload]"
+									 is="#[MunitTools::notNullValue()]"
+									 message="Action response object is null."/>
+			<munit-tools:assert-equals actual="#[attributes.statusCode]"
+									   expected="#[200]"
+									   message="Response code should be 200 for resource action operation."/>
 		</munit:validation>
 	</munit:test>
 

@@ -21,43 +21,16 @@
 	<munit:test name="get_resource_unauthorized_operation_test"
 				description="Test Get Resource Unauthorized"
 				expectedErrorType="CLOUDBLUE-CONNECT:REQUEST_UNAUTHORIZED">
-		<munit:execution >
-			<wiremock:add-stub config-ref="WireMock_Config"
-							   jsonMapping='#[%dw 2.0 output application/json
----
-{
-  "request" : {
-    "method" : "GET",
-    "url" : "/requests/PR-000-000"
-  },
-  "response" : {
-    "status" : 401,
-    "statusMessage": "Unauthorized"
-  }
-}]'/>
-			<flow-ref name="get_resource_operation"/>
+		<munit:execution>
+			<flow-ref name="get_resource_operation_unauthorized"/>
 		</munit:execution>
 	</munit:test>
 
-	<munit:test name="get_resource_bad_request_operation_test1"
-				description="Test Get Resource Bad Request"
+	<munit:test name="update_resource_bad_request_operation_test1"
+				description="Test Update Resource Bad Request"
 				expectedErrorType="CLOUDBLUE-CONNECT:BAD_REQUEST">
-		<munit:execution >
-			<wiremock:add-stub config-ref="WireMock_Config"
-							   jsonMapping='#[%dw 2.0 output application/json
----
-{
-  "request" : {
-    "method" : "GET",
-    "url" : "/requests/PR-000-000"
-  },
-  "response" : {
-    "status" : 400,
-    "statusMessage": "Bad Request",
-    "bodyFileName": "get_request_error.json"
-  }
-}]'/>
-			<flow-ref name="get_resource_operation"/>
+		<munit:execution>
+			<flow-ref name="update_resource_operation_bad_request"/>
 		</munit:execution>
 	</munit:test>
 
@@ -69,24 +42,11 @@
 		</munit:execution>
 	</munit:test>
 
-	<munit:test name="get_resource_server_error_operation_test"
-				description="Test Get Resource Server Error"
+	<munit:test name="get_resource_not_found_error_operation_test"
+				description="Test Get Resource Not Found Error"
 				expectedErrorType="CLOUDBLUE-CONNECT:RESOURCE_NOT_FOUND">
-		<munit:execution >
-			<wiremock:add-stub config-ref="WireMock_Config"
-							   jsonMapping='#[%dw 2.0 output application/json
----
-{
-  "request" : {
-    "method" : "GET",
-    "url" : "/requests/PR-000-000"
-  },
-  "response" : {
-    "status" : 404,
-    "statusMessage": "Resource Not Found"
-  }
-}]'/>
-			<flow-ref name="get_resource_operation"/>
+		<munit:execution>
+			<flow-ref name="get_resource_operation_not_found"/>
 		</munit:execution>
 	</munit:test>
 
