@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:wiremock="http://www.mulesoft.org/schema/mule/wiremock"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit"
+	xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns:cloudblue-connect="http://www.mulesoft.org/schema/mule/cloudblue-connect"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	  xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/wiremock http://www.mulesoft.org/schema/mule/wiremock/current/mule-wiremock.xsd
+		http://www.mulesoft.org/schema/mule/cloudblue-connect http://www.mulesoft.org/schema/mule/cloudblue-connect/current/mule-cloudblue-connect.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+		
+	<munit:config name="list-sub-collection-resource-test-suite.xml">
+		<munit:parameterizations>
+			<munit:parameterization name="Asset Usage Aggregate">
+				<munit:parameters>
+					<munit:parameter propertyName="input" value='{ asset_id: "AS-8126-3704-2566" }'/>
+					<munit:parameter propertyName="type" value="ASSET_USAGE_AGGREGATE"/>
+					<munit:parameter propertyName="config" value="CloudBlue_Connect_Config_Sandbox_Provider"/>
+				</munit:parameters>
+			</munit:parameterization>
+			<munit:parameterization name="Conversation Messages">
+				<munit:parameters>
+					<munit:parameter propertyName="input" value='{ conversation_id: "CO-238-428-212" }'/>
+					<munit:parameter propertyName="type" value="CONVERSATION_MESSAGES"/>
+					<munit:parameter propertyName="config" value="CloudBlue_Connect_Config_Sandbox_Provider"/>
+				</munit:parameters>
+			</munit:parameterization>
+			<munit:parameterization name="Product Action">
+				<munit:parameters>
+					<munit:parameter propertyName="input" value='{ product_id: "PRD-838-787-106" }'/>
+					<munit:parameter propertyName="type" value="PRODUCT_ACTION"/>
+					<munit:parameter propertyName="config" value="CloudBlue_Connect_Config_Sandbox_Vendor"/>
+				</munit:parameters>
+			</munit:parameterization>
+			<munit:parameterization name="Product Item">
+				<munit:parameters>
+					<munit:parameter propertyName="input" value='{ product_id: "PRD-838-787-106" }'/>
+					<munit:parameter propertyName="type" value="PRODUCT_ITEM"/>
+					<munit:parameter propertyName="config" value="CloudBlue_Connect_Config_Sandbox_Vendor"/>
+				</munit:parameters>
+			</munit:parameterization>
+			<munit:parameterization name="Product Parameter">
+				<munit:parameters>
+					<munit:parameter propertyName="input" value='{ product_id: "PRD-838-787-106" }'/>
+					<munit:parameter propertyName="type" value="PRODUCT_PARAMETER"/>
+					<munit:parameter propertyName="config" value="CloudBlue_Connect_Config_Sandbox_Vendor"/>
+				</munit:parameters>
+			</munit:parameterization>
+			<munit:parameterization name="Product Template">
+				<munit:parameters>
+					<munit:parameter propertyName="input" value='{ product_id: "PRD-838-787-106" }'/>
+					<munit:parameter propertyName="type" value="PRODUCT_TEMPLATE"/>
+					<munit:parameter propertyName="config" value="CloudBlue_Connect_Config_Sandbox_Vendor"/>
+				</munit:parameters>
+			</munit:parameterization>
+			<munit:parameterization name="Tier Account Version">
+				<munit:parameters>
+					<munit:parameter propertyName="input" value='{ tier_account_id: "TA-0-4237-6464-0748" }'/>
+					<munit:parameter propertyName="type" value="TIER_ACCOUNT_VERSION"/>
+					<munit:parameter propertyName="config" value="CloudBlue_Connect_Config_Sandbox_Vendor"/>
+				</munit:parameters>
+			</munit:parameterization>
+		</munit:parameterizations>
+	</munit:config>
+
+	<munit:test name="list_sub_collection_resource_operation_test" description="Test List Sub Collection Resources">
+		<munit:execution>
+			<set-payload value='#[%dw 2.0 output application/java --- ${input}]'/>
+			<cloudblue-connect:list-resources resourceType="${type}"
+											  config-ref="${config}"
+											  limit="1" offset="0">
+				<cloudblue-connect:list-resource-parameter ><![CDATA[#[payload]]]></cloudblue-connect:list-resource-parameter>
+			</cloudblue-connect:list-resources>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that expression="#[payload]"
+									 is="#[MunitTools::notNullValue()]"
+									 message="List sub collection resources ${type} response is null."/>
+			<munit-tools:assert-equals actual="#[attributes.statusCode]"
+									   expected="#[200]"
+									   message="Response code should be 200 for list sub collection resources ${type}."/>
+		</munit:validation>
+	</munit:test>
+
+</mule>

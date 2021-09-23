@@ -388,7 +388,6 @@ public class MetadataUtil {
                         .parentCollection(CONVERSATION)
                         .parentId(CONVERSATION_ID)
                         .schema(CONVERSATION_MESSAGES_SCHEMA)
-                        .includeGetAction()
                         .includeListAction()
                         .addActionMetaData(Action.CREATE, new ActionMetadata()
                                 .input(NEW_CONVERSATION_MESSAGES_SCHEMA)));
