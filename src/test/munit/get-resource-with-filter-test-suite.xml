@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:wiremock="http://www.mulesoft.org/schema/mule/wiremock"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit"
+	xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns:cloudblue-connect="http://www.mulesoft.org/schema/mule/cloudblue-connect"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/wiremock http://www.mulesoft.org/schema/mule/wiremock/current/mule-wiremock.xsd
+		http://www.mulesoft.org/schema/mule/cloudblue-connect http://www.mulesoft.org/schema/mule/cloudblue-connect/current/mule-cloudblue-connect.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+		
+	<munit:config name="get-resource-with-filter-test-suite.xml"/>
+
+	<munit:test name="get_resource_with_filter_operation_test" description="Test Get Resource">
+		<munit:execution>
+			<flow-ref name="get_resource_with_filter_operation"/>
+		</munit:execution>
+		<munit:validation>
+			<munit-tools:assert-that expression="#[payload]"
+									 is="#[MunitTools::notNullValue()]"
+									 message="Get resource with filter response body is null."/>
+			<munit-tools:assert-equals actual="#[attributes.statusCode]"
+									   expected="#[200]"
+									   message="Response code should be 200 for get resource with filter operation."/>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>

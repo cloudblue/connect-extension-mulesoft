@@ -4,54 +4,118 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:munit="http://www.mulesoft.org/schema/mule/munit"
 	xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns:cloudblue-connect="http://www.mulesoft.org/schema/mule/cloudblue-connect"
 	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
 	  xsi:schemaLocation="
 		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
 		http://www.mulesoft.org/schema/mule/wiremock http://www.mulesoft.org/schema/mule/wiremock/current/mule-wiremock.xsd
+		http://www.mulesoft.org/schema/mule/cloudblue-connect http://www.mulesoft.org/schema/mule/cloudblue-connect/current/mule-cloudblue-connect.xsd
 		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
 		
-	<munit:config name="list-resource-test-suite.xml" />
+	<munit:config name="list-resource-test-suite.xml">
+		<munit:parameterizations>
+			<munit:parameterization name="Request">
+				<munit:parameters>
+					<munit:parameter propertyName="type" value="REQUEST"/>
+					<munit:parameter propertyName="config" value="CloudBlue_Connect_Config_Sandbox_Vendor"/>
+				</munit:parameters>
+			</munit:parameterization>
+			<munit:parameterization name="Asset">
+				<munit:parameters>
+					<munit:parameter propertyName="type" value="ASSET"/>
+					<munit:parameter propertyName="config" value="CloudBlue_Connect_Config_Sandbox_Vendor"/>
+				</munit:parameters>
+			</munit:parameterization>
+			<munit:parameterization name="Case">
+				<munit:parameters>
+					<munit:parameter propertyName="type" value="CASE"/>
+					<munit:parameter propertyName="config" value="CloudBlue_Connect_Config_Sandbox_Vendor"/>
+				</munit:parameters>
+			</munit:parameterization>
+			<munit:parameterization name="Product">
+				<munit:parameters>
+					<munit:parameter propertyName="type" value="PRODUCT"/>
+					<munit:parameter propertyName="config" value="CloudBlue_Connect_Config_Sandbox_Vendor"/>
+				</munit:parameters>
+			</munit:parameterization>
+			<munit:parameterization name="Subscription Asset">
+				<munit:parameters>
+					<munit:parameter propertyName="type" value="SUBSCRIPTION_ASSET"/>
+					<munit:parameter propertyName="config" value="CloudBlue_Connect_Config_Sandbox_Vendor"/>
+				</munit:parameters>
+			</munit:parameterization>
+			<munit:parameterization name="Subscription Request">
+				<munit:parameters>
+					<munit:parameter propertyName="type" value="SUBSCRIPTION_REQUEST"/>
+					<munit:parameter propertyName="config" value="CloudBlue_Connect_Config_Sandbox_Vendor"/>
+				</munit:parameters>
+			</munit:parameterization>
+			<munit:parameterization name="Tier Account">
+				<munit:parameters>
+					<munit:parameter propertyName="type" value="TIER_ACCOUNT"/>
+					<munit:parameter propertyName="config" value="CloudBlue_Connect_Config_Sandbox_Vendor"/>
+				</munit:parameters>
+			</munit:parameterization>
+			<munit:parameterization name="Tier Account Request">
+				<munit:parameters>
+					<munit:parameter propertyName="type" value="TIER_ACCOUNT_REQUEST"/>
+					<munit:parameter propertyName="config" value="CloudBlue_Connect_Config_Sandbox_Vendor"/>
+				</munit:parameters>
+			</munit:parameterization>
+			<munit:parameterization name="Tier Config">
+				<munit:parameters>
+					<munit:parameter propertyName="type" value="TIER_CONFIG"/>
+					<munit:parameter propertyName="config" value="CloudBlue_Connect_Config_Sandbox_Vendor"/>
+				</munit:parameters>
+			</munit:parameterization>
+			<munit:parameterization name="Tier Config Request">
+				<munit:parameters>
+					<munit:parameter propertyName="type" value="TIER_CONFIG_REQUEST"/>
+					<munit:parameter propertyName="config" value="CloudBlue_Connect_Config_Sandbox_Vendor"/>
+				</munit:parameters>
+			</munit:parameterization>
+			<munit:parameterization name="Usage Report">
+				<munit:parameters>
+					<munit:parameter propertyName="type" value="USAGE_REPORT"/>
+					<munit:parameter propertyName="config" value="CloudBlue_Connect_Config_Sandbox_Vendor"/>
+				</munit:parameters>
+			</munit:parameterization>
+			<munit:parameterization name="Usage Chunk">
+				<munit:parameters>
+					<munit:parameter propertyName="type" value="USAGE_CHUNK"/>
+					<munit:parameter propertyName="config" value="CloudBlue_Connect_Config_Sandbox_Provider"/>
+				</munit:parameters>
+			</munit:parameterization>
+			<munit:parameterization name="Usage Recon">
+				<munit:parameters>
+					<munit:parameter propertyName="type" value="USAGE_RECONCILIATION"/>
+					<munit:parameter propertyName="config" value="CloudBlue_Connect_Config_Sandbox_Provider"/>
+				</munit:parameters>
+			</munit:parameterization>
+			<munit:parameterization name="Usage Record">
+				<munit:parameters>
+					<munit:parameter propertyName="type" value="USAGE_RECORD"/>
+					<munit:parameter propertyName="config" value="CloudBlue_Connect_Config_Sandbox_Provider"/>
+				</munit:parameters>
+			</munit:parameterization>
+		</munit:parameterizations>
+	</munit:config>
 
 	<munit:test name="list_resource_operation_test" description="Test List Resources">
 		<munit:execution>
-			<flow-ref name="list_resource_operation"/>
+			<cloudblue-connect:list-resources
+					resourceType="${type}"
+					config-ref="${config}"
+					limit="1" offset="0"/>
 		</munit:execution>
 		<munit:validation >
 			<munit-tools:assert-that expression="#[payload]"
 									 is="#[MunitTools::notNullValue()]"
-									 message="List resources response is null."/>
+									 message="List ${type} resources response is null."/>
 			<munit-tools:assert-equals actual="#[attributes.statusCode]"
 									   expected="#[200]"
-									   message="Response code should be 200 for list resources."/>
-		</munit:validation>
-	</munit:test>
-
-	<munit:test name="list_resource_operation_with_filter_test" description="Test List Resources">
-		<munit:execution>
-			<flow-ref name="list_resource_operation_with_filter"/>
-		</munit:execution>
-		<munit:validation>
-			<munit-tools:assert-that expression="#[payload]"
-									 is="#[MunitTools::notNullValue()]"
-									 message="List resources with filter response is null."/>
-			<munit-tools:assert-equals actual="#[attributes.statusCode]"
-									   expected="#[200]"
-									   message="Response code should be 200 for list resources with filter."/>
-		</munit:validation>
-	</munit:test>
-
-	<munit:test name="list_sub_collection_resource_operation_test" description="Test List Resources">
-		<munit:execution>
-			<flow-ref name="list_sub_collection_resource_operation"/>
-		</munit:execution>
-		<munit:validation >
-			<munit-tools:assert-that expression="#[payload]"
-									 is="#[MunitTools::notNullValue()]"
-									 message="List sub collection resources response is null."/>
-			<munit-tools:assert-equals actual="#[attributes.statusCode]"
-									   expected="#[200]"
-									   message="Response code should be 200 for list sub collection resources."/>
+									   message="Response code should be 200 for list ${type} resources."/>
 		</munit:validation>
 	</munit:test>
 

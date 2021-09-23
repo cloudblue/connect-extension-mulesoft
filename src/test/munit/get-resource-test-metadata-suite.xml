@@ -47,7 +47,7 @@
 											config-ref="CloudBlue_Connect_Config_Test"/>
 		</mtf:get-metadata-keys>
 		<mtf:validation>
-			<munit-tools:assert-equals actual="#[sizeOf(payload)]" expected="#[21]"/>
+			<munit-tools:assert-equals actual="#[sizeOf(payload)]" expected="#[20]"/>
 		</mtf:validation>
 	</mtf:tooling-test>
 

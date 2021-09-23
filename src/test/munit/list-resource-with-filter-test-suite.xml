@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:wiremock="http://www.mulesoft.org/schema/mule/wiremock"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit"
+	xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	  xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/wiremock http://www.mulesoft.org/schema/mule/wiremock/current/mule-wiremock.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+		
+	<munit:config name="list-resource-with-filter-test-suite.xml"/>
+
+	<munit:test name="list_resource_operation_with_filter_test" description="Test List Resources With Filter">
+		<munit:execution>
+			<flow-ref name="list_resource_operation_with_filter"/>
+		</munit:execution>
+		<munit:validation>
+			<munit-tools:assert-that expression="#[payload]"
+									 is="#[MunitTools::notNullValue()]"
+									 message="List resources with filter response is null."/>
+			<munit-tools:assert-equals actual="#[attributes.statusCode]"
+									   expected="#[200]"
+									   message="Response code should be 200 for list resources with filter."/>
+		</munit:validation>
+	</munit:test>
+
+</mule>

@@ -27,12 +27,14 @@
 
     <cloudblue-connect:config name="CloudBlue_Connect_Config_Sandbox_Vendor">
         <cloudblue-connect:connection endpoint="${server.endpoint}"
-                                      token="${server.token.vendor}" />
+                                      token="${server.token.vendor}"
+                                      connectionTimeout="60"/>
     </cloudblue-connect:config>
 
     <cloudblue-connect:config name="CloudBlue_Connect_Config_Sandbox_Provider">
         <cloudblue-connect:connection endpoint="${server.endpoint}"
-                                      token="${server.token.provider}" />
+                                      token="${server.token.provider}"
+                                      connectionTimeout="60"/>
     </cloudblue-connect:config>
 
     <cloudblue-connect:config name="CloudBlue_Connect_Config_Sandbox_Invalid">
@@ -73,16 +75,10 @@
 
     <file:config name="File_Config"/>
 
-    <flow name="list_resource_operation">
-        <cloudblue-connect:list-resources
-                config-ref="CloudBlue_Connect_Config_Sandbox_Vendor"
-                resourceType="REQUEST" limit="2"/>
-    </flow>
-
     <flow name="list_resource_operation_with_filter">
         <cloudblue-connect:list-resources
                 config-ref="CloudBlue_Connect_Config_Sandbox_Vendor"
-                resourceType="REQUEST" limit="5" offset="5">
+                resourceType="REQUEST" limit="1" offset="0">
             <cloudblue-connect:filter >
                 <cloudblue-connect:mono-filter type="EQ" property="asset.id" value="AS-2007-4184-1954" />
             </cloudblue-connect:filter>
@@ -92,22 +88,6 @@
                 </cloudblue-connect:properties>
             </cloudblue-connect:order-by>
         </cloudblue-connect:list-resources>
-    </flow>
-
-    <flow name="list_sub_collection_resource_operation" >
-        <set-payload value='#[%dw 2.0 output application/java --- { product_id: "PRD-838-787-106" }]'/>
-        <cloudblue-connect:list-resources resourceType="PRODUCT_ACTION"
-                                          config-ref="CloudBlue_Connect_Config_Sandbox_Vendor"
-                                          limit="5">
-            <cloudblue-connect:list-resource-parameter ><![CDATA[#[payload]]]></cloudblue-connect:list-resource-parameter>
-        </cloudblue-connect:list-resources>
-    </flow>
-
-    <flow name="get_resource_operation">
-        <set-payload value='#[%dw 2.0 output application/java --- { request_id: "PR-2007-4184-1954-001" }]'/>
-        <cloudblue-connect:get-resource
-                resourceType="REQUEST"
-                config-ref="CloudBlue_Connect_Config_Sandbox_Vendor"/>
     </flow>
 
     <flow name="get_resource_operation_not_found">

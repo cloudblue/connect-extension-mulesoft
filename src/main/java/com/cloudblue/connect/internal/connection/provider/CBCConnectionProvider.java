@@ -55,7 +55,7 @@ public class CBCConnectionProvider implements CachedConnectionProvider<CBCConnec
         private String token;
 
         @Parameter
-        @Optional(defaultValue = "5")
+        @Optional(defaultValue = "30")
         @Placement(tab = Placement.ADVANCED_TAB, order = 1)
         @DisplayName("API Timeout Value")
         @Summary("API call timeout timeout value")
