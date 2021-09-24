@@ -13,6 +13,7 @@ import com.cloudblue.connect.internal.connection.CBCConnection;
 import com.cloudblue.connect.internal.error.provider.OperationErrorTypeProvider;
 import com.cloudblue.connect.internal.metadata.Metadata;
 import com.cloudblue.connect.internal.metadata.MetadataUtil;
+import com.cloudblue.connect.internal.metadata.resource.create.CreateCollectionIdentifierInputResolver;
 import com.cloudblue.connect.internal.metadata.resource.create.CreateResourceInputResolver;
 import com.cloudblue.connect.internal.metadata.resource.create.CreateResourceOutputResolver;
 import com.cloudblue.connect.internal.metadata.resource.create.CreateResourceTypeKeysResolver;
@@ -27,6 +28,7 @@ import org.mule.runtime.extension.api.annotation.param.display.Placement;
 import org.mule.runtime.extension.api.runtime.operation.Result;
 
 import java.io.InputStream;
+import java.util.Map;
 
 import static org.mule.runtime.extension.api.annotation.param.MediaType.APPLICATION_JSON;
 
@@ -48,6 +50,7 @@ public class CreateResourceOperation {
      * The operation to create a resource on CloudBlue Connect
      *
      * @param connection the connection required to execute the operation.
+     * @param collectionIdentifier the input needed to map parent collection in case of sub collection.
      * @param createResourceParameter the constructed request body to perform the resource creation.
      * @return JSON representation of created resource as result.
      */
@@ -56,13 +59,22 @@ public class CreateResourceOperation {
     @OutputResolver(output = CreateResourceOutputResolver.class)
     public Result<InputStream, CBCResponseAttributes> createResource(
             @Connection CBCConnection connection,
+            @TypeResolver(CreateCollectionIdentifierInputResolver.class)
+            Map<String, Object> collectionIdentifier,
             @TypeResolver(CreateResourceInputResolver.class)
             @Content InputStream createResourceParameter
     ) {
         Metadata metadata = MetadataUtil.getMetadata(identifier.getResourceType());
 
-        return connection.newQ()
-                .collection(metadata.getCollection())
+        CBCConnection.Q q = connection.newQ();
+
+        if (metadata.isSubCollection()) {
+            String parentId = (String) collectionIdentifier.get(metadata.getParentId().getField());
+
+            q.collection(metadata.getParentCollection(), parentId);
+        }
+
+        return q.collection(metadata.getCollection())
                 .create(createResourceParameter);
     }
 }

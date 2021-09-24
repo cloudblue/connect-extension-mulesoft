@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:wiremock="http://www.mulesoft.org/schema/mule/wiremock"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit"
+	xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns:cloudblue-connect="http://www.mulesoft.org/schema/mule/cloudblue-connect"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/wiremock http://www.mulesoft.org/schema/mule/wiremock/current/mule-wiremock.xsd
+		http://www.mulesoft.org/schema/mule/cloudblue-connect http://www.mulesoft.org/schema/mule/cloudblue-connect/current/mule-cloudblue-connect.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+		
+	<munit:config name="create-sub-collection-resource-test-suite.xml"/>
+
+	<munit:test name="create_sub_collection_resource_operation_test" description="Test Create Sub Collection Resource">
+		<munit:execution >
+			<set-payload value='#[%dw 2.0 output application/json --- {text: "Test message"} ]'/>
+			<cloudblue-connect:create-resource config-ref="CloudBlue_Connect_Config_Sandbox_Provider"
+											   collectionIdentifier='#[output application/java --- { conversation_id: "CO-238-428-212"}]'
+											   resourceType="CONVERSATION_MESSAGES"
+											   action="CREATE"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that expression="#[payload]"
+									 is="#[MunitTools::notNullValue()]"
+									 message="Response ${type} creation response is null."/>
+			<munit-tools:assert-equals actual="#[attributes.statusCode]"
+									   expected="#[201]"
+									   message="Response code should be 201 for create ${type} resource operation."/>
+		</munit:validation>
+	</munit:test>
+
+</mule>

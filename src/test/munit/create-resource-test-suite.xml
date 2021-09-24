@@ -4,25 +4,65 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:munit="http://www.mulesoft.org/schema/mule/munit"
 	xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns:cloudblue-connect="http://www.mulesoft.org/schema/mule/cloudblue-connect"
 	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xsi:schemaLocation="
 		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
 		http://www.mulesoft.org/schema/mule/wiremock http://www.mulesoft.org/schema/mule/wiremock/current/mule-wiremock.xsd
+		http://www.mulesoft.org/schema/mule/cloudblue-connect http://www.mulesoft.org/schema/mule/cloudblue-connect/current/mule-cloudblue-connect.xsd
 		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
 		
-	<munit:config name="create-resource-test-suite.xml" />
+	<munit:config name="create-resource-test-suite.xml">
+		<munit:parameterizations>
+			<munit:parameterization name="Usage Report">
+				<munit:parameters>
+					<munit:parameter propertyName="input" value='{ product: { id: "PRD-404-534-600" }, contract: { id: "CRD-08072-51679-98510" }, description: "Test Usege Report", external_id: "EXT-000-000", name: "Usage Report for current month" }'/>
+					<munit:parameter propertyName="type" value="USAGE_REPORT"/>
+					<munit:parameter propertyName="action" value="CREATE"/>
+					<munit:parameter propertyName="config" value="CloudBlue_Connect_Config_Sandbox_Vendor"/>
+				</munit:parameters>
+			</munit:parameterization>
+			<munit:parameterization name="Case">
+				<munit:parameters>
+					<munit:parameter propertyName="input" value='{"subject":"Test","description":"Mulesoft operation test","priority":0,"type":"business","receiver":{"account":{"id":"VA-178-258"}},"product":{"id":"PRD-732-266-033"}}'/>
+					<munit:parameter propertyName="type" value="CASE"/>
+					<munit:parameter propertyName="action" value="CREATE"/>
+					<munit:parameter propertyName="config" value="CloudBlue_Connect_Config_Sandbox_Provider"/>
+				</munit:parameters>
+			</munit:parameterization>
+			<munit:parameterization name="Request">
+				<munit:parameters>
+					<munit:parameter propertyName="input" value='{ "type": "purchase", "asset": { "product": { "id": "PRD-838-787-106" }, "connection": { "id": "CT-0000-0000-0000" }, "external_uid": uuid(), "external_id": "UB4EXL8Q67", "items": [ { "quantity": 5, "global_id": "PRD-838-787-106-0001" } ], "params": [], "tiers": { "customer": { "id": "TA-9125-4439-4133" }, "tier1": { "id": "TA-0000-0443-7285" } } }, "marketplace": { "id": "MP-66110" } }'/>
+					<munit:parameter propertyName="type" value="REQUEST"/>
+					<munit:parameter propertyName="action" value="NEW_PURCHASE_REQUEST_SCHEMA"/>
+					<munit:parameter propertyName="config" value="CloudBlue_Connect_Config_Sandbox_Provider"/>
+				</munit:parameters>
+			</munit:parameterization>
+			<munit:parameterization name="Tier Account">
+				<munit:parameters>
+					<munit:parameter propertyName="input" value='{"type":"customer","name":"Grimes - Bayer","parent":{"id":"TA-0000-0443-7285"},"external_id": "29665","external_uid": uuid(),"contact_info":{"address_line1":"Claud Street","address_line2":"Koch Gardens","city":"Jelenia Góra ","state":"Dolnoslaskie","postal_code":"58-500","country":"PL","contact":{"first_name":"Jana","last_name":"Bayer","email":"rahul.mondal+Jana_Bayer@ingrammicro.com","phone_number":{"phone":"665 558 902","area_code":"","country_code":"+48","extension":"","phone_number":"665558902","isValid":true}}},"tax_id":"X3LA66V4XY"}'/>
+					<munit:parameter propertyName="type" value="TIER_ACCOUNT"/>
+					<munit:parameter propertyName="action" value="CREATE"/>
+					<munit:parameter propertyName="config" value="CloudBlue_Connect_Config_Sandbox_Provider"/>
+				</munit:parameters>
+			</munit:parameterization>
+		</munit:parameterizations>
+	</munit:config>
 
 	<munit:test name="create_resource_operation_test" description="Test Create Resource">
 		<munit:execution >
-			<flow-ref name="create_resource_operation"/>
+			<set-payload value='#[%dw 2.0 output application/json --- ${input} ]'/>
+			<cloudblue-connect:create-resource config-ref="${config}"
+											   resourceType="${type}"
+											   action="${action}"/>
 		</munit:execution>
 		<munit:validation >
 			<munit-tools:assert-that expression="#[payload]"
 									 is="#[MunitTools::notNullValue()]"
-									 message="Action response object is null."/>
+									 message="Response ${type} creation response is null."/>
 			<munit-tools:assert-equals actual="#[attributes.statusCode]"
 									   expected="#[201]"
-									   message="Response code should be 201 for create resource operation."/>
+									   message="Response code should be 201 for create ${type} resource operation."/>
 		</munit:validation>
 	</munit:test>
 

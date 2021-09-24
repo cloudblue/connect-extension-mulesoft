@@ -5,11 +5,37 @@
     "configuration" : {
       "type" : "object",
       "properties" : {
-        "id" : {
-          "type" : "string"
+        "connection" : {
+          "type" : "object",
+          "properties" : {
+            "id" : {
+              "type" : "string"
+            }
+          },
+          "required": ["id"]
+        },
+        "marketplace" : {
+          "type" : "object",
+          "properties" : {
+            "id" : {
+              "type" : "string"
+            }
+          },
+          "required": ["id"]
+        },
+        "product" : {
+          "type" : "object",
+          "properties" : {
+            "id" : {
+              "type" : "string"
+            }
+          },
+          "required": ["id"]
+        },
+        "tier_level" : {
+          "type" : "integer"
         }
-      },
-      "required": ["id"]
+      }
     },
     "params" : {
       "type" : "array",
@@ -31,7 +57,7 @@
     },
     "type" : {
       "type" : "string",
-      "const" : "update"
+      "enum" : ["update", "setup"]
     }
   },
   "required": ["type", "params", "configuration"]

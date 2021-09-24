@@ -16,7 +16,31 @@
 		
 	<munit:config name="create-resource-test-metadata-suite.xml" />
 
-	<mtf:tooling-test name="create-resource-test-input-metadata" >
+	<mtf:tooling-test name="create-resource-test-input-metadata1" >
+		<mtf:get-input-metadata parameter="collectionIdentifier">
+			<cloudblue-connect:create-resource config-ref="CloudBlue_Connect_Config_Test"
+											   resourceType="REQUEST"
+											   action="CREATE_ADMIN_HOLD_REQUEST"/>
+		</mtf:get-input-metadata>
+		<mtf:validation>
+			<munit-tools:assert-equals actual="#[payload.format]" expected="#['java']"/>
+		</mtf:validation>
+	</mtf:tooling-test>
+
+	<mtf:tooling-test name="create-resource-test-input-metadata3" >
+		<mtf:get-input-metadata parameter="collectionIdentifier">
+			<cloudblue-connect:create-resource config-ref="CloudBlue_Connect_Config_Test"
+											   resourceType="CONVERSATION_MESSAGES"
+											   action="CREATE"/>
+		</mtf:get-input-metadata>
+		<mtf:validation>
+			<munit-tools:assert-equals actual="#[payload.format]" expected="#['java']"/>
+			<munit-tools:assert-equals actual="#[payload.fields[0].key.name]" expected="#['conversation_id']"/>
+			<munit-tools:assert-equals actual="#[payload.fields[0].model.'type']" expected="#['String']"/>
+		</mtf:validation>
+	</mtf:tooling-test>
+
+	<mtf:tooling-test name="create-resource-test-input-metadata2" >
 		<mtf:get-input-metadata parameter="createResourceParameter">
 			<cloudblue-connect:create-resource config-ref="CloudBlue_Connect_Config_Test"
 											   resourceType="REQUEST"

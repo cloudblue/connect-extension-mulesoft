@@ -31,7 +31,7 @@ public class ResourceInputResolver {
             return actionMetadata.getInput().getMetadataType(context, metadata,
                     Action.valueOf(action.toUpperCase()), actionMetadata);
         } else {
-            return context.getTypeBuilder().voidType().build();
+            return context.getTypeBuilder().nothingType().build();
         }
     }
 

@@ -20,7 +20,7 @@
 
     <munit:config name="update-resource-test-suite.xml" />
 
-    <munit:test name="update_resource_operation_test" description="Test List Resources">
+    <munit:test name="update_resource_operation_test" description="Test Update Resources">
         <munit:execution>
             <flow-ref name="update_resource_operation"/>
         </munit:execution>
