@@ -9,7 +9,7 @@ package com.cloudblue.connect.internal.source;
 
 import com.cloudblue.connect.internal.clients.parsers.jackson.JacksonResponseUnmarshaller;
 import com.cloudblue.connect.api.parameters.CBCResponseAttributes;
-import com.cloudblue.connect.internal.exception.WebhookException;
+import com.cloudblue.connect.internal.error.exception.WebhookException;
 import com.cloudblue.connect.internal.model.Webhook;
 import com.cloudblue.connect.internal.config.CBCWebhookConfig;
 import com.cloudblue.connect.internal.connection.CBCConnection;
