@@ -10,7 +10,7 @@ package com.cloudblue.connect.internal.source;
 import com.cloudblue.connect.internal.config.CBCWebhookConfig;
 import com.cloudblue.connect.internal.connection.CBCConnection;
 import com.cloudblue.connect.internal.connection.WebhookConnection;
-import com.cloudblue.connect.internal.exception.WebhookException;
+import com.cloudblue.connect.internal.error.exception.WebhookException;
 
 import org.mule.runtime.api.connection.ConnectionProvider;
 import org.mule.runtime.api.exception.MuleException;

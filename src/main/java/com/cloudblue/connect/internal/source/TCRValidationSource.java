@@ -9,9 +9,10 @@ package com.cloudblue.connect.internal.source;
 
 import com.cloudblue.connect.api.webhook.TCRValidationType;
 import com.cloudblue.connect.api.webhook.WebhookRequestAttributes;
-import com.cloudblue.connect.internal.exception.WebhookException;
+import com.cloudblue.connect.internal.error.exception.WebhookException;
 import com.cloudblue.connect.internal.metadata.MetadataUtil;
 
+import org.mule.runtime.extension.api.annotation.Alias;
 import org.mule.runtime.extension.api.annotation.metadata.fixed.OutputJsonType;
 import org.mule.runtime.extension.api.annotation.param.MediaType;
 import org.mule.runtime.extension.api.annotation.param.Parameter;
@@ -27,7 +28,8 @@ import static org.mule.runtime.extension.api.annotation.param.MediaType.APPLICAT
 @EmitsResponse
 @MediaType(value = APPLICATION_JSON, strict = false)
 @OutputJsonType(schema = MetadataUtil.TIER_CONFIG_REQUEST_SCHEMA)
-public class TCRValidationListener extends BaseWebhookSource<InputStream, WebhookRequestAttributes> {
+@Alias("tcr-validation-listener")
+public class TCRValidationSource extends BaseWebhookSource<InputStream, WebhookRequestAttributes> {
 
     @Parameter
     @Placement(order = 4)

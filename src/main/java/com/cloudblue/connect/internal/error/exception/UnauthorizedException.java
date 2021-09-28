@@ -5,7 +5,7 @@
  * LICENSE file.
  */
 
-package com.cloudblue.connect.internal.exception;
+package com.cloudblue.connect.internal.error.exception;
 
 import com.cloudblue.connect.internal.error.CBCErrorType;
 import org.mule.runtime.extension.api.exception.ModuleException;

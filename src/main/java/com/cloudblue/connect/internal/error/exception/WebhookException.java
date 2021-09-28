@@ -5,15 +5,15 @@
  * LICENSE file.
  */
 
-package com.cloudblue.connect.internal.exception;
+package com.cloudblue.connect.internal.error.exception;
 
 import com.cloudblue.connect.internal.error.CBCErrorType;
 import org.mule.runtime.extension.api.exception.ModuleException;
 
-public class ResourceNotFoundException extends ModuleException {
-    private static final long serialVersionUID = 8310037945619413416L;
+public class WebhookException extends ModuleException {
+    private static final long serialVersionUID = -4160991420660108906L;
 
-    public ResourceNotFoundException(String message) {
-        super(message, CBCErrorType.RESOURCE_NOT_FOUND);
+    public WebhookException(String message) {
+        super(message, CBCErrorType.REQUEST_UNAUTHORIZED);
     }
 }
