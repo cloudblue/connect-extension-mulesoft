@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright © 2021 Ingram Micro Inc. All rights reserved.
+  ~ The software in this package is published under the terms of the Apache-2.0
+  ~ license, a copy of which has been included with this distribution in the
+  ~ LICENSE file.
+  -->
+
 <Configuration shutdownHook="disable">
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
