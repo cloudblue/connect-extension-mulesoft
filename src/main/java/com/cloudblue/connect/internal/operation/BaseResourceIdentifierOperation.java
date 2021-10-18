@@ -11,13 +11,11 @@ import com.cloudblue.connect.internal.metadata.ActionMetadata;
 import com.cloudblue.connect.internal.metadata.Keys;
 import com.cloudblue.connect.internal.metadata.Metadata;
 import com.cloudblue.connect.internal.metadata.MetadataUtil;
-import org.mule.runtime.extension.api.annotation.Ignore;
 
 import java.util.Map;
 
 public class BaseResourceIdentifierOperation {
 
-    @Ignore
     protected CBCConnection.Q getQ(CBCConnection connection,
                                    String resourceType,
                                    String action,

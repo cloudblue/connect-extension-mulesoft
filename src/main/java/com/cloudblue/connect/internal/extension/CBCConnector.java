@@ -6,16 +6,21 @@
  */
 package com.cloudblue.connect.internal.extension;
 
-import com.cloudblue.connect.api.parameters.filters.*;
+import com.cloudblue.connect.api.parameters.filters.Filter;
+import com.cloudblue.connect.api.parameters.filters.InFilter;
+import com.cloudblue.connect.api.parameters.filters.ListFilter;
+import com.cloudblue.connect.api.parameters.filters.MonoFilter;
+import com.cloudblue.connect.api.parameters.filters.NotFilter;
+import com.cloudblue.connect.api.parameters.filters.OutFilter;
+import com.cloudblue.connect.api.parameters.filters.RawRQLFilter;
 import com.cloudblue.connect.internal.config.CBCConfiguration;
 import com.cloudblue.connect.internal.config.CBCWebhookConfig;
 import com.cloudblue.connect.internal.error.CBCErrorType;
-
 import org.mule.runtime.api.meta.Category;
+import org.mule.runtime.extension.api.annotation.Configurations;
 import org.mule.runtime.extension.api.annotation.Extension;
 import org.mule.runtime.extension.api.annotation.SubTypeMapping;
 import org.mule.runtime.extension.api.annotation.dsl.xml.Xml;
-import org.mule.runtime.extension.api.annotation.Configurations;
 import org.mule.runtime.extension.api.annotation.error.ErrorTypes;
 
 

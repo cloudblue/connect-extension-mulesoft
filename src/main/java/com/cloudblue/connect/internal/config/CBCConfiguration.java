@@ -7,8 +7,13 @@
 package com.cloudblue.connect.internal.config;
 
 import com.cloudblue.connect.internal.connection.provider.CBCConnectionProvider;
-import com.cloudblue.connect.internal.operation.*;
-
+import com.cloudblue.connect.internal.operation.CreateResourceOperation;
+import com.cloudblue.connect.internal.operation.DownloadResourceFileOperation;
+import com.cloudblue.connect.internal.operation.GetResourceOperation;
+import com.cloudblue.connect.internal.operation.ListResourcesOperation;
+import com.cloudblue.connect.internal.operation.ResourceActionOperation;
+import com.cloudblue.connect.internal.operation.UpdateResourceOperation;
+import com.cloudblue.connect.internal.operation.UploadResourceFileOperation;
 import org.mule.runtime.extension.api.annotation.Operations;
 import org.mule.runtime.extension.api.annotation.connectivity.ConnectionProviders;
 

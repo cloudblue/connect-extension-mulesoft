@@ -7,7 +7,10 @@
 package com.cloudblue.connect.internal.metadata;
 
 import com.cloudblue.connect.api.parameters.ResourceType;
-import com.cloudblue.connect.internal.metadata.fulfillment.*;
+import com.cloudblue.connect.internal.metadata.fulfillment.ApproveRequestMetadataProvider;
+import com.cloudblue.connect.internal.metadata.fulfillment.AssignRequestMetadataProvider;
+import com.cloudblue.connect.internal.metadata.fulfillment.FailRequestMetadataProvider;
+import com.cloudblue.connect.internal.metadata.fulfillment.InquireRequestMetadataProvider;
 import com.cloudblue.connect.internal.metadata.helpdesk.CloseCaseMetadataProvider;
 import com.cloudblue.connect.internal.metadata.tier.ApproveTcrMetadataProvider;
 import com.cloudblue.connect.internal.metadata.tier.FailTcrMetadataProvider;
@@ -19,11 +22,57 @@ import com.cloudblue.connect.internal.metadata.usage.report.AcceptReportMetadata
 import com.cloudblue.connect.internal.metadata.usage.report.RejectReportMetadataProvider;
 import com.cloudblue.connect.internal.model.resource.Action;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
-import static com.cloudblue.connect.internal.metadata.Keys.*;
-import static com.cloudblue.connect.internal.clients.constants.APIConstants.CollectionKeys.*;
+import static com.cloudblue.connect.internal.clients.constants.APIConstants.CollectionKeys.ACCOUNT_REQUESTS;
+import static com.cloudblue.connect.internal.clients.constants.APIConstants.CollectionKeys.ACTIONS;
+import static com.cloudblue.connect.internal.clients.constants.APIConstants.CollectionKeys.AGGREGATES;
+import static com.cloudblue.connect.internal.clients.constants.APIConstants.CollectionKeys.ASSETS;
+import static com.cloudblue.connect.internal.clients.constants.APIConstants.CollectionKeys.ATTRIBUTES;
+import static com.cloudblue.connect.internal.clients.constants.APIConstants.CollectionKeys.CASES;
+import static com.cloudblue.connect.internal.clients.constants.APIConstants.CollectionKeys.CHUNKS;
+import static com.cloudblue.connect.internal.clients.constants.APIConstants.CollectionKeys.CONFIGURATIONS;
+import static com.cloudblue.connect.internal.clients.constants.APIConstants.CollectionKeys.CONFIG_REQUESTS;
+import static com.cloudblue.connect.internal.clients.constants.APIConstants.CollectionKeys.CONVERSATION;
+import static com.cloudblue.connect.internal.clients.constants.APIConstants.CollectionKeys.FILES;
+import static com.cloudblue.connect.internal.clients.constants.APIConstants.CollectionKeys.ITEMS;
+import static com.cloudblue.connect.internal.clients.constants.APIConstants.CollectionKeys.MESSAGES;
+import static com.cloudblue.connect.internal.clients.constants.APIConstants.CollectionKeys.PARAMETERS;
+import static com.cloudblue.connect.internal.clients.constants.APIConstants.CollectionKeys.PRODUCTS;
+import static com.cloudblue.connect.internal.clients.constants.APIConstants.CollectionKeys.RECONCILIATIONS;
+import static com.cloudblue.connect.internal.clients.constants.APIConstants.CollectionKeys.RECORDS;
+import static com.cloudblue.connect.internal.clients.constants.APIConstants.CollectionKeys.REQUESTS;
+import static com.cloudblue.connect.internal.clients.constants.APIConstants.CollectionKeys.SUBSCRIPTION_ASSETS;
+import static com.cloudblue.connect.internal.clients.constants.APIConstants.CollectionKeys.SUBSCRIPTION_REQUESTS;
+import static com.cloudblue.connect.internal.clients.constants.APIConstants.CollectionKeys.TEMPLATES;
+import static com.cloudblue.connect.internal.clients.constants.APIConstants.CollectionKeys.TIER_ACCOUNTS;
+import static com.cloudblue.connect.internal.clients.constants.APIConstants.CollectionKeys.TIER_CONFIG;
+import static com.cloudblue.connect.internal.clients.constants.APIConstants.CollectionKeys.VERSIONS;
+import static com.cloudblue.connect.internal.metadata.Keys.ACTION_ID;
+import static com.cloudblue.connect.internal.metadata.Keys.ASSET_ID;
+import static com.cloudblue.connect.internal.metadata.Keys.CASE_ID;
+import static com.cloudblue.connect.internal.metadata.Keys.CONVERSATION_ID;
+import static com.cloudblue.connect.internal.metadata.Keys.ITEM_ID;
+import static com.cloudblue.connect.internal.metadata.Keys.MESSAGE_ID;
+import static com.cloudblue.connect.internal.metadata.Keys.PARAMETER_ID;
+import static com.cloudblue.connect.internal.metadata.Keys.PRODUCT_ID;
+import static com.cloudblue.connect.internal.metadata.Keys.REQUEST_ID;
+import static com.cloudblue.connect.internal.metadata.Keys.TAR_ID;
+import static com.cloudblue.connect.internal.metadata.Keys.TA_ID;
+import static com.cloudblue.connect.internal.metadata.Keys.TA_VERSION_ID;
+import static com.cloudblue.connect.internal.metadata.Keys.TCR_ID;
+import static com.cloudblue.connect.internal.metadata.Keys.TC_ID;
+import static com.cloudblue.connect.internal.metadata.Keys.TEMPLATE_ID;
+import static com.cloudblue.connect.internal.metadata.Keys.UPLOAD_NOTE;
+import static com.cloudblue.connect.internal.metadata.Keys.USAGE_CHUNK_ID;
+import static com.cloudblue.connect.internal.metadata.Keys.USAGE_RECON_ID;
+import static com.cloudblue.connect.internal.metadata.Keys.USAGE_RECORD_ID;
+import static com.cloudblue.connect.internal.metadata.Keys.USAGE_REPORT_ID;
 
 public class MetadataUtil {
     private static final Map<ResourceType, Metadata> METADATA_STORE = new EnumMap<>(ResourceType.class);

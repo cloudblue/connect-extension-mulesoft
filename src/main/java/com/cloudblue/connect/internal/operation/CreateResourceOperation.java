@@ -6,8 +6,8 @@
  */
 package com.cloudblue.connect.internal.operation;
 
-import com.cloudblue.connect.api.parameters.CBCResponseAttributes;
 import com.cloudblue.connect.api.parameters.ActionIdentifier;
+import com.cloudblue.connect.api.parameters.CBCResponseAttributes;
 import com.cloudblue.connect.internal.connection.CBCConnection;
 import com.cloudblue.connect.internal.error.provider.OperationErrorTypeProvider;
 import com.cloudblue.connect.internal.metadata.Metadata;
@@ -16,12 +16,15 @@ import com.cloudblue.connect.internal.metadata.resource.create.CreateCollectionI
 import com.cloudblue.connect.internal.metadata.resource.create.CreateResourceInputResolver;
 import com.cloudblue.connect.internal.metadata.resource.create.CreateResourceOutputResolver;
 import com.cloudblue.connect.internal.metadata.resource.create.CreateResourceTypeKeysResolver;
-
 import org.mule.runtime.extension.api.annotation.error.Throws;
 import org.mule.runtime.extension.api.annotation.metadata.MetadataKeyId;
 import org.mule.runtime.extension.api.annotation.metadata.OutputResolver;
 import org.mule.runtime.extension.api.annotation.metadata.TypeResolver;
-import org.mule.runtime.extension.api.annotation.param.*;
+import org.mule.runtime.extension.api.annotation.param.Connection;
+import org.mule.runtime.extension.api.annotation.param.Content;
+import org.mule.runtime.extension.api.annotation.param.MediaType;
+import org.mule.runtime.extension.api.annotation.param.Parameter;
+import org.mule.runtime.extension.api.annotation.param.ParameterGroup;
 import org.mule.runtime.extension.api.annotation.param.display.DisplayName;
 import org.mule.runtime.extension.api.annotation.param.display.Placement;
 import org.mule.runtime.extension.api.runtime.operation.Result;

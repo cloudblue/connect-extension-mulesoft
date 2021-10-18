@@ -9,11 +9,9 @@ package com.cloudblue.connect.internal.metadata.resource.action;
 import com.cloudblue.connect.api.parameters.ActionIdentifier;
 import com.cloudblue.connect.internal.metadata.BaseMetadataResolverTest;
 import com.cloudblue.connect.internal.metadata.Keys;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-
 import org.mule.metadata.api.model.ArrayType;
 import org.mule.metadata.api.model.MetadataType;
 import org.mule.metadata.api.model.ObjectType;
@@ -24,7 +22,27 @@ import org.mule.runtime.api.metadata.resolving.InputTypeResolver;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static com.cloudblue.connect.internal.metadata.Keys.*;
+import static com.cloudblue.connect.internal.metadata.Keys.ACCEPTANCE_NOTE;
+import static com.cloudblue.connect.internal.metadata.Keys.CASE_ID;
+import static com.cloudblue.connect.internal.metadata.Keys.EFFECTIVE_DATE;
+import static com.cloudblue.connect.internal.metadata.Keys.EMAIL;
+import static com.cloudblue.connect.internal.metadata.Keys.EXTERNAL_BILLING_ID;
+import static com.cloudblue.connect.internal.metadata.Keys.EXTERNAL_BILLING_NOTE;
+import static com.cloudblue.connect.internal.metadata.Keys.FEEDBACK;
+import static com.cloudblue.connect.internal.metadata.Keys.FORCE;
+import static com.cloudblue.connect.internal.metadata.Keys.ID;
+import static com.cloudblue.connect.internal.metadata.Keys.RATING;
+import static com.cloudblue.connect.internal.metadata.Keys.REASON;
+import static com.cloudblue.connect.internal.metadata.Keys.REJECTION_NOTE;
+import static com.cloudblue.connect.internal.metadata.Keys.REQUEST_ID;
+import static com.cloudblue.connect.internal.metadata.Keys.TAR_ID;
+import static com.cloudblue.connect.internal.metadata.Keys.TCR_ID;
+import static com.cloudblue.connect.internal.metadata.Keys.TEMPLATE_ID;
+import static com.cloudblue.connect.internal.metadata.Keys.UPLOAD_NOTE;
+import static com.cloudblue.connect.internal.metadata.Keys.USAGE_CHUNK_ID;
+import static com.cloudblue.connect.internal.metadata.Keys.USAGE_RECON_ID;
+import static com.cloudblue.connect.internal.metadata.Keys.USAGE_RECORD_ID;
+import static com.cloudblue.connect.internal.metadata.Keys.USAGE_REPORT_ID;
 
 @RunWith(Parameterized.class)
 public class ResourceActionInputResolverTest extends BaseMetadataResolverTest {
