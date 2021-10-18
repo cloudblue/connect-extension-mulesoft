@@ -6,17 +6,15 @@
  */
 package com.cloudblue.connect.internal.source;
 
-import com.cloudblue.connect.internal.clients.parsers.jackson.JacksonResponseUnmarshaller;
 import com.cloudblue.connect.api.parameters.CBCResponseAttributes;
-import com.cloudblue.connect.internal.error.exception.WebhookException;
-import com.cloudblue.connect.internal.model.Webhook;
+import com.cloudblue.connect.internal.clients.parsers.jackson.JacksonResponseUnmarshaller;
 import com.cloudblue.connect.internal.config.CBCWebhookConfig;
 import com.cloudblue.connect.internal.connection.CBCConnection;
 import com.cloudblue.connect.internal.connection.WebhookConnection;
+import com.cloudblue.connect.internal.error.exception.WebhookException;
+import com.cloudblue.connect.internal.model.Webhook;
 import com.cloudblue.connect.internal.model.resource.Action;
-
 import com.fasterxml.jackson.core.type.TypeReference;
-
 import org.mule.runtime.api.exception.MuleRuntimeException;
 import org.mule.runtime.api.message.Message;
 import org.mule.runtime.api.metadata.TypedValue;
@@ -38,7 +36,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-import static com.cloudblue.connect.internal.clients.constants.APIConstants.CollectionKeys.*;
+import static com.cloudblue.connect.internal.clients.constants.APIConstants.CollectionKeys.NOTIFICATIONS;
+import static com.cloudblue.connect.internal.clients.constants.APIConstants.CollectionKeys.WEBHOOKS;
 import static org.mule.runtime.api.i18n.I18nMessageFactory.createStaticMessage;
 import static org.mule.runtime.api.metadata.DataType.BYTE_ARRAY;
 

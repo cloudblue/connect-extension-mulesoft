@@ -13,12 +13,14 @@ import com.cloudblue.connect.internal.metadata.resource.get.GetResourceInputReso
 import com.cloudblue.connect.internal.metadata.resource.get.GetResourceOutputResolver;
 import com.cloudblue.connect.internal.metadata.resource.get.GetResourceTypeKeysResolver;
 import com.cloudblue.connect.internal.model.resource.Action;
-
 import org.mule.runtime.extension.api.annotation.error.Throws;
 import org.mule.runtime.extension.api.annotation.metadata.MetadataKeyId;
 import org.mule.runtime.extension.api.annotation.metadata.OutputResolver;
 import org.mule.runtime.extension.api.annotation.metadata.TypeResolver;
-import org.mule.runtime.extension.api.annotation.param.*;
+import org.mule.runtime.extension.api.annotation.param.Connection;
+import org.mule.runtime.extension.api.annotation.param.Content;
+import org.mule.runtime.extension.api.annotation.param.MediaType;
+import org.mule.runtime.extension.api.annotation.param.Parameter;
 import org.mule.runtime.extension.api.annotation.param.display.DisplayName;
 import org.mule.runtime.extension.api.annotation.param.display.Placement;
 import org.mule.runtime.extension.api.runtime.operation.Result;

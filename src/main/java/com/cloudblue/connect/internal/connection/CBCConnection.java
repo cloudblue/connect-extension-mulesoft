@@ -6,6 +6,7 @@
  */
 package com.cloudblue.connect.internal.connection;
 
+import com.cloudblue.connect.api.parameters.CBCResponseAttributes;
 import com.cloudblue.connect.internal.clients.constants.APIConstants;
 import com.cloudblue.connect.internal.clients.constants.ContentType;
 import com.cloudblue.connect.internal.clients.constants.HeaderParams;
@@ -15,12 +16,10 @@ import com.cloudblue.connect.internal.clients.parsers.jackson.JacksonRequestMars
 import com.cloudblue.connect.internal.clients.rql.R;
 import com.cloudblue.connect.internal.clients.utils.RequestUtil;
 import com.cloudblue.connect.internal.clients.utils.Url;
-import com.cloudblue.connect.api.parameters.CBCResponseAttributes;
 import com.cloudblue.connect.internal.connection.provider.CBCConnectionProvider;
 import com.cloudblue.connect.internal.error.exception.BadRequestException;
 import com.cloudblue.connect.internal.error.exception.ResourceNotFoundException;
 import com.cloudblue.connect.internal.error.exception.UnauthorizedException;
-
 import org.mule.runtime.api.exception.MuleRuntimeException;
 import org.mule.runtime.api.metadata.MediaType;
 import org.mule.runtime.extension.api.runtime.operation.Result;
@@ -33,15 +32,24 @@ import org.mule.runtime.http.api.domain.message.request.HttpRequest;
 import org.mule.runtime.http.api.domain.message.request.HttpRequestBuilder;
 import org.mule.runtime.http.api.domain.message.response.HttpResponse;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeoutException;
 import java.util.stream.Collectors;
 
 import static org.mule.runtime.api.i18n.I18nMessageFactory.createStaticMessage;
-import static org.mule.runtime.http.api.HttpConstants.*;
+import static org.mule.runtime.http.api.HttpConstants.Method;
 
 
 public final class CBCConnection {

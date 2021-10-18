@@ -10,7 +10,11 @@ import com.cloudblue.connect.api.parameters.ActionIdentifier;
 import org.junit.Before;
 import org.junit.runners.Parameterized;
 import org.mule.metadata.api.builder.BaseTypeBuilder;
-import org.mule.metadata.api.model.*;
+import org.mule.metadata.api.model.ArrayType;
+import org.mule.metadata.api.model.MetadataFormat;
+import org.mule.metadata.api.model.MetadataType;
+import org.mule.metadata.api.model.ObjectFieldType;
+import org.mule.metadata.api.model.ObjectType;
 import org.mule.runtime.api.metadata.MetadataContext;
 
 import java.util.Optional;

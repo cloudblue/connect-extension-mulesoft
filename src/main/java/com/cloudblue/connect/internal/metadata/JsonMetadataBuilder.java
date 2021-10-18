@@ -8,7 +8,6 @@ package com.cloudblue.connect.internal.metadata;
 
 import com.cloudblue.connect.internal.model.resource.Action;
 import org.apache.commons.io.IOUtils;
-
 import org.mule.metadata.api.model.MetadataType;
 import org.mule.metadata.json.api.JsonTypeLoader;
 import org.mule.runtime.api.metadata.MetadataResolvingException;
@@ -48,7 +47,7 @@ public class JsonMetadataBuilder {
                     () -> resolvingException
             );
         } catch (IOException e) {
-            logger.error("Error during loading JSON metadata from file " + schemaFileName, e);
+            logger.error(String.format("Error during loading JSON metadata from file %s", schemaFileName), e);
             throw resolvingException;
         }
     }

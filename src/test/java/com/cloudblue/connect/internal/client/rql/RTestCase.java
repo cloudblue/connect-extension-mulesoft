@@ -7,11 +7,25 @@
 package com.cloudblue.connect.internal.client.rql;
 
 import com.cloudblue.connect.internal.clients.rql.R;
-
 import org.junit.Assert;
 import org.junit.Test;
 
-import static com.cloudblue.connect.internal.clients.rql.R.*;
+import static com.cloudblue.connect.internal.clients.rql.R.EMPTY;
+import static com.cloudblue.connect.internal.clients.rql.R.and;
+import static com.cloudblue.connect.internal.clients.rql.R.eq;
+import static com.cloudblue.connect.internal.clients.rql.R.expr;
+import static com.cloudblue.connect.internal.clients.rql.R.ge;
+import static com.cloudblue.connect.internal.clients.rql.R.gt;
+import static com.cloudblue.connect.internal.clients.rql.R.ilike;
+import static com.cloudblue.connect.internal.clients.rql.R.in;
+import static com.cloudblue.connect.internal.clients.rql.R.le;
+import static com.cloudblue.connect.internal.clients.rql.R.like;
+import static com.cloudblue.connect.internal.clients.rql.R.lt;
+import static com.cloudblue.connect.internal.clients.rql.R.ne;
+import static com.cloudblue.connect.internal.clients.rql.R.not;
+import static com.cloudblue.connect.internal.clients.rql.R.or;
+import static com.cloudblue.connect.internal.clients.rql.R.orderBy;
+import static com.cloudblue.connect.internal.clients.rql.R.out;
 
 
 public class RTestCase {

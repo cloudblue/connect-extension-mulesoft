@@ -7,12 +7,11 @@
 package com.cloudblue.connect.internal.metadata;
 
 import com.cloudblue.connect.api.parameters.ResourceType;
-
 import org.junit.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class MetadataUtilTest {
 
