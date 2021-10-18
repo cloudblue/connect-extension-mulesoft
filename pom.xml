@@ -45,14 +45,15 @@
     </developers>
 
     <parent>
-        <groupId>org.mule.connectors</groupId>
-        <artifactId>mule-certified-parent</artifactId>
-        <version>1.4.1</version>
+        <groupId>org.mule.extensions</groupId>
+        <artifactId>mule-modules-parent</artifactId>
+        <version>1.3.0</version>
     </parent>
 
     <properties>
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
         <sonar.language>java</sonar.language>
+        <mule.version>4.3.0</mule.version>
         <mule.maven.plugin.version>3.4.2</mule.maven.plugin.version>
         <munit.version>2.3.6</munit.version>
         <munit.input.directory>src/test/munit</munit.input.directory>
@@ -321,7 +322,6 @@
                             <includeSnapshots>true</includeSnapshots>
                         </discoverRuntimes>
                     </runtimeConfiguration>
-                    <runtimeVersion>4.2.1</runtimeVersion>
                     <dynamicPorts>
                         <dynamicPort>http.port</dynamicPort>
                         <dynamicPort>webhook.port</dynamicPort>
