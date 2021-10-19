@@ -7,15 +7,14 @@
   ~ LICENSE file.
   -->
 
-<mule xmlns:wiremock="http://www.mulesoft.org/schema/mule/wiremock"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:munit="http://www.mulesoft.org/schema/mule/munit"
-	xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
-	xmlns:file="http://www.mulesoft.org/schema/mule/file"
-	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xsi:schemaLocation="
-		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+<mule
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:munit="http://www.mulesoft.org/schema/mule/munit"
+		xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+		xmlns:file="http://www.mulesoft.org/schema/mule/file"
+		xmlns="http://www.mulesoft.org/schema/mule/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
-		http://www.mulesoft.org/schema/mule/wiremock http://www.mulesoft.org/schema/mule/wiremock/current/mule-wiremock.xsd
+
 		http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
 		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
 		
@@ -29,9 +28,9 @@
 			</file:list>
 		</munit:execution>
 		<munit:validation>
-			<munit-tools:assert-that expression="#[payload]"
-									 is="#[MunitTools::hasSize(1)]"
-									 message="One file should be present after download."/>
+			<munit-tools:assert-equals actual="#[sizeOf(payload)]"
+									   expected="#[1]"
+									   message="One file should be present after download."/>
 		</munit:validation>
 	</munit:test>
 
