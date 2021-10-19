@@ -6,13 +6,13 @@
  */
 package com.cloudblue.connect.internal.metadata.usage.report;
 
-import com.cloudblue.connect.internal.metadata.Metadata;
+import com.cloudblue.connect.internal.metadata.CollectionInfo;
 import org.mule.metadata.api.builder.ObjectTypeBuilder;
 
 public class BaseReportMetadataProvider {
-    protected void includeId(final ObjectTypeBuilder objectBuilder, final Metadata metadata) {
+    protected void includeId(final ObjectTypeBuilder objectBuilder, final CollectionInfo collectionInfo) {
         objectBuilder.addField()
-                .key(metadata.getId().getField())
+                .key(collectionInfo.getId().getField())
                 .required()
                 .label("Usage Report ID")
                 .value()

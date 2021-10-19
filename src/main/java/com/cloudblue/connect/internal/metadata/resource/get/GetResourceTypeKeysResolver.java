@@ -6,9 +6,8 @@
  */
 package com.cloudblue.connect.internal.metadata.resource.get;
 
+import com.cloudblue.connect.internal.metadata.CollectionInfoUtil;
 import com.cloudblue.connect.internal.metadata.Constants;
-import com.cloudblue.connect.internal.metadata.MetadataUtil;
-
 import org.mule.runtime.api.metadata.MetadataContext;
 import org.mule.runtime.api.metadata.MetadataKey;
 import org.mule.runtime.api.metadata.MetadataKeyBuilder;
@@ -22,7 +21,7 @@ public class GetResourceTypeKeysResolver implements TypeKeysResolver {
     @Override
     public Set<MetadataKey> getKeys(MetadataContext context) {
         Set<MetadataKey> keys = new HashSet<>();
-        for(String resourceType : MetadataUtil.getGetResourceTypes())
+        for(String resourceType : CollectionInfoUtil.getGetResourceTypes())
             keys.add(MetadataKeyBuilder.newKey(resourceType).build());
 
         return keys;

@@ -61,7 +61,7 @@ public class GetResourceOperation extends BaseResourceIdentifierOperation {
             @Content Map<String, Object> getResourceParameter
     ) {
 
-        return getQ(connection, resourceType, Action.GET.name(), getResourceParameter)
+        return getQuery(connection, resourceType, Action.GET.name(), getResourceParameter)
                 .get();
     }
 }

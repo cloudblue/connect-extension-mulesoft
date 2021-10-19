@@ -6,10 +6,10 @@
  */
 package com.cloudblue.connect.api.parameters.filters;
 
-import com.cloudblue.connect.internal.clients.rql.R;
+import com.cloudblue.connect.internal.clients.rql.Rql;
 
 import java.io.Serializable;
 
 public interface Filter extends Serializable {
-    R toRQL();
+    Rql toRQL();
 }

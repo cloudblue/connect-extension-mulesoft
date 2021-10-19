@@ -6,10 +6,10 @@
  */
 package com.cloudblue.connect.internal.config;
 
+import com.cloudblue.connect.internal.connection.provider.WebhookConnectionProvider;
 import com.cloudblue.connect.internal.source.RequestValidationSource;
 import com.cloudblue.connect.internal.source.TCRValidationSource;
 import com.cloudblue.connect.internal.source.WebhookSource;
-import com.cloudblue.connect.internal.connection.provider.WebhookConnectionProvider;
 import org.mule.runtime.extension.api.annotation.Configuration;
 import org.mule.runtime.extension.api.annotation.Sources;
 import org.mule.runtime.extension.api.annotation.connectivity.ConnectionProviders;

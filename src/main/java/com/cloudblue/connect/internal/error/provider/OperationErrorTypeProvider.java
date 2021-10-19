@@ -7,7 +7,6 @@
 package com.cloudblue.connect.internal.error.provider;
 
 import com.cloudblue.connect.internal.error.CBCErrorType;
-
 import org.mule.runtime.extension.api.annotation.error.ErrorTypeProvider;
 import org.mule.runtime.extension.api.error.ErrorTypeDefinition;
 

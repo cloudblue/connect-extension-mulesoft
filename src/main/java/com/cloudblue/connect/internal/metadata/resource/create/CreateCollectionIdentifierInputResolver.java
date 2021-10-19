@@ -10,7 +10,6 @@ import com.cloudblue.connect.api.parameters.ActionIdentifier;
 import com.cloudblue.connect.internal.metadata.Constants;
 import com.cloudblue.connect.internal.metadata.resource.ResourceInputResolver;
 import com.cloudblue.connect.internal.model.resource.Action;
-
 import org.mule.metadata.api.model.MetadataType;
 import org.mule.runtime.api.metadata.MetadataContext;
 import org.mule.runtime.api.metadata.MetadataResolvingException;

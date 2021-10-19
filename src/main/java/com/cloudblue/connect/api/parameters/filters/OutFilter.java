@@ -6,7 +6,7 @@
  */
 package com.cloudblue.connect.api.parameters.filters;
 
-import com.cloudblue.connect.internal.clients.rql.R;
+import com.cloudblue.connect.internal.clients.rql.Rql;
 
 import java.io.Serializable;
 
@@ -14,7 +14,7 @@ public class OutFilter extends MultiValueFilter implements Serializable {
     private static final long serialVersionUID = 8079200967712763339L;
 
     @Override
-    public R toRQL() {
-        return R.out(this.getProperty(), this.getValues().toArray());
+    public Rql toRQL() {
+        return Rql.out(this.getProperty(), this.getValues().toArray());
     }
 }

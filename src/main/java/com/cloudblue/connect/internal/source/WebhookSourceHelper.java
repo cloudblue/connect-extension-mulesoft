@@ -84,12 +84,12 @@ public class WebhookSourceHelper {
     private Webhook webhookAction(Action action, Webhook input) {
         Result<InputStream, CBCResponseAttributes> result;
 
-        CBCConnection.Q q = connection.newQ().collection(NOTIFICATIONS);
+        CBCConnection.Query query = connection.newQuery().collection(NOTIFICATIONS);
 
         if (action == Action.CREATE) {
-            result = q.collection(WEBHOOKS).create(input);
+            result = query.collection(WEBHOOKS).create(input);
         } else {
-            result = q.collection(WEBHOOKS, input.getId()).update(input);
+            result = query.collection(WEBHOOKS, input.getId()).update(input);
         }
 
         ModuleException moduleException = new WebhookException("Not able to create/update Webhook Object");
@@ -152,7 +152,7 @@ public class WebhookSourceHelper {
                     path, objectClass
             );
 
-            Result<InputStream, CBCResponseAttributes> result = connection.newQ()
+            Result<InputStream, CBCResponseAttributes> result = connection.newQuery()
                     .collection(NOTIFICATIONS)
                     .collection(WEBHOOKS)
                     .get();

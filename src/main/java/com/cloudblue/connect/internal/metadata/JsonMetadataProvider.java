@@ -7,7 +7,6 @@
 package com.cloudblue.connect.internal.metadata;
 
 import com.cloudblue.connect.internal.model.resource.Action;
-
 import org.mule.metadata.api.model.MetadataType;
 import org.mule.runtime.api.metadata.MetadataContext;
 import org.mule.runtime.api.metadata.MetadataResolvingException;
@@ -22,9 +21,9 @@ public class JsonMetadataProvider
 
     @Override
     public MetadataType getMetadataType(MetadataContext context,
-                                        Metadata metadata,
+                                        CollectionInfo collectionInfo,
                                         Action action,
-                                        ActionMetadata actionMetadata
+                                        ActionInfo actionInfo
     ) throws MetadataResolvingException {
 
         return getType(schemaFileName, action);

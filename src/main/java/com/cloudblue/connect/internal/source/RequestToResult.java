@@ -6,9 +6,8 @@
  */
 package com.cloudblue.connect.internal.source;
 
-import com.cloudblue.connect.internal.clients.constants.HeaderParams;
 import com.cloudblue.connect.api.webhook.WebhookRequestAttributes;
-
+import com.cloudblue.connect.internal.clients.constants.HeaderParams;
 import org.mule.runtime.api.exception.MuleRuntimeException;
 import org.mule.runtime.api.metadata.MediaType;
 import org.mule.runtime.api.util.MultiMap;

@@ -6,7 +6,7 @@
  */
 package com.cloudblue.connect.api.parameters.filters;
 
-import com.cloudblue.connect.internal.clients.rql.R;
+import com.cloudblue.connect.internal.clients.rql.Rql;
 import org.mule.runtime.extension.api.annotation.param.Parameter;
 
 public class NotFilter implements Filter {
@@ -25,7 +25,7 @@ public class NotFilter implements Filter {
     }
 
     @Override
-    public R toRQL() {
-        return R.not(filter.toRQL());
+    public Rql toRQL() {
+        return Rql.not(filter.toRQL());
     }
 }

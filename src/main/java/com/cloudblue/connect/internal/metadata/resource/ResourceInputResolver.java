@@ -6,10 +6,9 @@
  */
 package com.cloudblue.connect.internal.metadata.resource;
 
-import com.cloudblue.connect.internal.metadata.ActionMetadata;
-import com.cloudblue.connect.internal.metadata.Metadata;
-import com.cloudblue.connect.internal.metadata.MetadataUtil;
-
+import com.cloudblue.connect.internal.metadata.ActionInfo;
+import com.cloudblue.connect.internal.metadata.CollectionInfo;
+import com.cloudblue.connect.internal.metadata.CollectionInfoUtil;
 import com.cloudblue.connect.internal.model.resource.Action;
 import org.mule.metadata.api.model.MetadataType;
 import org.mule.runtime.api.metadata.MetadataContext;
@@ -20,15 +19,15 @@ public class ResourceInputResolver {
 
     public MetadataType getInputMetadata(MetadataContext context, String resourceType, String action)
             throws MetadataResolvingException {
-        Metadata metadata = MetadataUtil.getMetadata(resourceType);
-        ActionMetadata actionMetadata = MetadataUtil.getActionMetadata(resourceType, action);
+        CollectionInfo collectionInfo = CollectionInfoUtil.getCollectionInfo(resourceType);
+        ActionInfo actionInfo = CollectionInfoUtil.getActionInfo(resourceType, action);
 
-        if (actionMetadata == null) {
+        if (actionInfo == null) {
             throw new MetadataResolvingException("No Metadata is available.",
                     FailureCode.NO_DYNAMIC_TYPE_AVAILABLE);
-        } else if (actionMetadata.getInput() != null) {
-            return actionMetadata.getInput().getMetadataType(context, metadata,
-                    Action.valueOf(action.toUpperCase()), actionMetadata);
+        } else if (actionInfo.getInput() != null) {
+            return actionInfo.getInput().getMetadataType(context, collectionInfo,
+                    Action.valueOf(action.toUpperCase()), actionInfo);
         } else {
             return context.getTypeBuilder().nothingType().build();
         }
