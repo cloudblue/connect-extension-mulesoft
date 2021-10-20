@@ -13,7 +13,7 @@ import com.cloudblue.connect.internal.clients.constants.HeaderParams;
 import com.cloudblue.connect.internal.clients.constants.RestConstants;
 import com.cloudblue.connect.internal.clients.entity.FileEntity;
 import com.cloudblue.connect.internal.clients.parsers.jackson.JacksonRequestMarshaller;
-import com.cloudblue.connect.internal.clients.rql.R;
+import com.cloudblue.connect.internal.clients.rql.Rql;
 import com.cloudblue.connect.internal.clients.utils.RequestUtil;
 import com.cloudblue.connect.internal.clients.utils.Url;
 import com.cloudblue.connect.internal.connection.provider.CBCConnectionProvider;
@@ -57,21 +57,21 @@ public final class CBCConnection {
     private final HttpClient client;
     private final CBCConnectionProvider.ConnectionParams connectionParams;
 
-    public static final class Q {
+    public static final class Query {
         private final HttpClient client;
         private final CBCConnectionProvider.ConnectionParams connectionParams;
 
         private final List<String> ns = new ArrayList<>();
         private final Map<Integer, String> nsKeyMap = new HashMap<>();
         private final Map<String, String> filters = new HashMap<>();
-        private final List<R> rqlFilters = new ArrayList<>();
+        private final List<Rql> rqlFilters = new ArrayList<>();
         private final List<String> orderBys = new ArrayList<>();
         private int limit = 100;
         private int offset = 0;
         private boolean encode = true;
         private boolean listOperation = false;
 
-        public Q(HttpClient client, CBCConnectionProvider.ConnectionParams connectionParams) {
+        public Query(HttpClient client, CBCConnectionProvider.ConnectionParams connectionParams) {
             this.client = client;
             this.connectionParams = connectionParams;
         }
@@ -117,7 +117,7 @@ public final class CBCConnection {
                 if (rqlFilters.size() == 1)
                     rqlStr = rqlFilters.get(0).toString();
                 else
-                    rqlStr = R.and(rqlFilters.toArray(new R[]{})).toString();
+                    rqlStr = Rql.and(rqlFilters.toArray(new Rql[]{})).toString();
 
                 queryStrings.add(rqlStr);
             }
@@ -127,7 +127,7 @@ public final class CBCConnection {
             }
 
             if (!orderBys.isEmpty()) {
-                queryStrings.add(R.orderBy(orderBys.toArray(new String[]{})).toString());
+                queryStrings.add(Rql.orderBy(orderBys.toArray(new String[]{})).toString());
             }
 
             if (listOperation) {
@@ -151,54 +151,54 @@ public final class CBCConnection {
                 return processFilters(getUrl());
         }
 
-        public Q collection(String ns) {
+        public Query collection(String ns) {
             return collection(ns, null);
         }
 
-        public Q collection(String ns, String key) {
+        public Query collection(String ns, String key) {
             this.ns.add(ns);
             this.nsKeyMap.put(this.ns.size() - 1, key);
 
             return this;
         }
 
-        public Q encode(boolean encode) {
+        public Query encode(boolean encode) {
             this.encode = encode;
 
             return this;
         }
 
-        public Q filter(String property, String value) {
+        public Query filter(String property, String value) {
             this.filters.put(property, value);
 
             return this;
         }
 
-        public Q filter(R... r) {
+        public Query filter(Rql... r) {
             this.rqlFilters.addAll(Arrays.asList(r));
 
             return this;
         }
 
-        public Q orderBy(String... orderBys) {
+        public Query orderBy(String... orderBys) {
             this.orderBys.addAll(Arrays.asList(orderBys));
 
             return this;
         }
 
-        public Q limit(int limit) {
+        public Query limit(int limit) {
             this.limit = limit;
 
             return this;
         }
 
-        public Q offset(int offset) {
+        public Query offset(int offset) {
             this.offset = offset;
 
             return this;
         }
 
-        public Q listOperation(boolean listOperation) {
+        public Query listOperation(boolean listOperation) {
             this.listOperation = listOperation;
 
             return this;
@@ -390,12 +390,12 @@ public final class CBCConnection {
         this.connectionParams = connectionParams;
     }
 
-    public Q newQ() {
-        return new Q(client, connectionParams);
+    public Query newQuery() {
+        return new Query(client, connectionParams);
     }
 
     public boolean isConnected() {
-        newQ().collection(APIConstants.CollectionKeys.ACCOUNTS).get();
+        newQuery().collection(APIConstants.CollectionKeys.ACCOUNTS).get();
 
         return true;
     }

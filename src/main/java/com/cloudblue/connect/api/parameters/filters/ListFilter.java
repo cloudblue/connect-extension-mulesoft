@@ -6,8 +6,7 @@
  */
 package com.cloudblue.connect.api.parameters.filters;
 
-import com.cloudblue.connect.internal.clients.rql.R;
-
+import com.cloudblue.connect.internal.clients.rql.Rql;
 import org.mule.runtime.extension.api.annotation.param.Parameter;
 
 import java.util.List;
@@ -42,13 +41,13 @@ public class ListFilter implements Filter {
     }
 
     @Override
-    public R toRQL() {
-        R[] rs = getFilters().stream().map(Filter::toRQL).toArray(R[]::new);
+    public Rql toRQL() {
+        Rql[] rs = getFilters().stream().map(Filter::toRQL).toArray(Rql[]::new);
 
         if (getType() == ListFilter.Type.AND) {
-            return R.and(rs);
+            return Rql.and(rs);
         } else if (getType() == ListFilter.Type.OR) {
-            return R.or(rs);
+            return Rql.or(rs);
         }
 
         return null;

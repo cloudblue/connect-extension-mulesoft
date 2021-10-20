@@ -8,7 +8,6 @@ package com.cloudblue.connect.internal.connection.provider;
 
 
 import com.cloudblue.connect.internal.connection.CBCConnection;
-
 import org.mule.runtime.api.connection.CachedConnectionProvider;
 import org.mule.runtime.api.connection.ConnectionException;
 import org.mule.runtime.api.connection.ConnectionValidationResult;
@@ -27,7 +26,6 @@ import org.mule.runtime.http.api.HttpService;
 import org.mule.runtime.http.api.client.HttpClient;
 import org.mule.runtime.http.api.client.HttpClientConfiguration;
 import org.mule.runtime.http.api.client.proxy.ProxyConfig;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

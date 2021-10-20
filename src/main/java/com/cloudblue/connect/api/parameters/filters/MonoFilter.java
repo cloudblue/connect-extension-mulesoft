@@ -6,8 +6,7 @@
  */
 package com.cloudblue.connect.api.parameters.filters;
 
-import com.cloudblue.connect.internal.clients.rql.R;
-
+import com.cloudblue.connect.internal.clients.rql.Rql;
 import org.mule.runtime.extension.api.annotation.param.Parameter;
 
 import java.io.Serializable;
@@ -54,22 +53,22 @@ public class MonoFilter implements Filter, Serializable {
     }
 
     @Override
-    public R toRQL() {
+    public Rql toRQL() {
         if (this.getType() == Type.EQ)
-            return R.eq(this.getProperty(), this.getValue());
+            return Rql.eq(this.getProperty(), this.getValue());
         else if (this.getType() == Type.NE)
-            return R.ne(this.getProperty(), this.getValue());
+            return Rql.ne(this.getProperty(), this.getValue());
         else if (this.getType() == Type.GE)
-            return R.ge(this.getProperty(), this.getValue());
+            return Rql.ge(this.getProperty(), this.getValue());
         else if (this.getType() == Type.GT)
-            return R.gt(this.getProperty(), this.getValue());
+            return Rql.gt(this.getProperty(), this.getValue());
         else if (this.getType() == Type.LE)
-            return R.le(this.getProperty(), this.getValue());
+            return Rql.le(this.getProperty(), this.getValue());
         else if (this.getType() == Type.LT)
-            return R.lt(this.getProperty(), this.getValue());
+            return Rql.lt(this.getProperty(), this.getValue());
         else if (this.getType() == Type.LIKE)
-            return R.like(this.getProperty(), this.getValue());
-        else return R.ilike(this.getProperty(), this.getValue());
+            return Rql.like(this.getProperty(), this.getValue());
+        else return Rql.ilike(this.getProperty(), this.getValue());
     }
 
 }

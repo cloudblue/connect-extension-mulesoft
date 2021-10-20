@@ -13,22 +13,22 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class MetadataUtilTest {
+public class CollectionInfoUtilTest {
 
     @Test
     public void testGetListResourceTypes() {
-        List<String> listResourceTypes = MetadataUtil.getListResourceTypes();
+        List<String> listResourceTypes = CollectionInfoUtil.getListResourceTypes();
 
         assertEquals(23, listResourceTypes.size());
     }
 
     @Test
     public void testCreateListResourceTypes() {
-        List<String> listResourceTypes = MetadataUtil.getCreateResourceTypes();
+        List<String> listResourceTypes = CollectionInfoUtil.getCreateResourceTypes();
 
         assertEquals(7, listResourceTypes.size());
 
-        List<String> createActions = MetadataUtil.getCreateActions(ResourceType.REQUEST.name());
+        List<String> createActions = CollectionInfoUtil.getCreateActions(ResourceType.REQUEST.name());
 
         assertEquals(3, createActions.size());
     }

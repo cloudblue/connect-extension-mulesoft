@@ -14,7 +14,6 @@ import com.cloudblue.connect.internal.metadata.resource.update.UpdateResourceInp
 import com.cloudblue.connect.internal.metadata.resource.update.UpdateResourceOutputResolver;
 import com.cloudblue.connect.internal.metadata.resource.update.UpdateResourceTypeKeysResolver;
 import com.cloudblue.connect.internal.model.resource.Action;
-
 import org.mule.runtime.extension.api.annotation.error.Throws;
 import org.mule.runtime.extension.api.annotation.metadata.MetadataKeyId;
 import org.mule.runtime.extension.api.annotation.metadata.OutputResolver;
@@ -64,7 +63,7 @@ public class UpdateResourceOperation extends BaseResourceIdentifierOperation {
             @TypeResolver(UpdateResourceInputResolver.class)
             @Content InputStream updatePayload
     ) {
-        return getQ(connection, resourceType, Action.UPDATE.name(), updateResourceIdentifier)
+        return getQuery(connection, resourceType, Action.UPDATE.name(), updateResourceIdentifier)
                 .update(updatePayload);
     }
 }

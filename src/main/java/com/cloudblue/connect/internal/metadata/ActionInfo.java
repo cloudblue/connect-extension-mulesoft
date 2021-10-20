@@ -13,7 +13,7 @@ import java.util.List;
 
 import static org.mule.runtime.http.api.HttpConstants.Method;
 
-public class ActionMetadata {
+public class ActionInfo {
     private String output;
     private MetadataProvider input;
     private Method method = Method.POST;
@@ -24,54 +24,54 @@ public class ActionMetadata {
     private final List<Keys> formAttributes = new ArrayList<>();
     private String fileName;
 
-    public ActionMetadata output(String output) {
+    public ActionInfo output(String output) {
         this.output = output;
         return this;
     }
 
-    public ActionMetadata input(MetadataProvider input) {
+    public ActionInfo input(MetadataProvider input) {
         this.input = input;
         return this;
     }
 
-    public ActionMetadata input(String input) {
+    public ActionInfo input(String input) {
         this.input = new JsonMetadataProvider(input);
         return this;
     }
 
-    public ActionMetadata method(Method method) {
+    public ActionInfo method(Method method) {
         this.method = method;
         return this;
     }
 
-    public ActionMetadata action(String action) {
+    public ActionInfo action(String action) {
         this.action = action;
         return this;
     }
 
-    public ActionMetadata includePayload(boolean includePayload) {
+    public ActionInfo includePayload(boolean includePayload) {
         this.includePayload = includePayload;
         return this;
     }
 
-    public ActionMetadata collectionAction(boolean collectionAction) {
+    public ActionInfo collectionAction(boolean collectionAction) {
         this.collectionAction = collectionAction;
         return this;
     }
 
-    public ActionMetadata filter(Keys... filter) {
+    public ActionInfo filter(Keys... filter) {
         this.filters.addAll(Arrays.asList(filter));
 
         return this;
     }
 
-    public ActionMetadata formAttributes(Keys... attributes) {
+    public ActionInfo formAttributes(Keys... attributes) {
         this.formAttributes.addAll(Arrays.asList(attributes));
 
         return this;
     }
 
-    public ActionMetadata fileName(String fileName) {
+    public ActionInfo fileName(String fileName) {
         this.fileName = fileName;
 
         return this;

@@ -11,8 +11,8 @@ import com.cloudblue.connect.api.parameters.CBCResponseAttributes;
 import com.cloudblue.connect.internal.clients.entity.FileEntity;
 import com.cloudblue.connect.internal.connection.CBCConnection;
 import com.cloudblue.connect.internal.error.provider.OperationErrorTypeProvider;
-import com.cloudblue.connect.internal.metadata.ActionMetadata;
-import com.cloudblue.connect.internal.metadata.MetadataUtil;
+import com.cloudblue.connect.internal.metadata.ActionInfo;
+import com.cloudblue.connect.internal.metadata.CollectionInfoUtil;
 import com.cloudblue.connect.internal.metadata.resource.upload.ResourceFileUploadInputResolver;
 import com.cloudblue.connect.internal.metadata.resource.upload.ResourceFileUploadOutputResolver;
 import com.cloudblue.connect.internal.metadata.resource.upload.ResourceFileUploadTypeKeysResolver;
@@ -60,11 +60,11 @@ public class UploadResourceFileOperation extends BaseFileOperation {
     ActionIdentifier actionIdentifier;
 
 
-    private FileEntity buildPayload(ActionMetadata actionMetadata, Map<String, Object> params) {
+    private FileEntity buildPayload(ActionInfo actionInfo, Map<String, Object> params) {
         FileEntity fileEntity = new FileEntity()
-                .addFile(actionMetadata.getFileName(), new File(file));
+                .addFile(actionInfo.getFileName(), new File(file));
 
-        actionMetadata.getFormAttributes()
+        actionInfo.getFormAttributes()
                 .forEach(attributes -> fileEntity
                         .addValue(attributes.getField(),
                                 (String) params.get(attributes.getField())));
@@ -89,15 +89,15 @@ public class UploadResourceFileOperation extends BaseFileOperation {
             @TypeResolver(ResourceFileUploadInputResolver.class)
             @Content Map<String, Object> uploadResourceFileParameter) {
 
-        CBCConnection.Q q = getQ(connection, actionIdentifier.getResourceType(),
+        CBCConnection.Query query = getQuery(connection, actionIdentifier.getResourceType(),
                 actionIdentifier.getAction(), uploadResourceFileParameter);
 
-        ActionMetadata actionMetadata = MetadataUtil.getActionMetadata(actionIdentifier.getResourceType(),
+        ActionInfo actionInfo = CollectionInfoUtil.getActionInfo(actionIdentifier.getResourceType(),
                 actionIdentifier.getAction());
 
 
-        return q.action(getAction(actionIdentifier.getResourceType(), actionIdentifier.getAction()),
-                actionMetadata.getMethod(),
-                buildPayload(actionMetadata, uploadResourceFileParameter));
+        return query.action(getAction(actionIdentifier.getResourceType(), actionIdentifier.getAction()),
+                actionInfo.getMethod(),
+                buildPayload(actionInfo, uploadResourceFileParameter));
     }
 }

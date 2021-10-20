@@ -7,7 +7,6 @@
 package com.cloudblue.connect.internal.clients.parsers.jackson;
 
 import com.cloudblue.connect.internal.clients.parsers.RequestMarshaller;
-
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.MapperFeature;

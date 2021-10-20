@@ -6,8 +6,7 @@
  */
 package com.cloudblue.connect.api.parameters.filters;
 
-import com.cloudblue.connect.internal.clients.rql.R;
-
+import com.cloudblue.connect.internal.clients.rql.Rql;
 import org.mule.runtime.extension.api.annotation.param.Parameter;
 
 import java.io.Serializable;
@@ -27,7 +26,7 @@ public class RawRQLFilter implements Filter, Serializable {
     }
 
     @Override
-    public R toRQL() {
-        return R.expr(rawRql);
+    public Rql toRQL() {
+        return Rql.expr(rawRql);
     }
 }

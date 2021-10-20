@@ -14,15 +14,15 @@ import org.mule.runtime.api.metadata.MetadataContext;
 public class ParentMetadataProvider implements MetadataProvider {
     @Override
     public MetadataType getMetadataType(MetadataContext context,
-                                        Metadata metadata,
+                                        CollectionInfo collectionInfo,
                                         Action action,
-                                        ActionMetadata actionMetadata) {
+                                        ActionInfo actionInfo) {
 
         final ObjectTypeBuilder objectBuilder = context.getTypeBuilder().objectType();
 
         objectBuilder.addField()
-                .key(metadata.getParentId().getField())
-                .label(metadata.getParentId().getLabel())
+                .key(collectionInfo.getParentId().getField())
+                .label(collectionInfo.getParentId().getLabel())
                 .required()
                 .value()
                 .stringType();

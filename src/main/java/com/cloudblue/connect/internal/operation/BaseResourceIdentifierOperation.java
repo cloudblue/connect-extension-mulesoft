@@ -7,43 +7,43 @@
 package com.cloudblue.connect.internal.operation;
 
 import com.cloudblue.connect.internal.connection.CBCConnection;
-import com.cloudblue.connect.internal.metadata.ActionMetadata;
+import com.cloudblue.connect.internal.metadata.ActionInfo;
+import com.cloudblue.connect.internal.metadata.CollectionInfo;
+import com.cloudblue.connect.internal.metadata.CollectionInfoUtil;
 import com.cloudblue.connect.internal.metadata.Keys;
-import com.cloudblue.connect.internal.metadata.Metadata;
-import com.cloudblue.connect.internal.metadata.MetadataUtil;
 
 import java.util.Map;
 
 public class BaseResourceIdentifierOperation {
 
-    protected CBCConnection.Q getQ(CBCConnection connection,
-                                   String resourceType,
-                                   String action,
-                                   Map<String, Object> resourceIdentifier) {
+    protected CBCConnection.Query getQuery(CBCConnection connection,
+                                           String resourceType,
+                                           String action,
+                                           Map<String, Object> resourceIdentifier) {
 
-        Metadata metadata = MetadataUtil.getMetadata(resourceType);
-        ActionMetadata actionMetadata = MetadataUtil.getActionMetadata(resourceType, action);
+        CollectionInfo collectionInfo = CollectionInfoUtil.getCollectionInfo(resourceType);
+        ActionInfo actionInfo = CollectionInfoUtil.getActionInfo(resourceType, action);
 
-        CBCConnection.Q q = connection.newQ();
+        CBCConnection.Query query = connection.newQuery();
 
-        if (metadata.isSubCollection()) {
-            String parentId = (String) resourceIdentifier.get(metadata.getParentId().getField());
+        if (collectionInfo.isSubCollection()) {
+            String parentId = (String) resourceIdentifier.get(collectionInfo.getParentId().getField());
 
-            q.collection(metadata.getParentCollection(), parentId);
+            query.collection(collectionInfo.getParentCollection(), parentId);
         }
 
-        if (!actionMetadata.getFilters().isEmpty()) {
-            for (Keys filter : actionMetadata.getFilters()) {
-                q.filter(filter.getField(),
+        if (!actionInfo.getFilters().isEmpty()) {
+            for (Keys filter : actionInfo.getFilters()) {
+                query.filter(filter.getField(),
                         (String) resourceIdentifier.get(filter.getField()));
             }
         }
 
-        if (actionMetadata.isCollectionAction()) {
-            return q.collection(metadata.getCollection());
+        if (actionInfo.isCollectionAction()) {
+            return query.collection(collectionInfo.getCollection());
         } else {
-            String id = (String) resourceIdentifier.get(metadata.getId().getField());
-            return q.collection(metadata.getCollection(), id);
+            String id = (String) resourceIdentifier.get(collectionInfo.getId().getField());
+            return query.collection(collectionInfo.getCollection(), id);
         }
     }
 }

@@ -7,7 +7,6 @@
 package com.cloudblue.connect.internal.metadata;
 
 import com.cloudblue.connect.internal.model.resource.Action;
-
 import org.mule.metadata.api.builder.ObjectTypeBuilder;
 import org.mule.metadata.api.model.MetadataType;
 import org.mule.runtime.api.metadata.MetadataContext;
@@ -15,29 +14,29 @@ import org.mule.runtime.api.metadata.MetadataContext;
 public class BaseMetadataProvider implements MetadataProvider {
     @Override
     public MetadataType getMetadataType(MetadataContext context,
-                                        Metadata metadata,
+                                        CollectionInfo collectionInfo,
                                         Action action,
-                                        ActionMetadata actionMetadata) {
+                                        ActionInfo actionInfo) {
         final ObjectTypeBuilder objectBuilder = context.getTypeBuilder().objectType();
 
-        if (metadata.isSubCollection()) {
+        if (collectionInfo.isSubCollection()) {
             objectBuilder.addField()
-                    .key(metadata.getParentId().getField())
-                    .label(metadata.getParentId().getLabel())
+                    .key(collectionInfo.getParentId().getField())
+                    .label(collectionInfo.getParentId().getLabel())
                     .required()
                     .value()
                     .stringType();
         }
 
         objectBuilder.addField()
-                .key(metadata.getId().getField())
-                .label(metadata.getId().getLabel())
+                .key(collectionInfo.getId().getField())
+                .label(collectionInfo.getId().getLabel())
                 .required()
                 .value()
                 .stringType();
 
-        if (!actionMetadata.getFilters().isEmpty()) {
-            for (Keys filter : actionMetadata.getFilters()) {
+        if (!actionInfo.getFilters().isEmpty()) {
+            for (Keys filter : actionInfo.getFilters()) {
                 objectBuilder.addField()
                         .key(filter.getField())
                         .label(filter.getLabel())
@@ -47,8 +46,8 @@ public class BaseMetadataProvider implements MetadataProvider {
             }
         }
 
-        if (!actionMetadata.getFormAttributes().isEmpty()) {
-            for (Keys attributes : actionMetadata.getFormAttributes()) {
+        if (!actionInfo.getFormAttributes().isEmpty()) {
+            for (Keys attributes : actionInfo.getFormAttributes()) {
                 objectBuilder.addField()
                         .key(attributes.getField())
                         .label(attributes.getLabel())

@@ -6,15 +6,15 @@
  */
 package com.cloudblue.connect.internal.operation;
 
-import com.cloudblue.connect.internal.metadata.ActionMetadata;
-import com.cloudblue.connect.internal.metadata.MetadataUtil;
+import com.cloudblue.connect.internal.metadata.ActionInfo;
+import com.cloudblue.connect.internal.metadata.CollectionInfoUtil;
 
 public class BaseFileOperation extends BaseResourceIdentifierOperation {
 
     protected String getAction(String resourceType, String action) {
-        ActionMetadata actionMetadata = MetadataUtil.getActionMetadata(resourceType, action);
+        ActionInfo actionInfo = CollectionInfoUtil.getActionInfo(resourceType, action);
 
-        String actionName = actionMetadata.getAction();
+        String actionName = actionInfo.getAction();
 
         if (actionName == null) {
             actionName = action;

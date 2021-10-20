@@ -9,8 +9,8 @@ package com.cloudblue.connect.internal.operation;
 import com.cloudblue.connect.api.parameters.CBCResponseAttributes;
 import com.cloudblue.connect.internal.connection.CBCConnection;
 import com.cloudblue.connect.internal.error.provider.OperationErrorTypeProvider;
-import com.cloudblue.connect.internal.metadata.Metadata;
-import com.cloudblue.connect.internal.metadata.MetadataUtil;
+import com.cloudblue.connect.internal.metadata.CollectionInfo;
+import com.cloudblue.connect.internal.metadata.CollectionInfoUtil;
 import com.cloudblue.connect.internal.metadata.resource.list.ListResourceInputResolver;
 import com.cloudblue.connect.internal.metadata.resource.list.ListResourceOutputResolver;
 import com.cloudblue.connect.internal.metadata.resource.list.ListResourceTypeKeysResolver;
@@ -61,20 +61,20 @@ public class ListResourcesOperation extends BaseListOperation {
             @TypeResolver(ListResourceInputResolver.class)
             @Content @Optional @NullSafe Map<String, Object> listResourceParameter
     ) {
-        Metadata metadata = MetadataUtil.getMetadata(resourceType);
+        CollectionInfo collectionInfo = CollectionInfoUtil.getCollectionInfo(resourceType);
 
-        CBCConnection.Q q = connection.newQ();
+        CBCConnection.Query query = connection.newQuery();
 
-        if (metadata.isSubCollection()) {
-            String parentId = (String) listResourceParameter.get(metadata.getParentId().getField());
+        if (collectionInfo.isSubCollection()) {
+            String parentId = (String) listResourceParameter.get(collectionInfo.getParentId().getField());
 
-            q.collection(metadata.getParentCollection(), parentId);
+            query.collection(collectionInfo.getParentCollection(), parentId);
         }
 
-        q.collection(metadata.getCollection());
+        query.collection(collectionInfo.getCollection());
 
-        resolve(q);
+        resolve(query);
 
-        return q.get();
+        return query.get();
     }
 }

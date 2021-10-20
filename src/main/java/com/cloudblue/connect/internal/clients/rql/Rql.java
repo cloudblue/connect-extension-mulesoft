@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class R {
+public class Rql {
     public static final String NULL = "null()";
     public static final String EMPTY = "empty()";
 
@@ -30,14 +30,14 @@ public class R {
     }
 
     private Type type;
-    private List<R> children;
+    private List<Rql> children;
 
     private LiteralType literalType;
     private String property;
     private Object[] values;
 
-    private static R expr(LiteralType literalType, String property) {
-        R r = new R();
+    private static Rql expr(LiteralType literalType, String property) {
+        Rql r = new Rql();
         r.type = Type.LITERAL;
         r.literalType = literalType;
         r.property = property;
@@ -45,59 +45,59 @@ public class R {
         return r;
     }
 
-    private static R comp(LiteralType literalType, String property, Object... values) {
-        R r = expr(literalType, property);
+    private static Rql comp(LiteralType literalType, String property, Object... values) {
+        Rql r = expr(literalType, property);
         r.values = values;
 
         return r;
     }
 
-    public static R eq(String property, Object value) {
+    public static Rql eq(String property, Object value) {
         return comp(LiteralType.EQ, property, value);
     }
 
-    public static R ne(String property, Object value) {
+    public static Rql ne(String property, Object value) {
         return comp(LiteralType.NE, property, value);
     }
 
-    public static R lt(String property, Object value) {
+    public static Rql lt(String property, Object value) {
         return comp(LiteralType.LT, property, value);
     }
 
-    public static R le(String property, Object value) {
+    public static Rql le(String property, Object value) {
         return comp(LiteralType.LE, property, value);
     }
 
-    public static R gt(String property, Object value) {
+    public static Rql gt(String property, Object value) {
         return comp(LiteralType.GT, property, value);
     }
 
-    public static R ge(String property, Object value) {
+    public static Rql ge(String property, Object value) {
         return comp(LiteralType.GE, property, value);
     }
 
-    public static R like(String property, String value) {
+    public static Rql like(String property, String value) {
         return comp(LiteralType.LIKE, property, value);
     }
 
-    public static R ilike(String property, String value) {
+    public static Rql ilike(String property, String value) {
         return comp(LiteralType.ILIKE, property, value);
     }
 
-    public static R in(String property, Object... values) {
+    public static Rql in(String property, Object... values) {
         return comp(LiteralType.IN, property, values);
     }
 
-    public static R out(String property, Object... values) {
+    public static Rql out(String property, Object... values) {
         return comp(LiteralType.OUT, property, values);
     }
 
-    public static R orderBy(String... values) {
+    public static Rql orderBy(String... values) {
         return comp(LiteralType.ORDERING, null, (Object[]) values);
     }
 
-    private static R multiValuedLogical(Type type, R... remaining) {
-        R r = new R();
+    private static Rql multiValuedLogical(Type type, Rql... remaining) {
+        Rql r = new Rql();
         r.type = type;
 
         r.children = new ArrayList<>();
@@ -106,16 +106,16 @@ public class R {
         return r;
     }
 
-    public static R and(R... rs) {
+    public static Rql and(Rql... rs) {
         return multiValuedLogical(Type.AND, rs);
     }
 
-    public static R or(R... rs) {
+    public static Rql or(Rql... rs) {
         return multiValuedLogical(Type.OR, rs);
     }
 
-    public static R not(R only) {
-        R r = new R();
+    public static Rql not(Rql only) {
+        Rql r = new Rql();
         r.type = Type.NOT;
 
         r.children = new ArrayList<>();
@@ -124,8 +124,8 @@ public class R {
         return r;
     }
 
-    public static R expr(String expr) {
-        R r = new R();
+    public static Rql expr(String expr) {
+        Rql r = new Rql();
         r.type = Type.EXPR;
         r.property = expr;
 
@@ -185,7 +185,7 @@ public class R {
         rql.append(prefix);
         rql.append(OPEN_BRACES);
         rql.append(
-                this.children.stream().map(R::toString)
+                this.children.stream().map(Rql::toString)
                         .collect(Collectors.joining(separator))
         );
         rql.append(CLOSE_BRACES);

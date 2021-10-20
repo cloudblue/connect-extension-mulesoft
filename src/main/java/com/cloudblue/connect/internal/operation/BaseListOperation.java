@@ -9,7 +9,6 @@ package com.cloudblue.connect.internal.operation;
 import com.cloudblue.connect.api.parameters.filters.Filter;
 import com.cloudblue.connect.api.parameters.filters.OrderBy;
 import com.cloudblue.connect.internal.connection.CBCConnection;
-
 import org.mule.runtime.extension.api.annotation.param.Optional;
 import org.mule.runtime.extension.api.annotation.param.Parameter;
 
@@ -30,18 +29,18 @@ public class BaseListOperation {
     @Optional(defaultValue = "0")
     Integer offset;
 
-    protected void resolve(CBCConnection.Q q) {
+    protected void resolve(CBCConnection.Query query) {
 
         if (orderBy != null){
-            q.orderBy(orderBy.getProperties().toArray(new String[]{}));
+            query.orderBy(orderBy.getProperties().toArray(new String[]{}));
         }
 
         if (filter != null) {
-            q.filter(filter.toRQL());
+            query.filter(filter.toRQL());
         }
 
-        q.limit(limit);
-        q.offset(offset);
-        q.listOperation(true);
+        query.limit(limit);
+        query.offset(offset);
+        query.listOperation(true);
     }
 }

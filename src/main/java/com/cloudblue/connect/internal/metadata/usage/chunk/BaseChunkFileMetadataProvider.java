@@ -6,13 +6,13 @@
  */
 package com.cloudblue.connect.internal.metadata.usage.chunk;
 
-import com.cloudblue.connect.internal.metadata.Metadata;
+import com.cloudblue.connect.internal.metadata.CollectionInfo;
 import org.mule.metadata.api.builder.ObjectTypeBuilder;
 
 public class BaseChunkFileMetadataProvider {
-    protected void includeId(final ObjectTypeBuilder objectBuilder, Metadata metadata) {
+    protected void includeId(final ObjectTypeBuilder objectBuilder, CollectionInfo collectionInfo) {
         objectBuilder.addField()
-                .key(metadata.getId().getField())
+                .key(collectionInfo.getId().getField())
                 .required()
                 .label("Chunk File ID")
                 .value()

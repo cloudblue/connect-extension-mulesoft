@@ -75,13 +75,13 @@ public class DownloadResourceFileOperation extends BaseFileOperation {
             @TypeResolver(ResourceFileDownloadInputResolver.class)
             @Content Map<String, Object> downloadResourceFileIdentifier) {
 
-        CBCConnection.Q q = getQ(connection,
+        CBCConnection.Query query = getQuery(connection,
                 actionIdentifier.getResourceType(),
                 actionIdentifier.getAction(),
                 downloadResourceFileIdentifier);
 
-        q.collection(getAction(actionIdentifier.getResourceType(), actionIdentifier.getAction()));
+        query.collection(getAction(actionIdentifier.getResourceType(), actionIdentifier.getAction()));
 
-        return q.download(location, fileName);
+        return query.download(location, fileName);
     }
 }

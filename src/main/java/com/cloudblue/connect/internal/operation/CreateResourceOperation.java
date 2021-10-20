@@ -10,8 +10,8 @@ import com.cloudblue.connect.api.parameters.ActionIdentifier;
 import com.cloudblue.connect.api.parameters.CBCResponseAttributes;
 import com.cloudblue.connect.internal.connection.CBCConnection;
 import com.cloudblue.connect.internal.error.provider.OperationErrorTypeProvider;
-import com.cloudblue.connect.internal.metadata.Metadata;
-import com.cloudblue.connect.internal.metadata.MetadataUtil;
+import com.cloudblue.connect.internal.metadata.CollectionInfo;
+import com.cloudblue.connect.internal.metadata.CollectionInfoUtil;
 import com.cloudblue.connect.internal.metadata.resource.create.CreateCollectionIdentifierInputResolver;
 import com.cloudblue.connect.internal.metadata.resource.create.CreateResourceInputResolver;
 import com.cloudblue.connect.internal.metadata.resource.create.CreateResourceOutputResolver;
@@ -66,17 +66,17 @@ public class CreateResourceOperation {
             @TypeResolver(CreateResourceInputResolver.class)
             @Content InputStream createResourceParameter
     ) {
-        Metadata metadata = MetadataUtil.getMetadata(identifier.getResourceType());
+        CollectionInfo collectionInfo = CollectionInfoUtil.getCollectionInfo(identifier.getResourceType());
 
-        CBCConnection.Q q = connection.newQ();
+        CBCConnection.Query query = connection.newQuery();
 
-        if (metadata.isSubCollection()) {
-            String parentId = (String) collectionIdentifier.get(metadata.getParentId().getField());
+        if (collectionInfo.isSubCollection()) {
+            String parentId = (String) collectionIdentifier.get(collectionInfo.getParentId().getField());
 
-            q.collection(metadata.getParentCollection(), parentId);
+            query.collection(collectionInfo.getParentCollection(), parentId);
         }
 
-        return q.collection(metadata.getCollection())
+        return query.collection(collectionInfo.getCollection())
                 .create(createResourceParameter);
     }
 }

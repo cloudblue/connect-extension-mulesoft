@@ -11,7 +11,7 @@ import com.cloudblue.connect.internal.model.resource.Action;
 import java.util.EnumMap;
 import java.util.Map;
 
-public class Metadata {
+public class CollectionInfo {
     private String collection;
     private Keys id;
 
@@ -21,56 +21,56 @@ public class Metadata {
 
     private String schema;
 
-    private final EnumMap<Action, ActionMetadata> actionMetadata = new EnumMap<>(Action.class);
+    private final EnumMap<Action, ActionInfo> actionMetadata = new EnumMap<>(Action.class);
 
-    public Metadata collection(String collection) {
+    public CollectionInfo collection(String collection) {
         this.collection = collection;
 
         return this;
     }
 
-    public Metadata id(Keys id) {
+    public CollectionInfo id(Keys id) {
         this.id = id;
 
         return this;
     }
 
-    public Metadata isSubCollection(boolean isSubCollection) {
+    public CollectionInfo isSubCollection(boolean isSubCollection) {
         this.isSubCollection = isSubCollection;
 
         return this;
     }
 
-    public Metadata parentId(Keys parentId) {
+    public CollectionInfo parentId(Keys parentId) {
         this.parentId = parentId;
 
         return this;
     }
 
-    public Metadata parentCollection(String parentCollection) {
+    public CollectionInfo parentCollection(String parentCollection) {
         this.parentCollection = parentCollection;
 
         return this;
     }
 
-    public Metadata addActionMetaData(Action action, ActionMetadata actionMetadata) {
-        if (actionMetadata.getOutput() == null) {
-            actionMetadata.output(schema);
+    public CollectionInfo addActionMetaData(Action action, ActionInfo actionInfo) {
+        if (actionInfo.getOutput() == null) {
+            actionInfo.output(schema);
         }
-        this.actionMetadata.put(action, actionMetadata);
+        this.actionMetadata.put(action, actionInfo);
 
         return this;
     }
 
-    public Metadata schema(String schema) {
+    public CollectionInfo schema(String schema) {
         this.schema = schema;
 
         return this;
     }
 
-    public Metadata includeListAction(Keys... filters) {
+    public CollectionInfo includeListAction(Keys... filters) {
         this.addActionMetaData(Action.LIST,
-                new ActionMetadata()
+                new ActionInfo()
                         .output(schema)
                         .input(isSubCollection? new ParentMetadataProvider(): null)
                         .filter(filters));
@@ -78,9 +78,9 @@ public class Metadata {
         return this;
     }
 
-    public Metadata includeGetAction(Keys... filters) {
+    public CollectionInfo includeGetAction(Keys... filters) {
         this.addActionMetaData(Action.GET,
-                new ActionMetadata()
+                new ActionInfo()
                         .output(schema)
                         .input(new BaseMetadataProvider())
                         .filter(filters));
@@ -108,7 +108,7 @@ public class Metadata {
         return parentCollection;
     }
 
-    public Map<Action, ActionMetadata> getActionMetadata() {
+    public Map<Action, ActionInfo> getActionMetadata() {
         return actionMetadata;
     }
 

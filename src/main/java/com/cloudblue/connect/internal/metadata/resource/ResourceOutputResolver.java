@@ -6,10 +6,9 @@
  */
 package com.cloudblue.connect.internal.metadata.resource;
 
-import com.cloudblue.connect.internal.metadata.ActionMetadata;
+import com.cloudblue.connect.internal.metadata.ActionInfo;
+import com.cloudblue.connect.internal.metadata.CollectionInfoUtil;
 import com.cloudblue.connect.internal.metadata.JsonMetadataBuilder;
-import com.cloudblue.connect.internal.metadata.MetadataUtil;
-
 import com.cloudblue.connect.internal.model.resource.Action;
 import org.mule.metadata.api.model.MetadataType;
 import org.mule.runtime.api.metadata.MetadataContext;
@@ -20,13 +19,13 @@ public class ResourceOutputResolver extends JsonMetadataBuilder {
 
     public MetadataType getOutputType(MetadataContext context, String resourceType, String action)
             throws MetadataResolvingException {
-        ActionMetadata actionMetadata = MetadataUtil.getActionMetadata(resourceType, action);
-        if (actionMetadata == null) {
+        ActionInfo actionInfo = CollectionInfoUtil.getActionInfo(resourceType, action);
+        if (actionInfo == null) {
             throw new MetadataResolvingException("No Metadata is available.",
                     FailureCode.NO_DYNAMIC_TYPE_AVAILABLE);
-        } else if (actionMetadata.getOutput() != null
-                && !actionMetadata.getOutput().equals(MetadataUtil.NO_OUTPUT_SCHEMA)) {
-            return getType(actionMetadata.getOutput(), Action.valueOf(action.toUpperCase()));
+        } else if (actionInfo.getOutput() != null
+                && !actionInfo.getOutput().equals(CollectionInfoUtil.NO_OUTPUT_SCHEMA)) {
+            return getType(actionInfo.getOutput(), Action.valueOf(action.toUpperCase()));
         } else {
             return context.getTypeBuilder().voidType().build();
         }

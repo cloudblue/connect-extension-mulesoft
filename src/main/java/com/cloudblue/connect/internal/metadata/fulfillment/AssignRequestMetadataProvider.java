@@ -6,11 +6,10 @@
  */
 package com.cloudblue.connect.internal.metadata.fulfillment;
 
-import com.cloudblue.connect.internal.metadata.ActionMetadata;
+import com.cloudblue.connect.internal.metadata.ActionInfo;
+import com.cloudblue.connect.internal.metadata.CollectionInfo;
 import com.cloudblue.connect.internal.metadata.Keys;
-import com.cloudblue.connect.internal.metadata.Metadata;
 import com.cloudblue.connect.internal.metadata.MetadataProvider;
-
 import com.cloudblue.connect.internal.model.resource.Action;
 import org.mule.metadata.api.builder.ObjectTypeBuilder;
 import org.mule.metadata.api.model.MetadataType;
@@ -20,12 +19,12 @@ public class AssignRequestMetadataProvider
         extends BaseRequestMetadataProvider implements MetadataProvider {
     @Override
     public MetadataType getMetadataType(MetadataContext context,
-                                        Metadata metadata,
+                                        CollectionInfo collectionInfo,
                                         Action action,
-                                        ActionMetadata actionMetadata) {
+                                        ActionInfo actionInfo) {
         final ObjectTypeBuilder objectBuilder = context.getTypeBuilder().objectType();
 
-        includeId(objectBuilder, metadata);
+        includeId(objectBuilder, collectionInfo);
 
         objectBuilder.addField()
                 .key(Keys.EMAIL.getField())

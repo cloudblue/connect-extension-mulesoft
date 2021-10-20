@@ -6,14 +6,14 @@
  */
 package com.cloudblue.connect.internal.metadata.fulfillment;
 
+import com.cloudblue.connect.internal.metadata.CollectionInfo;
 import com.cloudblue.connect.internal.metadata.Keys;
-import com.cloudblue.connect.internal.metadata.Metadata;
 import org.mule.metadata.api.builder.ObjectTypeBuilder;
 
 public class BaseRequestMetadataProvider {
-    protected void includeId(final ObjectTypeBuilder objectBuilder, Metadata metadata) {
+    protected void includeId(final ObjectTypeBuilder objectBuilder, CollectionInfo collectionInfo) {
         objectBuilder.addField()
-                .key(metadata.getId().getField())
+                .key(collectionInfo.getId().getField())
                 .required()
                 .label("Fulfillment Request ID")
                 .value()

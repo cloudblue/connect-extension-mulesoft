@@ -6,9 +6,9 @@
  */
 package com.cloudblue.connect.internal.metadata.usage.record;
 
-import com.cloudblue.connect.internal.metadata.ActionMetadata;
+import com.cloudblue.connect.internal.metadata.ActionInfo;
+import com.cloudblue.connect.internal.metadata.CollectionInfo;
 import com.cloudblue.connect.internal.metadata.Keys;
-import com.cloudblue.connect.internal.metadata.Metadata;
 import com.cloudblue.connect.internal.metadata.MetadataProvider;
 import com.cloudblue.connect.internal.model.resource.Action;
 import org.mule.metadata.api.builder.ArrayTypeBuilder;
@@ -20,9 +20,9 @@ public class BulkCloseMetadataProvider
         extends BaseRecordMetadataProvider implements MetadataProvider {
     @Override
     public MetadataType getMetadataType(MetadataContext context,
-                                        Metadata metadata,
+                                        CollectionInfo collectionInfo,
                                         Action action,
-                                        ActionMetadata actionMetadata) {
+                                        ActionInfo actionInfo) {
         final ArrayTypeBuilder arrayBuilder = context.getTypeBuilder().arrayType();
         final ObjectTypeBuilder objectBuilder = arrayBuilder.of().objectType();
 

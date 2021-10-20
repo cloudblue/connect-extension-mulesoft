@@ -9,7 +9,7 @@ package com.cloudblue.connect.internal.source;
 import com.cloudblue.connect.api.webhook.WebhookEventType;
 import com.cloudblue.connect.api.webhook.WebhookRequestAttributes;
 import com.cloudblue.connect.internal.error.exception.WebhookException;
-import com.cloudblue.connect.internal.metadata.MetadataUtil;
+import com.cloudblue.connect.internal.metadata.CollectionInfoUtil;
 import org.mule.runtime.extension.api.annotation.Alias;
 import org.mule.runtime.extension.api.annotation.metadata.fixed.OutputJsonType;
 import org.mule.runtime.extension.api.annotation.param.MediaType;
@@ -25,7 +25,7 @@ import static org.mule.runtime.extension.api.annotation.param.MediaType.APPLICAT
 
 @EmitsResponse
 @MediaType(value = APPLICATION_JSON, strict = false)
-@OutputJsonType(schema = MetadataUtil.WEBHOOK_EVENT_SCHEMA)
+@OutputJsonType(schema = CollectionInfoUtil.WEBHOOK_EVENT_SCHEMA)
 @Alias("webhook-listener")
 public class WebhookSource extends BaseWebhookSource<InputStream, WebhookRequestAttributes> {
 

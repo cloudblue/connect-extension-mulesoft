@@ -11,9 +11,9 @@ import com.cloudblue.connect.api.parameters.ActionIdentifier;
 import com.cloudblue.connect.api.parameters.CBCResponseAttributes;
 import com.cloudblue.connect.internal.connection.CBCConnection;
 import com.cloudblue.connect.internal.error.provider.OperationErrorTypeProvider;
-import com.cloudblue.connect.internal.metadata.ActionMetadata;
-import com.cloudblue.connect.internal.metadata.Metadata;
-import com.cloudblue.connect.internal.metadata.MetadataUtil;
+import com.cloudblue.connect.internal.metadata.ActionInfo;
+import com.cloudblue.connect.internal.metadata.CollectionInfo;
+import com.cloudblue.connect.internal.metadata.CollectionInfoUtil;
 import com.cloudblue.connect.internal.metadata.resource.action.ResourceActionInputResolver;
 import com.cloudblue.connect.internal.metadata.resource.action.ResourceActionOutputResolver;
 import com.cloudblue.connect.internal.metadata.resource.action.ResourceActionTypeKeysResolver;
@@ -65,31 +65,31 @@ public class ResourceActionOperation extends BaseResourceIdentifierOperation {
             @TypeResolver(ResourceActionInputResolver.class)
             @Content Object resourceActionParameter
     ) {
-        Metadata metadata = MetadataUtil.getMetadata(identifier.getResourceType());
+        CollectionInfo collectionInfo = CollectionInfoUtil.getCollectionInfo(identifier.getResourceType());
 
-        ActionMetadata actionMetadata = MetadataUtil.getActionMetadata(
+        ActionInfo actionInfo = CollectionInfoUtil.getActionInfo(
                 identifier.getResourceType(), identifier.getAction());
 
-        CBCConnection.Q q = connection.newQ();
+        CBCConnection.Query query = connection.newQuery();
 
-        if (actionMetadata.isCollectionAction()) {
-            q.collection(metadata.getCollection());
+        if (actionInfo.isCollectionAction()) {
+            query.collection(collectionInfo.getCollection());
         } else if (resourceActionParameter instanceof Map) {
-            q = getQ(connection,
+            query = getQuery(connection,
                     identifier.getResourceType(),
                     identifier.getAction(),
                     (Map<String, Object>) resourceActionParameter);
         }
 
-        String action = actionMetadata.getAction();
+        String action = actionInfo.getAction();
 
         if (action == null) {
             action = identifier.getAction();
         }
 
-        if (actionMetadata.isIncludePayload())
-            return q.action(action.toLowerCase(), actionMetadata.getMethod(), resourceActionParameter);
+        if (actionInfo.isIncludePayload())
+            return query.action(action.toLowerCase(), actionInfo.getMethod(), resourceActionParameter);
         else
-            return q.action(action.toLowerCase(), actionMetadata.getMethod(), null);
+            return query.action(action.toLowerCase(), actionInfo.getMethod(), null);
     }
 }

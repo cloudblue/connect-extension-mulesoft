@@ -6,14 +6,14 @@
  */
 package com.cloudblue.connect.internal.metadata.usage.record;
 
+import com.cloudblue.connect.internal.metadata.CollectionInfo;
 import com.cloudblue.connect.internal.metadata.Keys;
-import com.cloudblue.connect.internal.metadata.Metadata;
 import org.mule.metadata.api.builder.ObjectTypeBuilder;
 
 public class BaseRecordMetadataProvider {
-    protected void includeId(final ObjectTypeBuilder objectBuilder, final Metadata metadata) {
+    protected void includeId(final ObjectTypeBuilder objectBuilder, final CollectionInfo collectionInfo) {
         objectBuilder.addField()
-                .key(metadata.getId().getField())
+                .key(collectionInfo.getId().getField())
                 .required()
                 .label("Usage Record ID")
                 .value()

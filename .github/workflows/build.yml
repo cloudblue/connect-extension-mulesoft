@@ -26,7 +26,7 @@ jobs:
           gpg --list-secret-keys --keyid-format LONG
       - name: Build and Test
         run: |
-          mvn -f gitBuildPom.xml --no-transfer-progress --batch-mode -Dserver.endpoint="${{ secrets.SERVER_ENDPOINT }}" -Dserver.token.vendor="${{ secrets.SERVER_TOKEN_VENDOR }}" -Dserver.token.provider="${{ secrets.SERVER_TOKEN_PROVIDER }}" -Dgpg.passphrase=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }} clean install
+          mvn --no-transfer-progress --batch-mode -Dserver.endpoint="${{ secrets.SERVER_ENDPOINT }}" -Dserver.token.vendor="${{ secrets.SERVER_TOKEN_VENDOR }}" -Dserver.token.provider="${{ secrets.SERVER_TOKEN_PROVIDER }}" -Dgpg.passphrase=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }} clean install
       - name: Set up JDK 11
         uses: joschi/setup-jdk@v2
         with:
@@ -47,4 +47,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -f gitBuildPom.xml -Dserver.endpoint="${{ secrets.SERVER_ENDPOINT }}" -Dserver.token.vendor="${{ secrets.SERVER_TOKEN_VENDOR }}" -Dserver.token.provider="${{ secrets.SERVER_TOKEN_PROVIDER }}" sonar:sonar
+        run: mvn -Dserver.endpoint="${{ secrets.SERVER_ENDPOINT }}" -Dserver.token.vendor="${{ secrets.SERVER_TOKEN_VENDOR }}" -Dserver.token.provider="${{ secrets.SERVER_TOKEN_PROVIDER }}" sonar:sonar

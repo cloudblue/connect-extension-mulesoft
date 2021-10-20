@@ -6,9 +6,8 @@
  */
 package com.cloudblue.connect.internal.metadata.resource.upload;
 
+import com.cloudblue.connect.internal.metadata.CollectionInfoUtil;
 import com.cloudblue.connect.internal.metadata.Constants;
-import com.cloudblue.connect.internal.metadata.MetadataUtil;
-
 import org.mule.runtime.api.metadata.MetadataContext;
 import org.mule.runtime.api.metadata.MetadataKey;
 import org.mule.runtime.api.metadata.MetadataKeyBuilder;
@@ -22,9 +21,9 @@ public class ResourceFileUploadTypeKeysResolver implements TypeKeysResolver {
     @Override
     public Set<MetadataKey> getKeys(MetadataContext context) {
         Set<MetadataKey> keys = new HashSet<>();
-        for(String resourceType : MetadataUtil.getUploadResourceTypes()){
+        for(String resourceType : CollectionInfoUtil.getUploadResourceTypes()){
             MetadataKeyBuilder key = MetadataKeyBuilder.newKey(resourceType);
-            for(String action : MetadataUtil.getUploadActions(resourceType)){
+            for(String action : CollectionInfoUtil.getUploadActions(resourceType)){
                 key.withChild(MetadataKeyBuilder.newKey(action).build());
             }
             keys.add(key.build());
