@@ -1,0 +1,901 @@
+
+
+= CloudBlue Connect Module Connector Reference
+
+
+This is the main class of an extension, is the entry point from which configurations, connection providers, operations and sources are going to be declared.
+
+
+
+== Configurations
+---
+[[Config]]
+=== Config
+
+
+==== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+|Name | String | The name for this configuration. Connectors reference the configuration with this name. | | *x*{nbsp}
+| Connection a| <<Config_Connection, Connection>>
+ | The connection types that can be provided to this configuration. | | *x*{nbsp}
+| Name a| String |  The identifier of this element used to reference it in other components |  | *x*{nbsp}
+| Expiration Policy a| <<ExpirationPolicy>> |  Configures the minimum amount of time that a dynamic configuration instance can remain idle before the runtime considers it eligible for expiration. This does not mean that the platform will expire the instance at the exact moment that it becomes eligible. The runtime will actually purge the instances when it sees it fit. |  | {nbsp}
+|===
+
+==== Connection Types
+[[Config_Connection]]
+===== Connection
+
+
+====== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+| API Endpoint a| String |  API endpoint |  https://api.connect.cloud.im/public/v1 | {nbsp}
+| Authentication Token a| String |  API authentication token |  | *x*{nbsp}
+| API Timeout Value a| Number |  API call timeout timeout value |  30 | {nbsp}
+| API Timeout Unit a| Enumeration, one of:
+
+** NANOSECONDS
+** MICROSECONDS
+** MILLISECONDS
+** SECONDS
+** MINUTES
+** HOURS
+** DAYS |  Time unit to be used in the Timeout configurations |  SECONDS | {nbsp}
+| Authentication Token a| ProxyConfig |  Proxy configuration for outbound connections |  | {nbsp}
+| Reconnection a| <<Reconnection>> |  When the application is deployed, a connectivity test is performed on all connectors. If set to true, deployment will fail if the test doesn't pass after exhausting the associated reconnection strategy |  | {nbsp}
+|===
+
+==== Associated Operations
+* <<CreateResource>> {nbsp}
+* <<DownloadFile>> {nbsp}
+* <<GetResource>> {nbsp}
+* <<ListResources>> {nbsp}
+* <<ResourceAction>> {nbsp}
+* <<UpdateResource>> {nbsp}
+* <<UploadFile>> {nbsp}
+
+
+---
+[[WebhookConfig]]
+=== Webhook Config
+
+
+==== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+|Name | String | The name for this configuration. Connectors reference the configuration with this name. | | *x*{nbsp}
+| Connection a| <<WebhookConfig_Listener, Listener>>
+ | The connection types that can be provided to this configuration. | | *x*{nbsp}
+| Base Path a| String |  |  | {nbsp}
+| Name a| String |  The identifier of this element used to reference it in other components |  | *x*{nbsp}
+| Expiration Policy a| <<ExpirationPolicy>> |  Configures the minimum amount of time that a dynamic configuration instance can remain idle before the runtime considers it eligible for expiration. This does not mean that the platform will expire the instance at the exact moment that it becomes eligible. The runtime will actually purge the instances when it sees it fit. |  | {nbsp}
+|===
+
+==== Connection Types
+[[WebhookConfig_Listener]]
+===== Listener
+
+
+====== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+| TLS Configuration a| <<Tls>> |  |  | {nbsp}
+| Protocol a| Enumeration, one of:
+
+** HTTP
+** HTTPS |  |  HTTP | {nbsp}
+| Host a| String |  |  | *x*{nbsp}
+| Port a| Number |  |  | *x*{nbsp}
+| Webhook Binding URL a| String |  |  | *x*{nbsp}
+| API Endpoint a| String |  API endpoint |  https://api.connect.cloud.im/public/v1 | {nbsp}
+| Authentication Token a| String |  API authentication token |  | *x*{nbsp}
+| API Timeout Value a| Number |  API call timeout timeout value |  30 | {nbsp}
+| API Timeout Unit a| Enumeration, one of:
+
+** NANOSECONDS
+** MICROSECONDS
+** MILLISECONDS
+** SECONDS
+** MINUTES
+** HOURS
+** DAYS |  Time unit to be used in the Timeout configurations |  SECONDS | {nbsp}
+| Authentication Token a| ProxyConfig |  Proxy configuration for outbound connections |  | {nbsp}
+| Reconnection a| <<Reconnection>> |  When the application is deployed, a connectivity test is performed on all connectors. If set to true, deployment will fail if the test doesn't pass after exhausting the associated reconnection strategy |  | {nbsp}
+|===
+
+
+==== Associated Sources
+* <<RequestValidationListener>> {nbsp}
+* <<TcrValidationListener>> {nbsp}
+* <<WebhookListener>> {nbsp}
+
+
+== Operations
+
+[[CreateResource]]
+== Create Resource
+`<cloudblue-connect:create-resource>`
+
+
+=== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+| Configuration | String | The name of the configuration to use. | | *x*{nbsp}
+| Collection Identifier a| Object |  |  | *x*{nbsp}
+| Create Resource Parameter a| Any |  |  #[payload] | {nbsp}
+| Output Mime Type a| String |  The mime type of the payload that this operation outputs. |  | {nbsp}
+| Output Encoding a| String |  The encoding of the payload that this operation outputs. |  | {nbsp}
+| Config Ref a| ConfigurationProvider |  The name of the configuration to be used to execute this component |  | *x*{nbsp}
+| Streaming Strategy a| * <<RepeatableInMemoryStream>>
+* <<RepeatableFileStoreStream>>
+* non-repeatable-stream |  Configure if repeatable streams should be used and their behaviour |  | {nbsp}
+| Resource Type a| String |  |  | *x*{nbsp}
+| Action a| String |  |  | *x*{nbsp}
+| Target Variable a| String |  The name of a variable on which the operation's output will be placed |  | {nbsp}
+| Target Value a| String |  An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable |  #[payload] | {nbsp}
+| Reconnection Strategy a| * <<Reconnect>>
+* <<ReconnectForever>> |  A retry strategy in case of connectivity errors |  | {nbsp}
+|===
+
+=== Output
+
+[%autowidth.spread]
+|===
+| *Type* a| Binary
+| *Attributes Type* a| <<CbcResponseAttributes>>
+|===
+
+=== For Configurations
+
+* <<Config>> {nbsp}
+
+=== Throws
+
+* CLOUDBLUE-CONNECT:BAD_REQUEST {nbsp}
+* CLOUDBLUE-CONNECT:CONNECTIVITY {nbsp}
+* CLOUDBLUE-CONNECT:REQUEST_UNAUTHORIZED {nbsp}
+* CLOUDBLUE-CONNECT:RESOURCE_NOT_FOUND {nbsp}
+* CLOUDBLUE-CONNECT:RETRY_EXHAUSTED {nbsp}
+* CLOUDBLUE-CONNECT:WEBHOOK_ERROR {nbsp}
+
+
+[[DownloadFile]]
+== Download File
+`<cloudblue-connect:download-file>`
+
+
+=== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+| Configuration | String | The name of the configuration to use. | | *x*{nbsp}
+| Download Resource File Identifier a| Object |  |  #[payload] | {nbsp}
+| Download Location a| String |  |  | *x*{nbsp}
+| File Name a| String |  |  | *x*{nbsp}
+| Config Ref a| ConfigurationProvider |  The name of the configuration to be used to execute this component |  | *x*{nbsp}
+| Resource Type a| String |  |  | *x*{nbsp}
+| Action a| String |  |  | *x*{nbsp}
+| Reconnection Strategy a| * <<Reconnect>>
+* <<ReconnectForever>> |  A retry strategy in case of connectivity errors |  | {nbsp}
+|===
+
+
+=== For Configurations
+
+* <<Config>> {nbsp}
+
+=== Throws
+
+* CLOUDBLUE-CONNECT:BAD_REQUEST {nbsp}
+* CLOUDBLUE-CONNECT:CONNECTIVITY {nbsp}
+* CLOUDBLUE-CONNECT:REQUEST_UNAUTHORIZED {nbsp}
+* CLOUDBLUE-CONNECT:RESOURCE_NOT_FOUND {nbsp}
+* CLOUDBLUE-CONNECT:RETRY_EXHAUSTED {nbsp}
+* CLOUDBLUE-CONNECT:WEBHOOK_ERROR {nbsp}
+
+
+[[GetResource]]
+== Get Resource
+`<cloudblue-connect:get-resource>`
+
+
+=== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+| Configuration | String | The name of the configuration to use. | | *x*{nbsp}
+| Get Resource Parameter a| Object |  |  #[payload] | {nbsp}
+| Resource Type a| String |  |  | *x*{nbsp}
+| Output Mime Type a| String |  The mime type of the payload that this operation outputs. |  | {nbsp}
+| Output Encoding a| String |  The encoding of the payload that this operation outputs. |  | {nbsp}
+| Config Ref a| ConfigurationProvider |  The name of the configuration to be used to execute this component |  | *x*{nbsp}
+| Streaming Strategy a| * <<RepeatableInMemoryStream>>
+* <<RepeatableFileStoreStream>>
+* non-repeatable-stream |  Configure if repeatable streams should be used and their behaviour |  | {nbsp}
+| Target Variable a| String |  The name of a variable on which the operation's output will be placed |  | {nbsp}
+| Target Value a| String |  An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable |  #[payload] | {nbsp}
+| Reconnection Strategy a| * <<Reconnect>>
+* <<ReconnectForever>> |  A retry strategy in case of connectivity errors |  | {nbsp}
+|===
+
+=== Output
+
+[%autowidth.spread]
+|===
+| *Type* a| Binary
+| *Attributes Type* a| <<CbcResponseAttributes>>
+|===
+
+=== For Configurations
+
+* <<Config>> {nbsp}
+
+=== Throws
+
+* CLOUDBLUE-CONNECT:BAD_REQUEST {nbsp}
+* CLOUDBLUE-CONNECT:CONNECTIVITY {nbsp}
+* CLOUDBLUE-CONNECT:REQUEST_UNAUTHORIZED {nbsp}
+* CLOUDBLUE-CONNECT:RESOURCE_NOT_FOUND {nbsp}
+* CLOUDBLUE-CONNECT:RETRY_EXHAUSTED {nbsp}
+* CLOUDBLUE-CONNECT:WEBHOOK_ERROR {nbsp}
+
+
+[[ListResources]]
+== List Resources
+`<cloudblue-connect:list-resources>`
+
+
+=== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+| Configuration | String | The name of the configuration to use. | | *x*{nbsp}
+| List Resource Parameter a| Object |  |  | {nbsp}
+| Filter a| One of:
+
+* <<ListFilter>>
+* <<MonoFilter>>
+* <<InFilter>>
+* <<OutFilter>>
+* <<NotFilter>>
+* <<RawRqlFilter>> |  |  | {nbsp}
+| Order By a| <<OrderBy>> |  |  | {nbsp}
+| Limit a| Number |  |  100 | {nbsp}
+| Offset a| Number |  |  0 | {nbsp}
+| Resource Type a| String |  |  | *x*{nbsp}
+| Output Mime Type a| String |  The mime type of the payload that this operation outputs. |  | {nbsp}
+| Output Encoding a| String |  The encoding of the payload that this operation outputs. |  | {nbsp}
+| Config Ref a| ConfigurationProvider |  The name of the configuration to be used to execute this component |  | *x*{nbsp}
+| Streaming Strategy a| * <<RepeatableInMemoryStream>>
+* <<RepeatableFileStoreStream>>
+* non-repeatable-stream |  Configure if repeatable streams should be used and their behaviour |  | {nbsp}
+| Target Variable a| String |  The name of a variable on which the operation's output will be placed |  | {nbsp}
+| Target Value a| String |  An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable |  #[payload] | {nbsp}
+| Reconnection Strategy a| * <<Reconnect>>
+* <<ReconnectForever>> |  A retry strategy in case of connectivity errors |  | {nbsp}
+|===
+
+=== Output
+
+[%autowidth.spread]
+|===
+| *Type* a| Binary
+| *Attributes Type* a| <<CbcResponseAttributes>>
+|===
+
+=== For Configurations
+
+* <<Config>> {nbsp}
+
+=== Throws
+
+* CLOUDBLUE-CONNECT:BAD_REQUEST {nbsp}
+* CLOUDBLUE-CONNECT:CONNECTIVITY {nbsp}
+* CLOUDBLUE-CONNECT:REQUEST_UNAUTHORIZED {nbsp}
+* CLOUDBLUE-CONNECT:RESOURCE_NOT_FOUND {nbsp}
+* CLOUDBLUE-CONNECT:RETRY_EXHAUSTED {nbsp}
+* CLOUDBLUE-CONNECT:WEBHOOK_ERROR {nbsp}
+
+
+[[ResourceAction]]
+== Resource Action
+`<cloudblue-connect:resource-action>`
+
+
+=== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+| Configuration | String | The name of the configuration to use. | | *x*{nbsp}
+| Resource Action Parameter a| Any |  |  #[payload] | {nbsp}
+| Output Mime Type a| String |  The mime type of the payload that this operation outputs. |  | {nbsp}
+| Output Encoding a| String |  The encoding of the payload that this operation outputs. |  | {nbsp}
+| Config Ref a| ConfigurationProvider |  The name of the configuration to be used to execute this component |  | *x*{nbsp}
+| Streaming Strategy a| * <<RepeatableInMemoryStream>>
+* <<RepeatableFileStoreStream>>
+* non-repeatable-stream |  Configure if repeatable streams should be used and their behaviour |  | {nbsp}
+| Resource Type a| String |  |  | *x*{nbsp}
+| Action a| String |  |  | *x*{nbsp}
+| Target Variable a| String |  The name of a variable on which the operation's output will be placed |  | {nbsp}
+| Target Value a| String |  An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable |  #[payload] | {nbsp}
+| Reconnection Strategy a| * <<Reconnect>>
+* <<ReconnectForever>> |  A retry strategy in case of connectivity errors |  | {nbsp}
+|===
+
+=== Output
+
+[%autowidth.spread]
+|===
+| *Type* a| Binary
+| *Attributes Type* a| <<CbcResponseAttributes>>
+|===
+
+=== For Configurations
+
+* <<Config>> {nbsp}
+
+=== Throws
+
+* CLOUDBLUE-CONNECT:BAD_REQUEST {nbsp}
+* CLOUDBLUE-CONNECT:CONNECTIVITY {nbsp}
+* CLOUDBLUE-CONNECT:REQUEST_UNAUTHORIZED {nbsp}
+* CLOUDBLUE-CONNECT:RESOURCE_NOT_FOUND {nbsp}
+* CLOUDBLUE-CONNECT:RETRY_EXHAUSTED {nbsp}
+* CLOUDBLUE-CONNECT:WEBHOOK_ERROR {nbsp}
+
+
+[[UpdateResource]]
+== Update Resource
+`<cloudblue-connect:update-resource>`
+
+
+=== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+| Configuration | String | The name of the configuration to use. | | *x*{nbsp}
+| Update Resource Identifier a| Object |  |  | *x*{nbsp}
+| Update Payload a| Any |  |  #[payload] | {nbsp}
+| Resource Type a| String |  |  | *x*{nbsp}
+| Output Mime Type a| String |  The mime type of the payload that this operation outputs. |  | {nbsp}
+| Output Encoding a| String |  The encoding of the payload that this operation outputs. |  | {nbsp}
+| Config Ref a| ConfigurationProvider |  The name of the configuration to be used to execute this component |  | *x*{nbsp}
+| Streaming Strategy a| * <<RepeatableInMemoryStream>>
+* <<RepeatableFileStoreStream>>
+* non-repeatable-stream |  Configure if repeatable streams should be used and their behaviour |  | {nbsp}
+| Target Variable a| String |  The name of a variable on which the operation's output will be placed |  | {nbsp}
+| Target Value a| String |  An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable |  #[payload] | {nbsp}
+| Reconnection Strategy a| * <<Reconnect>>
+* <<ReconnectForever>> |  A retry strategy in case of connectivity errors |  | {nbsp}
+|===
+
+=== Output
+
+[%autowidth.spread]
+|===
+| *Type* a| Binary
+| *Attributes Type* a| <<CbcResponseAttributes>>
+|===
+
+=== For Configurations
+
+* <<Config>> {nbsp}
+
+=== Throws
+
+* CLOUDBLUE-CONNECT:BAD_REQUEST {nbsp}
+* CLOUDBLUE-CONNECT:CONNECTIVITY {nbsp}
+* CLOUDBLUE-CONNECT:REQUEST_UNAUTHORIZED {nbsp}
+* CLOUDBLUE-CONNECT:RESOURCE_NOT_FOUND {nbsp}
+* CLOUDBLUE-CONNECT:RETRY_EXHAUSTED {nbsp}
+* CLOUDBLUE-CONNECT:WEBHOOK_ERROR {nbsp}
+
+
+[[UploadFile]]
+== Upload File
+`<cloudblue-connect:upload-file>`
+
+
+=== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+| Configuration | String | The name of the configuration to use. | | *x*{nbsp}
+| Upload Resource File Parameter a| Object |  |  #[payload] | {nbsp}
+| File Path a| String |  |  | *x*{nbsp}
+| Output Mime Type a| String |  The mime type of the payload that this operation outputs. |  | {nbsp}
+| Output Encoding a| String |  The encoding of the payload that this operation outputs. |  | {nbsp}
+| Config Ref a| ConfigurationProvider |  The name of the configuration to be used to execute this component |  | *x*{nbsp}
+| Streaming Strategy a| * <<RepeatableInMemoryStream>>
+* <<RepeatableFileStoreStream>>
+* non-repeatable-stream |  Configure if repeatable streams should be used and their behaviour |  | {nbsp}
+| Resource Type a| String |  |  | *x*{nbsp}
+| Action a| String |  |  | *x*{nbsp}
+| Target Variable a| String |  The name of a variable on which the operation's output will be placed |  | {nbsp}
+| Target Value a| String |  An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable |  #[payload] | {nbsp}
+| Reconnection Strategy a| * <<Reconnect>>
+* <<ReconnectForever>> |  A retry strategy in case of connectivity errors |  | {nbsp}
+|===
+
+=== Output
+
+[%autowidth.spread]
+|===
+| *Type* a| Binary
+| *Attributes Type* a| <<CbcResponseAttributes>>
+|===
+
+=== For Configurations
+
+* <<Config>> {nbsp}
+
+=== Throws
+
+* CLOUDBLUE-CONNECT:BAD_REQUEST {nbsp}
+* CLOUDBLUE-CONNECT:CONNECTIVITY {nbsp}
+* CLOUDBLUE-CONNECT:REQUEST_UNAUTHORIZED {nbsp}
+* CLOUDBLUE-CONNECT:RESOURCE_NOT_FOUND {nbsp}
+* CLOUDBLUE-CONNECT:RETRY_EXHAUSTED {nbsp}
+* CLOUDBLUE-CONNECT:WEBHOOK_ERROR {nbsp}
+
+
+== Sources
+
+[[RequestValidationListener]]
+== Request Validation Listener
+`<cloudblue-connect:request-validation-listener>`
+
+
+=== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+| Configuration | String | The name of the configuration to use. | | *x*{nbsp}
+| Path a| String |  |  | *x*{nbsp}
+| Product Id a| String |  |  | *x*{nbsp}
+| JWT Secret a| String |  |  | *x*{nbsp}
+| Validation Type a| Enumeration, one of:
+
+** DRAFT_VALIDATION
+** INQUIRING_VALIDATION
+** CHANGE_VALIDATION |  |  | *x*{nbsp}
+| Output Mime Type a| String |  The mime type of the payload that this operation outputs. |  | {nbsp}
+| Output Encoding a| String |  The encoding of the payload that this operation outputs. |  | {nbsp}
+| Config Ref a| ConfigurationProvider |  The name of the configuration to be used to execute this component |  | *x*{nbsp}
+| Primary Node Only a| Boolean |  Whether this source should only be executed on the primary node when runnning in Cluster |  | {nbsp}
+| Streaming Strategy a| * <<RepeatableInMemoryStream>>
+* <<RepeatableFileStoreStream>>
+* non-repeatable-stream |  Configure if repeatable streams should be used and their behaviour |  | {nbsp}
+| Redelivery Policy a| <<RedeliveryPolicy>> |  Defines a policy for processing the redelivery of the same message |  | {nbsp}
+| Reconnection Strategy a| * <<Reconnect>>
+* <<ReconnectForever>> |  A retry strategy in case of connectivity errors |  | {nbsp}
+| Response Status Code a| Number |  |  200 | {nbsp}
+| Response Body a| Any |  |  #[output application/json --- payload] | {nbsp}
+| Error Response Status Code a| Number |  |  500 | {nbsp}
+|===
+
+=== Output
+
+[%autowidth.spread]
+|===
+| *Type* a| Any
+| *Attributes Type* a| <<WebhookRequestAttributes>>
+|===
+
+=== For Configurations
+
+* <<WebhookConfig>> {nbsp}
+
+
+
+[[TcrValidationListener]]
+== Tcr Validation Listener
+`<cloudblue-connect:tcr-validation-listener>`
+
+
+=== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+| Configuration | String | The name of the configuration to use. | | *x*{nbsp}
+| Path a| String |  |  | *x*{nbsp}
+| Product Id a| String |  |  | *x*{nbsp}
+| JWT Secret a| String |  |  | *x*{nbsp}
+| Validation Type a| Enumeration, one of:
+
+** DRAFT_TCR_T1_VALIDATION
+** DRAFT_TCR_T2_VALIDATION
+** INQUIRING_TCR_T1_VALIDATION
+** INQUIRING_TCR_T2_VALIDATION |  |  | *x*{nbsp}
+| Output Mime Type a| String |  The mime type of the payload that this operation outputs. |  | {nbsp}
+| Output Encoding a| String |  The encoding of the payload that this operation outputs. |  | {nbsp}
+| Config Ref a| ConfigurationProvider |  The name of the configuration to be used to execute this component |  | *x*{nbsp}
+| Primary Node Only a| Boolean |  Whether this source should only be executed on the primary node when runnning in Cluster |  | {nbsp}
+| Streaming Strategy a| * <<RepeatableInMemoryStream>>
+* <<RepeatableFileStoreStream>>
+* non-repeatable-stream |  Configure if repeatable streams should be used and their behaviour |  | {nbsp}
+| Redelivery Policy a| <<RedeliveryPolicy>> |  Defines a policy for processing the redelivery of the same message |  | {nbsp}
+| Reconnection Strategy a| * <<Reconnect>>
+* <<ReconnectForever>> |  A retry strategy in case of connectivity errors |  | {nbsp}
+| Response Status Code a| Number |  |  200 | {nbsp}
+| Response Body a| Any |  |  #[output application/json --- payload] | {nbsp}
+| Error Response Status Code a| Number |  |  500 | {nbsp}
+|===
+
+=== Output
+
+[%autowidth.spread]
+|===
+| *Type* a| Any
+| *Attributes Type* a| <<WebhookRequestAttributes>>
+|===
+
+=== For Configurations
+
+* <<WebhookConfig>> {nbsp}
+
+
+
+[[WebhookListener]]
+== Webhook Listener
+`<cloudblue-connect:webhook-listener>`
+
+
+=== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+| Configuration | String | The name of the configuration to use. | | *x*{nbsp}
+| Path a| String |  |  | *x*{nbsp}
+| Product Id a| String |  |  | *x*{nbsp}
+| JWT Secret a| String |  |  | *x*{nbsp}
+| Webhook Event Type a| Enumeration, one of:
+
+** FULFILLMENT_REQUEST
+** BILLING_REQUEST
+** LISTING_REQUEST
+** TIER_ACCOUNT_REQUEST
+** TIER_CONFIG_REQUEST
+** USAGE_FILE |  |  | *x*{nbsp}
+| Output Mime Type a| String |  The mime type of the payload that this operation outputs. |  | {nbsp}
+| Output Encoding a| String |  The encoding of the payload that this operation outputs. |  | {nbsp}
+| Config Ref a| ConfigurationProvider |  The name of the configuration to be used to execute this component |  | *x*{nbsp}
+| Primary Node Only a| Boolean |  Whether this source should only be executed on the primary node when runnning in Cluster |  | {nbsp}
+| Streaming Strategy a| * <<RepeatableInMemoryStream>>
+* <<RepeatableFileStoreStream>>
+* non-repeatable-stream |  Configure if repeatable streams should be used and their behaviour |  | {nbsp}
+| Redelivery Policy a| <<RedeliveryPolicy>> |  Defines a policy for processing the redelivery of the same message |  | {nbsp}
+| Reconnection Strategy a| * <<Reconnect>>
+* <<ReconnectForever>> |  A retry strategy in case of connectivity errors |  | {nbsp}
+| Response Status Code a| Number |  |  200 | {nbsp}
+| Response Body a| Any |  |  #[output application/json --- payload] | {nbsp}
+| Error Response Status Code a| Number |  |  500 | {nbsp}
+|===
+
+=== Output
+
+[%autowidth.spread]
+|===
+| *Type* a| Any
+| *Attributes Type* a| <<WebhookRequestAttributes>>
+|===
+
+=== For Configurations
+
+* <<WebhookConfig>> {nbsp}
+
+
+
+== Types
+[[Reconnection]]
+=== Reconnection
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Fails Deployment a| Boolean | When the application is deployed, a connectivity test is performed on all connectors. If set to true, deployment will fail if the test doesn't pass after exhausting the associated reconnection strategy |  | 
+| Reconnection Strategy a| * <<Reconnect>>
+* <<ReconnectForever>> | The reconnection strategy to use |  | 
+|======================
+
+[[Reconnect]]
+=== Reconnect
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Frequency a| Number | How often (in ms) to reconnect |  | 
+| Blocking a| Boolean | If false, the reconnection strategy will run in a separate, non-blocking thread |  | 
+| Count a| Number | How many reconnection attempts to make |  | 
+|======================
+
+[[ReconnectForever]]
+=== Reconnect Forever
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Frequency a| Number | How often (in ms) to reconnect |  | 
+| Blocking a| Boolean | If false, the reconnection strategy will run in a separate, non-blocking thread |  | 
+|======================
+
+[[ExpirationPolicy]]
+=== Expiration Policy
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Max Idle Time a| Number | A scalar time value for the maximum amount of time a dynamic configuration instance should be allowed to be idle before it's considered eligible for expiration |  | 
+| Time Unit a| Enumeration, one of:
+
+** NANOSECONDS
+** MICROSECONDS
+** MILLISECONDS
+** SECONDS
+** MINUTES
+** HOURS
+** DAYS | A time unit that qualifies the maxIdleTime attribute |  | 
+|======================
+
+[[CbcResponseAttributes]]
+=== CBC Response Attributes
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Headers a| Object |  |  | 
+| Reason Phrase a| String |  |  | 
+| Status Code a| Number |  |  | 
+|======================
+
+[[RepeatableInMemoryStream]]
+=== Repeatable In Memory Stream
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Initial Buffer Size a| Number | This is the amount of memory that will be allocated in order to consume the stream and provide random access to it. If the stream contains more data than can be fit into this buffer, then it will be expanded by according to the bufferSizeIncrement attribute, with an upper limit of maxInMemorySize. |  | 
+| Buffer Size Increment a| Number | This is by how much will be buffer size by expanded if it exceeds its initial size. Setting a value of zero or lower will mean that the buffer should not expand, meaning that a STREAM_MAXIMUM_SIZE_EXCEEDED error will be raised when the buffer gets full. |  | 
+| Max Buffer Size a| Number | This is the maximum amount of memory that will be used. If more than that is used then a STREAM_MAXIMUM_SIZE_EXCEEDED error will be raised. A value lower or equal to zero means no limit. |  | 
+| Buffer Unit a| Enumeration, one of:
+
+** BYTE
+** KB
+** MB
+** GB | The unit in which all these attributes are expressed |  | 
+|======================
+
+[[RepeatableFileStoreStream]]
+=== Repeatable File Store Stream
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| In Memory Size a| Number | Defines the maximum memory that the stream should use to keep data in memory. If more than that is consumed then it will start to buffer the content on disk. |  | 
+| Buffer Unit a| Enumeration, one of:
+
+** BYTE
+** KB
+** MB
+** GB | The unit in which maxInMemorySize is expressed |  | 
+|======================
+
+[[OrderBy]]
+=== Order By
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Properties a| Array of String |  |  | x
+|======================
+
+[[Tls]]
+=== Tls
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Enabled Protocols a| String | A comma separated list of protocols enabled for this context. |  | 
+| Enabled Cipher Suites a| String | A comma separated list of cipher suites enabled for this context. |  | 
+| Trust Store a| <<TrustStore>> |  |  | 
+| Key Store a| <<KeyStore>> |  |  | 
+| Revocation Check a| * <<StandardRevocationCheck>>
+* <<CustomOcspResponder>>
+* <<CrlFile>> |  |  | 
+|======================
+
+[[TrustStore]]
+=== Trust Store
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Path a| String | The location (which will be resolved relative to the current classpath and file system, if possible) of the trust store. |  | 
+| Password a| String | The password used to protect the trust store. |  | 
+| Type a| String | The type of store used. |  | 
+| Algorithm a| String | The algorithm used by the trust store. |  | 
+| Insecure a| Boolean | If true, no certificate validations will be performed, rendering connections vulnerable to attacks. Use at your own risk. |  | 
+|======================
+
+[[KeyStore]]
+=== Key Store
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Path a| String | The location (which will be resolved relative to the current classpath and file system, if possible) of the key store. |  | 
+| Type a| String | The type of store used. |  | 
+| Alias a| String | When the key store contains many private keys, this attribute indicates the alias of the key that should be used. If not defined, the first key in the file will be used by default. |  | 
+| Key Password a| String | The password used to protect the private key. |  | 
+| Password a| String | The password used to protect the key store. |  | 
+| Algorithm a| String | The algorithm used by the key store. |  | 
+|======================
+
+[[StandardRevocationCheck]]
+=== Standard Revocation Check
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Only End Entities a| Boolean | Only verify the last element of the certificate chain. |  | 
+| Prefer Crls a| Boolean | Try CRL instead of OCSP first. |  | 
+| No Fallback a| Boolean | Do not use the secondary checking method (the one not selected before). |  | 
+| Soft Fail a| Boolean | Avoid verification failure when the revocation server can not be reached or is busy. |  | 
+|======================
+
+[[CustomOcspResponder]]
+=== Custom Ocsp Responder
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Url a| String | The URL of the OCSP responder. |  | 
+| Cert Alias a| String | Alias of the signing certificate for the OCSP response (must be in the trust store), if present. |  | 
+|======================
+
+[[CrlFile]]
+=== Crl File
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Path a| String | The path to the CRL file. |  | 
+|======================
+
+[[WebhookRequestAttributes]]
+=== Webhook Request Attributes
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Token a| String |  |  | 
+|======================
+
+[[RedeliveryPolicy]]
+=== Redelivery Policy
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Max Redelivery Count a| Number | The maximum number of times a message can be redelivered and processed unsuccessfully before triggering process-failed-message |  | 
+| Message Digest Algorithm a| String | The secure hashing algorithm to use. If not set, the default is SHA-256. |  | 
+| Message Identifier a| <<RedeliveryPolicyMessageIdentifier>> | Defines which strategy is used to identify the messages. |  | 
+| Object Store a| ObjectStore | The object store where the redelivery counter for each message is going to be stored. |  | 
+|======================
+
+[[RedeliveryPolicyMessageIdentifier]]
+=== Redelivery Policy Message Identifier
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Use Secure Hash a| Boolean | Whether to use a secure hash algorithm to identify a redelivered message |  | 
+| Id Expression a| String | Defines one or more expressions to use to determine when a message has been redelivered. This property may only be set if useSecureHash is false. |  | 
+|======================
+
+[[ListFilter]]
+=== List Filter
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Type a| Enumeration, one of:
+
+** AND
+** OR |  |  | x
+| Filters a| Array of One of:
+
+* <<ListFilter>>
+* <<MonoFilter>>
+* <<InFilter>>
+* <<OutFilter>>
+* <<NotFilter>>
+* <<RawRqlFilter>> |  |  | x
+|======================
+
+[[MonoFilter]]
+=== Mono Filter
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Type a| Enumeration, one of:
+
+** EQ
+** NE
+** LT
+** LE
+** GT
+** GE
+** LIKE
+** ILIKE |  |  | x
+| Property a| String |  |  | x
+| Value a| String |  |  | x
+|======================
+
+[[InFilter]]
+=== In Filter
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Property a| String |  |  | x
+| Values a| Array of String |  |  | x
+|======================
+
+[[OutFilter]]
+=== Out Filter
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Property a| String |  |  | x
+| Values a| Array of String |  |  | x
+|======================
+
+[[NotFilter]]
+=== Not Filter
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Filter a| One of:
+
+* <<ListFilter>>
+* <<MonoFilter>>
+* <<InFilter>>
+* <<OutFilter>>
+* <<NotFilter>>
+* <<RawRqlFilter>> |  |  | x
+|======================
+
+[[RawRqlFilter]]
+=== Raw RQL Filter
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Raw Rql a| String |  |  | x
+|======================
+
