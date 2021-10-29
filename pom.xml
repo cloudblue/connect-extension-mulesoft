@@ -73,30 +73,11 @@
 
     <repositories>
         <repository>
-            <id>mulesoft-releases</id>
-            <name>MuleSoft Release Repository</name>
-            <url>https://repository.mulesoft.org/releases/</url>
-            <layout>default</layout>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
+            <id>mule-releases</id>
+            <name>Nexus Public Releases</name>
+            <url>https://repository-master.mulesoft.org/nexus/content/repositories/releases/</url>
         </repository>
     </repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>mulesoft-plugin-releases</id>
-            <name>MuleSoft Release Repository</name>
-            <url>https://repository.mulesoft.org/releases/</url>
-            <layout>default</layout>
-        </pluginRepository>
-        <pluginRepository>
-            <id>mulesoft-plugin-snapshots</id>
-            <name>MuleSoft Snapshots Repository</name>
-            <url>https://repository.mulesoft.org/snapshots/</url>
-            <layout>default</layout>
-        </pluginRepository>
-    </pluginRepositories>
 
     <dependencies>
 
@@ -318,8 +299,8 @@
                     </argLines>
                     <runtimeConfiguration>
                         <discoverRuntimes>
-                            <product>ALL</product>
-                            <includeSnapshots>true</includeSnapshots>
+                            <product>EE</product>
+                            <includeSnapshots>false</includeSnapshots>
                         </discoverRuntimes>
                     </runtimeConfiguration>
                     <dynamicPorts>

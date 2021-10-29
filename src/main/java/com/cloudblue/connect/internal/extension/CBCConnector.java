@@ -22,6 +22,7 @@ import org.mule.runtime.extension.api.annotation.Extension;
 import org.mule.runtime.extension.api.annotation.SubTypeMapping;
 import org.mule.runtime.extension.api.annotation.dsl.xml.Xml;
 import org.mule.runtime.extension.api.annotation.error.ErrorTypes;
+import org.mule.runtime.extension.api.annotation.license.RequiresEnterpriseLicense;
 
 
 /**
@@ -31,6 +32,7 @@ import org.mule.runtime.extension.api.annotation.error.ErrorTypes;
  */
 @Xml(prefix = "cloudblue-connect")
 @Extension(name = "CloudBlue Connect", category = Category.CERTIFIED, vendor = "CloudBlue")
+@RequiresEnterpriseLicense(allowEvaluationLicense = true)
 @Configurations({CBCConfiguration.class, CBCWebhookConfig.class})
 @ErrorTypes(CBCErrorType.class)
 @SubTypeMapping(
